@@ -5,43 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Study With Mubarak</title>
 
-<style>
-body { font-family: Arial; margin:0; background:#f4f4f4; }
-
-nav {
-    background:#0a192f;
-    color:white;
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
-}
-
-nav button {
-    margin-left:10px;
-}
-
-.section { padding:20px; display:none; }
-.active { display:block; }
-
-.card {
-    background:white;
-    padding:15px;
-    margin:10px 0;
-    border-radius:8px;
-}
-
-input, button {
-    padding:10px;
-    margin:5px 0;
-    width:100%;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <nav>
-    <h3>Study With Mubarak</h3>
+    <h2>Study With Mubarak</h2>
     <div>
         <button onclick="show('home')">Home</button>
         <button onclick="show('quiz')">Quiz</button>
@@ -55,9 +25,14 @@ input, button {
 <div id="home" class="section active">
     <h2>Welcome</h2>
     <p>Your smart learning platform</p>
+
+    <div class="profile">
+        <img src="your-image.jpg" alt="My Picture">
+        <h3>Mubarak</h3>
+    </div>
 </div>
 
-<!-- AUTH -->
+<!-- LOGIN -->
 <div id="auth" class="section">
     <h2>Login / Signup</h2>
     <input id="username" placeholder="Username">
@@ -78,16 +53,16 @@ input, button {
 
 <!-- NOTES -->
 <div id="notes" class="section">
-    <h2>Upload Notes</h2>
+    <h2>Notes</h2>
     <input id="noteInput" placeholder="Write your note">
-    <button onclick="saveNote()">Save</button>
+    <button onclick="saveNote()">Save Note</button>
     <div id="notesList"></div>
 </div>
 
 <!-- AI -->
 <div id="ai" class="section">
     <h2>AI Tutor</h2>
-    <input id="aiInput" placeholder="Ask something...">
+    <input id="aiInput" placeholder="Ask a question...">
     <button onclick="askAI()">Ask</button>
     <p id="aiResponse"></p>
 </div>
@@ -100,7 +75,7 @@ function show(id){
     document.getElementById(id).classList.add('active');
 }
 
-// AUTH SYSTEM
+// AUTH
 function signup(){
     let u = username.value;
     let p = password.value;
@@ -130,29 +105,72 @@ function checkAnswer(){
     }
 }
 
-// NOTES
+// NOTES (EDITABLE)
 function saveNote(){
     let note = noteInput.value;
     let notes = JSON.parse(localStorage.getItem("notes") || "[]");
     notes.push(note);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    noteInput.value = "";
+    displayNotes();
+}
+
+function editNote(index){
+    let notes = JSON.parse(localStorage.getItem("notes"));
+    noteInput.value = notes[index];
+    notes.splice(index,1);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    displayNotes();
+}
+
+function deleteNote(index){
+    let notes = JSON.parse(localStorage.getItem("notes"));
+    notes.splice(index,1);
     localStorage.setItem("notes", JSON.stringify(notes));
     displayNotes();
 }
 
 function displayNotes(){
     let notes = JSON.parse(localStorage.getItem("notes") || "[]");
-    notesList.innerHTML = notes.map(n=>"<div class='card'>"+n+"</div>").join("");
+    notesList.innerHTML = notes.map((n,i)=>`
+        <div class='card'>
+            ${n}
+            <br>
+            <button onclick="editNote(${i})">Edit</button>
+            <button onclick="deleteNote(${i})">Delete</button>
+        </div>
+    `).join("");
 }
 displayNotes();
 
-// AI (Basic Fake AI)
+// AI (Improved)
 function askAI(){
     let q = aiInput.value.toLowerCase();
-    if(q.includes("math")){
-        aiResponse.innerText = "Math is the study of numbers.";
-    } else {
-        aiResponse.innerText = "I am still learning. Ask something else.";
+    let response = "";
+
+    if(q.includes("name")){
+        response = "I am Mubarak AI Tutor 🤖";
     }
+    else if(q.includes("math")){
+        response = "Math involves numbers, algebra, geometry and more.";
+    }
+    else if(q.includes("english")){
+        response = "English includes grammar, comprehension and writing.";
+    }
+    else if(q.includes("biology")){
+        response = "Biology is the study of living things.";
+    }
+    else if(q.includes("physics")){
+        response = "Physics deals with energy and motion.";
+    }
+    else if(q.includes("chemistry")){
+        response = "Chemistry studies substances and reactions.";
+    }
+    else{
+        response = "Ask me about subjects like Math, English, Biology.";
+    }
+
+    aiResponse.innerText = response;
 }
 
 </script>
