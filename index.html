@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Study Portal</title>
+    <title>Academic Study Bank</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+
+    <nav class="navbar">
+        <div class="logo">Study Portal</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="government.html">Government</a></li>
+            <li><a href="antonyms.html">English</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
         <h1>Academic Study Bank</h1>
-        <p>Master your subjects with practice questions</p>
+        <p>Master your subjects with high-quality practice questions and detailed explanations.</p>
     </header>
 
     <main class="container">
-        <section class="card-grid">
+        <div class="subject-grid">
+            
             <div class="card">
                 <h2>Government</h2>
                 <p>Nigerian Federalism, International Relations, and more.</p>
@@ -25,12 +37,13 @@
                 <p>Master Antonyms, Synonyms, and Grammar rules.</p>
                 <a href="antonyms.html" class="btn">Start Practice</a>
             </div>
-        </section>
+
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Study Portal | Built with HTML & CSS</p>
     </footer>
+
 </body>
 </html>
-
