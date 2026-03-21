@@ -1,119 +1,69 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    background-color: #f4f7f6;
-    color: #333;
-}
-
-/* Navigation Bar */
-.navbar {
-    background: #2c3e50;
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #141e30, #243b55);
     color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 5%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
 }
 
-.nav-links {
-    list-style: none;
-    display: flex;
+/* NAV */
+nav {
+    background:#0a192f;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.nav-links li {
-    margin-left: 20px;
+nav button {
+    margin:5px;
+    padding:10px;
+    border:none;
+    background:#00c6ff;
+    color:white;
+    border-radius:5px;
 }
 
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
+/* SECTIONS */
+.section {
+    display:none;
+    padding:20px;
 }
 
-.nav-links a:hover {
-    color: #3498db;
+.active {
+    display:block;
 }
 
-/* Hero Section */
-.hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    text-align: center;
-    padding: 80px 20px;
+/* INPUTS */
+input {
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:none;
+    border-radius:5px;
 }
 
-.hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+/* BUTTONS */
+button {
+    cursor:pointer;
 }
 
-/* Layout Container */
-.container {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-/* Subject Grid & Cards */
-.subject-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
+/* CARDS */
 .card {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.3s;
+    background: rgba(255,255,255,0.1);
+    padding:15px;
+    margin:10px 0;
+    border-radius:10px;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+/* PROFILE */
+.profile {
+    text-align:center;
+    margin-top:20px;
 }
 
-.card h2 {
-    margin-bottom: 15px;
-    color: #2c3e50;
-}
-
-/* Professional Button */
-.btn {
-    display: inline-block;
-    background: #3498db;
-    color: white;
-    padding: 10px 25px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.btn:hover {
-    background: #2980b9;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 40px;
-    background: #2c3e50;
-    color: white;
-    margin-top: 50px;
+.profile img {
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
 }
