@@ -1,239 +1,323 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Study Bank | Professional Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>STUDY-WITH-MUBARAK | Ultimate Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* 1. PROFESSIONAL COLORS & THEMES */
         :root {
-            --bg-color: #f4f7f6;
-            --text-color: #333;
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
             --card-bg: #ffffff;
-            --primary: #1a2a6c;
-            --accent: #007bff;
-            --nav-bg: #ffffff;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --accent: #7c3aed;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --card-bg: #1e1e1e;
-            --primary: #bb86fc;
-            --accent: #03dac6;
-            --nav-bg: #1e1e1e;
-            --shadow: 0 4px 12px rgba(0,0,0,0.5);
+            --bg-color: #020617;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --primary: #60a5fa;
+            --nav-bg: rgba(15, 23, 42, 0.8);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: 0.3s ease; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+            line-height: 1.6;
+        }
 
-        /* 2. NAVIGATION & SEARCH BARS */
+        /* --- NAVIGATION --- */
         nav {
+            backdrop-filter: blur(10px);
             background: var(--nav-bg);
-            padding: 15px 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow);
         }
 
-        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); letter-spacing: -1px; }
 
-        .search-bar {
-            padding: 8px 15px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 60px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .search-box {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+            font-size: 1rem;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .upload-zone {
             background: var(--card-bg);
-            color: var(--text-color);
+            border: 2px dashed var(--primary);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            cursor: pointer;
         }
 
-        .theme-btn, .upload-label {
-            cursor: pointer;
-            padding: 8px 12px;
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card:hover { transform: translateY(-10px); }
+
+        .btn-main {
+            display: inline-block;
             background: var(--primary);
             color: white;
-            border-radius: 5px;
-            border: none;
-            font-size: 0.9rem;
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
         }
 
-        /* 3. USER PROFILE SECTION */
-        .user-info {
-            background: var(--accent);
-            color: white;
-            padding: 20px 5%;
-            text-align: right;
-            font-size: 0.85rem;
-        }
-
-        /* 4. MAIN LAYOUT & UPLOADS */
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-        
-        .upload-section {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-align: center;
-            border: 2px dashed var(--accent);
-        }
-
-        #preview-container img {
-            max-width: 150px;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-
-        /* 5. SUBJECT CARDS */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: var(--shadow); }
-        .btn { display: inline-block; margin-top: 15px; color: var(--accent); text-decoration: none; font-weight: bold; }
-
-        /* 6. AI ASSISTANT */
-        #ai-widget {
+        /* --- AI ASSISTANT PANEL --- */
+        #ai-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2000;
+        }
+
+        #ai-window {
+            width: 350px;
+            height: 500px;
             background: var(--card-bg);
-            box-shadow: var(--shadow);
-            border-radius: 10px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
             display: none;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid var(--accent);
+            border: 1px solid var(--primary);
         }
 
-        .ai-header { background: var(--primary); color: white; padding: 10px; display: flex; justify-content: space-between; }
-        #ai-body { height: 250px; padding: 10px; overflow-y: auto; font-size: 0.9rem; }
-        .ai-input-area { display: flex; border-top: 1px solid #ddd; }
-        .ai-input-area input { flex: 1; padding: 10px; border: none; outline: none; background: var(--card-bg); color: var(--text-color); }
-        
-        .bot-trigger {
-            position: fixed; bottom: 20px; right: 20px;
-            background: var(--primary); color: white; padding: 15px;
-            border-radius: 50px; cursor: pointer; box-shadow: var(--shadow);
+        .ai-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        #chat-flow {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg { padding: 12px 16px; border-radius: 15px; max-width: 85%; font-size: 0.95rem; }
+        .user-msg { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .bot-msg { background: #e2e8f0; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 2px; }
+
+        .ai-input-wrapper {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            border-top: 1px solid #ddd;
+        }
+
+        .ai-input-wrapper input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .toggle-ai-btn {
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+            margin-left: auto;
+        }
+
+        footer { text-align: center; padding: 50px; opacity: 0.6; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <div class="user-info" id="userDisplay">
-        Logged in as: <strong>Mubarak (Admin)</strong> | Last Session: March 2026
-    </div>
-
     <nav>
-        <div class="logo"><strong>STUDY BANK</strong></div>
-        <div class="nav-right">
-            <input type="text" class="search-bar" placeholder="Search topics...">
-            <button class="theme-btn" onclick="toggleTheme()">🌓 Mode</button>
-        </div>
+        <div class="logo">STUDY WITH MUBARAK</div>
+        <button onclick="toggleTheme()" style="background:none; border:none; font-size: 1.5rem; cursor:pointer;">🌓</button>
     </nav>
 
+    <header class="hero">
+        <h1>Welcome Back, Mubarak</h1>
+        <p>What are we mastering today? Let's get to work.</p>
+        <input type="text" class="search-box" placeholder="Search for Government notes, English antonyms...">
+    </header>
+
     <div class="container">
-        <section class="upload-section">
-            <h3>Upload Study Materials</h3>
-            <p>Upload your past questions or images from your phone</p>
-            <br>
-            <label class="upload-label" for="fileInput">Choose File / Take Photo</label>
-            <input type="file" id="fileInput" style="display:none" onchange="previewFile()">
-            <div id="preview-container"></div>
+        <section class="upload-zone" onclick="document.getElementById('file-upload').click()">
+            <h3 id="upload-status">📤 Tap to Upload Study Files or Photos</h3>
+            <input type="file" id="file-upload" hidden onchange="handleUpload(event)">
+            <div id="preview"></div>
         </section>
 
         <div class="grid">
             <div class="card">
+                <span style="font-size: 2rem;">🏛️</span>
                 <h2>Government</h2>
-                <p>Explore Nigerian Federalism and International Relations.</p>
-                <a href="government.html" class="btn">Practice Now →</a>
+                <p>Nigerian Federalism, International Relations, and Constitutional Law.</p>
+                <a href="government.html" class="btn-main">Open Bank</a>
             </div>
+
             <div class="card">
+                <span style="font-size: 2rem;">📚</span>
                 <h2>English Language</h2>
-                <p>Vocabulary, Antonyms, and Grammar rules.</p>
-                <a href="antonyms.html" class="btn">Practice Now →</a>
+                <p>Master the art of Antonyms, Synonyms, and Lexis & Structure.</p>
+                <a href="antonyms.html" class="btn-main">Practice English</a>
             </div>
         </div>
     </div>
 
-    <div class="bot-trigger" onclick="toggleAI()">🤖 Ask AI Assistant</div>
-
-    <div id="ai-widget">
-        <div class="ai-header">
-            <span>Study AI (Multi-Discipline)</span>
-            <span style="cursor:pointer" onclick="toggleAI()">×</span>
+    <div id="ai-container">
+        <div id="ai-window">
+            <div class="ai-header">
+                <strong>Gemini AI Assistant</strong>
+                <span onclick="toggleAI()" style="cursor:pointer">✕</span>
+            </div>
+            <div id="chat-flow">
+                <div class="msg bot-msg">Hello Mubarak! I'm powered by Gemini 1.5. How can I help with your studies?</div>
+            </div>
+            <div class="ai-input-wrapper">
+                <input type="text" id="ai-prompt" placeholder="Ask anything...">
+                <button onclick="askGemini()" style="border:none; background:var(--primary); color:white; padding:10px; border-radius:10px;">Send</button>
+            </div>
         </div>
-        <div id="ai-body">
-            <p style="color:gray italic">Ask me anything about Government, Science, or Math!</p>
-        </div>
-        <div class="ai-input-area">
-            <input type="text" id="ai-input" placeholder="Type your question...">
-            <button onclick="askAI()" style="padding:10px; border:none; background:var(--accent); color:white;">Send</button>
-        </div>
+        <div class="toggle-ai-btn" onclick="toggleAI()">🤖</div>
     </div>
+
+    <footer>
+        &copy; 2026 STUDY-WITH-MUBARAK Portal | Professional Learning Interface
+    </footer>
 
     <script>
-        // 1. THEME TOGGLE LOGIC
+        const API_KEY = "AIzaSyAK9pQ4zf389xFakzLsJCnQuz3KLIaSkJc";
+
+        // 1. Theme Toggle
         function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                body.setAttribute('data-theme', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-            }
+            const html = document.documentElement;
+            html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
 
-        // 2. FILE UPLOAD PREVIEW
-        function previewFile() {
-            const preview = document.getElementById('preview-container');
-            const file = document.getElementById('fileInput').files[0];
-            const reader = new FileReader();
+        // 2. AI Window Toggle
+        function toggleAI() {
+            const win = document.getElementById('ai-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        }
 
-            reader.onloadend = function () {
-                if (file.type.startsWith('image/')) {
-                    preview.innerHTML = `<img src="${reader.result}"><p>${file.name} ready!</p>`;
-                } else {
-                    preview.innerHTML = `<p>📄 File Uploaded: ${file.name}</p>`;
+        // 3. File Upload Handler
+        function handleUpload(event) {
+            const file = event.target.files[0];
+            const status = document.getElementById('upload-status');
+            const preview = document.getElementById('preview');
+            if(file) {
+                status.innerText = "✅ Successfully loaded: " + file.name;
+                if(file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = e => preview.innerHTML = `<img src="${e.target.result}" style="max-width:200px; margin-top:20px; border-radius:10px;">`;
+                    reader.readAsDataURL(file);
                 }
             }
-            if (file) { reader.readAsDataURL(file); }
         }
 
-        // 3. AI ASSISTANT LOGIC (Multi-Discipline)
-        function toggleAI() {
-            const widget = document.getElementById('ai-widget');
-            widget.style.display = widget.style.display === 'flex' ? 'none' : 'flex';
+        // 4. THE BRAIN: Gemini API Integration
+        async function askGemini() {
+            const promptInput = document.getElementById('ai-prompt');
+            const chatFlow = document.getElementById('chat-flow');
+            const text = promptInput.value;
+
+            if (!text) return;
+
+            // User bubble
+            chatFlow.innerHTML += `<div class="msg user-msg">${text}</div>`;
+            promptInput.value = "";
+            chatFlow.scrollTop = chatFlow.scrollHeight;
+
+            // Thinking bubble
+            const tempId = "temp-" + Date.now();
+            chatFlow.innerHTML += `<div id="${tempId}" class="msg bot-msg">Assistant is analyzing...</div>`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: text }] }]
+                    })
+                });
+
+                const data = await response.json();
+                const aiText = data.candidates[0].content.parts[0].text;
+                
+                // Replace thinking with actual answer
+                document.getElementById(tempId).innerText = aiText;
+            } catch (error) {
+                document.getElementById(tempId).innerText = "Sorry, I hit a snag. Check your connection.";
+            }
+            chatFlow.scrollTop = chatFlow.scrollHeight;
         }
 
-        function askAI() {
-            const input = document.getElementById('ai-input');
-            const body = document.getElementById('ai-body');
-            const query = input.value.toLowerCase();
-            
-            if (!query) return;
-
-            body.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
-            let response = "I'm analyzing that... Can you be more specific about the subject?";
-
-            // Multi-discipline Intelligence
-            if (query.includes("government")) response = "Government deals with the system of social control under which the right to make laws is vested in a particular group.";
-            if (query.includes("nigeria")) response = "Nigeria is a Federal Republic with 36 states and a Federal Capital Territory in Abuja.";
-            if (query.includes("math") || query.includes("solve")) response = "I can help with formulas! For example, the area of a circle is πr².";
-            if (query.includes("english") || query.includes("antonym")) response = "An antonym is a word opposite in meaning to another (e.g., Hot and Cold).";
-            if (query.includes("science")) response = "Science is the systematic study of the structure and behavior of the physical and natural world.";
-
-            setTimeout(() => {
-                body.innerHTML += `<p style="background:#f1f1f1; color:#333; padding:5px; border-radius:5px;"><strong>AI:</strong> ${response}</p>`;
-                body.scrollTop = body.scrollHeight;
-            }, 500);
-            input.value = "";
-        }
+        // Allow 'Enter' key to send message
+        document.getElementById('ai-prompt').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') askGemini();
+        });
     </script>
 </body>
 </html>
