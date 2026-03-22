@@ -7,8 +7,8 @@ Welcome to the official **STUDY WITH MUBARAK** portal. This platform is designed
 
 ## 🚀 Live Access
 You can access the full study bank and interactive quizzes here:
-👉 **[CLICK HERE TO START STUDYING](https://your-github-username.github.io/STUDY-WITH-MUBARAK/)**
-*(Note: Replace the link above with your actual GitHub Pages URL)*
+👉 **[CLICK HERE TO START STUDYING**(https://owodunnimubarak7-blip.github.io/STUDY-WITH-MUBARAK/)**
+
 
 ---
 
