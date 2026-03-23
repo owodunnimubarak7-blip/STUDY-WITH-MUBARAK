@@ -5,144 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUDY WITH MUBARAK | Premium Learning Portal</title>
     
+    <meta name="description" content="Official Study with Mubarak portal. Interactive quizzes and AI assistance for Nigerian students.">
+
     <style>
         :root {
             --primary: #2563eb;
             --secondary: #1e293b;
             --accent: #f59e0b;
+            --success: #10b981;
             --bg: #f8fafc;
         }
 
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: var(--bg); 
             margin: 0; 
             color: var(--secondary);
+            line-height: 1.6;
         }
 
-        /* Grand Animated Header */
+        /* Grand Header */
         header { 
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: white; 
-            padding: 60px 20px; 
+            padding: 70px 20px; 
             text-align: center;
-            border-bottom: 5px solid var(--accent);
+            border-bottom: 6px solid var(--accent);
         }
 
-        .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+        .hero-h1 { font-size: 2.8rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .hero-p { font-size: 1.1rem; opacity: 0.8; margin-top: 10px; }
 
-        /* Subject Grid */
+        .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
+
+        /* Subject Grid Styling */
         .subject-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 25px; 
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 60px;
         }
 
         .card { 
             background: white; 
-            border-radius: 20px; 
-            padding: 30px; 
+            border-radius: 25px; 
+            padding: 40px 30px; 
             text-align: center; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: 0.3s;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
         }
 
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .card:hover { 
+            transform: translateY(-12px); 
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+            border-color: var(--primary);
+        }
+
+        .card h2 { color: var(--secondary); margin-bottom: 15px; font-size: 1.6rem; }
 
         .btn { 
             display: inline-block; 
             background: var(--primary); 
             color: white; 
-            padding: 12px 25px; 
+            padding: 14px 35px; 
             text-decoration: none; 
             border-radius: 50px; 
-            font-weight: bold;
+            font-weight: 700;
+            transition: 0.3s;
         }
 
-        /* THE GRAND AI SECTION (The "Enclosure") */
-        .ai-portal-container {
+        .btn:hover { background: #1d4ed8; transform: scale(1.05); }
+
+        /* THE GRAND AI PORTAL */
+        .ai-portal {
             background: white;
             border-radius: 30px;
-            padding: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 50px 30px;
+            text-align: center;
             border: 3px solid var(--accent);
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.25);
             margin-top: 40px;
         }
 
-        .ai-header {
-            text-align: center;
-            padding-bottom: 20px;
+        .ai-btn {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: white;
+            padding: 22px 60px;
+            font-size: 1.4rem;
+            border-radius: 60px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+            transition: 0.3s;
         }
 
-        /* This makes Gemini fit well in the screen */
-        .gemini-frame {
-            width: 100%;
-            height: 600px; /* Adjust height for mobile/desktop */
-            border: none;
-            border-radius: 15px;
-            background: #fff;
-        }
+        .ai-btn:hover { transform: scale(1.08); box-shadow: 0 15px 35px rgba(245, 158, 11, 0.5); }
 
-        footer { text-align: center; padding: 40px; color: #94a3b8; }
+        footer { text-align: center; padding: 60px; color: #94a3b8; font-weight: 500; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>STUDY WITH MUBARAK</h1>
-    <p>Nigeria's Advanced Interactive Study Portal</p>
+    <h1 class="hero-h1">STUDY WITH MUBARAK</h1>
+    <p class="hero-p">Nigeria's Most Advanced Interactive Study Portal</p>
 </header>
 
 <div class="container">
     
     <div class="subject-grid">
         <div class="card">
-            <h2>English</h2>
-            <p>Antonyms & Grammar mastery.</p>
-            <a href="english.html" class="btn">Enter Class</a>
+            <h2>English Language</h2>
+            <p>50+ Antonyms & Grammar Questions to master your vocabulary.</p>
+            <a href="english.html" class="btn">Launch Class</a>
         </div>
 
         <div class="card">
             <h2>Government</h2>
-            <p>Political history & Constitution.</p>
-            <a href="government.html" class="btn">Enter Class</a>
+            <p>Full Nigerian Constitution & History study bank for top results.</p>
+            <a href="government.html" class="btn">Launch Class</a>
         </div>
 
-        <div class="card" style="border-left: 5px solid #10b981;">
+        <div class="card" style="border-top: 6px solid var(--success);">
             <h2>General Studies</h2>
-            <p>Economics, Civics, Biology, Physics, Chemistry, Literature, Maths& more.</p>
-            <a href="random subject.html" class="btn" style="background: #10b981;">Enter Class</a>
+            <p>Mixed subjects including Economics, Civics, and Geography.</p>
+            <a href="random subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
         </div>
-        <div class="ai-portal-container" style="text-align: center; padding: 60px 20px;">
-        <div class="ai-header">
-            <h2 style="color: var(--accent); font-size: 2.2rem;">✨ MUBARAK'S AI ASSISTANT</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 30px;">
-                Ask Gemini anything! Your Study Portal will stay open in the background.
-            </p>
-        </div>
+    </div>
+
+    <div class="ai-portal">
+        <h2 style="color: var(--accent); font-size: 2.2rem; margin-bottom: 15px;">✨ MUBARAK'S AI ASSISTANT</h2>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto 35px auto;">
+            Need help with a difficult question? Click below to launch **Gemini**. 
+            It will open in a new tab so you don't lose your place here!
+        </p>
         
-        <a href="https://gemini.google.com/" target="_blank" class="ai-btn" 
-           style="background: linear-gradient(90deg, #f59e0b, #d97706); 
-                  color: white; 
-                  padding: 20px 60px; 
-                  font-size: 1.5rem; 
-                  border-radius: 60px; 
-                  text-decoration: none; 
-                  display: inline-block; 
-                  font-weight: bold; 
-                  box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4); 
-                  transition: transform 0.3s;">
-            LAUNCH GEMINI AI
+        <a href="https://gemini.google.com/" target="_blank" class="ai-btn">
+            OPEN GEMINI AI NOW
         </a>
 
-        <p style="margin-top: 25px; color: #94a3b8; font-style: italic;">
-            Clicking the button opens the AI in a new room so you don't lose your quiz progress!
+        <p style="margin-top: 25px; color: #94a3b8; font-style: italic; font-size: 0.9rem;">
+            Link: https://gemini.google.com/
         </p>
     </div>
 
- <html>&copy; 2026 STUDY-WITH-MUBARAK | Developed by Mubarak</p>
+</div>
+
+<footer>
+    <p>&copy; 2026 STUDY-WITH-MUBARAK | Built for Excellence</p>
 </footer>
 
 </body>
