@@ -1,179 +1,140 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STUDY-WITH-MUBARAK | Pro Learning Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>STUDY WITH MUBARAK | Premium Learning Portal</title>
     
     <style>
         :root {
-            --bg: #f8fafc; --text: #0f172a; --card: #ffffff;
-            --primary: #2563eb; --accent: #7c3aed; --nav: rgba(255, 255, 255, 0.8);
-            --bot-bubble: #f1f5f9;
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
         }
-        [data-theme="dark"] {
-            --bg: #020617; --text: #f1f5f9; --card: #1e293b;
-            --primary: #3b82f6; --nav: rgba(15, 23, 42, 0.8);
-            --bot-bubble: #334155;
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            color: var(--secondary);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.25s ease; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        nav { backdrop-filter: blur(12px); background: var(--nav); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); letter-spacing: -1px; }
+        /* Grand Animated Header */
+        header { 
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white; 
+            padding: 60px 20px; 
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+        }
 
-        .hero { padding: 80px 5%; text-align: center; background: radial-gradient(circle at top right, var(--primary), var(--accent)); color: white; border-bottom-left-radius: 60px; border-bottom-right-radius: 60px; box-shadow: 0 20px 50px rgba(37, 99, 235, 0.2); }
-        .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 15px; }
-        
-        .container { max-width: 1200px; margin: -40px auto 40px; padding: 0 20px; }
-        .upload-card { background: var(--card); padding: 40px; border-radius: 30px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); border: 2px dashed var(--primary); cursor: pointer; }
+        .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
-        .card { background: var(--card); padding: 40px; border-radius: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .btn-action { display: inline-block; background: var(--primary); color: white; padding: 14px 30px; border-radius: 16px; text-decoration: none; font-weight: 700; margin-top: 25px; }
+        /* Subject Grid */
+        .subject-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            margin-bottom: 50px;
+        }
 
-        #ai-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
-        #ai-panel { width: 380px; height: 550px; background: var(--card); border-radius: 28px; box-shadow: 0 25px 60px rgba(0,0,0,0.25); display: none; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
-        .ai-top { background: var(--primary); color: white; padding: 25px; display: flex; justify-content: space-between; align-items: center; }
-        .status-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            border: 1px solid #e2e8f0;
+        }
 
-        #chat-window { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--bg); }
-        .bubble { padding: 14px 18px; border-radius: 20px; font-size: 0.95rem; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
-        .user-b { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .bot-b { background: var(--bot-bubble); color: var(--text); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
 
-        .input-area { padding: 20px; background: var(--card); display: flex; gap: 12px; border-top: 1px solid rgba(0,0,0,0.05); }
-        .input-area input { flex: 1; padding: 12px 18px; border-radius: 14px; border: 1px solid #e2e8f0; background: var(--bg); color: var(--text); outline: none; }
-        .send-btn { background: var(--primary); color: white; border: none; padding: 0 20px; border-radius: 14px; cursor: pointer; font-weight: 700; }
-        .fab { width: 70px; height: 70px; background: var(--primary); color: white; border-radius: 24px; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; cursor: pointer; box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4); margin-left: auto; }
+        .btn { 
+            display: inline-block; 
+            background: var(--primary); 
+            color: white; 
+            padding: 12px 25px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: bold;
+        }
+
+        /* THE GRAND AI SECTION (The "Enclosure") */
+        .ai-portal-container {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 3px solid var(--accent);
+            margin-top: 40px;
+        }
+
+        .ai-header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        /* This makes Gemini fit well in the screen */
+        .gemini-frame {
+            width: 100%;
+            height: 600px; /* Adjust height for mobile/desktop */
+            border: none;
+            border-radius: 15px;
+            background: #fff;
+        }
+
+        footer { text-align: center; padding: 40px; color: #94a3b8; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">STUDY WITH MUBARAK</div>
-        <button onclick="toggleMode()" style="background:none; border:none; font-size: 1.6rem; cursor:pointer;">🌓</button>
-    </nav>
+<header>
+    <h1>STUDY WITH MUBARAK</h1>
+    <p>Nigeria's Advanced Interactive Study Portal</p>
+</header>
 
-    <header class="hero">
-        <h1>Level Up, Mubarak.</h1>
-        <p>Your AI-powered academic command center is ready.</p>
-    </header>
-
-    <div class="container">
-        <div class="upload-card" onclick="document.getElementById('hidden-input').click()">
-            <h2 id="up-text">📸 Upload Past Questions or Photos</h2>
-            <input type="file" id="hidden-input" hidden onchange="fileManager(event)">
-            <div id="img-preview"></div>
+<div class="container">
+    
+    <div class="subject-grid">
+        <div class="card">
+            <h2>English</h2>
+            <p>Antonyms & Grammar mastery.</p>
+            <a href="english.html" class="btn">Enter Class</a>
         </div>
 
-        <div class="grid">
-            <div class="card">
-                <div style="font-size: 2.5rem; margin-bottom: 10px;">🏛️</div>
-                <h2>Government Bank</h2>
-                <p>Master Nigerian Federalism and Policy.</p>
-                <a href="government.html" class="btn-action">Start Quiz</a>
-            </div>
-            <div class="card">
-                <div style="font-size: 2.5rem; margin-bottom: 10px;">✍️</div>
-                <h2>English Lab</h2>
-                <p>Antonyms, Synonyms, and Oral English.</p>
-                <a href="antonyms.html" class="btn-action">Practice Now</a>
-            </div>
+        <div class="card">
+            <h2>Government</h2>
+            <p>Political history & Constitution.</p>
+            <a href="government.html" class="btn">Enter Class</a>
+        </div>
+
+        <div class="card" style="border-left: 5px solid #10b981;">
+            <h2>General Studies</h2>
+            <p>Economics, Civics, & more.</p>
+            <a href="random subject.html" class="btn" style="background: #10b981;">Enter Class</a>
         </div>
     </div>
 
-    <div id="ai-widget">
-        <div id="ai-panel">
-            <div class="ai-top">
-                <div><span class="status-dot"></span><strong>Gemini AI Pro</strong></div>
-                <span onclick="openAI()" style="cursor:pointer; font-size: 1.2rem;">✕</span>
-            </div>
-            <div id="chat-window">
-                <div class="bubble bot-b">Welcome, Mubarak. Type any question and I will answer instantly.</div>
-            </div>
-            <div class="input-area">
-                <input type="text" id="user-query" placeholder="Ask anything...">
-                <button class="send-btn" id="send-trigger" onclick="startAI()">Send</button>
-            </div>
+    <div class="ai-portal-container">
+        <div class="ai-header">
+            <h2 style="color: var(--accent);">✨ MUBARAK'S AI ASSISTANT</h2>
+            <p>Ask anything! Gemini is integrated below for your convenience.</p>
         </div>
-        <div class="fab" onclick="openAI()">🤖</div>
+        
+        <iframe 
+            src="https://gemini.google.com/" 
+            class="gemini-frame" 
+            title="Gemini AI Assistant">
+        </iframe>
     </div>
 
-    <script>
-        const MASTER_KEY = "AIzaSyAK9pQ4zf389xFakzLsJCnQuz3KLIaSkJc";
+</div>
 
-        function toggleMode() {
-            const root = document.documentElement;
-            root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        }
+<footer>
+    <p>&copy; 2026 STUDY-WITH-MUBARAK | Developed by Mubarak</p>
+</footer>
 
-        function openAI() {
-            const panel = document.getElementById('ai-panel');
-            panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function fileManager(e) {
-            const file = e.target.files[0];
-            const text = document.getElementById('up-text');
-            const preview = document.getElementById('img-preview');
-            if(file) {
-                text.innerHTML = "✅ File Loaded: " + file.name;
-                if(file.type.startsWith('image/')) {
-                    const r = new FileReader();
-                    r.onload = ev => preview.innerHTML = `<img src="${ev.target.result}" style="max-width:100%; height:150px; border-radius:20px; margin-top:20px; object-fit:cover;">`;
-                    r.readAsDataURL(file);
-                }
-            }
-        }
-
-        async function startAI() {
-            const input = document.getElementById('user-query');
-            const win = document.getElementById('chat-window');
-            const val = input.value.trim();
-
-            if(!val) return;
-
-            win.innerHTML += `<div class="bubble user-b">${val}</div>`;
-            input.value = "";
-            win.scrollTop = win.scrollHeight;
-
-            const id = "bot-" + Date.now();
-            win.innerHTML += `<div id="${id}" class="bubble bot-b">Thinking...</div>`;
-            win.scrollTop = win.scrollHeight;
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MASTER_KEY}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: val }] }]
-                    })
-                });
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates[0].content) {
-                    const reply = data.candidates[0].content.parts[0].text;
-                    document.getElementById(id).innerText = reply;
-                } else if (data.error) {
-                    document.getElementById(id).innerText = "API Error: " + data.error.message;
-                } else {
-                    document.getElementById(id).innerText = "I'm having trouble processing that. Please try a different question.";
-                }
-
-            } catch (err) {
-                document.getElementById(id).innerText = "Connection failed. Please check your internet.";
-            }
-            win.scrollTop = win.scrollHeight;
-        }
-
-        document.getElementById('user-query').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') startAI();
-        });
-    </script>
 </body>
 </html>
