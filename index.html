@@ -3,75 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STUDY WITH MUBARAK | Dual-View Portal</title>
+    <title>STUDY WITH MUBARAK | Grand Dual Portal</title>
     
     <style>
         :root {
             --primary: #2563eb;
             --secondary: #1e293b;
             --accent: #f59e0b;
+            --success: #10b981;
             --bg: #f8fafc;
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
 
-        /* This container holds both halves */
-        .master-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+        /* Master Container */
+        .master-container { display: flex; flex-direction: column; height: 100vh; }
 
-        /* TOP SECTION: Your Study Hall */
+        /* TOP SECTION: The Scrollable Study Hall */
         #top-section {
-            flex: 1; /* Takes full screen until AI is clicked */
+            flex: 1; /* Takes full screen until AI opens */
             background: var(--bg);
-            overflow-y: auto;
-            transition: flex 0.5s ease;
-            border-bottom: 4px solid var(--secondary);
+            overflow-y: auto; /* Allows scrolling inside the small top half */
+            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 5px solid var(--secondary);
         }
 
         /* BOTTOM SECTION: The AI Hall */
         #bottom-section {
-            flex: 0; /* Hidden at first */
-            background: white;
-            transition: flex 0.5s ease;
+            flex: 0; 
+            background: #fff;
+            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.1);
         }
 
-        /* Header Styling */
-        header { background: var(--secondary); color: white; padding: 20px; text-align: center; }
-        .container { padding: 20px; max-width: 800px; margin: auto; }
-
-        /* Subject Cards */
-        .card { 
-            background: white; padding: 20px; border-radius: 15px; 
-            margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
-            border: 1px solid #e2e8f0; text-align: center;
-        }
-        .btn { 
-            display: inline-block; background: var(--primary); color: white; 
-            padding: 10px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; 
+        /* Design Elements */
+        header { 
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white; padding: 40px 20px; text-align: center;
         }
 
-        /* THE AI BUTTON */
-        .ai-trigger {
+        .container { padding: 30px 20px; max-width: 900px; margin: auto; }
+
+        /* Grand Subject Cards */
+        .subject-card {
+            background: white; border-radius: 20px; padding: 25px;
+            margin-bottom: 25px; border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center; transition: 0.3s;
+        }
+        .subject-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        .btn {
+            display: inline-block; background: var(--primary); color: white;
+            padding: 12px 30px; text-decoration: none; border-radius: 50px;
+            font-weight: bold; margin-top: 10px;
+        }
+
+        /* The AI Trigger Button */
+        .ai-trigger-box { text-align: center; margin: 40px 0; }
+        .ai-button {
             background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: white; padding: 15px 30px; border-radius: 50px;
-            font-weight: bold; cursor: pointer; border: none; font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
-            margin: 20px auto; display: block;
+            color: white; border: none; padding: 20px 50px;
+            font-size: 1.2rem; border-radius: 60px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
         }
 
-        /* The Frame for the Assistant */
-        iframe { width: 100%; height: 100%; border: none; }
-
-        /* Close Button for the AI */
-        #close-ai {
-            display: none; background: #ef4444; color: white; 
-            border: none; padding: 5px 15px; cursor: pointer; font-weight: bold;
+        /* AI Frame Controls */
+        .ai-nav { 
+            background: #1e293b; color: white; padding: 12px 20px; 
+            display: flex; justify-content: space-between; align-items: center;
         }
+        #ai-frame { width: 100%; height: 100%; border: none; background: white; }
     </style>
 </head>
 <body>
@@ -80,57 +84,67 @@
     
     <div id="top-section">
         <header>
-            <h1 style="margin:0;">STUDY WITH MUBARAK</h1>
+            <h1 style="margin:0; letter-spacing: 2px;">STUDY WITH MUBARAK</h1>
+            <p style="opacity: 0.8; margin-top: 10px;">Your Premium Academic Success Portal</p>
         </header>
 
         <div class="container">
-            <div class="card">
-                <h2>English & Government</h2>
-                <p>Select your subject below to begin practicing.</p>
-                <a href="english.html" class="btn">English</a>
-                <a href="government.html" class="btn">Government</a>
-                <a href="random subject.html" class="btn" style="background:#10b981;">General Studies</a>
+            <div class="subject-card">
+                <h2 style="color: var(--primary);">English Language</h2>
+                <p>Master 50+ Antonyms, Synonyms, and essential Grammar rules for your exams.</p>
+                <a href="english.html" class="btn">Launch English Quiz</a>
             </div>
 
-            <button class="ai-trigger" onclick="openSplitAI()">✨ OPEN AI ASSISTANT (SPLIT VIEW)</button>
+            <div class="subject-card">
+                <h2 style="color: var(--secondary);">Government</h2>
+                <p>Deep dive into the Nigerian Constitution, Political History, and Governance.</p>
+                <a href="government.html" class="btn">Launch Government Quiz</a>
+            </div>
+
+            <div class="subject-card" style="border-top: 5px solid var(--success);">
+                <h2 style="color: var(--success);">General Studies</h2>
+                <p>A mix of Economics, Civic Education, and Geography practice questions.</p>
+                <a href="random subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
+            </div>
+
+            <div class="ai-trigger-box">
+                <button class="ai-button" onclick="activateSplit()">✨ ACTIVATE DUAL-VIEW AI</button>
+                <p style="color: #64748b; margin-top: 15px;">This will split your screen so you can study and chat at the same time!</p>
+            </div>
         </div>
     </div>
 
     <div id="bottom-section">
-        <div style="background:#334155; color:white; padding:10px; display:flex; justify-content:space-between;">
-            <span>Mubarak AI Learning Helper</span>
-            <button id="close-ai" onclick="closeSplitAI()">CLOSE AI [X]</button>
+        <div class="ai-nav">
+            <span style="font-weight: bold;">STUDY ASSISTANT ACTIVE</span>
+            <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">CLOSE [X]</button>
         </div>
-        <iframe id="ai-frame" src=""></iframe>
+        
+        <iframe id="ai-frame" src="about:blank"></iframe>
     </div>
 
 </div>
 
 <script>
-    function openSplitAI() {
+    function activateSplit() {
         const top = document.getElementById('top-section');
         const bottom = document.getElementById('bottom-section');
-        const closeBtn = document.getElementById('close-ai');
         const frame = document.getElementById('ai-frame');
 
-        // Split the screen: Top gets 40%, Bottom gets 60%
-        top.style.flex = "0.4";
-        bottom.style.flex = "0.6";
-        closeBtn.style.display = "block";
+        // Split: 45% Top / 55% Bottom
+        top.style.flex = "0.45";
+        bottom.style.flex = "0.55";
         
-        // We use a specialized educational search that allows framing
-        // If you want the REAL Gemini, it MUST open in a new tab due to Google's security.
-        frame.src = "https://www.bing.com/search?q=Academic+Help+for+Students"; 
+        // Loads a helpful academic search engine
+        frame.src = "https://www.bing.com/search?q=Study+help+for+Nigerian+students";
     }
 
-    function closeSplitAI() {
+    function deactivateSplit() {
         const top = document.getElementById('top-section');
         const bottom = document.getElementById('bottom-section');
-        const closeBtn = document.getElementById('close-ai');
         
         top.style.flex = "1";
         bottom.style.flex = "0";
-        closeBtn.style.display = "none";
     }
 </script>
 
