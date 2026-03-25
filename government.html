@@ -3,445 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Excellence Quiz | STUDY-WITH-MUBARAK</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Government Bank | STUDY-WITH-MUBARAK</title>
     <style>
-        .quiz-container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-        .question-block { 
-            background: white; 
-            padding: 25px; 
-            margin-bottom: 25px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-left: 6px solid #3b82f6;
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --bg: #f8fafc;
+            --success: #f0fdf4;
+            --success-border: #bbf7d0;
+            --success-text: #166534;
         }
-        .options-list { list-style: none; padding: 10px 0; }
-        .options-list label { 
-            display: block; 
-            padding: 10px; 
-            margin: 5px 0; 
-            background: #f8fafc; 
-            border-radius: 8px; 
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; padding: 0; line-height: 1.6; }
+        header { background: var(--secondary); color: white; padding: 40px 20px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .container { max-width: 850px; margin: 40px auto; padding: 0 20px; }
+
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-left: 10px solid var(--primary);
+            position: relative;
+        }
+
+        .question-text { font-weight: 700; font-size: 1.2rem; color: var(--secondary); margin-bottom: 20px; display: block; }
+        .options-container { display: flex; flex-direction: column; gap: 15px; }
+
+        .option-label {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
             cursor: pointer;
-            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
         }
-        .options-list label:hover { background: #e2e8f0; }
-        .explanation { 
-            display: none; 
-            background: #f0fdf4; 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-top: 15px; 
-            border: 1px solid #bbf7d0;
-        }
-        .correct-tag { color: #16a34a; font-weight: bold; }
-        #results-banner {
-            display: none;
-            position: sticky;
-            top: 20px;
-            z-index: 100;
+
+        .option-label:hover { background: #eff6ff; border-color: var(--primary); transform: translateX(5px); }
+        .option-label input { margin-right: 15px; transform: scale(1.4); cursor: pointer; }
+
+        .explanation-box {
+            display: none; /* Hidden until Submit */
+            margin-top: 25px;
+            background: var(--success);
+            border: 1.5px solid var(--success-border);
             padding: 20px;
             border-radius: 12px;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
+            color: var(--success-text);
+            font-size: 1rem;
+            animation: fadeIn 0.5s ease-in;
         }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 25px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 60px 0;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+            transition: 0.3s;
+        }
+        .submit-btn:hover { background: #1d4ed8; transform: translateY(-3px); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Government Master Quiz</h1>
-    <p>25 Questions on Nigerian Governance & International Relations</p>
-    <a href="index.html" style="color: white; text-decoration: none;">🏠 Back to Dashboard</a>
+    <h1 style="margin:0; letter-spacing: 1px;">STUDY-WITH-MUBARAK</h1>
+    <p style="margin:10px 0 0 0; font-size: 1.1rem; font-weight: 300;">Government Mastery: Questions 1 - 30</p>
 </header>
 
-<div class="quiz-container">
-    <div id="results-banner"></div>
-    
-    <form id="govQuiz">
-        <div class="question-block">
-            <p><strong>1. The party system that Nigeria operated in the aborted Third Republic is:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q1" value="A"> A. Zero party system</label>
-                <label><input type="radio" name="q1" value="B"> B. One party system</label>
-                <label><input type="radio" name="q1" value="C"> C. Two party system</label>
-                <label><input type="radio" name="q1" value="D"> D. Multi-party system</label>
-            </div>
-            <div class="explanation" id="exp1"><span class="correct-tag">Correct: C</span> - The Third Republic featured the SDP and NRC.</div>
+<div class="container">
+
+    <div class="question-card">
+        <span class="question-text">1. The degree of centralization is high in a:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q1" value="A"> A. Unitary system of government</label>
+            <label class="option-label"><input type="radio" name="q1" value="B"> B. Federal system of government</label>
+            <label class="option-label"><input type="radio" name="q1" value="C"> C. Confederal system of government</label>
+            <label class="option-label"><input type="radio" name="q1" value="D"> D. Representative government</label>
         </div>
-
-        <div class="question-block">
-            <p><strong>2. Delegated legislation can be regulated through:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q2" value="A"> A. Ministerial control</label>
-                <label><input type="radio" name="q2" value="B"> B. Legislative control</label>
-                <label><input type="radio" name="q2" value="C"> C. Executive control</label>
-                <label><input type="radio" name="q2" value="D"> D. Judicial control</label>
-            </div>
-            <div class="explanation" id="exp2"><span class="correct-tag">Correct: B</span> - Parliament oversees powers given to other bodies.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>3. The main argument against the 1999 Constitution is that:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q3" value="A"> A. It was imposed by the military</label>
-                <label><input type="radio" name="q3" value="B"> B. The executive have immunity clause</label>
-                <label><input type="radio" name="q3" value="C"> C. It is expensive to operate</label>
-                <label><input type="radio" name="q3" value="D"> D. It did not create additional states</label>
-            </div>
-            <div class="explanation" id="exp3"><span class="correct-tag">Correct: A</span> - Critics argue it wasn't created by "the people."</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>4. Which of the following is a basic feature of the rule of law?</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q4" value="A"> A. Secret trial of offenders</label>
-                <label><input type="radio" name="q4" value="B"> B. Unlimited power of the executive</label>
-                <label><input type="radio" name="q4" value="C"> C. Dependent judiciary</label>
-                <label><input type="radio" name="q4" value="D"> D. Equality before the law</label>
-            </div>
-            <div class="explanation" id="exp4"><span class="correct-tag">Correct: D</span> - No one is above the law.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>5. The collective views of the citizens on a specific national matter is:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q5" value="A"> A. Group opinions</label>
-                <label><input type="radio" name="q5" value="B"> B. Electoral opinion</label>
-                <label><input type="radio" name="q5" value="C"> C. Public opinion</label>
-                <label><input type="radio" name="q5" value="D"> D. Collective responsibility</label>
-            </div>
-            <div class="explanation" id="exp5"><span class="correct-tag">Correct: C</span> - It reflects the general stance of the populace.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>6. The productivity of public corporations is believed to be enhanced when there is:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q6" value="A"> A. Increase in employment rate</label>
-                <label><input type="radio" name="q6" value="B"> B. Redeployment of staff</label>
-                <label><input type="radio" name="q6" value="C"> C. Increase in working hours</label>
-                <label><input type="radio" name="q6" value="D"> D. Less political interference</label>
-            </div>
-            <div class="explanation" id="exp6"><span class="correct-tag">Correct: D</span> - Autonomy leads to better efficiency.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>7. NEPAD stands for:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q7" value="A"> A. New Economic Programmes for African Development</label>
-                <label><input type="radio" name="q7" value="B"> B. New Partnership for Afro-Asian Development</label>
-                <label><input type="radio" name="q7" value="C"> C. New Economic Partnerships for African Development</label>
-                <label><input type="radio" name="q7" value="D"> D. New Partnerships for Africa's Development</label>
-            </div>
-            <div class="explanation" id="exp7"><span class="correct-tag">Correct: D</span> - Established in 2001 by the AU.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>8. Under the Hausa pre-colonial administration, the office of the Prime Minister is usually occupied by:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q8" value="A"> A. Sarki</label>
-                <label><input type="radio" name="q8" value="B"> B. Waziri</label>
-                <label><input type="radio" name="q8" value="C"> C. Galadima</label>
-                <label><input type="radio" name="q8" value="D"> D. Madawaki</label>
-            </div>
-            <div class="explanation" id="exp8"><span class="correct-tag">Correct: B</span> - The Waziri was the chief administrative officer.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>9. Nigerian Ports Authority is an example of:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q9" value="A"> A. Civil Service</label>
-                <label><input type="radio" name="q9" value="B"> B. Public Service</label>
-                <label><input type="radio" name="q9" value="C"> C. Public Corporation</label>
-                <label><input type="radio" name="q9" value="D"> D. Maritime Corporation</label>
-            </div>
-            <div class="explanation" id="exp9"><span class="correct-tag">Correct: C</span> - It is a government-owned commercial entity.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>10. An agent in which the state undertakes direct political socialisation is:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q10" value="A"> A. Church</label>
-                <label><input type="radio" name="q10" value="B"> B. School</label>
-                <label><input type="radio" name="q10" value="C"> C. Peer groups</label>
-                <label><input type="radio" name="q10" value="D"> D. Mass media</label>
-            </div>
-            <div class="explanation" id="exp10"><span class="correct-tag">Correct: B</span> - Schools provide formal civic education.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>11. The Nigerian Youth Movement pursued its objectives through the use of:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q11" value="A"> A. Protest</label>
-                <label><input type="radio" name="q11" value="B"> B. Newspapers</label>
-                <label><input type="radio" name="q11" value="C"> C. Radio</label>
-                <label><input type="radio" name="q11" value="D"> D. Strike actions</label>
-            </div>
-            <div class="explanation" id="exp11"><span class="correct-tag">Correct: B</span> - The 'Daily Service' was their main tool.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>12. Formation of political parties in Nigeria is one of the features of:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q12" value="A"> A. Lyttleton Constitution</label>
-                <label><input type="radio" name="q12" value="B"> B. Macpherson Constitution</label>
-                <label><input type="radio" name="q12" value="C"> C. Richards Constitution</label>
-                <label><input type="radio" name="q12" value="D"> D. Clifford Constitution</label>
-            </div>
-            <div class="explanation" id="exp12"><span class="correct-tag">Correct: D</span> - The 1922 Clifford Constitution allowed elective principle.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>13. The commander of the army under the Hausa/Fulani pre-colonial administration was:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q13" value="A"> A. Waziri</label>
-                <label><input type="radio" name="q13" value="B"> B. Madawaki</label>
-                <label><input type="radio" name="q13" value="C"> C. Galadima</label>
-                <label><input type="radio" name="q13" value="D"> D. Maaji</label>
-            </div>
-            <div class="explanation" id="exp13"><span class="correct-tag">Correct: B</span> - The Madawaki headed the military.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>14. The rationale behind the adoption of a federal system of government in Nigeria is to:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q14" value="A"> A. Promote the autonomy of states</label>
-                <label><input type="radio" name="q14" value="B"> B. Establish a powerful central government</label>
-                <label><input type="radio" name="q14" value="C"> C. Create more states</label>
-                <label><input type="radio" name="q14" value="D"> D. Promote unity in diversity</label>
-            </div>
-            <div class="explanation" id="exp14"><span class="correct-tag">Correct: D</span> - Federalism manages multi-ethnic differences.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>15. Lawyers recruited into the civil service belong to the:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q15" value="A"> A. Professional class</label>
-                <label><input type="radio" name="q15" value="B"> B. Administrative class</label>
-                <label><input type="radio" name="q15" value="C"> C. Executive class</label>
-                <label><input type="radio" name="q15" value="D"> D. Clerical class</label>
-            </div>
-            <div class="explanation" id="exp15"><span class="correct-tag">Correct: A</span> - Specialized roles like doctors and lawyers are Professional.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>16. A naturalised citizen can lose his citizenship if found guilty of:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q16" value="A"> A. Treason</label>
-                <label><input type="radio" name="q16" value="B"> B. Evading of taxes</label>
-                <label><input type="radio" name="q16" value="C"> C. Electoral violence</label>
-                <label><input type="radio" name="q16" value="D"> D. Loitering</label>
-            </div>
-            <div class="explanation" id="exp16"><span class="correct-tag">Correct: A</span> - Treason is a ground for deprivation of citizenship.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>17. Shehu Shagari won the 1979 Presidential Election under:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q17" value="A"> A. UPN</label>
-                <label><input type="radio" name="q17" value="B"> B. NPN</label>
-                <label><input type="radio" name="q17" value="C"> C. NPP</label>
-                <label><input type="radio" name="q17" value="D"> D. GNPP</label>
-            </div>
-            <div class="explanation" id="exp17"><span class="correct-tag">Correct: B</span> - National Party of Nigeria.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>18. A form of government where the powers of the state is determined by the citizens is:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q18" value="A"> A. Monarchy</label>
-                <label><input type="radio" name="q18" value="B"> B. Aristocracy</label>
-                <label><input type="radio" name="q18" value="C"> C. Autocracy</label>
-                <label><input type="radio" name="q18" value="D"> D. Democracy</label>
-            </div>
-            <div class="explanation" id="exp18"><span class="correct-tag">Correct: D</span> - Government of the people, by the people.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>19. As a non-aligned state, Nigeria attended the second meeting of the Non-Aligned Movement in:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q19" value="A"> A. 1960</label>
-                <label><input type="radio" name="q19" value="B"> B. 1963</label>
-                <label><input type="radio" name="q19" value="C"> C. 1964</label>
-                <label><input type="radio" name="q19" value="D"> D. 1965</label>
-            </div>
-            <div class="explanation" id="exp19"><span class="correct-tag">Correct: C</span> - Held in Cairo, Egypt.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>20. The power of prerogative of mercy rests with the:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q20" value="A"> A. Legislature</label>
-                <label><input type="radio" name="q20" value="B"> B. Executive</label>
-                <label><input type="radio" name="q20" value="C"> C. Judiciary</label>
-                <label><input type="radio" name="q20" value="D"> D. National Assembly</label>
-            </div>
-            <div class="explanation" id="exp20"><span class="correct-tag">Correct: B</span> - The President/Governor grants pardons.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>21. The judgement that ceded Bakassi to Cameroon was delivered by:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q21" value="A"> A. ECOWAS Court</label>
-                <label><input type="radio" name="q21" value="B"> B. Court of Justice of the African Union</label>
-                <label><input type="radio" name="q21" value="C"> C. International Criminal Court</label>
-                <label><input type="radio" name="q21" value="D"> D. International Court of Justice</label>
-            </div>
-            <div class="explanation" id="exp21"><span class="correct-tag">Correct: D</span> - The ICJ ruling in 2002.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>22. ECOWAS was established in:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q22" value="A"> A. 1970</label>
-                <label><input type="radio" name="q22" value="B"> B. 1972</label>
-                <label><input type="radio" name="q22" value="C"> C. 1975</label>
-                <label><input type="radio" name="q22" value="D"> D. 1976</label>
-            </div>
-            <div class="explanation" id="exp22"><span class="correct-tag">Correct: C</span> - Signed on May 28, 1975 in Lagos.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>23. The Nigerian Civil War was fought during the military regime of:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q23" value="A"> A. Aguiyi Ironsi</label>
-                <label><input type="radio" name="q23" value="B"> B. Yakubu Gowon</label>
-                <label><input type="radio" name="q23" value="C"> C. Murtala Muhammed</label>
-                <label><input type="radio" name="q23" value="D"> D. Olusegun Obasanjo</label>
-            </div>
-            <div class="explanation" id="exp23"><span class="correct-tag">Correct: B</span> - General Yakubu Gowon led from 1966-1975.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>24. The fundamental objective guiding a nation's foreign policy is:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q24" value="A"> A. National interest</label>
-                <label><input type="radio" name="q24" value="B"> B. Foreign interest</label>
-                <label><input type="radio" name="q24" value="C"> C. African interest</label>
-                <label><input type="radio" name="q24" value="D"> D. Colonial interest</label>
-            </div>
-            <div class="explanation" id="exp24"><span class="correct-tag">Correct: A</span> - All foreign policy aims to benefit the nation.</div>
-        </div>
-
-        <div class="question-block">
-            <p><strong>25. The Aburi Accord was a popular phrase during the administration of:</strong></p>
-            <div class="options-list">
-                <label><input type="radio" name="q25" value="A"> A. Aguiyi Ironsi</label>
-                <label><input type="radio" name="q25" value="B"> B. Murtala Muhammed</label>
-                <label><input type="radio" name="q25" value="C"> C. Yakubu Gowon</label>
-                <label><input type="radio" name="q25" value="D"> D. Olusegun Obasanjo</label>
-            </div>
-            <div class="explanation" id="exp25"><span class="correct-tag">Correct: C</span> - Negotiated in Ghana before the civil war broke out.</div>
-        </div>
-
-
-<div class="question-card" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 8px solid #2563eb;">
-    <p style="font-weight: bold; font-size: 1.1rem; color: #1e293b;">26. The degree of centralization is high in a:</p>
-    <div class="options-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q26" value="A"> A. Unitary system of government</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q26" value="B"> B. Federal system of government</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q26" value="C"> C. Confederal system of government</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q26" value="D"> D. Representative government</label>
+        <div class="explanation-box" id="expl-q1"><strong>Correct: A</strong> - In a unitary state, all power flows from the central government.</div>
     </div>
-    <div class="explanation-box" style="margin-top: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 10px; color: #166534;">
-        <strong>Correct: A</strong> - Power is concentrated at the center in a unitary state.
-    </div>
-</div>
 
-<div class="question-card" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 8px solid #2563eb;">
-    <p style="font-weight: bold; font-size: 1.1rem; color: #1e293b;">27. A constitution that requires special procedures to amend is referred to as:</p>
-    <div class="options-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q27" value="A"> A. Flexible</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q27" value="B"> B. Federal</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q27" value="C"> C. Rigid</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q27" value="D"> D. Unwritten</label>
-    </div>
-    <div class="explanation-box" style="margin-top: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 10px; color: #166534;">
-        <strong>Correct: C</strong> - Rigid constitutions need more than a simple majority to change.
-    </div>
-</div>
-
-<div class="question-card" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 8px solid #2563eb;">
-    <p style="font-weight: bold; font-size: 1.1rem; color: #1e293b;">28. A government allowing co-ordinate units to make laws is:</p>
-    <div class="options-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q28" value="A"> A. Federal</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q28" value="B"> B. Monarchical</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q28" value="C"> C. Unitary</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q28" value="D"> D. Presidential</label>
-    </div>
-    <div class="explanation-box" style="margin-top: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 10px; color: #166534;">
-        <strong>Correct: A</strong> - Federalism divides power between central and state governments.
-    </div>
-</div>
-
-<div class="question-card" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 8px solid #2563eb;">
-    <p style="font-weight: bold; font-size: 1.1rem; color: #1e293b;">29. Which organ of government is responsible for interpreting laws?</p>
-    <div class="options-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q29" value="A"> A. Legislature</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q29" value="B"> B. Executive</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q29" value="C"> C. Judiciary</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q29" value="D"> D. Civil Service</label>
-    </div>
-    <div class="explanation-box" style="margin-top: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 10px; color: #166534;">
-        <strong>Correct: C</strong> - The Judiciary interprets the law and settles disputes.
-    </div>
-</div>
-
-<div class="question-card" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 8px solid #2563eb;">
-    <p style="font-weight: bold; font-size: 1.1rem; color: #1e293b;">30. Separation of powers is intended to prevent:</p>
-    <div class="options-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q30" value="A"> A. Rule of Law</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q30" value="B"> B. Democracy</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q30" value="C"> C. Tyranny and absolute power</label>
-        <label style="background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;"><input type="radio" name="q30" value="D"> D. Political parties</label>
-    </div>
-    <div class="explanation-box" style="margin-top: 20px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 10px; color: #166534;">
-        <strong>Correct: C</strong> - By splitting power, no single person can become a dictator.
-    </div>
-</div>
-
-
-        <div class="submit-area" style="text-align: center; margin: 50px 0;">
-            <button type="button" class="btn" style="padding: 1.5rem 3rem; font-size: 1.2rem;" onclick="gradeQuiz()">Submit Final Answers</button>
+    <div class="question-card">
+        <span class="question-text">2. A constitution that requires special procedures to amend is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q2" value="A"> A. Flexible</label>
+            <label class="option-label"><input type="radio" name="q2" value="B"> B. Federal</label>
+            <label class="option-label"><input type="radio" name="q2" value="C"> C. Rigid</label>
+            <label class="option-label"><input type="radio" name="q2" value="D"> D. Unwritten</label>
         </div>
-    </form>
+        <div class="explanation-box" id="expl-q2"><strong>Correct: C</strong> - A rigid constitution is difficult to change to prevent political instability.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">3. A government that allows co-ordinate units to make laws is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q3" value="A"> A. Federal</label>
+            <label class="option-label"><input type="radio" name="q3" value="B"> B. Monarchical</label>
+            <label class="option-label"><input type="radio" name="q3" value="C"> C. Unitary</label>
+            <label class="option-label"><input type="radio" name="q3" value="D"> D. Presidential</label>
+        </div>
+        <div class="explanation-box" id="expl-q3"><strong>Correct: A</strong> - Federalism is based on power sharing between tiers of government.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">4. One feature of a Unitary State is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q4" value="A"> A. Large land mass</label>
+            <label class="option-label"><input type="radio" name="q4" value="B"> B. High level of development</label>
+            <label class="option-label"><input type="radio" name="q4" value="C"> C. Absence of constitutional division of power</label>
+            <label class="option-label"><input type="radio" name="q4" value="D"> D. Presence of many ethnic groups</label>
+        </div>
+        <div class="explanation-box" id="expl-q4"><strong>Correct: C</strong> - Sovereignty lies solely with the central authority.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">5. Executive and legislative powers are fused in a:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q5" value="A"> A. Parliamentary System</label>
+            <label class="option-label"><input type="radio" name="q5" value="B"> B. Presidential System</label>
+            <label class="option-label"><input type="radio" name="q5" value="C"> C. Unitary System</label>
+            <label class="option-label"><input type="radio" name="q5" value="D"> D. Federal System</label>
+        </div>
+        <div class="explanation-box" id="expl-q5"><strong>Correct: A</strong> - In parliament, ministers are also members of the legislature.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">6. A politically active society has a:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q6" value="A"> A. Subjective culture</label>
+            <label class="option-label"><input type="radio" name="q6" value="B"> B. Participatory culture</label>
+            <label class="option-label"><input type="radio" name="q6" value="C"> C. Parochial culture</label>
+            <label class="option-label"><input type="radio" name="q6" value="D"> D. Evaluative culture</label>
+        </div>
+        <div class="explanation-box" id="expl-q6"><strong>Correct: B</strong> - Citizens actively participate in elections and policy making.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">7. Fundamental Human Rights are:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q7" value="A"> A. Rights granted by the Police</label>
+            <label class="option-label"><input type="radio" name="q7" value="B"> B. Freedoms enshrined in the constitution</label>
+            <label class="option-label"><input type="radio" name="q7" value="C"> C. Local government rules</label>
+            <label class="option-label"><input type="radio" name="q7" value="D"> D. Political party manifestos</label>
+        </div>
+        <div class="explanation-box" id="expl-q7"><strong>Correct: B</strong> - These rights are inherent and constitutionally protected.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">8. A government of elected officials is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q8" value="A"> A. Representative government</label>
+            <label class="option-label"><input type="radio" name="q8" value="B"> B. Socialist government</label>
+            <label class="option-label"><input type="radio" name="q8" value="C"> C. Capitalist government</label>
+            <label class="option-label"><input type="radio" name="q8" value="D"> D. Feudalist government</label>
+        </div>
+        <div class="explanation-box" id="expl-q8"><strong>Correct: A</strong> - Officials represent the will of the people who voted.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">9. Devolution of power involves:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q9" value="A"> A. Moving power to the center</label>
+            <label class="option-label"><input type="radio" name="q9" value="B"> B. Moving power to lower levels</label>
+            <label class="option-label"><input type="radio" name="q9" value="C"> C. Abolishing the constitution</label>
+            <label class="option-label"><input type="radio" name="q9" value="D"> D. Military rule</label>
+        </div>
+        <div class="explanation-box" id="expl-q9"><strong>Correct: B</strong> - It is a form of decentralization.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">10. Checks and Balances are meant to:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q10" value="A"> A. Increase government spending</label>
+            <label class="option-label"><input type="radio" name="q10" value="B"> B. Prevent domination by one organ</label>
+            <label class="option-label"><input type="radio" name="q10" value="C"> C. Help the military take over</label>
+            <label class="option-label"><input type="radio" name="q10" value="D"> D. Ban political parties</label>
+        </div>
+        <div class="explanation-box" id="expl-q10"><strong>Correct: B</strong> - It keeps the Executive, Legislature, and Judiciary in balance.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">11. In a confederation, units have the power to:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q11" value="A"> A. Secede from the union</label>
+            <label class="option-label"><input type="radio" name="q11" value="B"> B. Dissolve the center</label>
+            <label class="option-label"><input type="radio" name="q11" value="C"> C. Appoint the UN Secretary</label>
+            <label class="option-label"><input type="radio" name="q11" value="D"> D. Ban local laws</label>
+        </div>
+        <div class="explanation-box" id="expl-q11"><strong>Correct: A</strong> - Units in a confederation are more powerful than the center.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">12. The Head of State in Nigeria is also:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q12" value="A"> A. Chief Justice</label>
+            <label class="option-label"><input type="radio" name="q12" value="B"> B. Head of Government</label>
+            <label class="option-label"><input type="radio" name="q12" value="C"> C. Senate President</label>
+            <label class="option-label"><input type="radio" name="q12" value="D"> D. Speaker</label>
+        </div>
+        <div class="explanation-box" id="expl-q12"><strong>Correct: B</strong> - In the Presidential system, one person holds both roles.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">13. Rule of Law implies:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q13" value="A"> A. Kings are above the law</label>
+            <label class="option-label"><input type="radio" name="q13" value="B"> B. Equality before the law</label>
+            <label class="option-label"><input type="radio" name="q13" value="C"> C. Only the rich follow law</label>
+            <label class="option-label"><input type="radio" name="q13" value="D"> D. Law is for the police only</label>
+        </div>
+        <div class="explanation-box" id="expl-q13"><strong>Correct: B</strong> - No one is above the supreme law of the land.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">14. The Judiciary's primary function is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q14" value="A"> A. To make laws</label>
+            <label class="option-label"><input type="radio" name="q14" value="B"> B. To execute laws</label>
+            <label class="option-label"><input type="radio" name="q14" value="C"> C. To interpret laws</label>
+            <label class="option-label"><input type="radio" name="q14" value="D"> D. To pay civil servants</label>
+        </div>
+        <div class="explanation-box" id="expl-q14"><strong>Correct: C</strong> - Courts interpret and apply the law to cases.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">15. A Bicameral legislature has:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q15" value="A"> A. One house</label>
+            <label class="option-label"><input type="radio" name="q15" value="B"> B. Two houses</label>
+            <label class="option-label"><input type="radio" name="q15" value="C"> C. Three houses</label>
+            <label class="option-label"><input type="radio" name="q15" value="D"> D. No houses</label>
+        </div>
+        <div class="explanation-box" id="expl-q15"><strong>Correct: B</strong> - Example: Nigeria's Senate and House of Representatives.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">16. Franchise means:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q16" value="A"> A. Freedom of movement</label>
+            <label class="option-label"><input type="radio" name="q16" value="B"> B. The right to vote</label>
+            <label class="option-label"><input type="radio" name="q16" value="C"> C. Freedom of speech</label>
+            <label class="option-label"><input type="radio" name="q16" value="D"> D. The right to strike</label>
+        </div>
+        <div class="explanation-box" id="expl-q16"><strong>Correct: B</strong> - It is the political right to choose leaders.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">17. Clifford Constitution (1922) introduced:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q17" value="A"> A. Independence</label>
+            <label class="option-label"><input type="radio" name="q17" value="B"> B. The elective principle</label>
+            <label class="option-label"><input type="radio" name="q17" value="C"> C. A Prime Minister</label>
+            <label class="option-label"><input type="radio" name="q17" value="D"> D. Regionalism</label>
+        </div>
+        <div class="explanation-box" id="expl-q17"><strong>Correct: B</strong> - It allowed Nigerians to vote for the first time.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">18. Richards Constitution (1946) created:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q18" value="A"> A. The Police Force</label>
+            <label class="option-label"><input type="radio" name="q18" value="B"> B. Regionalism</label>
+            <label class="option-label"><input type="radio" name="q18" value="C"> C. The Naira</label>
+            <label class="option-label"><input type="radio" name="q18" value="D"> D. A Republic</label>
+        </div>
+        <div class="explanation-box" id="expl-q18"><strong>Correct: B</strong> - It divided the country into North, West, and East regions.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">19. Macpherson Constitution (1951) was:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q19" value="A"> A. Written by only the British</label>
+            <label class="option-label"><input type="radio" name="q19" value="B"> B. Based on consultation with Nigerians</label>
+            <label class="option-label"><input type="radio" name="q19" value="C"> C. Rejected by the North</label>
+            <label class="option-label"><input type="radio" name="q19" value="D"> D. Abolished regionalism</label>
+        </div>
+        <div class="explanation-box" id="expl-q19"><strong>Correct: B</strong> - Nigerians were consulted at village and district levels.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">20. Lyttleton Constitution (1954) established:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q20" value="A"> A. A Unitary state</label>
+            <label class="option-label"><input type="radio" name="q20" value="B"> B. A Federal system</label>
+            <label class="option-label"><input type="radio" name="q20" value="C"> C. Total Independence</label>
+            <label class="option-label"><input type="radio" name="q20" value="D"> D. Military rule</label>
+        </div>
+        <div class="explanation-box" id="expl-q20"><strong>Correct: B</strong> - It marked the beginning of true federalism in Nigeria.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">21. Nigeria became a Republic in:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q21" value="A"> A. 1960</label>
+            <label class="option-label"><input type="radio" name="q21" value="B"> B. 1963</label>
+            <label class="option-label"><input type="radio" name="q21" value="C"> C. 1979</label>
+            <label class="option-label"><input type="radio" name="q21" value="D"> D. 1999</label>
+        </div>
+        <div class="explanation-box" id="expl-q21"><strong>Correct: B</strong> - Nigeria stopped having the Queen as Head of State.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">22. The 1979 Constitution introduced:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q22" value="A"> A. The British system</label>
+            <label class="option-label"><input type="radio" name="q22" value="B"> B. The Presidential system</label>
+            <label class="option-label"><input type="radio" name="q22" value="C"> C. The Prime Minister role</label>
+            <label class="option-label"><input type="radio" name="q22" value="D"> D. One-party rule</label>
+        </div>
+        <div class="explanation-box" id="expl-q22"><strong>Correct: B</strong> - Nigeria adopted the American style of government.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">23. INEC stands for:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q23" value="A"> A. Independent National Election Center</label>
+            <label class="option-label"><input type="radio" name="q23" value="B"> B. Independent National Electoral Commission</label>
+            <label class="option-label"><input type="radio" name="q23" value="C"> C. Internal National Election Council</label>
+            <label class="option-label"><input type="radio" name="q23" value="D"> D. International Nigerian Election Committee</label>
+        </div>
+        <div class="explanation-box" id="expl-q23"><strong>Correct: B</strong> - It is the body that organizes elections.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">24. Gerrymandering is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q24" value="A"> A. Stealing ballot boxes</label>
+            <label class="option-label"><input type="radio" name="q24" value="B"> B. Redrawing boundaries to favor a party</label>
+            <label class="option-label"><input type="radio" name="q24" value="C"> C. Campaigning in the night</label>
+            <label class="option-label"><input type="radio" name="q24" value="D"> D. Paying people to vote</label>
+        </div>
+        <div class="explanation-box" id="expl-q24"><strong>Correct: B</strong> - It is a political strategy to win unfairly.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">25. The first Military Coup was in:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q25" value="A"> A. Oct 1960</label>
+            <label class="option-label"><input type="radio" name="q25" value="B"> B. Jan 1966</label>
+            <label class="option-label"><input type="radio" name="q25" value="C"> C. July 1975</label>
+            <label class="option-label"><input type="radio" name="q25" value="D"> D. May 1999</label>
+        </div>
+        <div class="explanation-box" id="expl-q25"><strong>Correct: B</strong> - It led to the end of the First Republic.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">26. Separation of Powers was by:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q26" value="A"> A. John Locke</label>
+            <label class="option-label"><input type="radio" name="q26" value="B"> B. Baron de Montesquieu</label>
+            <label class="option-label"><input type="radio" name="q26" value="C"> C. Thomas Hobbes</label>
+            <label class="option-label"><input type="radio" name="q26" value="D"> D. Plato</label>
+        </div>
+        <div class="explanation-box" id="expl-q26"><strong>Correct: B</strong> - He popularized it in his book "The Spirit of Laws."</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">27. Public Opinion helps to:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q27" value="A"> A. Build more houses</label>
+            <label class="option-label"><input type="radio" name="q27" value="B"> B. Guide policy makers</label>
+            <label class="option-label"><input type="radio" name="q27" value="C"> C. Print money</label>
+            <label class="option-label"><input type="radio" name="q27" value="D"> D. Win football games</label>
+        </div>
+        <div class="explanation-box" id="expl-q27"><strong>Correct: B</strong> - Governments use it to know what citizens want.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">28. Pressure groups want to:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q28" value="A"> A. Win elections</label>
+            <label class="option-label"><input type="radio" name="q28" value="B"> B. Influence policy</label>
+            <label class="option-label"><input type="radio" name="q28" value="C"> C. Become Presidents</label>
+            <label class="option-label"><input type="radio" name="q28" value="D"> D. Organize parties</label>
+        </div>
+        <div class="explanation-box" id="expl-q28"><strong>Correct: B</strong> - They lobby those in power to change things.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">29. Order of Precedence is:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q29" value="A"> A. Order in the market</label>
+            <label class="option-label"><input type="radio" name="q29" value="B"> B. Ranking of public officials</label>
+            <label class="option-label"><input type="radio" name="q29" value="C"> C. Order of making food</label>
+            <label class="option-label"><input type="radio" name="q29" value="D"> D. Military discipline</label>
+        </div>
+        <div class="explanation-box" id="expl-q29"><strong>Correct: B</strong> - It shows who is senior in government protocol.</div>
+    </div>
+
+    <div class="question-card">
+        <span class="question-text">30. Dictatorship is a government of:</span>
+        <div class="options-container">
+            <label class="option-label"><input type="radio" name="q30" value="A"> A. Many people</label>
+            <label class="option-label"><input type="radio" name="q30" value="B"> B. One person with absolute power</label>
+            <label class="option-label"><input type="radio" name="q30" value="C"> C. Elected representatives</label>
+            <label class="option-label"><input type="radio" name="q30" value="D"> D. The police only</label>
+        </div>
+        <div class="explanation-box" id="expl-q30"><strong>Correct: B</strong> - Freedom is usually very limited in this system.</div>
+    </div>
+
+    <button class="submit-btn" onclick="checkAllAnswers()">SUBMIT & REVEAL ALL ANSWERS</button>
+
 </div>
 
 <script>
-    function gradeQuiz() {
-        const answers = {
-            q1:"C", q2:"B", q3:"A", q4:"D", q5:"C", 
-            q6:"D", q7:"D", q8:"B", q9:"C", q10:"B",
-            q11:"B", q12:"D", q13:"B", q14:"D", q15:"A",
-            q16:"A", q17:"B", q18:"D", q19:"C", q20:"B",
-            q21:"D", q22:"C", q23:"B", q24:"A", q25:"C", q26:"A", q27:"C", q28:"A", q29:"C", q30:"A"
-        };
-
-        let score = 0;
-        const form = document.getElementById('govQuiz');
-        const formData = new FormData(form);
-
-        for (let [q, ans] of Object.entries(answers)) {
-            if (formData.get(q) === ans) score++;
-        }
-
-        const banner = document.getElementById('results-banner');
-        banner.style.display = "block";
-        banner.style.background = score >= 20 ? "#16a34a" : "#dc2626";
-        banner.style.color = "white";
-        banner.innerHTML = `RESULT: ${score} / 25 (${Math.round(score/25*100)}%)`;
-
-        document.querySelectorAll('.explanation').forEach(el => el.style.display = "block");
+    function checkAllAnswers() {
+        const boxes = document.querySelectorAll('.explanation-box');
+        boxes.forEach(box => {
+            box.style.display = 'block';
+        });
+        alert("Success! Review your performance in the green boxes below.");
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>
-
-<footer>
-    <p>&copy; 2026 STUDY-WITH-MUBARAK | Empowering Education</p>
-</footer>
 
 </body>
 </html>
