@@ -13,26 +13,27 @@
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); margin: 0; color: var(--secondary); }
-        
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); margin: 0; color: var(--secondary); line-height: 1.6; }
         header { background: var(--secondary); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); }
-        
-        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; padding-bottom: 100px; }
 
         /* Progress Bar */
         .progress-container { margin-bottom: 30px; }
         .progress-text { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; font-size: 0.9rem; }
         .bar-bg { background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; }
-        .bar-fill { background: var(--primary); height: 100%; width: 0%; transition: 0.4s ease; }
+        .bar-fill { background: var(--primary); height: 100%; width: 4%; transition: 0.4s ease; }
 
         /* Quiz Card */
         .quiz-card {
             background: white; border-radius: 20px; padding: 40px; 
             box-shadow: var(--card-shadow); border-left: 12px solid var(--primary);
-            min-height: 400px; display: flex; flex-direction: column;
+            min-height: 350px; display: flex; flex-direction: column;
+            animation: slideIn 0.4s ease;
         }
 
-        .question-header { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; line-height: 1.4; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        .question-header { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; }
         
         .options-list { display: grid; gap: 15px; flex-grow: 1; }
         .option {
@@ -40,149 +41,135 @@
             cursor: pointer; transition: 0.3s; display: flex; align-items: center;
             background: #f8fafc; font-weight: 500;
         }
-        .option:hover { border-color: var(--primary); background: #eff6ff; transform: translateX(5px); }
-        .option.selected { border-color: var(--primary); background: #dbeafe; }
-        .option input { display: none; }
-
-        /* Controls */
-        .controls { display: flex; gap: 15px; margin-top: 30px; }
-        button {
-            padding: 15px 30px; border-radius: 12px; border: none; font-weight: 700;
-            cursor: pointer; transition: 0.3s; font-size: 1rem;
+        .option:hover { border-color: var(--primary); background: #eff6ff; }
+        .option.selected { border-color: var(--primary); background: #dbeafe; box-shadow: 0 0 0 2px var(--primary); }
+        
+        .btn-next { 
+            background: var(--primary); color: white; width: 100%; margin-top: 30px;
+            padding: 18px; border-radius: 12px; border: none; font-weight: 700;
+            cursor: pointer; font-size: 1.1rem;
         }
-        .btn-next { background: var(--primary); color: white; flex-grow: 1; }
         .btn-next:disabled { background: #94a3b8; cursor: not-allowed; }
         
-        /* Results Section */
-        #results-screen { display: none; text-align: center; background: white; padding: 50px; border-radius: 20px; box-shadow: var(--card-shadow); }
-        .score-circle { width: 150px; height: 150px; border: 10px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; font-weight: 900; }
-        .btn-restart { background: var(--secondary); color: white; margin-top: 20px; }
+        /* Results & Review */
+        #results-screen { display: none; }
+        .score-box { background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: var(--card-shadow); margin-bottom: 30px; }
+        .score-num { font-size: 4rem; font-weight: 900; color: var(--primary); }
+        
+        .review-item { background: white; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid var(--success); }
+        .exp-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; margin-top: 15px; color: #166534; font-size: 0.95rem; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>STUDY-WITH-MUBARAK</h1>
-    <p>Advanced Government Prep (25 Essential Questions)</p>
+    <p>Government Master Bank (25 Questions with Explanations)</p>
 </header>
 
 <div class="container">
     <div id="quiz-screen">
         <div class="progress-container">
-            <div class="progress-text">
-                <span id="current-count">Question 1 of 25</span>
-                <span id="percent">0%</span>
-            </div>
-            <div class="bar-bg"><div class="bar-fill" id="progress-bar"></div></div>
+            <div class="progress-text"><span id="current-count">Question 1 of 25</span><span id="percent">4%</span></div>
+            <div class="bar-bg"><div class="bar-fill" id="progress-bar" style="width: 4%"></div></div>
         </div>
-
         <div class="quiz-card">
-            <div class="question-header" id="question-text">Loading question...</div>
-            <div class="options-list" id="options-container">
-                </div>
-            <div class="controls">
-                <button class="btn-next" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
-            </div>
+            <div class="question-header" id="question-text"></div>
+            <div class="options-list" id="options-container"></div>
+            <button class="btn-next" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
         </div>
     </div>
 
     <div id="results-screen">
-        <h2>Quiz Complete!</h2>
-        <div class="score-circle" id="final-score">0</div>
-        <p id="feedback-msg">Great effort!</p>
-        <button class="btn-restart" onclick="location.reload()">Try Again</button>
-        <br><br>
-        <a href="index.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Back to Study Portal</a>
+        <div class="score-box">
+            <h2>Your Final Score</h2>
+            <div class="score-num" id="final-score">0</div>
+            <p id="feedback-msg"></p>
+            <button class="btn-next" onclick="location.reload()" style="background: var(--secondary)">Restart Quiz</button>
+        </div>
+        <h3 style="margin-top: 50px;">Detailed Review & Explanations:</h3>
+        <div id="review-container"></div>
     </div>
 </div>
 
 <script>
     const quizData = [
-        { q: "The party system in the aborted Third Republic of Nigeria was?", a: ["One-party", "Two-party", "Multi-party", "Zero-party"], correct: 1 },
-        { q: "NEPAD was primarily established to?", a: ["Promote African unity", "Attract foreign investment", "Foster economic development", "Ensure military security"], correct: 2 },
-        { q: "In the pre-colonial Hausa system, the official in charge of the treasury was?", a: ["Sarkin Fada", "Galadima", "Ma'aji", "Madawaki"], correct: 2 },
-        { q: "The 1999 Constitution of Nigeria is described as?", a: ["Flexible", "Rigid", "Unwritten", "Unitary"], correct: 1 },
-        { q: "Which of the following is a feature of the Rule of Law?", a: ["Absolute power", "Equality before the law", "Secret trial", "Gerrymandering"], correct: 1 },
-        { q: "The highest court of appeal in Nigeria is the?", a: ["High Court", "Court of Appeal", "Supreme Court", "Magistrate Court"], correct: 2 },
-        { q: "Public opinion can be measured through?", a: ["Referendum", "Elections", "Opinion polls", "All of the above"], correct: 3 },
-        { q: "The first Nigerian military Head of State was?", a: ["Gowon", "Ironsi", "Murtala", "Obasanjo"], correct: 1 },
-        { q: "Aburi Accord was a meeting held to resolve the crisis under?", a: ["Nnamdi Azikiwe", "Yakubu Gowon", "Tafawa Balewa", "Aguiyi Ironsi"], correct: 1 },
-        { q: "The 1976 Local Government Reforms created?", a: ["A unified structure", "A fragmented system", "Regional councils", "Colonial offices"], correct: 0 },
-        { q: "Fundamental Human Rights were first entrenched in which constitution?", a: ["1922 Clifford", "1954 Lyttleton", "1960 Independence", "1979 Presidential"], correct: 2 },
-        { q: "ECOWAS was formed in?", a: ["1963", "1975", "1980", "1999"], correct: 1 },
-        { q: "The main function of the Legislature is to?", a: ["Execute laws", "Interpret laws", "Make laws", "Punish offenders"], correct: 2 },
-        { q: "A bill that requires the President's signature becomes?", a: ["An Act", "A Decree", "A Law", "A Proclamation"], correct: 0 },
-        { q: "The system where power is shared between central and component units is?", a: ["Unitary", "Confederal", "Federal", "Monarchy"], correct: 2 },
-        { q: "Gerrymandering is a term associated with?", a: ["Taxation", "Constituency delimitation", "Judicial review", "Diplomacy"], correct: 1 },
-        { q: "Who is the 'Father of Nigerian Nationalism'?", a: ["Awolowo", "Macaulay", "Azikiwe", "Bello"], correct: 1 },
-        { q: "The head of the Commonwealth is?", a: ["The UN Secretary", "The British Monarch", "The US President", "The African Union Chair"], correct: 1 },
-        { q: "Pressure groups differ from political parties because they?", a: ["Win elections", "Influence policy", "Form government", "Register voters"], correct: 1 },
-        { q: "The 1963 Constitution made Nigeria a?", a: ["Colony", "Monarchy", "Republic", "Protectorate"], correct: 2 },
-        { q: "Delegated legislation is made by?", a: ["Judges", "The Executive", "The Parliament", "The People"], correct: 1 },
-        { q: "The 'elective principle' was introduced by?", a: ["Richards", "Macpherson", "Clifford", "Lyttleton"], correct: 2 },
-        { q: "The ombudsman is responsible for?", a: ["Tax collection", "Protecting rights against administrative abuse", "Arresting criminals", "Managing elections"], correct: 1 },
-        { q: "The 1954 Lyttleton Constitution is significant for?", a: ["Ending regionalism", "Establishing a true federation", "Introducing the Queen", "Unifying the North and South"], correct: 1 },
-        { q: "Which body conducts federal elections in Nigeria?", a: ["FEDECO", "NEC", "INEC", "SIEC"], correct: 2 }
+        { q: "The party system in the aborted Third Republic of Nigeria was?", a: ["One-party", "Two-party", "Multi-party", "Zero-party"], correct: 1, exp: "The Third Republic featured a government-enforced two-party system: the Social Democratic Party (SDP) and the National Republican Convention (NRC)." },
+        { q: "NEPAD was primarily established to?", a: ["Promote African unity", "Attract foreign investment", "Foster economic development", "Ensure military security"], correct: 2, exp: "The New Partnership for Africa's Development (NEPAD) focuses on economic growth and sustainable development across the continent." },
+        { q: "In the pre-colonial Hausa system, the official in charge of the treasury was?", a: ["Sarkin Fada", "Galadima", "Ma'aji", "Madawaki"], correct: 2, exp: "The Ma'aji served as the treasurer, while the Galadima was an administrator and the Madawaki led the cavalry." },
+        { q: "The 1999 Constitution of Nigeria is described as?", a: ["Flexible", "Rigid", "Unwritten", "Unitary"], correct: 1, exp: "It is rigid because it requires a two-thirds majority of the National Assembly and State Houses of Assembly to amend." },
+        { q: "Which of the following is a feature of the Rule of Law?", a: ["Absolute power", "Equality before the law", "Secret trial", "Gerrymandering"], correct: 1, exp: "Popularized by A.V. Dicey, equality before the law ensures no one is above the legal system." },
+        { q: "The highest court of appeal in Nigeria is the?", a: ["High Court", "Court of Appeal", "Supreme Court", "Magistrate Court"], correct: 2, exp: "The Supreme Court is the apex court; its decisions are final and binding." },
+        { q: "Public opinion can be measured through?", a: ["Referendum", "Elections", "Opinion polls", "All of the above"], correct: 3, exp: "Public opinion represents the views of the citizenry, gathered through votes, polls, and media." },
+        { q: "The first Nigerian military Head of State was?", a: ["Gowon", "Ironsi", "Murtala", "Obasanjo"], correct: 1, exp: "Major General Johnson Aguiyi-Ironsi took power following the January 15, 1966 coup." },
+        { q: "Aburi Accord was a meeting held to resolve the crisis under?", a: ["Nnamdi Azikiwe", "Yakubu Gowon", "Tafawa Balewa", "Aguiyi Ironsi"], correct: 1, exp: "The meeting in Aburi, Ghana (1967) was between Gowon and Ojukwu to prevent the Civil War." },
+        { q: "The 1976 Local Government Reforms created?", a: ["A unified structure", "A fragmented system", "Regional councils", "Colonial offices"], correct: 0, exp: "It standardized local government as a third tier of government with uniform functions across Nigeria." },
+        { q: "Fundamental Human Rights were first entrenched in which constitution?", a: ["1922 Clifford", "1954 Lyttleton", "1960 Independence", "1979 Presidential"], correct: 2, exp: "The 1960 Independence Constitution was the first to fully entrench these rights to protect minorities." },
+        { q: "ECOWAS was formed in?", a: ["1963", "1975", "1980", "1999"], correct: 1, exp: "The Economic Community of West African States was established in Lagos on May 28, 1975." },
+        { q: "The main function of the Legislature is to?", a: ["Execute laws", "Interpret laws", "Make laws", "Punish offenders"], correct: 2, exp: "The legislature (National Assembly) debates and passes bills into law." },
+        { q: "A bill that requires the President's signature becomes?", a: ["An Act", "A Decree", "A Law", "A Proclamation"], correct: 0, exp: "When a bill is signed by the President in a democracy, it becomes an Act of the National Assembly." },
+        { q: "The system where power is shared between central and component units is?", a: ["Unitary", "Confederal", "Federal", "Monarchy"], correct: 2, exp: "Federalism involves the constitutional division of power between the center and state/regional units." },
+        { q: "Gerrymandering is a term associated with?", a: ["Taxation", "Constituency delimitation", "Judicial review", "Diplomacy"], correct: 1, exp: "It refers to the unfair manipulation of electoral boundaries to favor a particular party." },
+        { q: "Who is the 'Father of Nigerian Nationalism'?", a: ["Awolowo", "Macaulay", "Azikiwe", "Bello"], correct: 1, exp: "Herbert Macaulay founded the NNDP in 1923 and led the early fight against colonial rule." },
+        { q: "The head of the Commonwealth is?", a: ["The UN Secretary", "The British Monarch", "The US President", "The African Union Chair"], correct: 1, exp: "The British Monarch (currently King Charles III) serves as the symbolic head of the Commonwealth." },
+        { q: "Pressure groups differ from political parties because they?", a: ["Win elections", "Influence policy", "Form government", "Register voters"], correct: 1, exp: "Pressure groups seek to influence government decisions, not to contest elections or hold office." },
+        { q: "The 1963 Constitution made Nigeria a?", a: ["Colony", "Monarchy", "Republic", "Protectorate"], correct: 2, exp: "As a Republic, the Queen was replaced by a President as the Head of State." },
+        { q: "Delegated legislation is made by?", a: ["Judges", "The Executive", "The Parliament", "The People"], correct: 1, exp: "The legislature 'delegates' the power to make minor rules to ministers or local authorities." },
+        { q: "The 'elective principle' was introduced by?", a: ["Richards", "Macpherson", "Clifford", "Lyttleton"], correct: 2, exp: "The 1922 Clifford Constitution allowed for the first limited elections in Lagos and Calabar." },
+        { q: "The ombudsman is responsible for?", a: ["Tax collection", "Protecting rights against administrative abuse", "Arresting criminals", "Managing elections"], correct: 1, exp: "In Nigeria, the Public Complaints Commission acts as the Ombudsman to investigate citizen grievances." },
+        { q: "The 1954 Lyttleton Constitution is significant for?", a: ["Ending regionalism", "Establishing a true federation", "Introducing the Queen", "Unifying the North and South"], correct: 1, exp: "It formally divided powers between the central and regional governments, creating a true federal system." },
+        { q: "Which body conducts federal elections in Nigeria?", a: ["FEDECO", "NEC", "INEC", "SIEC"], correct: 2, exp: "The Independent National Electoral Commission (INEC) is the current body empowered to conduct federal polls." }
     ];
 
-    let currentQ = 0;
-    let score = 0;
-    let selectedIndex = null;
+    let currentQ = 0, score = 0, selectedIndex = null;
 
     function loadQuestion() {
         const q = quizData[currentQ];
         document.getElementById('question-text').innerText = `${currentQ + 1}. ${q.q}`;
         const container = document.getElementById('options-container');
         container.innerHTML = '';
-        
-        q.a.forEach((opt, index) => {
+        q.a.forEach((opt, idx) => {
             const div = document.createElement('div');
             div.className = 'option';
             div.innerText = opt;
-            div.onclick = () => selectOption(index, div);
+            div.onclick = () => {
+                document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                selectedIndex = idx;
+                document.getElementById('next-btn').disabled = false;
+            };
             container.appendChild(div);
         });
-
         document.getElementById('current-count').innerText = `Question ${currentQ + 1} of 25`;
-        const prog = ((currentQ) / 25) * 100;
-        document.getElementById('progress-bar').style.width = prog + '%';
-        document.getElementById('percent').innerText = Math.round(prog) + '%';
+        document.getElementById('progress-bar').style.width = ((currentQ + 1) / 25 * 100) + '%';
         document.getElementById('next-btn').disabled = true;
-        selectedIndex = null;
-    }
-
-    function selectOption(index, element) {
-        const options = document.querySelectorAll('.option');
-        options.forEach(o => o.classList.remove('selected'));
-        element.classList.add('selected');
-        selectedIndex = index;
-        document.getElementById('next-btn').disabled = false;
     }
 
     function nextQuestion() {
-        if (selectedIndex === quizData[currentQ].correct) {
-            score++;
-        }
-
+        if (selectedIndex === quizData[currentQ].correct) score++;
         currentQ++;
-        if (currentQ < quizData.length) {
-            loadQuestion();
-        } else {
-            showResults();
-        }
+        if (currentQ < quizData.length) loadQuestion();
+        else showResults();
     }
 
     function showResults() {
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('results-screen').style.display = 'block';
-        document.getElementById('final-score').innerText = score;
-        const msg = score > 15 ? "Excellent Performance!" : "Good effort, keep studying!";
-        document.getElementById('feedback-msg').innerText = msg;
+        document.getElementById('final-score').innerText = `${score} / 25`;
+        document.getElementById('feedback-msg').innerText = score > 18 ? "Excellent! You are ready for the exam." : "Keep studying and review the explanations below.";
+        
+        const review = document.getElementById('review-container');
+        quizData.forEach((item, i) => {
+            review.innerHTML += `
+                <div class="review-item">
+                    <strong>${i+1}. ${item.q}</strong><br>
+                    <div class="exp-box"><strong>Correct Answer:</strong> ${item.a[item.correct]}<br><br><strong>Explanation:</strong> ${item.exp}</div>
+                </div>`;
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Initialize
     loadQuestion();
 </script>
-
 </body>
 </html>
