@@ -1,407 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Government CBT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Mastery | STUDY-WITH-MUBARAK</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --success: #10b981;
+            --bg: #f8fafc;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
 
-<style>
-body {
-  font-family: Arial;
-  background: #f4f6f9;
-  margin: 0;
-}
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); margin: 0; color: var(--secondary); }
+        
+        header { background: var(--secondary); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        
+        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-}
+        /* Progress Bar */
+        .progress-container { margin-bottom: 30px; }
+        .progress-text { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 10px; font-size: 0.9rem; }
+        .bar-bg { background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; }
+        .bar-fill { background: var(--primary); height: 100%; width: 0%; transition: 0.4s ease; }
 
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+        /* Quiz Card */
+        .quiz-card {
+            background: white; border-radius: 20px; padding: 40px; 
+            box-shadow: var(--card-shadow); border-left: 12px solid var(--primary);
+            min-height: 400px; display: flex; flex-direction: column;
+        }
 
-h2 {
-  color: #1e3a8a;
-}
+        .question-header { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; line-height: 1.4; }
+        
+        .options-list { display: grid; gap: 15px; flex-grow: 1; }
+        .option {
+            padding: 18px; border: 2px solid #f1f5f9; border-radius: 12px;
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center;
+            background: #f8fafc; font-weight: 500;
+        }
+        .option:hover { border-color: var(--primary); background: #eff6ff; transform: translateX(5px); }
+        .option.selected { border-color: var(--primary); background: #dbeafe; }
+        .option input { display: none; }
 
-.option {
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.option:hover {
-  background: #e0e7ff;
-}
-
-.selected {
-  background: #2563eb;
-  color: white;
-}
-
-.progress {
-  height: 10px;
-  background: #ddd;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.progress-bar {
-  height: 10px;
-  background: #2563eb;
-  width: 0%;
-  border-radius: 10px;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-.review-card {
-  background: white;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-}
-
-.correct { color: green; }
-.wrong { color: red; }
-</style>
+        /* Controls */
+        .controls { display: flex; gap: 15px; margin-top: 30px; }
+        button {
+            padding: 15px 30px; border-radius: 12px; border: none; font-weight: 700;
+            cursor: pointer; transition: 0.3s; font-size: 1rem;
+        }
+        .btn-next { background: var(--primary); color: white; flex-grow: 1; }
+        .btn-next:disabled { background: #94a3b8; cursor: not-allowed; }
+        
+        /* Results Section */
+        #results-screen { display: none; text-align: center; background: white; padding: 50px; border-radius: 20px; box-shadow: var(--card-shadow); }
+        .score-circle { width: 150px; height: 150px; border: 10px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; font-weight: 900; }
+        .btn-restart { background: var(--secondary); color: white; margin-top: 20px; }
+    </style>
 </head>
-
 <body>
 
+<header>
+    <h1>STUDY-WITH-MUBARAK</h1>
+    <p>Advanced Government Prep (25 Essential Questions)</p>
+</header>
+
 <div class="container">
+    <div id="quiz-screen">
+        <div class="progress-container">
+            <div class="progress-text">
+                <span id="current-count">Question 1 of 25</span>
+                <span id="percent">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="progress-bar"></div></div>
+        </div>
 
-  <div id="quizPage">
-    <div class="topbar">
-      <div id="progressText"></div>
-      <div id="timer">Time: 0s</div>
+        <div class="quiz-card">
+            <div class="question-header" id="question-text">Loading question...</div>
+            <div class="options-list" id="options-container">
+                </div>
+            <div class="controls">
+                <button class="btn-next" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+        </div>
     </div>
 
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
+    <div id="results-screen">
+        <h2>Quiz Complete!</h2>
+        <div class="score-circle" id="final-score">0</div>
+        <p id="feedback-msg">Great effort!</p>
+        <button class="btn-restart" onclick="location.reload()">Try Again</button>
+        <br><br>
+        <a href="index.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Back to Study Portal</a>
     </div>
-
-    <div class="card">
-      <h2 id="question"></h2>
-      <div id="options"></div>
-
-      <button onclick="prevQuestion()">Previous</button>
-      <button onclick="nextQuestion()">Next</button>
-    </div>
-  </div>
-
-  <div id="resultPage" style="display:none;">
-    <div class="card" style="text-align:center;">
-      <h2>Your Result</h2>
-      <h1 id="score"></h1>
-      <p id="performance"></p>
-
-      <button onclick="restart()">Try Again</button>
-      <button onclick="showReview()">Review Answers</button>
-    </div>
-  </div>
-
-  <div id="reviewPage" style="display:none;">
-    <h2>Review Answers</h2>
-    <div id="reviewContainer"></div>
-    <button onclick="goHome()">Home</button>
-  </div>
-
 </div>
 
 <script>
-const questions = [
-  {
-    q: "Which system of government operates in Nigeria?",
-    options: ["Parliamentary", "Presidential", "Unitary", "Confederal"],
-    answer: 1,
-    explanation: "Nigeria practices a presidential system."
-  },
-  {
-    q: "Separation of powers was proposed by?",
-    options: ["Locke", "Montesquieu", "Rousseau", "Hobbes"],
-    answer: 1,
-    explanation: "Montesquieu introduced separation of powers."
-  },
-  {
-    q: "The legislature is responsible for?",
-    options: ["Executing laws", "Making laws", "Judging laws", "Enforcing laws"],
-    answer: 1,
-    explanation: "The legislature makes laws."
-  },const questions = [
-{
-q: "Which political system is characterized by the fusion of executive and legislative powers?",
-options: ["Presidential", "Federal", "Parliamentary", "Confederal"],
-answer: 2,
-explanation: "Parliamentary system fuses executive and legislature."
-},
-{
-q: "The concept of rule of law was popularized by?",
-options: ["Montesquieu", "A.V. Dicey", "Hobbes", "Locke"],
-answer: 1,
-explanation: "A.V. Dicey popularized the rule of law."
-},
-{
-q: "In a federal system, powers are divided between?",
-options: ["President and judiciary", "Central and regional governments", "Military and civilians", "Legislature and judiciary"],
-answer: 1,
-explanation: "Federalism divides powers between central and regional governments."
-},
-{
-q: "A constitution that is difficult to amend is called?",
-options: ["Written", "Flexible", "Rigid", "Unitary"],
-answer: 2,
-explanation: "Rigid constitutions are hard to amend."
-},
-{
-q: "Which arm of government interprets the law?",
-options: ["Executive", "Legislature", "Judiciary", "Police"],
-answer: 2,
-explanation: "Judiciary interprets laws."
-},
-{
-q: "The term bicameral legislature means?",
-options: ["One chamber", "Two chambers", "Three chambers", "No chamber"],
-answer: 1,
-explanation: "Bicameral means two legislative houses."
-},
-{
-q: "Nigeria operates which type of legislature?",
-options: ["Unicameral", "Bicameral", "Tricameral", "None"],
-answer: 1,
-explanation: "Nigeria has Senate and House of Representatives."
-},
-{
-q: "Which political ideology supports state ownership?",
-options: ["Capitalism", "Socialism", "Democracy", "Feudalism"],
-answer: 1,
-explanation: "Socialism supports state ownership."
-},
-{
-q: "The executive is responsible for?",
-options: ["Making laws", "Executing laws", "Interpreting laws", "Amending laws"],
-answer: 1,
-explanation: "Executive executes laws."
-},
-{
-q: "Which form of government is ruled by a king or queen?",
-options: ["Republic", "Monarchy", "Democracy", "Oligarchy"],
-answer: 1,
-explanation: "Monarchy is rule by a king or queen."
-},
-{
-q: "The head of government in Nigeria is the?",
-options: ["Chief Justice", "President", "Senate President", "Governor"],
-answer: 1,
-explanation: "President is head of government."
-},
-{
-q: "Which system allows citizens to vote directly on issues?",
-options: ["Indirect democracy", "Direct democracy", "Monarchy", "Oligarchy"],
-answer: 1,
-explanation: "Direct democracy allows direct voting."
-},
-{
-q: "An unwritten constitution is also known as?",
-options: ["Rigid", "Flexible", "Codified", "Federal"],
-answer: 1,
-explanation: "Unwritten constitutions are flexible."
-},
-{
-q: "Which body conducts elections in Nigeria?",
-options: ["INEC", "EFCC", "NASS", "ICPC"],
-answer: 0,
-explanation: "INEC conducts elections."
-},
-{
-q: "The doctrine of separation of powers prevents?",
-options: ["Corruption", "Abuse of power", "Elections", "Military rule"],
-answer: 1,
-explanation: "It prevents abuse of power."
-},
-{
-q: "Which government type is controlled by a few people?",
-options: ["Democracy", "Oligarchy", "Republic", "Federal"],
-answer: 1,
-explanation: "Oligarchy is rule by few."
-},
-{
-q: "The judiciary ensures?",
-options: ["Execution", "Justice", "Law making", "Elections"],
-answer: 1,
-explanation: "Judiciary ensures justice."
-},
-{
-q: "Which constitution introduced presidential system in Nigeria?",
-options: ["1960", "1963", "1979", "1999"],
-answer: 2,
-explanation: "1979 introduced presidential system."
-},
-{
-q: "A sovereign state must have?",
-options: ["Army only", "Defined territory", "Only population", "Religion"],
-answer: 1,
-explanation: "Defined territory is essential."
-},
-{
-q: "Political parties contest elections to?",
-options: ["Rule directly", "Win power", "Control judiciary", "Stop laws"],
-answer: 1,
-explanation: "They aim to win power."
-}
-  
-// Continue similarly...
+    const quizData = [
+        { q: "The party system in the aborted Third Republic of Nigeria was?", a: ["One-party", "Two-party", "Multi-party", "Zero-party"], correct: 1 },
+        { q: "NEPAD was primarily established to?", a: ["Promote African unity", "Attract foreign investment", "Foster economic development", "Ensure military security"], correct: 2 },
+        { q: "In the pre-colonial Hausa system, the official in charge of the treasury was?", a: ["Sarkin Fada", "Galadima", "Ma'aji", "Madawaki"], correct: 2 },
+        { q: "The 1999 Constitution of Nigeria is described as?", a: ["Flexible", "Rigid", "Unwritten", "Unitary"], correct: 1 },
+        { q: "Which of the following is a feature of the Rule of Law?", a: ["Absolute power", "Equality before the law", "Secret trial", "Gerrymandering"], correct: 1 },
+        { q: "The highest court of appeal in Nigeria is the?", a: ["High Court", "Court of Appeal", "Supreme Court", "Magistrate Court"], correct: 2 },
+        { q: "Public opinion can be measured through?", a: ["Referendum", "Elections", "Opinion polls", "All of the above"], correct: 3 },
+        { q: "The first Nigerian military Head of State was?", a: ["Gowon", "Ironsi", "Murtala", "Obasanjo"], correct: 1 },
+        { q: "Aburi Accord was a meeting held to resolve the crisis under?", a: ["Nnamdi Azikiwe", "Yakubu Gowon", "Tafawa Balewa", "Aguiyi Ironsi"], correct: 1 },
+        { q: "The 1976 Local Government Reforms created?", a: ["A unified structure", "A fragmented system", "Regional councils", "Colonial offices"], correct: 0 },
+        { q: "Fundamental Human Rights were first entrenched in which constitution?", a: ["1922 Clifford", "1954 Lyttleton", "1960 Independence", "1979 Presidential"], correct: 2 },
+        { q: "ECOWAS was formed in?", a: ["1963", "1975", "1980", "1999"], correct: 1 },
+        { q: "The main function of the Legislature is to?", a: ["Execute laws", "Interpret laws", "Make laws", "Punish offenders"], correct: 2 },
+        { q: "A bill that requires the President's signature becomes?", a: ["An Act", "A Decree", "A Law", "A Proclamation"], correct: 0 },
+        { q: "The system where power is shared between central and component units is?", a: ["Unitary", "Confederal", "Federal", "Monarchy"], correct: 2 },
+        { q: "Gerrymandering is a term associated with?", a: ["Taxation", "Constituency delimitation", "Judicial review", "Diplomacy"], correct: 1 },
+        { q: "Who is the 'Father of Nigerian Nationalism'?", a: ["Awolowo", "Macaulay", "Azikiwe", "Bello"], correct: 1 },
+        { q: "The head of the Commonwealth is?", a: ["The UN Secretary", "The British Monarch", "The US President", "The African Union Chair"], correct: 1 },
+        { q: "Pressure groups differ from political parties because they?", a: ["Win elections", "Influence policy", "Form government", "Register voters"], correct: 1 },
+        { q: "The 1963 Constitution made Nigeria a?", a: ["Colony", "Monarchy", "Republic", "Protectorate"], correct: 2 },
+        { q: "Delegated legislation is made by?", a: ["Judges", "The Executive", "The Parliament", "The People"], correct: 1 },
+        { q: "The 'elective principle' was introduced by?", a: ["Richards", "Macpherson", "Clifford", "Lyttleton"], correct: 2 },
+        { q: "The ombudsman is responsible for?", a: ["Tax collection", "Protecting rights against administrative abuse", "Arresting criminals", "Managing elections"], correct: 1 },
+        { q: "The 1954 Lyttleton Constitution is significant for?", a: ["Ending regionalism", "Establishing a true federation", "Introducing the Queen", "Unifying the North and South"], correct: 1 },
+        { q: "Which body conducts federal elections in Nigeria?", a: ["FEDECO", "NEC", "INEC", "SIEC"], correct: 2 }
+    ];
 
-];
+    let currentQ = 0;
+    let score = 0;
+    let selectedIndex = null;
 
-// 👉 ADD UP TO 200 QUESTIONS HERE
+    function loadQuestion() {
+        const q = quizData[currentQ];
+        document.getElementById('question-text').innerText = `${currentQ + 1}. ${q.q}`;
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        
+        q.a.forEach((opt, index) => {
+            const div = document.createElement('div');
+            div.className = 'option';
+            div.innerText = opt;
+            div.onclick = () => selectOption(index, div);
+            container.appendChild(div);
+        });
 
-let current = 0;
-let selectedAnswers = [];
-let time = 0;
-
-function loadQuestion() {
-  const q = questions[current];
-  document.getElementById("question").innerText = `Q${current+1}: ${q.q}`;
-
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
-
-  q.options.forEach((opt, index) => {
-    const div = document.createElement("div");
-    div.className = "option";
-    div.innerText = opt;
-
-    if (selectedAnswers[current] === index) {
-      div.classList.add("selected");
+        document.getElementById('current-count').innerText = `Question ${currentQ + 1} of 25`;
+        const prog = ((currentQ) / 25) * 100;
+        document.getElementById('progress-bar').style.width = prog + '%';
+        document.getElementById('percent').innerText = Math.round(prog) + '%';
+        document.getElementById('next-btn').disabled = true;
+        selectedIndex = null;
     }
 
-    div.onclick = () => {
-      selectedAnswers[current] = index;
-      loadQuestion();
-    };
+    function selectOption(index, element) {
+        const options = document.querySelectorAll('.option');
+        options.forEach(o => o.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedIndex = index;
+        document.getElementById('next-btn').disabled = false;
+    }
 
-    optionsDiv.appendChild(div);
-  });
+    function nextQuestion() {
+        if (selectedIndex === quizData[currentQ].correct) {
+            score++;
+        }
 
-  updateProgress();
-}
+        currentQ++;
+        if (currentQ < quizData.length) {
+            loadQuestion();
+        } else {
+            showResults();
+        }
+    }
 
-function nextQuestion() {
-  if (current < questions.length - 1) {
-    current++;
+    function showResults() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('results-screen').style.display = 'block';
+        document.getElementById('final-score').innerText = score;
+        const msg = score > 15 ? "Excellent Performance!" : "Good effort, keep studying!";
+        document.getElementById('feedback-msg').innerText = msg;
+    }
+
+    // Initialize
     loadQuestion();
-  } else {
-    finishQuiz();
-  }
-}
-
-function prevQuestion() {
-  if (current > 0) {
-    current--;
-    loadQuestion();
-  }
-}
-
-function updateProgress() {
-  let percent = ((current+1)/questions.length)*100;
-  document.getElementById("progressBar").style.width = percent + "%";
-  document.getElementById("progressText").innerText =
-    `Question ${current+1} of ${questions.length}`;
-}
-
-function finishQuiz() {
-  let score = 0;
-
-  questions.forEach((q, i) => {
-    if (selectedAnswers[i] === q.answer) score++;
-  });
-
-  document.getElementById("quizPage").style.display = "none";
-  document.getElementById("resultPage").style.display = "block";
-
-  let percent = (score / questions.length) * 100;
-
-  document.getElementById("score").innerText =
-    score + " / " + questions.length;
-
-  let performance = "";
-
-  if (percent >= 80) performance = "Excellent 🎉";
-  else if (percent >= 50) performance = "Good 👍";
-  else performance = "Needs Improvement 📚";
-
-  document.getElementById("performance").innerText =
-    performance + " (" + percent.toFixed(1) + "%) | Time: " + time + "s";
-}
-
-function showReview() {
-  document.getElementById("resultPage").style.display = "none";
-  document.getElementById("reviewPage").style.display = "block";
-
-  const container = document.getElementById("reviewContainer");
-  container.innerHTML = "";
-
-  questions.forEach((q, i) => {
-    let user = selectedAnswers[i];
-    let correct = q.answer;
-
-    let div = document.createElement("div");
-    div.className = "review-card";
-
-    let status = user === correct ? "correct" : "wrong";
-
-    div.innerHTML = `
-      <h4>Q${i+1}: ${q.q}</h4>
-      <p class="${status}">Your Answer: ${q.options[user] || "None"}</p>
-      <p class="correct">Correct Answer: ${q.options[correct]}</p>
-      <p><i>${q.explanation}</i></p>
-    `;
-
-    container.appendChild(div);
-  });
-}
-
-function restart() {
-  location.reload();
-}
-
-function goHome() {
-  window.location.href = "index.html";
-}
-
-setInterval(() => {
-  time++;
-  document.getElementById("timer").innerText = "Time: " + time + "s";
-}, 1000);
-
-loadQuestion();
 </script>
 
 </body>
-    </html>
+</html>
