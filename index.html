@@ -23,9 +23,8 @@
         #top-section {
             flex: 1; /* Takes full screen until AI opens */
             background: var(--bg);
-            overflow-y: auto; /* Allows scrolling inside the small top half */
+            overflow-y: auto; /* Allows scrolling inside the top half */
             transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border-bottom: 5px solid var(--secondary);
         }
 
         /* BOTTOM SECTION: The AI Hall */
@@ -36,6 +35,8 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 -10px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--secondary);
+            visibility: hidden; /* Hidden until activated */
         }
 
         /* Design Elements */
@@ -70,12 +71,53 @@
             cursor: pointer; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
         }
 
-        /* AI Frame Controls */
+        /* AI Chat Window Interface */
         .ai-nav { 
             background: #1e293b; color: white; padding: 12px 20px; 
             display: flex; justify-content: space-between; align-items: center;
         }
-        #ai-frame { width: 100%; height: 100%; border: none; background: white; }
+        
+        .chat-container {
+            flex: 1; display: flex; flex-direction: column;
+            background: #f1f5f9; overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1; padding: 15px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .message {
+            max-width: 75%; padding: 12px 16px; border-radius: 15px;
+            font-size: 0.95rem; line-height: 1.4;
+        }
+
+        .message.bot {
+            background: white; color: #1e293b; align-self: flex-start;
+            border-bottom-left-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .message.user {
+            background: var(--primary); color: white; align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-input-area {
+            display: flex; padding: 12px; background: white;
+            border-top: 1px solid #e2e8f0; gap: 10px;
+        }
+
+        .chat-input-area input {
+            flex: 1; padding: 12px; border: 1px solid #cbd5e1;
+            border-radius: 8px; font-size: 1rem; outline: none;
+        }
+
+        .chat-input-area input:focus { border-color: var(--primary); }
+
+        .chat-input-area button {
+            background: var(--primary); color: white; border: none;
+            padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -104,7 +146,7 @@
             <div class="subject-card" style="border-top: 5px solid var(--success);">
                 <h2 style="color: var(--success);">General Studies</h2>
                 <p>A mix of Economics, Civic Education, and Geography practice questions.</p>
-                <a href="random subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
+                <a href="random%20subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
             </div>
 
             <div class="ai-trigger-box">
@@ -120,7 +162,16 @@
             <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">CLOSE [X]</button>
         </div>
         
-        <iframe id="ai-frame" src="about:blank"></iframe>
+        <!-- Replaced standard iframe with Native Interactive Chat App -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">Hello! I am your Mubarak Study Assistant. Ask me anything about English, Government, or General Studies!</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type your academic question here..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -129,14 +180,14 @@
     function activateSplit() {
         const top = document.getElementById('top-section');
         const bottom = document.getElementById('bottom-section');
-        const frame = document.getElementById('ai-frame');
 
-        // Split: 45% Top / 55% Bottom
+        // Make section visible and split screen (45% Top / 55% Bottom)
+        bottom.style.visibility = "visible";
         top.style.flex = "0.45";
         bottom.style.flex = "0.55";
         
-        // Loads a helpful academic search engine
-        frame.src = "https://www.bing.com/search?q=Study+help+for+Nigerian+students";
+        // Auto focus the input field for instant typing
+        setTimeout(() => document.getElementById('chat-input').focus(), 600);
     }
 
     function deactivateSplit() {
@@ -145,6 +196,54 @@
         
         top.style.flex = "1";
         bottom.style.flex = "0";
+        
+        // Hide panel completely after smooth transition finishes
+        setTimeout(() => {
+            if(top.style.flex === "1") bottom.style.visibility = "hidden";
+        }, 600);
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const messagesContainer = document.getElementById('chat-messages');
+
+        // Append User Message
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user';
+        userDiv.textContent = text;
+        messagesContainer.appendChild(userDiv);
+
+        // Clear input box
+        input.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Simulate AI academic response
+        setTimeout(() => {
+            const botDiv = document.createElement('div');
+            botDiv.className = 'message bot';
+            botDiv.textContent = getSimulatedResponse(text);
+            messagesContainer.appendChild(botDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 800);
+    }
+
+    // Interactive fallback simulator for study help
+    function getSimulatedResponse(query) {
+        const q = query.toLowerCase();
+        if (q.includes('hi') || q.includes('hello')) return "Welcome back! What are we studying together today?";
+        if (q.includes('government') || q.includes('constitution')) return "The Nigerian 1999 Constitution is the supreme law. It features 8 chapters and outlines the separation of powers between Executive, Legislature, and Judiciary.";
+        if (q.includes('english') || q.includes('antonym')) return "Great choice! An antonym is a word opposite in meaning to another (e.g., 'Giant' vs 'Dwarf'). Need a specific example?";
+        if (q.includes('study') || q.includes('exam')) return "Consistency beats cramming! Focus on active recall and testing yourself using the quiz buttons above.";
+        return "That is an excellent study topic! Let's break it down together. Could you provide a bit more specific context?";
     }
 </script>
 
