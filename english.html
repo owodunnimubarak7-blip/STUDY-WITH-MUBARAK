@@ -97,11 +97,216 @@
         { q: "ANTONYM of 'Dormant':", options: ["Inactive", "Asleep", "Active", "Static"], correct: 2, exp: "Dormant means inactive or in a deep sleep. Active is the opposite." },
         { q: "ANTONYM of 'Fastidious':", options: ["Easygoing", "Picky", "Demanding", "Fussy"], correct: 0, exp: "Fastidious means very attentive to detail; easygoing is the opposite." },
         { q: "ANTONYM of 'Gregarious':", options: ["Sociable", "Outgoing", "Solitary", "Friendly"], correct: 2, exp: "Gregarious means fond of company. Solitary means liking to be alone." },
-        { q: "ANTONYM of 'adept':", options: ["Inept", "Shrewd", "Savvy", "Astute"], correct: 0, exp: "Inept means unskillful or competent. Adept means being skillful and competent. inept is the opposite." }
+        { q: "ANTONYM of 'adept':", options: ["Inept", "Shrewd", "Savvy", "Astute"], correct: 0, exp: "Inept means unskillful or competent. Adept means being skillful and competent. inept is the opposite." },
         // Note: I have included 20 inept questions here. 
         // You can easily add questions 21-50 by following the pattern above!
-    ];
+  
 
+    // SECTION 1: Opposites / Synonyms
+    {
+      instruction: "In each of the following sentences, there is a word underlined and one gap. From the list of words lettered A to D, choose the one that is most nearly opposite in meaning to the underlined word and that will, at the same time, correctly fill the gap in the sentence."
+    },
+    { q: "1. The road which used to be wide now appears ... because it is bordered with trees.", options: ["A. winding", "B. limited", "C. narrow", "D. untarred"], a: "C", e: "The sentence contrasts the road’s past state 'wide' with its present state caused by trees. 'Narrow' is the direct opposite of 'wide' and fits because trees on both sides make the usable space look smaller." },
+    { q: "2. The manager is sensitive to the feelings of his subordinates, unlike the ... manager who is insensitive to them.", options: ["A. appease", "B. ward", "C. settle", "D. attend"], a: "B", e: "The structure contrasts 'sensitive' with 'insensitive'. In WAEC usage, 'ward' means hard-hearted or unfeeling." },
+    { q: "3. Rather than be discouraged by the plight of the workers, the manager was ...", options: ["A. negligent", "B. indifferent", "C. malicious", "D. callous"], a: "B", e: "If he was not discouraged, he remained unaffected or unconcerned. 'Indifferent' means showing no concern." },
+    { q: "4. A lazy student makes progress but an ... one hardly makes any.", options: ["A. industrious", "B. nervous", "C. inactive", "D. reluctant"], a: "A", e: "'Industrious' means hardworking and diligent, the direct opposite of 'lazy'." },
+    { q: "5. Unlike C, through the message was clearly written, D did not understand it.", options: ["A. Good", "B. Unclear", "C. Vague", "D. Ambiguous"], a: "B", e: "The phrase 'clearly written' is contrasted. The direct opposite is 'unclear'." },
+    { q: "6. Good policies are usually reasonable but bad ones are ...", options: ["A. unrealistic", "B. inadequate", "C. unattractive", "D. unpopular"], a: "A", e: "'Unrealistic' means not practical or sensible, the closest match to 'unreasonable'." },
+    { q: "7. One expects a library to be quiet, but in C it was noisy.", options: ["A. not jumbled", "B. not rowdy", "C. not crowded", "D. not noisy"], a: "D", e: "'Not noisy' means quiet, the expected state of a library." },
+    { q: "8. Despite everything, J chose to keep rather than C the secret.", options: ["A. show", "B. reveal", "C. display", "D. announce"], a: "B", e: "'Keep' and 'reveal' are direct opposites in the context of a secret." },
+    { q: "9. Though the teachers disliked the idea, the principal was ... to it.", options: ["A. forced", "B. recognized", "C. admitted", "D. reconciled"], a: "D", e: "To be 'reconciled to' something means to accept it reluctantly." },
+    { q: "10. It is only natural to feel nervous when you first take the stage, but you soon become D, composed.", options: ["A. balanced", "B. peaceful", "C. normal", "D. composed"], a: "D", e: "The sentence ends with 'composed', so the blank repeats the word for logical completion." },
+
+    // SECTION 2: Vocabulary Usage
+    {
+      instruction: "From the words lettered A to D, choose the word that best completes each of the following sentences."
+    },
+    { q: "11. Don’t tell me a ... enough to believe his lies.", options: ["A. credible", "B. childish", "C. modest", "D. naive"], a: "A", e: "'Credible' means believable or plausible." },
+    { q: "12. The members of parliament tabled ... to the constitution.", options: ["A. adjustment", "B. amendment", "C. enactment", "D. enact"], a: "B", e: "An 'amendment' is a formal proposal to change a constitution or law." },
+    { q: "13. His ... to violent video games is something to worry about.", options: ["A. devotion", "B. addiction", "C. commitment", "D. addiction"], a: "B", e: "Excessive and compulsive use of video games is called an 'addiction'." },
+    { q: "14. Most people think that ... punishment should be abolished, even in murder cases.", options: ["A. feel", "B. capital", "C. severe", "D. corporal"], a: "B", e: "'Capital punishment' is the legal term for the death penalty." },
+    { q: "15. The President made a ... appeal for calm in the face of the crisis.", options: ["A. passive", "B. serious", "C. active", "D. sensitive"], a: "B", e: "A 'serious appeal' means a sincere and urgent plea." },
+    { q: "16. After my mother ..., my father sat down and raised his voice.", options: ["A. had down and rained abuses on me", "B. broke down in tears and made a silent confession", "C. This softened him but did not prevent him from giving my cousin the spanking of their lives", "D. Why did the writer’s father warn the boys against going out at night?"], a: "B", e: "The sentence requires a clause describing what the mother did before the father reacted." },
+    { q: "17. The boy’s parents ... a sigh of relief when the meeting ended happily.", options: ["A. breathed", "B. raised", "C. heaved", "D. shielded"], a: "C", e: "The correct collocation is 'heave a sigh of relief'." },
+    { q: "18. We’d not reconvened ... because we could not form a quorum.", options: ["A. had not", "B. have not", "C. did not", "D. had not"], a: "D", e: "The past perfect 'had not' matches 'We’d not reconvened' and explains the reason in the past." },
+    { q: "19. The policeman tried to ... money from the motorist.", options: ["A. extort", "B. exert", "C. extract", "D. extricate"], a: "A", e: "'Extort' means to obtain money by force or threat." },
+    { q: "20. They were given an ... to either pay a fine or vacate the premises.", options: ["A. option", "B. injunction", "C. ultimatum", "D. undertaking"], a: "C", e: "An 'ultimatum' is a final demand with a threat of consequences." },
+
+    // SECTION 3: Sentence Interpretation
+    {
+      instruction: "After each of the following sentences, a list of possible interpretations is given. Choose the interpretation that is most appropriate for each sentence."
+    },
+    { q: "21. My parents carried the day in the debate. This means that my parents", options: ["A. missed the date for the debate", "B. won the debate", "C. lost the debate", "D. chaired the debate"], a: "B", e: "'Carry the day' is an idiom meaning to win or be successful in a contest." },
+    { q: "22. We discussed the issue at length but many issues came up. This means that we", options: ["A. discussed many things", "B. exhausted many issues", "C. used up many things", "D. discussed the issue for a long time"], a: "D", e: "'At length' means for a long time." },
+    { q: "23. We saw Ada dancing at the end of the party. This means that", options: ["A. Ada danced a lot", "B. we saw Ada dance", "C. we saw Ada dancing", "D. Ada was dancing"], a: "C", e: "The sentence is in the present participle form 'dancing'." },
+    { q: "24. The first time we saw Ada dancing with everyone, C didn’t want to keep seeing her. This means that", options: ["A. we were surprised that Baba backed the wrong horse", "B. we were surprised that Baba was dancing", "C. we were surprised that Baba was not dancing", "D. we were surprised that Baba was not there"], a: "C", e: "Based on the passage context, 'C' refers to Baba, and the surprise was that he was not participating." },
+    { q: "25. I knew they were being dishonest when I saw them. This means that", options: ["A. I knew they were honest", "B. I knew they were not honest", "C. I knew they were not being honest", "D. I knew they were honest"], a: "C", e: "'Being dishonest' is a present continuous action." },
+    { q: "26. My mother wanted to know what I was eating. This means that she wanted to", options: ["A. find out what I was eating", "B. know what I was eating", "C. know what I had eaten", "D. know what I would eat"], a: "A", e: "'Wanted to know' means to seek information or 'find out' about a present continuous action." },
+
+    // SECTION 4: Comprehension Cloze Q71-80
+    {
+      section: "Comprehension Cloze",
+      instruction: "Read the passage carefully and choose the word that best fits each numbered gap.",
+      passage: `The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, “Stretcher, quickly; take her to the _____33_____.” Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, “Are you sure doctor, that she is for surgery?” The young doctor did not mince words; he said to her, “This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.” That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.`,
+      blanks: [
+        {
+          q: "27. 71. Displaying _____ very complacently on his neck",
+          options: ["A. Sham", "B. Badge", "C. Stethoscope", "D. Watch"],
+          a: "C",
+          e: "A doctor in a white coat typically has a stethoscope around his neck."
+        },
+        {
+          q: "28. 72. he walked through the _____ greeting each of the patients",
+          options: ["A. Alale", "B. Office", "C. Room", "D. ward"],
+          a: "D",
+          e: "Doctors walk through hospital 'wards' and greet patients there."
+        },
+        {
+          q: "29. 73. greeting each of the _____ who greeted him in return",
+          options: ["A. Patients", "B. Clients", "C. Invalids", "D. Customers"],
+          a: "A",
+          e: "The correct term for people receiving treatment in a hospital is 'patients'."
+        },
+        {
+          q: "30. 74. a woman on a nearby _____",
+          options: ["A. stretcher", "B. Bed", "C. wheel-chair", "D. bench"],
+          a: "A",
+          e: "A patient needing urgent care would be on a 'stretcher'."
+        },
+        {
+          q: "31. 75. feeling for her _____",
+          options: ["A. breathing", "B. Pulse", "C. Response", "D. pressure"],
+          a: "B",
+          e: "A doctor checking a patient’s condition typically feels for the 'pulse'."
+        },
+        {
+          q: "32. 76. carried out some other minor _____",
+          options: ["A. experiments", "B. robots", "C. frills", "D. checks"],
+          a: "D",
+          e: "'Checks' fits as a general term for medical examinations."
+        },
+        {
+          q: "33. 77. take her to the _____",
+          options: ["A. theatre", "B. laboratory", "C. Clinic", "D. casually"],
+          a: "A",
+          e: "For surgery, a patient is taken to the 'theatre' or operating theatre."
+        },
+        {
+          q: "34. 78. Even the _____ who had been supervising her treatment was amazed.",
+          options: ["A. Infirmaries", "B. Matrons", "C. Midwives", "D. attendants"],
+          a: "B",
+          e: "In a hospital, a 'matron' supervises nursing care."
+        },
+        {
+          q: "35. 79. The _____ must be taken out promptly.",
+          options: ["A. baby", "B. Child", "C. Infant", "D. foetus"],
+          a: "D",
+          e: "In an ectopic pregnancy, the 'foetus' is developing outside the uterus."
+        },
+        {
+          q: "36. 80. blood was being pumped for _____",
+          options: ["A. dripping", "B. pumping", "C. transfer", "D. transfusion"],
+          a: "D",
+          e: "During surgery, blood is prepared for a 'transfusion' to replace blood loss."
+        }
+      ]
+    },
+
+    // SECTION 5: Oral Test of Orals - Vowel Sounds 1-15
+    {
+      instruction: "From the words lettered A to D, choose the word that has the same vowel sound as the one represented by the letter(s) underlined."
+    },
+    { q: "37. chick", options: ["A. breath", "B. pick", "C. hike", "D. heard"], a: "B", e: "'Chick' and 'pick' both have the short /ɪ/ sound." },
+    { q: "38. afford", options: ["A. enjoy", "B. peck", "C. water", "D. grey"], a: "C", e: "'Afford' and 'water' both have the /ɔː/ sound in British pronunciation." },
+    { q: "39. says", options: ["A. fez", "B. paid", "C. watch", "D. pride"], a: "A", e: "'Says' is pronounced /sez/, matching the /e/ sound in 'fez'." },
+    { q: "40. cook", options: ["A. stew", "B. sew", "C. look", "D. pool"], a: "C", e: "'Cook' and 'look' both have the short /ʊ/ sound." },
+    { q: "41. busy", options: ["A. see", "B. dare", "C. fruit", "D. play"], a: "A", e: "In 'busy', the 'u' is pronounced /ɪ/ as in 'see'." },
+    { q: "42. get", options: ["A. situation", "B. fate", "C. cab", "D. wait"], a: "C", e: "'Get' and 'cab' both have the short /æ/ sound." },
+    { q: "43. call", options: ["A. grab", "B. palm", "C. mat", "D. guest"], a: "B", e: "'Call' and 'palm' both have the long /ɔː/ sound." },
+    { q: "44. shoe", options: ["A. bullet", "B. drew", "C. fuel", "D. pull"], a: "B", e: "'Shoe' and 'drew' both have the /uː/ sound." },
+    { q: "45. fright", options: ["A. fridge", "B. rain", "C. spot", "D. weight"], a: "D", e: "'Fright' and 'weight' both have the diphthong /aɪ/ sound." },
+    { q: "46. sport", options: ["A. was", "B. plough", "C. dog", "D. pause"], a: "D", e: "'Sport' and 'pause' both have the long /ɔː/ sound." },
+    { q: "47. come", options: ["A. brush", "B. warm", "C. cot", "D. even"], a: "A", e: "'Come' and 'brush' both have the short /ʌ/ sound." },
+    { q: "48. peas", options: ["A. suit", "B. fear", "C. spare", "D. feed"], a: "D", e: "'Peas' and 'feed' both have the long /iː/ sound." },
+    { q: "49. yew", options: ["A. drawn", "B. now", "C. brown", "D. pole"], a: "D", e: "'Yew' and 'pole' both have the diphthong /əʊ/ sound." },
+    { q: "50. canoe", options: ["A. poor", "B. goose", "C. here", "D. deer"], a: "B", e: "'Canoe' and 'goose' both have the /uː/ sound." },
+    { q: "51. cone", options: ["A. pen", "B. earth", "C. feet", "D. none"], a: "C", e: "'Cone' and 'feet' both have the long /iː/ sound in standard pronunciation." },
+
+    // SECTION 6: Oral Test of Orals - Consonant Sounds 16-30
+    {
+      instruction: "From the words lettered A to D, choose the word that has the same consonant sound(s) as the one represented by the letter(s) underlined."
+    },
+    { q: "52. swing", options: ["A. snag", "B. bank", "C. wine", "D. alge"], a: "C", e: "'Swing' and 'wine' both have the /w/ sound." },
+    { q: "53. dumb", options: ["A. flamingo", "B. rubber", "C. sing", "D. funny"], a: "B", e: "'Dumb' and 'rubber' both contain the /b/ sound." },
+    { q: "54. theme", options: ["A. their", "B. smooth", "C. theory", "D. them"], a: "C", e: "'Theme' and 'theory' both have the voiceless /θ/ sound." },
+    { q: "55. phrase", options: ["A. cease", "B. fleece", "C. sees", "D. price"], a: "B", e: "'Phrase' and 'fleece' both have the /f/ sound." },
+    { q: "56. tough", options: ["A. psyche", "B. phoneme", "C. though", "D. goiter"], a: "B", e: "'Tough' and 'phoneme' both have the /f/ sound." },
+    { q: "57. treasure", options: ["A. adjunct", "B. soldier", "C. allusion", "D. elation"], a: "B", e: "'Treasure' and 'soldier' both contain the /ʒ/ or /dʒ/ sound." },
+    { q: "58. weather", options: ["A. soothing", "B. think", "C. theatre", "D. thanks"], a: "A", e: "'Weather' and 'soothing' both have the voiced /ð/ sound." },
+    { q: "59. factual", options: ["A. haste", "B. chair", "C. trite", "D. vicious"], a: "B", e: "'Factual' and 'chair' both have the /tʃ/ sound." },
+    { q: "60. haven", options: ["A. honour", "B. hour", "C. heir", "D. hair"], a: "D", e: "'Haven' and 'hair' both have the /h/ sound." },
+    { q: "61. marry", options: ["A. cart", "B. wreath", "C. burnt", "D. cover"], a: "B", e: "'Marry' and 'wreath' both contain the /r/ sound." },
+    { q: "62. kinetic", options: ["A. knit", "B. know", "C. guest", "D. clear"], a: "A", e: "'Kinetic' and 'knit' both have the /k/ sound." },
+    { q: "63. get", options: ["A. ledger", "B. germane", "C. ghastly", "D. neighbour"], a: "C", e: "'Get' and 'ghastly' both have the hard /g/ sound." },
+    { q: "64. praise", options: ["A. poise", "B. fuse", "C. peace", "D. snap"], a: "B", e: "'Praise' and 'fuse' both end with the /z/ sound." },
+    { q: "65. fine", options: ["A. bathe", "B. then", "C. hide", "D. they"], a: "A", e: "'Fine' and 'bathe' both contain the /f/ sound." },
+    { q: "66. low", options: ["A. bustle", "B. length", "C. epistle", "D. picked"], a: "A", e: "'Low' and 'bustle' both contain the /l/ sound." },
+
+    // SECTION 7: Oral Test of Orals - Rhymes 31-35
+    {
+      instruction: "From the words lettered A to D, choose the word that rhymes with the given word."
+    },
+    { q: "67. catch", options: ["A. leech", "B. fish", "C. batch", "D. perch"], a: "C", e: "'Catch' and 'batch' both end with the /ætʃ/ sound." },
+    { q: "68. sown", options: ["A. swam", "B. lawn", "C. broom", "D. loan"], a: "D", e: "'Sown' and 'loan' both rhyme with the /oʊn/ sound." },
+    { q: "69. rise", options: ["A. rims", "B. risk", "C. price", "D. size"], a: "D", e: "'Rise' and 'size' both end with the /aɪz/ sound." },
+    { q: "70. route", options: ["A. hoot", "B. show", "C. sweat", "D. bloat"], a: "A", e: "'Route' and 'hoot' both end with the /uːt/ sound." },
+    { q: "71. slime", options: ["A. brim", "B. cry", "C. dream", "D. grime"], a: "D", e: "'Slime' and 'grime' both end with the /aɪm/ sound." },
+
+    // SECTION 8: Oral Test of Orals - Word Stress 36-40
+    {
+      instruction: "In each of the following questions, the main/primary stress is indicated by writing the syllable on which it occurs in capital letters."
+    },
+    { q: "72. autocracy", options: ["A. Au-to-cra-cy", "B. au-TO-cra-cy", "C. au-to-CRA-cy", "D. au-to-cra-CY"], a: "C", e: "Stress falls on the third syllable: au-to-CRA-cy." },
+    { q: "73. development", options: ["A. DE-ve-lop-ment", "B. de-VE-lop-ment", "C. de-ve-LOP-ment", "D. de-ve-lop-MENT"], a: "D", e: "Stress falls on the final syllable: de-ve-lop-MENT." },
+    { q: "74. concentration", options: ["A. CON-cen-tra-tion", "B. con-CEN-tra-tion", "C. con-cen-TRA-tion", "D. con-cen-tra-TION"], a: "D", e: "Stress falls on the final syllable: con-cen-tra-TION." },
+    { q: "75. amiable", options: ["A. A-mi-a-ble", "B. a-MI-a-ble", "C. a-mi-A-ble", "D. a-mi-a-BLE"], a: "B", e: "Stress falls on the second syllable: a-MI-a-ble." },
+    { q: "76. diplomatic", options: ["A. DI-plo-ma-tic", "B. di-PLO-ma-tic", "C. di-plo-MA-tic", "D. di-plo-ma-TIC"], a: "B", e: "Stress falls on the second syllable: di-PLO-ma-tic." },
+
+    // SECTION 9: Oral Test of Orals - Different Stress Pattern 41-45
+    {
+      instruction: "In the following options lettered A to D, all the words except one have the same stress pattern. Identify the one with the different stress pattern."
+    },
+    { q: "77. dinner, current, divide, number", options: ["A. dinner", "B. current", "C. divide", "D. number"], a: "C", e: "'Divide' is stressed on the second syllable, others on the first." },
+    { q: "78. consequent, ingredient, aggravate, possibly", options: ["A. consequent", "B. ingredient", "C. aggravate", "D. possibly"], a: "C", e: "'Aggravate' is stressed on the second syllable, others on the first." },
+    { q: "79. assuage, confer, decide, format", options: ["A. assuage", "B. confer", "C. decide", "D. format"], a: "A", e: "'Assuage' is stressed on the first syllable, others on the second." },
+    { q: "80. demand, deafen, debate, debunk", options: ["A. demand", "B. deafen", "C. debate", "D. debunk"], a: "B", e: "'Deafen' is stressed on the first syllable, others on the second." },
+    { q: "81. constructive, technical, necessary, beautiful", options: ["A. constructive", "B. technical", "C. necessary", "D. beautiful"], a: "A", e: "'Constructive' is stressed on the second syllable, others on the first." },
+
+    // SECTION 10: Oral Test of Orals - Emphatic Stress 46-50
+    {
+      instruction: "In each of the following sentences, the word that receives the emphatic stress is written in capital letters. Choose the one to which the given sentence is the appropriate answer."
+    },
+    { q: "82. Stella likes reading NOVELS.", options: ["A. Does Stella like reading magazines?", "B. Does Esther like reading novels?", "C. Does Stella dislike reading novels?", "D. Does Stella like buying novels?"], a: "A", e: "Stress on 'NOVELS' contrasts it with magazines." },
+    { q: "83. Amina MISINTERPRETED my statement.", options: ["A. Did Amodu misinterpret my action?", "B. Did Amina misinterpret my statement?", "C. Did Amina understand my statement?", "D. Did Amina misinterpret your statement?"], a: "B", e: "Stress on 'MISINTERPRETED' confirms the action done to the statement." },
+    { q: "84. There are FIFTY people at the rally.", options: ["A. Are there fifty children at the rally?", "B. Are there twenty people at the rally?", "C. Were there fifty people at the rally?", "D. Are there fifty people at the meeting?"], a: "B", e: "Stress on 'FIFTY' contrasts it with 'twenty'." },
+    { q: "85. The government paid NEW salaries.", options: ["A. Did the government pay old salaries?", "B. Did the principal pay new salaries?", "C. Did the government pay new allowances?", "D. Did the government tax new salaries?"], a: "A", e: "Stress on 'NEW' contrasts it with 'old'." },
+    { q: "86. In some COUNTRIES, many citizens are unemployed.", options: ["A. Are few citizens unemployed in some countries?", "B. Are many youths unemployed in some countries?", "C. Are many citizens unemployed in some states?"], a: "C", e: "Stress on 'COUNTRIES' contrasts it with 'states'." },
+
+    // SECTION 11: Oral Test of Orals - Phonetic Symbols 51-60
+    {
+      instruction: "From the words lettered A to D, choose the word that has the sound represented by the given phonetic symbol."
+    },
+    { q: "87. /i:/", options: ["A. spill", "B. seize", "C. pretty", "D. funny"], a: "B", e: "'Seize' is pronounced /siːz/." },
+    { q: "88. /ɜ:/", options: ["A. steer", "B. peck", "C. fern", "D. clear"], a: "C", e: "'Fern' is pronounced /fɜːn/." },
+    { q: "89. /ʊ/", options: ["A. hook", "B. few", "C. blue", "D. rude"], a: "A", e: "'Hook' is pronounced /hʊk/." },
+    { q: "90. /ŋ/", options: ["A. calm", "B. cool", "C. dungeon", "D. pardon"], a: "C", e: "'Dungeon' contains the /ŋ/ sound in /dʌndʒən/." },
+    { q: "91. /ɜ:/", options: ["A. early", "B. work", "C. putrid", "D. conclude"], a: "B", e: "'Work' is pronounced /wɜːk/." },
+    { q: "92. /ʒ/", options: ["A. measure", "B. huge", "C. pressure", "D. church"], a: "A", e: "'Measure' is pronounced /ˈmeʒər/." },
+    { q: "93. /ʃ/", options: ["A. cheat", "B. match", "C. cash", "D. wage"], a: "C", e: "'Cash' is pronounced /kæʃ/." },
+    { q: "94. /ʌ/", options: ["A. rum", "B. raw", "C. foam", "D. wail"], a: "A", e: "'Rum' is pronounced /rʌm/." },
+    { q: "95. /z/", options: ["A. worse", "B. geese", "C. whose", "D. waist"], a: "B", e: "'Geese' ends with the /z/ sound." },
+    { q: "96. /θ/", options: ["A. therefore", "B. feather", "C. method", "D. bathe"], a: "C", e: "'Method' is pronounced /ˈmeθəd/." }
+  ];
     let currentQ = 0;
     let score = 0;
 
