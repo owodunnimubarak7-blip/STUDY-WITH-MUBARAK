@@ -14,110 +14,197 @@
             --bg: #f8fafc;
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: var(--bg);
+        }
 
         /* Master Container */
-        .master-container { display: flex; flex-direction: column; height: 100vh; }
+        .master-container { 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            width: 100vw;
+            overflow: hidden;
+        }
 
         /* TOP SECTION: The Scrollable Study Hall */
         #top-section {
-            flex: 1; /* Takes full screen until AI opens */
+            flex: 1 1 auto;
             background: var(--bg);
-            overflow-y: auto; /* Allows scrolling inside the top half */
-            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* BOTTOM SECTION: The AI Hall */
         #bottom-section {
-            flex: 0; 
-            background: #fff;
-            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            flex: 0 0 0%; 
+            background: #ffffff;
+            transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 -10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.08);
             border-top: 5px solid var(--secondary);
-            visibility: hidden; /* Hidden until activated */
+            overflow: hidden;
         }
 
-        /* Design Elements */
         header { 
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            color: white; padding: 40px 20px; text-align: center;
+            color: white; 
+            padding: 40px 20px; 
+            text-align: center;
         }
 
-        .container { padding: 30px 20px; max-width: 900px; margin: auto; }
+        .container { 
+            padding: 30px 20px; 
+            max-width: 900px; 
+            margin: auto; 
+        }
 
         /* Grand Subject Cards */
         .subject-card {
-            background: white; border-radius: 20px; padding: 25px;
-            margin-bottom: 25px; border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            text-align: center; transition: 0.3s;
+            background: white; 
+            border-radius: 20px; 
+            padding: 25px;
+            margin-bottom: 25px; 
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            text-align: center; 
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        .subject-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .subject-card:hover { 
+            transform: translateY(-4px); 
+            border-color: var(--primary); 
+        }
 
         .btn {
-            display: inline-block; background: var(--primary); color: white;
-            padding: 12px 30px; text-decoration: none; border-radius: 50px;
-            font-weight: bold; margin-top: 10px;
+            display: inline-block; 
+            background: var(--primary); 
+            color: white;
+            padding: 12px 30px; 
+            text-decoration: none; 
+            border-radius: 50px;
+            font-weight: bold; 
+            margin-top: 10px;
+            transition: opacity 0.2s ease;
         }
+        .btn:hover { opacity: 0.9; }
 
         /* The AI Trigger Button */
         .ai-trigger-box { text-align: center; margin: 40px 0; }
         .ai-button {
             background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: white; border: none; padding: 20px 50px;
-            font-size: 1.2rem; border-radius: 60px; font-weight: bold;
-            cursor: pointer; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+            color: white; 
+            border: none; 
+            padding: 18px 45px;
+            font-size: 1.1rem; 
+            border-radius: 60px; 
+            font-weight: bold;
+            cursor: pointer; 
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.25);
+            transition: transform 0.2s ease;
         }
+        .ai-button:hover { transform: scale(1.02); }
 
         /* AI Chat Window Interface */
         .ai-nav { 
-            background: #1e293b; color: white; padding: 12px 20px; 
-            display: flex; justify-content: space-between; align-items: center;
+            background: #1e293b; 
+            color: white; 
+            padding: 14px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
         }
         
         .chat-container {
-            flex: 1; display: flex; flex-direction: column;
-            background: #f1f5f9; overflow: hidden;
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            background: #f1f5f9; 
+            overflow: hidden;
         }
 
         .chat-messages {
-            flex: 1; padding: 15px; overflow-y: auto;
-            display: flex; flex-direction: column; gap: 10px;
+            flex: 1; 
+            padding: 20px; 
+            overflow-y: auto;
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px;
         }
 
         .message {
-            max-width: 75%; padding: 12px 16px; border-radius: 15px;
-            font-size: 0.95rem; line-height: 1.4;
+            max-width: 80%; 
+            padding: 12px 16px; 
+            border-radius: 16px;
+            font-size: 0.95rem; 
+            line-height: 1.5;
             word-wrap: break-word;
+            animation: fadeIn 0.3s ease-out;
         }
 
         .message.bot {
-            background: white; color: #1e293b; align-self: flex-start;
-            border-bottom-left-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background: white; 
+            color: #1e293b; 
+            align-self: flex-start;
+            border-bottom-left-radius: 2px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
         }
 
         .message.user {
-            background: var(--primary); color: white; align-self: flex-end;
+            background: var(--primary); 
+            color: white; 
+            align-self: flex-end;
             border-bottom-right-radius: 2px;
         }
 
+        .message.system {
+            background: #e2e8f0;
+            color: #475569;
+            align-self: center;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            padding: 6px 12px;
+        }
+
         .chat-input-area {
-            display: flex; padding: 12px; background: white;
-            border-top: 1px solid #e2e8f0; gap: 10px;
+            display: flex; 
+            padding: 15px; 
+            background: white;
+            border-top: 1px solid #e2e8f0; 
+            gap: 10px;
         }
 
         .chat-input-area input {
-            flex: 1; padding: 12px; border: 1px solid #cbd5e1;
-            border-radius: 8px; font-size: 1rem; outline: none;
+            flex: 1; 
+            padding: 14px; 
+            border: 1px solid #cbd5e1;
+            border-radius: 10px; 
+            font-size: 1rem; 
+            outline: none;
+            transition: border-color 0.2s;
         }
 
         .chat-input-area input:focus { border-color: var(--primary); }
 
         .chat-input-area button {
-            background: var(--primary); color: white; border: none;
-            padding: 0 20px; border-radius: 8px; font-weight: bold; cursor: pointer;
+            background: var(--primary); 
+            color: white; 
+            border: none;
+            padding: 0 24px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .chat-input-area button:hover { background: #1d4ed8; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -125,6 +212,7 @@
 
 <div class="master-container">
     
+    <!-- TOP SECTION -->
     <div id="top-section">
         <header>
             <h1 style="margin:0; letter-spacing: 2px;">STUDY WITH MUBARAK</h1>
@@ -157,19 +245,23 @@
         </div>
     </div>
 
+    <!-- BOTTOM SECTION -->
     <div id="bottom-section">
         <div class="ai-nav">
-            <span style="font-weight: bold;">STUDY ASSISTANT ACTIVE</span>
-            <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">CLOSE [X]</button>
+            <span style="font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                <span style="height: 8px; width: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                STUDY ASSISTANT ACTIVE
+            </span>
+            <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">CLOSE [X]</button>
         </div>
         
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
-                <div class="message bot">Hello! I am your Mubarak Study Assistant. Ask me anything about English, Government, or General Studies!</div>
+                <!-- Chat history loads here -->
             </div>
             <div class="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Type your academic question here..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()">Send</button>
+                <button id="send-btn" onclick="sendMessage()">Send</button>
             </div>
         </div>
     </div>
@@ -177,27 +269,42 @@
 </div>
 
 <script>
-    function activateSplit() {
+    // System Initialization & State Recovery
+    document.addEventListener("DOMContentLoaded", () => {
+        loadChatHistory();
+        
+        // Restore layout state safely
+        const aiOpenState = localStorage.getItem('ai_view_open');
+        if (aiOpenState === 'true') {
+            applySplitLayout();
+        } else {
+            resetLayoutStyles();
+        }
+    });
+
+    function applySplitLayout() {
         const top = document.getElementById('top-section');
         const bottom = document.getElementById('bottom-section');
-
-        bottom.style.visibility = "visible";
         top.style.flex = "0.45";
         bottom.style.flex = "0.55";
-        
-        setTimeout(() => document.getElementById('chat-input').focus(), 600);
+    }
+
+    function resetLayoutStyles() {
+        const top = document.getElementById('top-section');
+        const bottom = document.getElementById('bottom-section');
+        top.style.flex = "1 1 auto";
+        bottom.style.flex = "0 0 0%";
+    }
+
+    function activateSplit() {
+        applySplitLayout();
+        localStorage.setItem('ai_view_open', 'true');
+        setTimeout(() => document.getElementById('chat-input').focus(), 500);
     }
 
     function deactivateSplit() {
-        const top = document.getElementById('top-section');
-        const bottom = document.getElementById('bottom-section');
-        
-        top.style.flex = "1";
-        bottom.style.flex = "0";
-        
-        setTimeout(() => {
-            if(top.style.flex === "1") bottom.style.visibility = "hidden";
-        }, 600);
+        resetLayoutStyles();
+        localStorage.setItem('ai_view_open', 'false');
     }
 
     function handleKeyPress(event) {
@@ -206,21 +313,48 @@
         }
     }
 
-    function sendMessage() {
+    // Advanced API AI Engine Integration
+    async function sendMessage() {
         const input = document.getElementById('chat-input');
-        const text = input.value.trim();
+        const sendBtn = document.getElementById('send-btn');
+        const queryText = input.value.trim();
         
-        if (!text) return;
+        if (!queryText) return;
 
-        // Append User Message
-        appendMessage(text, 'user');
+        // Display user message & lock inputs
+        appendMessage(queryText, 'user');
+        saveMessage(queryText, 'user');
         input.value = '';
+        input.disabled = true;
+        sendBtn.disabled = true;
 
-        // Generate AI Response after a short delay
-        setTimeout(() => {
-            const botResponse = getAIResponse(text);
-            appendMessage(botResponse, 'bot');
-        }, 500);
+        // Show typing indicator
+        const typingIndicator = appendMessage('Thinking...', 'system');
+
+        try {
+            // Free and robust open serverless endpoint access framework
+            const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(queryText + " (Keep the explanation academic, clear, and tailored for a Nigerian student studying English, Government, or General Studies)")}`);
+            
+            typingIndicator.remove(); // Remove indicator
+            
+            if (response.ok) {
+                const data = await response.text();
+                appendMessage(data, 'bot');
+                saveMessage(data, 'bot');
+            } else {
+                throw new Error("API Offline");
+            }
+        } catch (error) {
+            typingIndicator.remove();
+            // Intelligent Offline Local Knowledge Fallback Engine
+            const fallbackResponse = getLocalFallback(queryText);
+            appendMessage(fallbackResponse, 'bot');
+            saveMessage(fallbackResponse, 'bot');
+        } finally {
+            input.disabled = false;
+            sendBtn.disabled = false;
+            input.focus();
+        }
     }
 
     function appendMessage(text, sender) {
@@ -230,28 +364,42 @@
         messageDiv.innerText = text;
         
         chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return messageDiv;
     }
 
-    function getAIResponse(query) {
-        const lowerQuery = query.toLowerCase();
+    // Local Storage Progress Retention Drivers
+    function saveMessage(text, sender) {
+        let history = JSON.parse(localStorage.getItem('study_mubarak_chat')) || [];
+        history.push({ text, sender });
+        localStorage.setItem('study_mubarak_chat', JSON.stringify(history));
+    }
 
-        // Built-in intelligent academic responses
-        if (lowerQuery.includes('english') || lowerQuery.includes('antonym') || lowerQuery.includes('synonym')) {
-            return "In English, synonyms are words with similar meanings (e.g., 'Huge' and 'Gigantic'). Antonyms are opposites (e.g., 'Allure' vs 'Repel'). What specific word can I help you with?";
-        } 
-        if (lowerQuery.includes('government') || lowerQuery.includes('constitution') || lowerQuery.includes('nigeria')) {
-            return "Nigeria operates a federal system of government based on the 1999 Constitution. It divides power across three branches: Executive, Legislative, and Judiciary. Let me know if you need specific details on political histories!";
-        } 
-        if (lowerQuery.includes('economics') || lowerQuery.includes('geography') || lowerQuery.includes('general studies')) {
-            return "General Studies covers crucial fundamentals like demand & supply curves in Economics, or map-reading and rock formations in Geography. Which area should we test next?";
+    function loadChatHistory() {
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.innerHTML = ''; // Sanitize initial window
+        
+        let history = JSON.parse(localStorage.getItem('study_mubarak_chat')) || [];
+        
+        if (history.length === 0) {
+            appendMessage("Hello! I am your Mubarak Study Assistant. Ask me anything about English, Government, or General Studies!", 'bot');
+        } else {
+            history.forEach(msg => {
+                appendMessage(msg.text, msg.sender);
+            });
         }
-        if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {
-            return "Hello! Ready to ace your exams? Drop your question about English, Government, or General Studies, and let's break it down.";
-        }
+    }
 
-        // Default Fallback Response
-        return "Interesting query! To help you prepare for your exams with Mubarak, let's look at this framework. Could you rephrase your question or specify if it falls under English, Government, or General Studies?";
+    // High Quality Offline Backup Router
+    function getLocalFallback(query) {
+        const lower = query.toLowerCase();
+        if (lower.includes('english') || lower.includes('antonym') || lower.includes('synonym')) {
+            return "[Offline Mode] Synonyms are words with similar meanings (e.g., 'Huge' and 'Gigantic'). Antonyms are opposites. Check your internet connection for full live explanations!";
+        } 
+        if (lower.includes('government') || lower.includes('constitution') || lower.includes('nigeria')) {
+            return "[Offline Mode] Nigeria runs a federal structure derived via historical constitutional updates (Clifford, Richards, Macpherson, down to 1999). Reconnect to the internet for a deep breakdown!";
+        }
+        return "[Offline Mode] I could not reach my cloud server database right now, but keep studying! Check your network connection and try again.";
     }
 </script>
 
