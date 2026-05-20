@@ -117,14 +117,14 @@
             box-shadow: 0 0 0 1px var(--primary);
         }
         
-        /* Validation State Renderers */
-        .option-btn.correct-state { 
+        /* Validation State Renderers for Review Section */
+        .review-correct { 
             background: var(--success-bg) !important; 
             color: var(--success-text) !important; 
             border-color: var(--success-border) !important; 
             font-weight: 700;
         }
-        .option-btn.wrong-state { 
+        .review-wrong { 
             background: var(--danger-bg) !important; 
             color: var(--danger-text) !important; 
             border-color: var(--danger-border) !important; 
@@ -132,7 +132,6 @@
 
         /* Green Explanation Boxes from Government Format */
         .explanation-box { 
-            display: none; 
             margin-top: 30px; 
             padding: 24px; 
             background: #f0fdf4; 
@@ -151,32 +150,75 @@
             color: #14532d;
             font-size: 1.1rem;
         }
+
+        /* Control Panel Row Layout */
+        .control-panel {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            align-items: center;
+        }
         
         .action-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 18px 36px;
+            padding: 18px 24px;
             border-radius: 14px;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 30px;
-            width: 100%;
             transition: all 0.2s ease;
             box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+            flex: 2;
+            text-align: center;
         }
         .action-btn:hover:not([disabled]) {
             background: #1d4ed8;
             transform: translateY(-1px);
             box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
-        .action-btn:disabled {
-            background: #cbd5e1;
-            color: #94a3b8;
-            cursor: not-allowed;
+        .nav-btn {
+            background: #f1f5f9;
+            color: var(--gray);
+            border: 2px solid #e2e8f0;
+            flex: 1;
             box-shadow: none;
         }
+        .nav-btn:hover:not([disabled]) {
+            background: #e2e8f0;
+            color: var(--dark);
+            border-color: #cbd5e1;
+        }
+        .action-btn:disabled, .nav-btn:disabled {
+            background: #cbd5e1;
+            color: #94a3b8;
+            border-color: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none !important;
+        }
+        
+        /* Review Area Card Spacing */
+        .review-card {
+            margin-bottom: 40px;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 40px;
+        }
+        .review-card:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .choice-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .badge-correct { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .badge-wrong { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
         .hidden { display: none !important; }
         .score-display { font-size: 3.5rem; color: var(--primary); font-weight: 800; margin: 20px 0; }
     </style>
@@ -190,7 +232,7 @@
 </header>
 
 <div class="quiz-container">
-    <div class="progress-bar"><div id="progress-fill"></div></div>
+    <div id="progress-container" class="progress-bar"><div id="progress-fill"></div></div>
     
     <div id="quiz-box" class="grand-card">
         <div id="question-number" style="color: var(--primary); font-weight: 700; margin-bottom: 12px; text-align: center; font-size: 1.1rem; letter-spacing: 0.5px; text-transform: uppercase;">Question 1</div>
@@ -200,20 +242,23 @@
         
         <div id="options-grid"></div>
         
-        <div id="explanation-bar" class="explanation-box">
-            <div class="explanation-title">💡 Performance Insight & Solution Rationale:</div>
-            <div id="explanation-text"></div>
+        <div class="control-panel">
+            <button id="prev-btn" class="action-btn nav-btn" onclick="navigateQuestion(-1)">← Previous</button>
+            <button id="submit-btn" class="action-btn" onclick="finishAssessment()">Finish & Grade Quiz</button>
+            <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">Next →</button>
         </div>
-        
-        <button id="submit-btn" class="action-btn" onclick="submitAnswer()" disabled>Submit Answer</button>
-        <button id="next-btn" class="action-btn hidden" onclick="nextQuestion()">Next Question →</button>
     </div>
 
-    <div id="result-box" class="grand-card hidden" style="text-align: center;">
-        <h2 style="font-size: 2.5rem; margin: 0; color: var(--dark); font-weight: 800;">Assessment Complete!</h2>
+    <div id="result-box" class="grand-card hidden" style="text-align: center; margin-bottom: 40px;">
+        <h2 style="font-size: 2.5rem; margin: 0; color: var(--dark); font-weight: 800;">Assessment Result Overview</h2>
         <div class="score-display" id="final-score">0 / 0</div>
         <p id="performance-msg" style="margin: 24px 0; color: var(--gray); font-size: 1.2rem; line-height: 1.65; max-width: 600px; margin-left: auto; margin-right: auto;"></p>
         <button class="action-btn" onclick="location.reload()" style="width: auto; display: inline-block; padding: 18px 60px;">Restart Diagnostic Session</button>
+    </div>
+
+    <div id="review-section" class="hidden">
+        <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 25px; border-left: 6px solid var(--primary); padding-left: 15px;">Detailed Corrections & Explanations Breakdown</h3>
+        <div id="review-cards-container"></div>
     </div>
 </div>
 
@@ -407,7 +452,7 @@
         { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: autocracy", options: ["Au-to-cra-cy", "au-TO-cra-cy", "au-to-CRA-cy", "au-to-cra-CY"], correct: 1, exp: "Primary stress falls natively on the antepenultimate structural syllable (au-TO-cra-cy)." },
         { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: development", options: ["DE-ve-lop-ment", "de-VE-lop-ment", "de-ve-LOP-ment", "de-ve-lop-MENT"], correct: 1, exp: "Tracks primary accent stress outputs natively across structure layouts (de-VE-lop-ment)." },
         { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: concentration", options: ["CON-cen-tra-tion", "con-CEN-tra-tion", "con-cen-TRA-tion", "con-cen-tra-TION"], correct: 2, exp: "Nouns terminating in '-tion' typically carry stress on the immediate preceding syllable." },
-        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: amiable", options: ["A-mi-a-ble", "a-MI-a-ble", "a-mi-A-ble", "a-mi-a-BLE"], correct: 0, exp: "Primary lexical accent sits on the early component structures (A-mi-a-ble)." },
+        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: amiable", options: ["A-mi-a-ble", "a-mi-a-ble", "a-mi-A-ble", "a-mi-a-BLE"], correct: 0, exp: "Primary lexical accent sits on the early component structures (A-mi-a-ble)." },
         { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: diplomatic", options: ["DI-plo-ma-tic", "di-PLO-ma-tic", "di-plo-MA-tic", "di-plo-ma-TIC"], correct: 2, exp: "Accents resolve stress distributions standardly over structural items (di-plo-MA-tic)." },
 
         // Oral: Stress Patterns (Questions 77-81)
@@ -427,7 +472,7 @@
         // Oral: Phonetic Symbols (Questions 87-96)
         { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /i:/", options: ["spill", "seize", "pretty", "funny"], correct: 1, exp: "'Seize' maps directly onto the long front close vowel sound /siːz/." },
         { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ɜ:/", options: ["steer", "peck", "fern", "clear"], correct: 2, exp: "'Fern' matches the standard open-mid central unrounded long vowel format /fɜːn/." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ʊ/", options: ["hook", "few", "blue", "rude"], correct: 0, exp: "'Hook' matches the short close-mid back rounded vowel pronunciation path /hʊk/." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /u/", options: ["hook", "few", "blue", "rude"], correct: 0, exp: "'Hook' matches the short close-mid back rounded vowel pronunciation path /hʊk/." },
         { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ŋ/", options: ["calm", "cool", "dungeon", "pardon"], correct: 2, exp: "The 'ng' sound system captures nasal articulation paths perfectly." },
         { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ɜ:/", options: ["early", "work", "putrid", "conclude"], correct: 1, exp: "'Work' tracks production patterns using the standard /wɜːk/ long central model." },
         { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ʒ/", options: ["measure", "huge", "pressure", "church"], correct: 0, exp: "'Measure' articulates the voiced post-alveolar fricative sound perfectly." },
@@ -438,15 +483,10 @@
     ];
 
     let currentQ = 0;
-    let score = 0;
-    let selectedOptionIdx = null;
+    // Track chosen option indices for all questions. Initialized to null.
+    let userAnswers = new Array(questions.length).fill(null);
 
     function initQuiz() {
-        selectedOptionIdx = null;
-        document.getElementById("submit-btn").classList.remove("hidden");
-        document.getElementById("submit-btn").disabled = true;
-        document.getElementById("next-btn").classList.add("hidden");
-        
         const current = questions[currentQ];
         document.getElementById("q-text").innerText = current.q;
         document.getElementById("instruction-box").innerText = current.instr;
@@ -465,77 +505,62 @@
         const progressPercent = (currentQ / questions.length) * 100;
         document.getElementById("progress-fill").style.width = `${progressPercent}%`;
 
+        // Configure Navigation Buttons States
+        document.getElementById("prev-btn").disabled = (currentQ === 0);
+        document.getElementById("next-btn").disabled = (currentQ === questions.length - 1);
+
         const grid = document.getElementById("options-grid");
         grid.innerHTML = "";
         
-        document.getElementById("explanation-bar").style.display = "none";
-        document.getElementById("explanation-text").innerText = "";
-
         current.options.forEach((opt, i) => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
             btn.innerText = opt;
-            btn.onclick = () => highlightSelection(i, btn);
+            
+            // Reapply styling if the user previously selected this option
+            if (userAnswers[currentQ] === i) {
+                btn.classList.add("selected");
+            }
+            
+            btn.onclick = () => selectOption(i);
             grid.appendChild(btn);
         });
     }
 
-    function highlightSelection(index, btn) {
-        selectedOptionIdx = index;
+    function selectOption(index) {
+        userAnswers[currentQ] = index;
         const allBtns = document.querySelectorAll(".option-btn");
-        
         allBtns.forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        
-        document.getElementById("submit-btn").disabled = false;
+        allBtns[index].classList.add("selected");
     }
 
-    function submitAnswer() {
-        if (selectedOptionIdx === null) return;
-        
-        const current = questions[currentQ];
-        const allBtns = document.querySelectorAll(".option-btn");
-        
-        allBtns.forEach(btn => {
-            btn.disabled = true;
-            btn.classList.remove("selected");
-        });
-        
-        if (selectedOptionIdx === current.correct) {
-            allBtns[selectedOptionIdx].classList.add("correct-state");
-            score++;
-        } else {
-            allBtns[selectedOptionIdx].classList.add("wrong-state");
-            allBtns[current.correct].classList.add("correct-state");
-        }
-        
-        document.getElementById("explanation-text").innerText = current.exp;
-        document.getElementById("explanation-bar").style.display = "block";
-        
-        document.getElementById("submit-btn").classList.add("hidden");
-        document.getElementById("next-btn").classList.remove("hidden");
-    }
-
-    function nextQuestion() {
-        currentQ++;
-        if (currentQ < questions.length) {
+    function navigateQuestion(direction) {
+        currentQ += direction;
+        if (currentQ >= 0 && currentQ < questions.length) {
             initQuiz();
-        } else {
-            showFinalResults();
         }
     }
 
-    function showFinalResults() {
+    function finishAssessment() {
+        // Calculate Total Correct Answers
+        let totalScore = 0;
+        questions.forEach((q, idx) => {
+            if (userAnswers[idx] === q.correct) {
+                totalScore++;
+            }
+        });
+
+        // Hide Exam View Portal Elements
         document.getElementById("quiz-box").classList.add("hidden");
-        document.getElementById("progress-fill").style.width = "100%";
-        
+        document.getElementById("progress-container").classList.add("hidden");
+
+        // Display Score and Performance Remarks Box
         const resultBox = document.getElementById("result-box");
         resultBox.classList.remove("hidden");
-        
-        document.getElementById("final-score").innerText = `${score} / ${questions.length}`;
+        document.getElementById("final-score").innerText = `${totalScore} / ${questions.length}`;
         
         const msg = document.getElementById("performance-msg");
-        const rating = score / questions.length;
+        const rating = totalScore / questions.length;
         if (rating >= 0.85) {
             msg.innerText = "Excellent capability level! Your high score demonstrates an exceptional mastery of oral English stress models, grammatical syntax structures, and critical reading comprehension metrics.";
         } else if (rating >= 0.65) {
@@ -543,9 +568,100 @@
         } else {
             msg.innerText = "A good foundation! English diagnostics require focused repetitions. Go through the structural insight rationales, restart the tracking module, and keep elevating your skills.";
         }
+
+        // Render Comprehensive Results Block below
+        renderReviewSection();
     }
 
-    // Launch Core Application
+    function renderReviewSection() {
+        const reviewContainer = document.getElementById("review-cards-container");
+        reviewContainer.innerHTML = "";
+
+        questions.forEach((q, idx) => {
+            const card = document.createElement("div");
+            card.className = "review-card";
+
+            // Header Numbering info
+            const titleInfo = document.createElement("div");
+            titleInfo.style.fontWeight = "700";
+            titleInfo.style.color = "var(--primary)";
+            titleInfo.style.marginBottom = "8px";
+            titleInfo.innerText = `QUESTION ${idx + 1}`;
+            card.appendChild(titleInfo);
+
+            // Instruction Tag
+            const instTag = document.createElement("div");
+            instTag.className = "instruction-tag";
+            instTag.style.padding = "10px 15px";
+            instTag.style.marginBottom = "15px";
+            instTag.innerText = q.instr;
+            card.appendChild(instTag);
+
+            // Text Content Passages
+            if (q.passage) {
+                const passBox = document.createElement("div");
+                passBox.className = "passage-box";
+                passBox.style.padding = "15px";
+                passBox.style.fontSize = "0.95rem";
+                passBox.innerText = q.passage;
+                card.appendChild(passBox);
+            }
+
+            // Question String Text
+            const qText = document.createElement("div");
+            qText.className = "question-text";
+            qText.style.fontSize = "1.15rem";
+            qText.style.marginBottom = "15px";
+            qText.innerText = q.q;
+            card.appendChild(qText);
+
+            // Choice Badge Marker
+            const badge = document.createElement("span");
+            const chosenIdx = userAnswers[idx];
+            if (chosenIdx === null) {
+                badge.className = "choice-badge badge-wrong";
+                badge.innerText = "⚠️ Left Unanswered";
+            } else if (chosenIdx === q.correct) {
+                badge.className = "choice-badge badge-correct";
+                badge.innerText = "✅ Correct Choice";
+            } else {
+                badge.className = "choice-badge badge-wrong";
+                badge.innerText = "❌ Incorrect Choice";
+            }
+            card.appendChild(badge);
+
+            // Options Output Stack
+            const optGrid = document.createElement("div");
+            q.options.forEach((opt, oIdx) => {
+                const optBtn = document.createElement("button");
+                optBtn.className = "option-btn";
+                optBtn.innerText = opt;
+                optBtn.disabled = true; // Review state options are non-clickable
+
+                // Styling logic for tracking user selection vs actual answer key
+                if (oIdx === q.correct) {
+                    optBtn.classList.add("review-correct");
+                } else if (oIdx === chosenIdx) {
+                    optBtn.classList.add("review-wrong");
+                }
+                optGrid.appendChild(optBtn);
+            });
+            card.appendChild(optGrid);
+
+            // Emerald Green Explanation container box
+            const expBox = document.createElement("div");
+            expBox.className = "explanation-box";
+            expBox.innerHTML = `<div class="explanation-title">💡 Performance Insight & Solution Rationale:</div><div>${q.exp}</div>`;
+            card.appendChild(expBox);
+
+            reviewContainer.appendChild(card);
+        });
+
+        // Make Section visible onto UI layout layer
+        document.getElementById("review-section").classList.remove("hidden");
+    }
+
+    // Launch Core Application Module
     document.addEventListener("DOMContentLoaded", initQuiz);
 </script>
 
