@@ -4,370 +4,538 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Mastery Pro | STUDY-WITH-MUBARAK</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        :root { --success: #22c55e; --danger: #ef4444; --primary: #3b82f6; --dark: #1e293b; }
-        body { background-color: #f1f5f9; font-family: 'Segoe UI', sans-serif; }
-        .quiz-container { max-width: 700px; margin: 40px auto; padding: 20px; }
+        :root { 
+            --success: #22c55e; 
+            --danger: #ef4444; 
+            --primary: #3b82f6; 
+            --dark: #1e293b; 
+            --gray: #64748b;
+        }
+        body { 
+            background-color: #f1f5f9; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: var(--dark); 
+            color: white; 
+            padding: 40px 20px; 
+            text-align: center;
+        }
+        header h1 { margin: 0 0 10px 0; font-size: 2rem; }
+        header p { margin: 0 0 15px 0; color: #94a3b8; }
+        .quiz-container { 
+            max-width: 750px; 
+            margin: 40px auto; 
+            padding: 0 20px 60px 20px; 
+        }
         .quiz-card { 
-            background: white; padding: 40px; border-radius: 24px; 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); text-align: center; 
+            background: white; 
+            padding: 40px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
         }
         .progress-bar { 
-            width: 100%; background: #e2e8f0; height: 12px; 
-            border-radius: 10px; margin-bottom: 30px; overflow: hidden; 
+            width: 100%; 
+            background: #e2e8f0; 
+            height: 12px; 
+            border-radius: 10px; 
+            margin-bottom: 30px; 
+            overflow: hidden; 
         }
-        #progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.4s; }
-        .question-text { font-size: 1.4rem; color: var(--dark); margin-bottom: 25px; font-weight: 700; }
+        #progress-fill { 
+            height: 100%; 
+            background: var(--primary); 
+            width: 0%; 
+            transition: 0.4s ease; 
+        }
+        .instruction-tag {
+            background: #f8fafc;
+            color: #475569;
+            font-size: 0.95rem;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        .passage-box {
+            background: #fff7ed;
+            border: 1px solid #ffedd5;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #431407;
+            text-align: left;
+        }
+        .question-text { 
+            font-size: 1.3rem; 
+            color: var(--dark); 
+            margin-bottom: 25px; 
+            font-weight: 700; 
+            line-height: 1.5;
+        }
         .option-btn { 
-            display: block; width: 100%; padding: 16px; margin: 12px 0; 
-            border: 2px solid #e2e8f0; border-radius: 12px; background: white; 
-            font-size: 1.1rem; cursor: pointer; transition: 0.2s; font-weight: 500;
+            display: block; 
+            width: 100%; 
+            padding: 16px 20px; 
+            margin: 12px 0; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 12px; 
+            background: white; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            font-weight: 500;
+            text-align: left;
+            color: var(--dark);
         }
-        .option-btn:hover:not([disabled]) { border-color: var(--primary); background: #f8fbff; }
+        .option-btn:hover:not([disabled]) { 
+            border-color: var(--primary); 
+            background: #f8fbff; 
+        }
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #eff6ff;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
         
-        /* Animations */
-        .correct { background: var(--success) !important; color: white !important; border-color: var(--success) !important; animation: pulse 0.5s; }
-        .wrong { background: var(--danger) !important; color: white !important; border-color: var(--danger) !important; animation: shake 0.4s; }
+        /* Status Animations */
+        .correct { 
+            background: var(--success) !important; 
+            color: white !important; 
+            border-color: var(--success) !important; 
+            animation: pulse 0.5s; 
+        }
+        .wrong { 
+            background: var(--danger) !important; 
+            color: white !important; 
+            border-color: var(--danger) !important; 
+            animation: shake 0.4s; 
+        }
         
-        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-8px);} 75% {transform: translateX(8px);} }
-        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.03);} 100% {transform: scale(1);} }
+        @keyframes shake { 
+            0%, 100% { transform: translateX(0); } 
+            25% { transform: translateX(-6px); } 
+            75% { transform: translateX(6px); } 
+        }
+        @keyframes pulse { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.02); } 
+            100% { transform: scale(1); } 
+        }
 
         #explanation-bar { 
-            display: none; margin-top: 25px; padding: 15px; 
-            background: #f0fdf4; border-left: 5px solid var(--success); 
-            border-radius: 8px; color: #166534; font-weight: 500; 
+            display: none; 
+            margin-top: 25px; 
+            padding: 20px; 
+            background: #f0fdf4; 
+            border-left: 5px solid var(--success); 
+            border-radius: 12px; 
+            color: #166534; 
+            font-weight: 500; 
+            text-align: left;
+            line-height: 1.6;
         }
-        .hidden { display: none; }
-        .score-text { font-size: 2rem; color: var(--primary); font-weight: 800; }
+        .hidden { display: none !important; }
+        .score-text { font-size: 3rem; color: var(--primary); font-weight: 800; margin: 15px 0; }
+        
+        .action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .action-btn:hover {
+            background: #2563eb;
+        }
+        .action-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
-<header style="background: var(--dark); color: white; padding: 40px 20px; text-align: center;">
+<header>
     <h1>English Language Mastery</h1>
-    <p>51 Advanced Antonyms, Synonyms & Grammar Challenges</p>
-    <a href="index.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">🏠 Return to Study Portal</a>
+    <p>Comprehensive Diagnostic Assessment Bank</p>
+    <a href="index.html" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem;">🏠 Return to Study Portal</a>
 </header>
 
 <div class="quiz-container">
     <div class="progress-bar"><div id="progress-fill"></div></div>
     
     <div id="quiz-box" class="quiz-card">
-        <div id="question-number" style="color: var(--primary); font-weight: bold; margin-bottom: 10px;">Question 1 of 50</div>
-        <div class="question-text" id="q-text">Loading...</div>
+        <div id="question-number" style="color: var(--primary); font-weight: bold; margin-bottom: 10px; text-align: center; font-size: 1.1rem;">Question 1</div>
+        <div id="instruction-box" class="instruction-tag"></div>
+        <div id="passage-container" class="passage-box hidden"></div>
+        <div class="question-text" id="q-text">Loading question data...</div>
+        
         <div id="options-grid"></div>
         <div id="explanation-bar"></div>
+        
+        <button id="submit-btn" class="action-btn" onclick="submitAnswer()" disabled>Submit Answer</button>
+        <button id="next-btn" class="action-btn hidden" onclick="nextQuestion()">Next Question →</button>
     </div>
 
-    <div id="result-box" class="quiz-card hidden">
-        <h2 style="font-size: 2.5rem;">Quiz Complete!</h2>
-        <div class="score-text" id="final-score">0 / 51</div>
-        <p id="performance-msg" style="margin: 20px 0; color: #64748b;"></p>
-        <button class="btn" onclick="location.reload()" style="padding: 15px 40px;">Try Again</button>
+    <div id="result-box" class="quiz-card hidden" style="text-align: center;">
+        <h2 style="font-size: 2.5rem; margin: 0; color: var(--dark);">Quiz Complete!</h2>
+        <div class="score-text" id="final-score">0 / 0</div>
+        <p id="performance-msg" style="margin: 20px 0; color: var(--gray); font-size: 1.2rem; line-height: 1.6;"></p>
+        <button class="action-btn" onclick="location.reload()" style="width: auto; display: inline-block; padding: 16px 50px;">Restart Assessment</button>
     </div>
 </div>
 
 <script>
     const questions = [
         // 1-5: Antonyms
-        { q: "Choose the ANTONYM of 'Garrulous':", options: ["Talkative", "Reticent", "Voluble", "Verbose"], correct: 1, exp: "Garrulous means excessively talkative. Reticent means reserved or quiet." },
-        { q: "Choose the ANTONYM of 'Enervate':", options: ["Weaken", "Exhaust", "Invigorate", "Debilitate"], correct: 2, exp: "Enervate means to drain energy. Invigorate means to give strength and energy." },
-        { q: "Choose the ANTONYM of 'Obsequious':", options: ["Submissive", "Domineering", "Servile", "Fawning"], correct: 1, exp: "Obsequious means overly obedient. Domineering means asserting one's will over others." },
-        { q: "Choose the ANTONYM of 'Ephemeral':", options: ["Fleeting", "Transient", "Perpetual", "Brief"], correct: 2, exp: "Ephemeral means short-lived. Perpetual means never-ending or permanent." },
-        { q: "Choose the ANTONYM of 'Loquacious':", options: ["Silent", "Chatty", "Fluent", "Articulate"], correct: 0, exp: "Loquacious means talkative. Silent is the direct opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Garrulous':", options: ["Talkative", "Reticent", "Voluble", "Verbose"], correct: 1, exp: "Garrulous means excessively talkative. Reticent means reserved or quiet." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Enervate':", options: ["Weaken", "Exhaust", "Invigorate", "Debilitate"], correct: 2, exp: "Enervate means to drain energy. Invigorate means to give strength and energy." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Obsequious':", options: ["Submissive", "Domineering", "Servile", "Fawning"], correct: 1, exp: "Obsequious means overly obedient. Domineering means asserting one's will over others." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Ephemeral':", options: ["Fleeting", "Transient", "Perpetual", "Brief"], correct: 2, exp: "Ephemeral means short-lived. Perpetual means never-ending or permanent." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Loquacious':", options: ["Silent", "Chatty", "Fluent", "Articulate"], correct: 0, exp: "Loquacious means talkative. Silent is the direct opposite." },
 
         // 6-10: Synonyms
-        { q: "Choose the SYNONYM of 'Anomalous':", options: ["Normal", "Abnormal", "Regular", "Common"], correct: 1, exp: "Anomalous refers to something that deviates from what is standard or expected." },
-        { q: "Choose the SYNONYM of 'Assuage':", options: ["Aggravate", "Relieve", "Irritate", "Inflame"], correct: 1, exp: "To assuage is to make an unpleasant feeling less intense." },
-        { q: "Choose the SYNONYM of 'Cacophony':", options: ["Harmony", "Silence", "Discord", "Melody"], correct: 2, exp: "Cacophony is a harsh, discordant mixture of sounds." },
-        { q: "Choose the SYNONYM of 'Laconic':", options: ["Wordy", "Concise", "Lengthy", "Talkative"], correct: 1, exp: "Laconic means using very few words." },
-        { q: "Choose the SYNONYM of 'Meticulous':", options: ["Sloppy", "Precise", "Careless", "Hasty"], correct: 1, exp: "Meticulous means showing great attention to detail; very careful and precise." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Anomalous':", options: ["Normal", "Abnormal", "Regular", "Common"], correct: 1, exp: "Anomalous refers to something that deviates from what is standard or expected." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Assuage':", options: ["Aggravate", "Relieve", "Irritate", "Inflame"], correct: 1, exp: "To assuage is to make an unpleasant feeling less intense." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Cacophony':", options: ["Harmony", "Silence", "Discord", "Melody"], correct: 2, exp: "Cacophony is a harsh, discordant mixture of sounds." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Laconic':", options: ["Wordy", "Concise", "Lengthy", "Talkative"], correct: 1, exp: "Laconic means using very few words." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Meticulous':", options: ["Sloppy", "Precise", "Careless", "Hasty"], correct: 1, exp: "Meticulous means showing great attention to detail; very careful and precise." },
 
         // 11-15: Grammar
-        { q: "Grammar: Which sentence is correct?", options: ["Neither he nor I are going.", "Neither he nor I am going.", "Neither he nor I is going.", "Neither he nor I were going."], correct: 1, exp: "When using 'neither/nor', the verb agrees with the closer subject ('I am')." },
-        { q: "Grammar: Select the correct collective noun.", options: ["A flock of lions", "A pride of lions", "A pack of lions", "A school of lions"], correct: 1, exp: "Lions are grouped in a 'pride'." },
-        { q: "Grammar: Choose the correct preposition.", options: ["He is proficient at English.", "He is proficient in English.", "He is proficient with English.", "He is proficient by English."], correct: 1, exp: "We use 'proficient in' for subjects or skills." },
-        { q: "Grammar: Pick the correct word.", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "Its's raining outside."], correct: 1, exp: " 'It's' is the contraction for 'It is'." },
-        { q: "Grammar: Identify the adjective.", options: ["Slowly", "Run", "Beautiful", "Happiness"], correct: 2, exp: "Beautiful describes a noun; slowly is an adverb; run is a verb; happiness is a noun." },
+        { instr: "Identify the option that satisfies standard syntax rules.", q: "Grammar: Which sentence is correct?", options: ["Neither he nor I are going.", "Neither he nor I am going.", "Neither he nor I is going.", "Neither he nor I were going."], correct: 1, exp: "When using 'neither/nor', the verb agrees with the closer subject ('I am')." },
+        { instr: "Select the accurate structural collective option.", q: "Grammar: Select the correct collective noun.", options: ["A flock of lions", "A pride of lions", "A pack of lions", "A school of lions"], correct: 1, exp: "Lions are grouped in a 'pride'." },
+        { instr: "Choose the accurate contextual preposition.", q: "Grammar: Choose the correct preposition.", options: ["He is proficient at English.", "He is proficient in English.", "He is proficient with English.", "He is proficient by English."], correct: 1, exp: "We use 'proficient in' for subjects or skills." },
+        { instr: "Identify correct orthography or contraction use.", q: "Grammar: Pick the correct word.", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "Its's raining outside."], correct: 1, exp: "'It's' is the contraction for 'It is'." },
+        { instr: "Identify the matching grammatical word group.", q: "Grammar: Identify the adjective.", options: ["Slowly", "Run", "Beautiful", "Happiness"], correct: 2, exp: "Beautiful describes a noun; slowly is an adverb; run is a verb; happiness is a noun." },
 
-        // 16-20: Advanced Antonyms
-        { q: "ANTONYM of 'Altruism':", options: ["Kindness", "Selfishness", "Generosity", "Benevolence"], correct: 1, exp: "Altruism is selfless concern for others. Selfishness is the opposite." },
-        { q: "ANTONYM of 'Capricious':", options: ["Unpredictable", "Stable", "Fickle", "Variable"], correct: 1, exp: "Capricious means impulsive and changing. Stable means firm and steady." },
-        { q: "ANTONYM of 'Dormant':", options: ["Inactive", "Asleep", "Active", "Static"], correct: 2, exp: "Dormant means inactive or in a deep sleep. Active is the opposite." },
-        { q: "ANTONYM of 'Fastidious':", options: ["Easygoing", "Picky", "Demanding", "Fussy"], correct: 0, exp: "Fastidious means very attentive to detail; easygoing is the opposite." },
-        { q: "ANTONYM of 'Gregarious':", options: ["Sociable", "Outgoing", "Solitary", "Friendly"], correct: 2, exp: "Gregarious means fond of company. Solitary means liking to be alone." },
-        { q: "ANTONYM of 'adept':", options: ["Inept", "Shrewd", "Savvy", "Astute"], correct: 0, exp: "Inept means unskillful or competent. Adept means being skillful and competent. inept is the opposite." },
-        // Note: I have included 20 inept questions here. 
-        // You can easily add questions 21-50 by following the pattern above!
-  
+        // 16-21: Advanced Antonyms
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Altruism':", options: ["Kindness", "Selfishness", "Generosity", "Benevolence"], correct: 1, exp: "Altruism is selfless concern for others. Selfishness is the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Capricious':", options: ["Unpredictable", "Stable", "Fickle", "Variable"], correct: 1, exp: "Capricious means impulsive and changing. Stable means firm and steady." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Dormant':", options: ["Inactive", "Asleep", "Active", "Static"], correct: 2, exp: "Dormant means inactive or in a deep sleep. Active is the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Fastidious':", options: ["Easygoing", "Picky", "Demanding", "Fussy"], correct: 0, exp: "Fastidious means very attentive to detail; easygoing is the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Gregarious':", options: ["Sociable", "Outgoing", "Solitary", "Friendly"], correct: 2, exp: "Gregarious means fond of company. Solitary means liking to be alone." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'adept':", options: ["Inept", "Shrewd", "Savvy", "Astute"], correct: 0, exp: "Inept means unskillful or incompetent. Adept means being skillful and competent." },
 
-    // SECTION 1: Opposites / Synonyms
-    {
-      instruction: "In each of the following sentences, there is a word underlined and one gap. From the list of words lettered A to D, choose the one that is most nearly opposite in meaning to the underlined word and that will, at the same time, correctly fill the gap in the sentence."
-    },
-    { q: "1. The road which used to be wide now appears ... because it is bordered with trees.", options: ["A. winding", "B. limited", "C. narrow", "D. untarred"], a: "C", e: "The sentence contrasts the road’s past state 'wide' with its present state caused by trees. 'Narrow' is the direct opposite of 'wide' and fits because trees on both sides make the usable space look smaller." },
-    { q: "2. The manager is sensitive to the feelings of his subordinates, unlike the ... manager who is insensitive to them.", options: ["A. appease", "B. ward", "C. settle", "D. attend"], a: "B", e: "The structure contrasts 'sensitive' with 'insensitive'. In WAEC usage, 'ward' means hard-hearted or unfeeling." },
-    { q: "3. Rather than be discouraged by the plight of the workers, the manager was ...", options: ["A. negligent", "B. indifferent", "C. malicious", "D. callous"], a: "B", e: "If he was not discouraged, he remained unaffected or unconcerned. 'Indifferent' means showing no concern." },
-    { q: "4. A lazy student makes progress but an ... one hardly makes any.", options: ["A. industrious", "B. nervous", "C. inactive", "D. reluctant"], a: "A", e: "'Industrious' means hardworking and diligent, the direct opposite of 'lazy'." },
-    { q: "5. Unlike C, through the message was clearly written, D did not understand it.", options: ["A. Good", "B. Unclear", "C. Vague", "D. Ambiguous"], a: "B", e: "The phrase 'clearly written' is contrasted. The direct opposite is 'unclear'." },
-    { q: "6. Good policies are usually reasonable but bad ones are ...", options: ["A. unrealistic", "B. inadequate", "C. unattractive", "D. unpopular"], a: "A", e: "'Unrealistic' means not practical or sensible, the closest match to 'unreasonable'." },
-    { q: "7. One expects a library to be quiet, but in C it was noisy.", options: ["A. not jumbled", "B. not rowdy", "C. not crowded", "D. not noisy"], a: "D", e: "'Not noisy' means quiet, the expected state of a library." },
-    { q: "8. Despite everything, J chose to keep rather than C the secret.", options: ["A. show", "B. reveal", "C. display", "D. announce"], a: "B", e: "'Keep' and 'reveal' are direct opposites in the context of a secret." },
-    { q: "9. Though the teachers disliked the idea, the principal was ... to it.", options: ["A. forced", "B. recognized", "C. admitted", "D. reconciled"], a: "D", e: "To be 'reconciled to' something means to accept it reluctantly." },
-    { q: "10. It is only natural to feel nervous when you first take the stage, but you soon become D, composed.", options: ["A. balanced", "B. peaceful", "C. normal", "D. composed"], a: "D", e: "The sentence ends with 'composed', so the blank repeats the word for logical completion." },
+        // Contextual Antonyms (Section 1)
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "1. The road which used to be wide now appears ______ because it is bordered with trees.", options: ["A. winding", "B. limited", "C. narrow", "D. untarred"], correct: 2, exp: "The sentence contrasts 'wide' with its current state. 'Narrow' is the direct opposite." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "2. The manager is sensitive to the feelings of his subordinates, unlike the ______ manager who is insensitive to them.", options: ["A. appease", "B. insensitive", "C. settle", "D. attend"], correct: 1, exp: "The structure explicitly contrasts 'sensitive' with 'insensitive'." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "3. Rather than be discouraged by the plight of the workers, the manager was ______", options: ["A. negligent", "B. indifferent", "C. malicious", "D. callous"], correct: 1, exp: "If he wasn't discouraged or moved, he remained unconcerned. 'Indifferent' means showing no concern." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "4. A lazy student makes progress but an ______ one hardly makes any.", options: ["A. industrious", "B. nervous", "C. inactive", "D. reluctant"], correct: 0, exp: "'Industrious' means hardworking and diligent, which is opposite to 'lazy'." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "5. Unlike C, though the message was clearly written, D did not understand it because it was ______.", options: ["A. Good", "B. Unclear", "C. Vague", "D. Ambiguous"], correct: 1, exp: "The phrase 'clearly written' is directly contrasted with 'unclear'." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "6. Good policies are usually reasonable but bad ones are ______", options: ["A. unrealistic", "B. inadequate", "C. unattractive", "D. unpopular"], correct: 0, exp: "'Unrealistic' means not sensible or practical, matching the opposite of reasonable." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "7. One expects a library to be quiet, but in C it was ______.", options: ["A. not jumbled", "B. not rowdy", "C. not crowded", "D. noisy"], correct: 3, exp: "'Noisy' is the direct opposite of the expected state 'quiet'." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "8. Despite everything, J chose to keep rather than ______ the secret.", options: ["A. show", "B. reveal", "C. display", "D. announce"], correct: 1, exp: "'Keep' and 'reveal' are direct opposites in the framework of confidential information." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "9. Though the teachers disliked the idea, the principal was ______ to it.", options: ["A. forced", "B. recognized", "C. admitted", "D. reconciled"], correct: 3, exp: "To be 'reconciled to' an idea means to accept or accommodate it despite initial reservations." },
+        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "10. It is only natural to feel nervous when you first take the stage, but you soon become ______.", options: ["A. balanced", "B. peaceful", "C. normal", "D. composed"], correct: 3, exp: "The state of being 'composed' directly resolves the feeling of being nervous." },
 
-    // SECTION 2: Vocabulary Usage
-    {
-      instruction: "From the words lettered A to D, choose the word that best completes each of the following sentences."
-    },
-    { q: "11. Don’t tell me a ... enough to believe his lies.", options: ["A. credible", "B. childish", "C. modest", "D. naive"], a: "A", e: "'Credible' means believable or plausible." },
-    { q: "12. The members of parliament tabled ... to the constitution.", options: ["A. adjustment", "B. amendment", "C. enactment", "D. enact"], a: "B", e: "An 'amendment' is a formal proposal to change a constitution or law." },
-    { q: "13. His ... to violent video games is something to worry about.", options: ["A. devotion", "B. addiction", "C. commitment", "D. addiction"], a: "B", e: "Excessive and compulsive use of video games is called an 'addiction'." },
-    { q: "14. Most people think that ... punishment should be abolished, even in murder cases.", options: ["A. feel", "B. capital", "C. severe", "D. corporal"], a: "B", e: "'Capital punishment' is the legal term for the death penalty." },
-    { q: "15. The President made a ... appeal for calm in the face of the crisis.", options: ["A. passive", "B. serious", "C. active", "D. sensitive"], a: "B", e: "A 'serious appeal' means a sincere and urgent plea." },
-    { q: "16. After my mother ..., my father sat down and raised his voice.", options: ["A. had down and rained abuses on me", "B. broke down in tears and made a silent confession", "C. This softened him but did not prevent him from giving my cousin the spanking of their lives", "D. Why did the writer’s father warn the boys against going out at night?"], a: "B", e: "The sentence requires a clause describing what the mother did before the father reacted." },
-    { q: "17. The boy’s parents ... a sigh of relief when the meeting ended happily.", options: ["A. breathed", "B. raised", "C. heaved", "D. shielded"], a: "C", e: "The correct collocation is 'heave a sigh of relief'." },
-    { q: "18. We’d not reconvened ... because we could not form a quorum.", options: ["A. had not", "B. have not", "C. did not", "D. had not"], a: "D", e: "The past perfect 'had not' matches 'We’d not reconvened' and explains the reason in the past." },
-    { q: "19. The policeman tried to ... money from the motorist.", options: ["A. extort", "B. exert", "C. extract", "D. extricate"], a: "A", e: "'Extort' means to obtain money by force or threat." },
-    { q: "20. They were given an ... to either pay a fine or vacate the premises.", options: ["A. option", "B. injunction", "C. ultimatum", "D. undertaking"], a: "C", e: "An 'ultimatum' is a final demand with a threat of consequences." },
+        // Vocabulary Usage (Section 2)
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "11. Don’t tell me you are ______ enough to believe his lies.", options: ["A. credible", "B. childish", "C. modest", "D. naive"], correct: 3, exp: "'Naive' describes someone showing a lack of experience, wisdom, or judgment." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "12. The members of parliament tabled ______ to the constitution.", options: ["A. adjustment", "B. amendment", "C. enactment", "D. enact"], correct: 1, exp: "An 'amendment' is a formal structural change made to a legislative or constitutional text." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "13. His ______ to violent video games is something to worry about.", options: ["A. devotion", "B. addiction", "C. commitment", "D. assignment"], correct: 1, exp: "'Addiction' matches the context of compulsive dependency on games." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "14. Most people think that ______ punishment should be abolished, even in murder cases.", options: ["A. feel", "B. capital", "C. severe", "D. corporal"], correct: 1, exp: "'Capital punishment' refers explicitly to execution or execution mandates sanctioned by law." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "15. The President made a ______ appeal for calm in the face of the crisis.", options: ["A. passive", "B. serious", "C. active", "D. sensitive"], correct: 1, exp: "A 'serious appeal' emphasizes an urgent, highly sincere plea." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "16. After my mother ______, my father sat down and raised his voice.", options: ["A. had down and rained abuses on me", "B. broke down in tears and made a silent confession", "C. became completely quiet and collected", "D. left the room abruptly"], correct: 1, exp: "This selection constructs a logical sequence of narrative actions prior to the response." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "17. The boy’s parents ______ a sigh of relief when the meeting ended happily.", options: ["A. breathed", "B. raised", "C. heaved", "D. shielded"], correct: 2, exp: "The correct linguistic idiomatic collocation is to 'heave a sigh of relief'." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "18. We had not reconvened ______ because we could not form a quorum.", options: ["A. earlier", "B. formerly", "C. then", "D. previously"], correct: 0, exp: "'Earlier' functions as an adverbial modifier indicating previous time reference." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "19. The policeman tried to ______ money from the motorist.", options: ["A. extort", "B. exert", "C. extract", "D. extricate"], correct: 0, exp: "'Extort' means to obtain something through force, intimidation, or abuse of authority." },
+        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "20. They were given an ______ to either pay a fine or vacate the premises.", options: ["A. option", "B. injunction", "C. ultimatum", "D. undertaking"], correct: 2, exp: "An 'ultimatum' is a final demand backed by a structural threat of consequence." },
 
-    // SECTION 3: Sentence Interpretation
-    {
-      instruction: "After each of the following sentences, a list of possible interpretations is given. Choose the interpretation that is most appropriate for each sentence."
-    },
-    { q: "21. My parents carried the day in the debate. This means that my parents", options: ["A. missed the date for the debate", "B. won the debate", "C. lost the debate", "D. chaired the debate"], a: "B", e: "'Carry the day' is an idiom meaning to win or be successful in a contest." },
-    { q: "22. We discussed the issue at length but many issues came up. This means that we", options: ["A. discussed many things", "B. exhausted many issues", "C. used up many things", "D. discussed the issue for a long time"], a: "D", e: "'At length' means for a long time." },
-    { q: "23. We saw Ada dancing at the end of the party. This means that", options: ["A. Ada danced a lot", "B. we saw Ada dance", "C. we saw Ada dancing", "D. Ada was dancing"], a: "C", e: "The sentence is in the present participle form 'dancing'." },
-    { q: "24. The first time we saw Ada dancing with everyone, C didn’t want to keep seeing her. This means that", options: ["A. we were surprised that Baba backed the wrong horse", "B. we were surprised that Baba was dancing", "C. we were surprised that Baba was not dancing", "D. we were surprised that Baba was not there"], a: "C", e: "Based on the passage context, 'C' refers to Baba, and the surprise was that he was not participating." },
-    { q: "25. I knew they were being dishonest when I saw them. This means that", options: ["A. I knew they were honest", "B. I knew they were not honest", "C. I knew they were not being honest", "D. I knew they were honest"], a: "C", e: "'Being dishonest' is a present continuous action." },
-    { q: "26. My mother wanted to know what I was eating. This means that she wanted to", options: ["A. find out what I was eating", "B. know what I was eating", "C. know what I had eaten", "D. know what I would eat"], a: "A", e: "'Wanted to know' means to seek information or 'find out' about a present continuous action." },
+        // Sentence Interpretation (Section 3)
+        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "21. My parents carried the day in the debate. This means that my parents ______.", options: ["A. missed the date for the debate", "B. won the debate", "C. lost the debate", "D. chaired the debate"], correct: 1, exp: "The idiom 'carry the day' means to win a contest or secure victory." },
+        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "22. We discussed the issue at length but many new elements came up. This means that we ______.", options: ["A. discussed many alternative subjects", "B. exhausted every perspective", "C. used up many resources", "D. discussed the issue for a long time"], correct: 3, exp: "'At length' means for a comprehensive or extended duration of time." },
+        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "23. We saw Ada dancing at the end of the party. This means that ______.", options: ["A. Ada danced a lot", "B. we saw Ada dance", "C. we witnessed the specific ongoing act of Ada dancing", "D. Ada was dancing alone"], correct: 2, exp: "The present participle construction models active ongoing perception." },
+        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "24. The first time we saw Ada dancing with everyone, Baba backed the wrong horse. This means that ______.", options: ["A. Baba made an unfortunate bet on a real animal", "B. we were surprised that Baba made an incorrect choice or prediction", "C. we were surprised that Baba was not dancing", "D. Baba supported the winning side"], correct: 1, exp: "'Back the wrong horse' is an idiom meaning to support a losing or incorrect option." },
+        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "25. I knew they were being dishonest when I saw them. This means that ______.", options: ["A. I knew they were completely honest structures", "B. I caught them in a state that lacked integrity", "C. I knew they were simulating a lie continuously", "D. I misjudged their background values"], correct: 1, exp: "'Being dishonest' relates to actively exhibiting deceptive profiles at that moment." },
+        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "26. My mother wanted to know what I was eating. This means that she wanted to ______.", options: ["A. find out what I was eating", "B. prevent me from swallowing items", "C. know what I had eaten hours ago", "D. prepare a completely new dish"], correct: 0, exp: "'Wanted to know' translates directly to seeking clarification or discovering facts." },
 
-    // SECTION 4: Comprehension Cloze Q71-80
-    {
-      section: "Comprehension Cloze",
-      instruction: "Read the passage carefully and choose the word that best fits each numbered gap.",
-      passage: `The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, “Stretcher, quickly; take her to the _____33_____.” Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, “Are you sure doctor, that she is for surgery?” The young doctor did not mince words; he said to her, “This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.” That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.`,
-      blanks: [
-        {
-          q: "27. 71. Displaying _____ very complacently on his neck",
-          options: ["A. Sham", "B. Badge", "C. Stethoscope", "D. Watch"],
-          a: "C",
-          e: "A doctor in a white coat typically has a stethoscope around his neck."
+        // Comprehension Cloze (Section 4)
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "27. Select the best fit for gap 27:", 
+            options: ["A. Sham", "B. Badge", "C. Stethoscope", "D. Watch"], 
+            correct: 2, 
+            exp: "Medical practitioners standardly wear a stethoscope surrounding their neck structures." 
         },
-        {
-          q: "28. 72. he walked through the _____ greeting each of the patients",
-          options: ["A. Alale", "B. Office", "C. Room", "D. ward"],
-          a: "D",
-          e: "Doctors walk through hospital 'wards' and greet patients there."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "28. Select the best fit for gap 28:", 
+            options: ["A. Alale", "B. Office", "C. Room", "D. ward"], 
+            correct: 3, 
+            exp: "A hospital contains specialized clinical units called 'wards' containing patient arrays." 
         },
-        {
-          q: "29. 73. greeting each of the _____ who greeted him in return",
-          options: ["A. Patients", "B. Clients", "C. Invalids", "D. Customers"],
-          a: "A",
-          e: "The correct term for people receiving treatment in a hospital is 'patients'."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "29. Select the best fit for gap 29:", 
+            options: ["A. Patients", "B. Clients", "C. Invalids", "D. Customers"], 
+            correct: 0, 
+            exp: "Individuals seeking active dynamic treatment inside hospitals are called patients." 
         },
-        {
-          q: "30. 74. a woman on a nearby _____",
-          options: ["A. stretcher", "B. Bed", "C. wheel-chair", "D. bench"],
-          a: "A",
-          e: "A patient needing urgent care would be on a 'stretcher'."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "30. Select the best fit for gap 30:", 
+            options: ["A. stretcher", "B. Bed", "C. wheel-chair", "D. bench"], 
+            correct: 1, 
+            exp: "Patients stationed within hospital wards reside on functional recovery beds." 
         },
-        {
-          q: "31. 75. feeling for her _____",
-          options: ["A. breathing", "B. Pulse", "C. Response", "D. pressure"],
-          a: "B",
-          e: "A doctor checking a patient’s condition typically feels for the 'pulse'."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "31. Select the best fit for gap 31:", 
+            options: ["A. breathing", "B. Pulse", "C. Response", "D. pressure"], 
+            correct: 1, 
+            exp: "Feeling the wrist allows tracking arterial expansion, known as checking the pulse." 
         },
-        {
-          q: "32. 76. carried out some other minor _____",
-          options: ["A. experiments", "B. robots", "C. frills", "D. checks"],
-          a: "D",
-          e: "'Checks' fits as a general term for medical examinations."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "32. Select the best fit for gap 32:", 
+            options: ["A. experiments", "B. robots", "C. frills", "D. checks"], 
+            correct: 3, 
+            exp: "'Checks' fits accurately to denote brief physiological or basic tests." 
         },
-        {
-          q: "33. 77. take her to the _____",
-          options: ["A. theatre", "B. laboratory", "C. Clinic", "D. casually"],
-          a: "A",
-          e: "For surgery, a patient is taken to the 'theatre' or operating theatre."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "33. Select the best fit for gap 33:", 
+            options: ["A. theatre", "B. laboratory", "C. Clinic", "D. casually"], 
+            correct: 0, 
+            exp: "Surgical intervention procedures take place directly within an operating theatre." 
         },
-        {
-          q: "34. 78. Even the _____ who had been supervising her treatment was amazed.",
-          options: ["A. Infirmaries", "B. Matrons", "C. Midwives", "D. attendants"],
-          a: "B",
-          e: "In a hospital, a 'matron' supervises nursing care."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "34. Select the best fit for gap 34:", 
+            options: ["A. Infirmaries", "B. Matrons", "C. Midwives", "D. attendants"], 
+            correct: 1, 
+            exp: "A 'matron' is an advanced senior nursing officer who manages ward care layouts." 
         },
-        {
-          q: "35. 79. The _____ must be taken out promptly.",
-          options: ["A. baby", "B. Child", "C. Infant", "D. foetus"],
-          a: "D",
-          e: "In an ectopic pregnancy, the 'foetus' is developing outside the uterus."
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "35. Select the best fit for gap 35:", 
+            options: ["A. baby", "B. Child", "C. Infant", "D. foetus"], 
+            correct: 3, 
+            exp: "Medical literature classifies a developing embryo past early stages as a foetus." 
         },
-        {
-          q: "36. 80. blood was being pumped for _____",
-          options: ["A. dripping", "B. pumping", "C. transfer", "D. transfusion"],
-          a: "D",
-          e: "During surgery, blood is prepared for a 'transfusion' to replace blood loss."
-        }
-      ]
-    },
+        { 
+            instr: "Read the passage context to choose the word that best fits the blank gap.",
+            passage: "The young doctor looked sprightly in his white coat. Displaying a _____27_____ very complacently on his neck, he walked through the _____28_____ greeting each of the _____29_____ who greeted him in return. Then suddenly, his eyes caught a woman on a nearby _____30_____. He went closer, held her hand, feeling for her _____31_____, and then carried out some other minor _____32_____. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the _____33_____.' Even the _____34_____ who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The _____35_____ must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for _____36_____.",
+            q: "36. Select the best fit for gap 36:", 
+            options: ["A. dripping", "B. pumping", "C. transfer", "D. transfusion"], 
+            correct: 3, 
+            exp: "The structural infusion of safe blood units into patients is a transfusion." 
+        },
 
-    // SECTION 5: Oral Test of Orals - Vowel Sounds 1-15
-    {
-      instruction: "From the words lettered A to D, choose the word that has the same vowel sound as the one represented by the letter(s) underlined."
-    },
-    { q: "37. chick", options: ["A. breath", "B. pick", "C. hike", "D. heard"], a: "B", e: "'Chick' and 'pick' both have the short /ɪ/ sound." },
-    { q: "38. afford", options: ["A. enjoy", "B. peck", "C. water", "D. grey"], a: "C", e: "'Afford' and 'water' both have the /ɔː/ sound in British pronunciation." },
-    { q: "39. says", options: ["A. fez", "B. paid", "C. watch", "D. pride"], a: "A", e: "'Says' is pronounced /sez/, matching the /e/ sound in 'fez'." },
-    { q: "40. cook", options: ["A. stew", "B. sew", "C. look", "D. pool"], a: "C", e: "'Cook' and 'look' both have the short /ʊ/ sound." },
-    { q: "41. busy", options: ["A. see", "B. dare", "C. fruit", "D. play"], a: "A", e: "In 'busy', the 'u' is pronounced /ɪ/ as in 'see'." },
-    { q: "42. get", options: ["A. situation", "B. fate", "C. cab", "D. wait"], a: "C", e: "'Get' and 'cab' both have the short /æ/ sound." },
-    { q: "43. call", options: ["A. grab", "B. palm", "C. mat", "D. guest"], a: "B", e: "'Call' and 'palm' both have the long /ɔː/ sound." },
-    { q: "44. shoe", options: ["A. bullet", "B. drew", "C. fuel", "D. pull"], a: "B", e: "'Shoe' and 'drew' both have the /uː/ sound." },
-    { q: "45. fright", options: ["A. fridge", "B. rain", "C. spot", "D. weight"], a: "D", e: "'Fright' and 'weight' both have the diphthong /aɪ/ sound." },
-    { q: "46. sport", options: ["A. was", "B. plough", "C. dog", "D. pause"], a: "D", e: "'Sport' and 'pause' both have the long /ɔː/ sound." },
-    { q: "47. come", options: ["A. brush", "B. warm", "C. cot", "D. even"], a: "A", e: "'Come' and 'brush' both have the short /ʌ/ sound." },
-    { q: "48. peas", options: ["A. suit", "B. fear", "C. spare", "D. feed"], a: "D", e: "'Peas' and 'feed' both have the long /iː/ sound." },
-    { q: "49. yew", options: ["A. drawn", "B. now", "C. brown", "D. pole"], a: "D", e: "'Yew' and 'pole' both have the diphthong /əʊ/ sound." },
-    { q: "50. canoe", options: ["A. poor", "B. goose", "C. here", "D. deer"], a: "B", e: "'Canoe' and 'goose' both have the /uː/ sound." },
-    { q: "51. cone", options: ["A. pen", "B. earth", "C. feet", "D. none"], a: "C", e: "'Cone' and 'feet' both have the long /iː/ sound in standard pronunciation." },
+        // Oral: Vowels (Questions 37-51)
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "37. chick", options: ["A. breath", "B. pick", "C. hike", "D. heard"], correct: 1, exp: "'Chick' and 'pick' contain the matching short /ɪ/ monophthong." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "38. afford", options: ["A. enjoy", "B. peck", "C. water", "D. grey"], correct: 2, exp: "Both 'afford' and 'water' use the /ɔː/ sound structure in standard pronunciation." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "39. says", options: ["A. fez", "B. paid", "C. watch", "D. pride"], correct: 0, exp: "'Says' is phonetically /sez/, matching the short /e/ in 'fez'." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "40. cook", options: ["A. stew", "B. sew", "C. look", "D. pool"], correct: 2, exp: "Both 'cook' and 'look' contain the short /ʊ/ rounded vowel sound." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "41. busy", options: ["A. see", "B. dare", "C. fruit", "D. play"], correct: 0, exp: "The 'u' in busy reads phonetically as short /ɪ/, which matches spelling exceptions." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "42. get", options: ["A. situation", "B. fate", "C. cab", "D. wait"], correct: 2, exp: "Matches the identical short open-mid position sound format." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "43. call", options: ["A. grab", "B. palm", "C. mat", "D. guest"], correct: 1, exp: "Both components map long open vowel outputs correctly." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "44. shoe", options: ["A. bullet", "B. drew", "C. fuel", "D. pull"], correct: 1, exp: "'Shoe' and 'drew' map into the high back long /uː/ sound." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "45. fright", options: ["A. fridge", "B. rain", "C. spot", "D. weight"], correct: 3, exp: "Shares matching diphthong shifts across active standard outputs." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "46. sport", options: ["A. was", "B. plough", "C. dog", "D. pause"], correct: 3, exp: "'Sport' and 'pause' explicitly share the long /ɔː/ vowel system." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "47. come", options: ["A. brush", "B. warm", "C. cot", "D. even"], correct: 0, exp: "Both structures explicitly utilize the short short central wedge /ʌ/ sound." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "48. peas", options: ["A. suit", "B. fear", "C. spare", "D. feed"], correct: 3, exp: "Both words articulate using the long front unrounded /iː/ vowel." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "49. yew", options: ["A. drawn", "B. now", "C. brown", "D. pole"], correct: 3, exp: "Shares matching close diphthong configurations standardly." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "50. canoe", options: ["A. poor", "B. goose", "C. here", "D. deer"], correct: 1, exp: "Both words terminate with the long high-back /uː/ sound profile." },
+        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "51. cone", options: ["A. pen", "B. earth", "C. feet", "D. none"], correct: 3, exp: "Evaluates standard phonetic mappings correctly here." },
 
-    // SECTION 6: Oral Test of Orals - Consonant Sounds 16-30
-    {
-      instruction: "From the words lettered A to D, choose the word that has the same consonant sound(s) as the one represented by the letter(s) underlined."
-    },
-    { q: "52. swing", options: ["A. snag", "B. bank", "C. wine", "D. alge"], a: "C", e: "'Swing' and 'wine' both have the /w/ sound." },
-    { q: "53. dumb", options: ["A. flamingo", "B. rubber", "C. sing", "D. funny"], a: "B", e: "'Dumb' and 'rubber' both contain the /b/ sound." },
-    { q: "54. theme", options: ["A. their", "B. smooth", "C. theory", "D. them"], a: "C", e: "'Theme' and 'theory' both have the voiceless /θ/ sound." },
-    { q: "55. phrase", options: ["A. cease", "B. fleece", "C. sees", "D. price"], a: "B", e: "'Phrase' and 'fleece' both have the /f/ sound." },
-    { q: "56. tough", options: ["A. psyche", "B. phoneme", "C. though", "D. goiter"], a: "B", e: "'Tough' and 'phoneme' both have the /f/ sound." },
-    { q: "57. treasure", options: ["A. adjunct", "B. soldier", "C. allusion", "D. elation"], a: "B", e: "'Treasure' and 'soldier' both contain the /ʒ/ or /dʒ/ sound." },
-    { q: "58. weather", options: ["A. soothing", "B. think", "C. theatre", "D. thanks"], a: "A", e: "'Weather' and 'soothing' both have the voiced /ð/ sound." },
-    { q: "59. factual", options: ["A. haste", "B. chair", "C. trite", "D. vicious"], a: "B", e: "'Factual' and 'chair' both have the /tʃ/ sound." },
-    { q: "60. haven", options: ["A. honour", "B. hour", "C. heir", "D. hair"], a: "D", e: "'Haven' and 'hair' both have the /h/ sound." },
-    { q: "61. marry", options: ["A. cart", "B. wreath", "C. burnt", "D. cover"], a: "B", e: "'Marry' and 'wreath' both contain the /r/ sound." },
-    { q: "62. kinetic", options: ["A. knit", "B. know", "C. guest", "D. clear"], a: "A", e: "'Kinetic' and 'knit' both have the /k/ sound." },
-    { q: "63. get", options: ["A. ledger", "B. germane", "C. ghastly", "D. neighbour"], a: "C", e: "'Get' and 'ghastly' both have the hard /g/ sound." },
-    { q: "64. praise", options: ["A. poise", "B. fuse", "C. peace", "D. snap"], a: "B", e: "'Praise' and 'fuse' both end with the /z/ sound." },
-    { q: "65. fine", options: ["A. bathe", "B. then", "C. hide", "D. they"], a: "A", e: "'Fine' and 'bathe' both contain the /f/ sound." },
-    { q: "66. low", options: ["A. bustle", "B. length", "C. epistle", "D. picked"], a: "A", e: "'Low' and 'bustle' both contain the /l/ sound." },
+        // Oral: Consonants (Questions 52-66)
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "52. swing", options: ["A. snag", "B. bank", "C. wine", "D. alge"], correct: 2, exp: "Both words employ the labio-velar approximant /w/ sound." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "53. dumb", options: ["A. flamingo", "B. rubber", "C. sing", "D. funny"], correct: 1, exp: "The letter 'b' in dumb is silent, testing the structural bilabial plosive context elsewhere." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "54. theme", options: ["A. their", "B. smooth", "C. theory", "D. them"], correct: 2, exp: "'Theme' and 'theory' utilize the voiceless dental fricative /θ/ sound." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "55. phrase", options: ["A. cease", "B. fleece", "C. sees", "D. price"], correct: 1, exp: "The 'ph' sound creates the voiceless labiodental fricative /f/ sound." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "56. tough", options: ["A. psyche", "B. phoneme", "C. though", "D. goiter"], correct: 1, exp: "'Tough' ends in /f/, matching the initial phoneme realization structure." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "57. treasure", options: ["A. adjunct", "B. soldier", "C. allusion", "D. elation"], correct: 1, exp: Maps post-alveolar voiced fricatives correctly across choices." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "58. weather", options: ["A. soothing", "B. think", "C. theatre", "D. thanks"], correct: 0, exp: "'Weather' and 'soothing' map onto the voiced dental fricative /ð/ symbol." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "59. factual", options: ["A. haste", "B. chair", "C. trite", "D. vicious"], correct: 1, exp: "'Factual' creates a /tʃ/ affricate sequence, matching 'chair'." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "60. haven", options: ["A. honour", "B. hour", "C. heir", "D. hair"], correct: 3, exp: "The letter 'h' is active in 'haven' and 'hair' but silent in the alternative options." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "61. marry", options: ["A. cart", "B. wreath", "C. burnt", "D. cover"], correct: 1, exp: "Both terms share the post-alveolar approximant /r/ sound value." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "62. kinetic", options: ["A. knit", "B. know", "C. guest", "D. clear"], correct: 0, exp: "Shares accurate initial voiceless velar plosive configurations." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "63. get", options: ["A. ledger", "B. germane", "C. ghastly", "D. neighbour"], correct: 2, exp: "Both 'get' and 'ghastly' express the hard voiced velar plosive /g/." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "64. praise", options: ["A. poise", "B. fuse", "C. peace", "D. snap"], correct: 1, exp: "Both 'praise' and 'fuse' terminate in the voiced alveolar sibilant /z/ sound." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "65. fine", options: ["A. bathe", "B. then", "C. hide", "D. they"], correct: 0, exp: "Validates sound mapping components cleanly within structure rules." },
+        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "66. low", options: ["A. bustle", "B. length", "C. epistle", "D. picked"], correct: 0, exp: "Both items share lateral liquid /l/ realizations." },
 
-    // SECTION 7: Oral Test of Orals - Rhymes 31-35
-    {
-      instruction: "From the words lettered A to D, choose the word that rhymes with the given word."
-    },
-    { q: "67. catch", options: ["A. leech", "B. fish", "C. batch", "D. perch"], a: "C", e: "'Catch' and 'batch' both end with the /ætʃ/ sound." },
-    { q: "68. sown", options: ["A. swam", "B. lawn", "C. broom", "D. loan"], a: "D", e: "'Sown' and 'loan' both rhyme with the /oʊn/ sound." },
-    { q: "69. rise", options: ["A. rims", "B. risk", "C. price", "D. size"], a: "D", e: "'Rise' and 'size' both end with the /aɪz/ sound." },
-    { q: "70. route", options: ["A. hoot", "B. show", "C. sweat", "D. bloat"], a: "A", e: "'Route' and 'hoot' both end with the /uːt/ sound." },
-    { q: "71. slime", options: ["A. brim", "B. cry", "C. dream", "D. grime"], a: "D", e: "'Slime' and 'grime' both end with the /aɪm/ sound." },
+        // Oral: Rhymes (Questions 67-71)
+        { instr: "Choose the option that rhymes perfectly with the given word.", q: "67. catch", options: ["A. leech", "B. fish", "C. batch", "D. perch"], correct: 2, exp: "'Catch' and 'batch' terminate in identical /ætʃ/ phonetic frameworks." },
+        { instr: "Choose the option that rhymes perfectly with the given word.", q: "68. sown", options: ["A. swam", "B. lawn", "C. broom", "D. loan"], correct: 3, exp: "Both articulate using matching final /oʊn/ structural rhymes." },
+        { instr: "Choose the option that rhymes perfectly with the given word.", q: "69. rise", options: ["A. rims", "B. risk", "C. price", "D. size"], correct: 3, exp: "'Rise' and 'size' terminate in identical phonetic sound paths /aɪz/." },
+        { instr: "Choose the option that rhymes perfectly with the given word.", q: "70. route", options: ["A. hoot", "B. show", "C. sweat", "D. bloat"], correct: 0, exp: "In default standard notation paths, 'route' and 'hoot' share /uːt/ rhymes." },
+        { instr: "Choose the option that rhymes perfectly with the given word.", q: "71. slime", options: ["A. brim", "B. cry", "C. dream", "D. grime"], correct: 3, exp: "'Slime' and 'grime' share identical final /aɪm/ rhyme metrics." },
 
-    // SECTION 8: Oral Test of Orals - Word Stress 36-40
-    {
-      instruction: "In each of the following questions, the main/primary stress is indicated by writing the syllable on which it occurs in capital letters."
-    },
-    { q: "72. autocracy", options: ["A. Au-to-cra-cy", "B. au-TO-cra-cy", "C. au-to-CRA-cy", "D. au-to-cra-CY"], a: "C", e: "Stress falls on the third syllable: au-to-CRA-cy." },
-    { q: "73. development", options: ["A. DE-ve-lop-ment", "B. de-VE-lop-ment", "C. de-ve-LOP-ment", "D. de-ve-lop-MENT"], a: "D", e: "Stress falls on the final syllable: de-ve-lop-MENT." },
-    { q: "74. concentration", options: ["A. CON-cen-tra-tion", "B. con-CEN-tra-tion", "C. con-cen-TRA-tion", "D. con-cen-tra-TION"], a: "D", e: "Stress falls on the final syllable: con-cen-tra-TION." },
-    { q: "75. amiable", options: ["A. A-mi-a-ble", "B. a-MI-a-ble", "C. a-mi-A-ble", "D. a-mi-a-BLE"], a: "B", e: "Stress falls on the second syllable: a-MI-a-ble." },
-    { q: "76. diplomatic", options: ["A. DI-plo-ma-tic", "B. di-PLO-ma-tic", "C. di-plo-MA-tic", "D. di-plo-ma-TIC"], a: "B", e: "Stress falls on the second syllable: di-PLO-ma-tic." },
+        // Oral: Word Stress (Questions 72-76)
+        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "72. autocracy", options: ["A. Au-to-cra-cy", "B. au-TO-cra-cy", "C. au-to-CRA-cy", "D. au-to-cra-CY"], correct: 2, exp: "Primary stress falls natively on the antepenultimate structural syllable." },
+        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "73. development", options: ["A. DE-ve-lop-ment", "B. de-VE-lop-ment", "C. de-ve-LOP-ment", "D. de-ve-lop-MENT"], correct: 3, exp: "Tracks primary accent stress outputs natively across structure layouts." },
+        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "74. concentration", options: ["A. CON-cen-tra-tion", "B. con-CEN-tra-tion", "C. con-cen-TRA-tion", "D. con-cen-tra-TION"], correct: 3, exp: "Nouns terminating in '-tion' typically carry stress on the immediate preceding syllable." },
+        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "75. amiable", options: ["A. A-mi-a-ble", "B. a-MI-a-ble", "C. a-mi-A-ble", "D. a-mi-a-BLE"], correct: 1, exp: "Primary lexical accent sits on the early component structures." },
+        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "76. diplomatic", options: ["A. DI-plo-ma-tic", "B. di-PLO-ma-tic", "C. di-plo-MA-tic", "D. di-plo-ma-TIC"], correct: 1, exp: "Accents resolve stress distributions standardly over structural items." },
 
-    // SECTION 9: Oral Test of Orals - Different Stress Pattern 41-45
-    {
-      instruction: "In the following options lettered A to D, all the words except one have the same stress pattern. Identify the one with the different stress pattern."
-    },
-    { q: "77. dinner, current, divide, number", options: ["A. dinner", "B. current", "C. divide", "D. number"], a: "C", e: "'Divide' is stressed on the second syllable, others on the first." },
-    { q: "78. consequent, ingredient, aggravate, possibly", options: ["A. consequent", "B. ingredient", "C. aggravate", "D. possibly"], a: "C", e: "'Aggravate' is stressed on the second syllable, others on the first." },
-    { q: "79. assuage, confer, decide, format", options: ["A. assuage", "B. confer", "C. decide", "D. format"], a: "A", e: "'Assuage' is stressed on the first syllable, others on the second." },
-    { q: "80. demand, deafen, debate, debunk", options: ["A. demand", "B. deafen", "C. debate", "D. debunk"], a: "B", e: "'Deafen' is stressed on the first syllable, others on the second." },
-    { q: "81. constructive, technical, necessary, beautiful", options: ["A. constructive", "B. technical", "C. necessary", "D. beautiful"], a: "A", e: "'Constructive' is stressed on the second syllable, others on the first." },
+        // Oral: Stress Patterns (Questions 77-81)
+        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "77. dinner, current, divide, number", options: ["A. dinner", "B. current", "C. divide", "D. number"], correct: 2, exp: "'Divide' features stress on its second syllable, while the others are stressed on the first." },
+        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "78. consequent, ingredient, aggravate, possibly", options: ["A. consequent", "B. ingredient", "C. aggravate", "D. possibly"], correct: 2, exp: "'Aggravate' tracks stress shifts distinctly compared to alternative array setups." },
+        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "79. assuage, confer, decide, format", options: ["A. assuage", "B. confer", "C. decide", "D. format"], correct: 0, exp: "'Assuage' carries an alternate primary emphasis path location." },
+        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "80. demand, deafen, debate, debunk", options: ["A. demand", "B. deafen", "C. debate", "D. debunk"], correct: 1, exp: "'Deafen' is stressed on its first syllable, while the other three verbs have stress on the second syllable." },
+        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "81. constructive, technical, necessary, beautiful", options: ["A. constructive", "B. technical", "C. necessary", "D. beautiful"], correct: 0, exp: "'Constructive' is stressed on the second syllable, whereas the others have first-syllable stress." },
 
-    // SECTION 10: Oral Test of Orals - Emphatic Stress 46-50
-    {
-      instruction: "In each of the following sentences, the word that receives the emphatic stress is written in capital letters. Choose the one to which the given sentence is the appropriate answer."
-    },
-    { q: "82. Stella likes reading NOVELS.", options: ["A. Does Stella like reading magazines?", "B. Does Esther like reading novels?", "C. Does Stella dislike reading novels?", "D. Does Stella like buying novels?"], a: "A", e: "Stress on 'NOVELS' contrasts it with magazines." },
-    { q: "83. Amina MISINTERPRETED my statement.", options: ["A. Did Amodu misinterpret my action?", "B. Did Amina misinterpret my statement?", "C. Did Amina understand my statement?", "D. Did Amina misinterpret your statement?"], a: "B", e: "Stress on 'MISINTERPRETED' confirms the action done to the statement." },
-    { q: "84. There are FIFTY people at the rally.", options: ["A. Are there fifty children at the rally?", "B. Are there twenty people at the rally?", "C. Were there fifty people at the rally?", "D. Are there fifty people at the meeting?"], a: "B", e: "Stress on 'FIFTY' contrasts it with 'twenty'." },
-    { q: "85. The government paid NEW salaries.", options: ["A. Did the government pay old salaries?", "B. Did the principal pay new salaries?", "C. Did the government pay new allowances?", "D. Did the government tax new salaries?"], a: "A", e: "Stress on 'NEW' contrasts it with 'old'." },
-    { q: "86. In some COUNTRIES, many citizens are unemployed.", options: ["A. Are few citizens unemployed in some countries?", "B. Are many youths unemployed in some countries?", "C. Are many citizens unemployed in some states?"], a: "C", e: "Stress on 'COUNTRIES' contrasts it with 'states'." },
+        // Oral: Emphatic Stress (Questions 82-86)
+        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "82. Stella likes reading NOVELS.", options: ["A. Does Stella like reading magazines?", "B. Does Esther like reading novels?", "C. Does Stella dislike reading novels?", "D. Does Stella like buying novels?"], correct: 0, exp: "Emphatic stress on 'NOVELS' implicitly contrasts it with alternate items like magazines." },
+        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "83. Amina MISINTERPRETED my statement.", options: ["A. Did Amodu misinterpret my action?", "B. Did Amina misinterpret my statement?", "C. Did Amina understand my statement?", "D. Did Amina misinterpret your statement?"], correct: 1, exp: "Focuses validation directly back onto the correctness of the dynamic behavior." },
+        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "84. There are FIFTY people at the rally.", options: ["A. Are there fifty children at the rally?", "B. Are there twenty people at the rally?", "C. Were there fifty people at the rally?", "D. Are there fifty people at the meeting?"], correct: 1, exp: "Stress on 'FIFTY' acts to challenge or correct an alternative numerical claim like 'twenty'." },
+        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "85. The government paid NEW salaries.", options: ["A. Did the government pay old salaries?", "B. Did the principal pay new salaries?", "C. Did the government pay new allowances?", "D. Did the government tax new salaries?"], correct: 0, exp: "The focus on 'NEW' establishes a direct contextual contrast with historical or 'old' conditions." },
+        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "86. In some COUNTRIES, many citizens are unemployed.", options: ["A. Are few citizens unemployed in some countries?", "B. Are many youths unemployed in some countries?", "C. Are many citizens unemployed in some states?"], correct: 2, exp: "Stressing 'COUNTRIES' directly corrects or contrasts with alternative units like states." },
 
-    // SECTION 11: Oral Test of Orals - Phonetic Symbols 51-60
-    {
-      instruction: "From the words lettered A to D, choose the word that has the sound represented by the given phonetic symbol."
-    },
-    { q: "87. /i:/", options: ["A. spill", "B. seize", "C. pretty", "D. funny"], a: "B", e: "'Seize' is pronounced /siːz/." },
-    { q: "88. /ɜ:/", options: ["A. steer", "B. peck", "C. fern", "D. clear"], a: "C", e: "'Fern' is pronounced /fɜːn/." },
-    { q: "89. /ʊ/", options: ["A. hook", "B. few", "C. blue", "D. rude"], a: "A", e: "'Hook' is pronounced /hʊk/." },
-    { q: "90. /ŋ/", options: ["A. calm", "B. cool", "C. dungeon", "D. pardon"], a: "C", e: "'Dungeon' contains the /ŋ/ sound in /dʌndʒən/." },
-    { q: "91. /ɜ:/", options: ["A. early", "B. work", "C. putrid", "D. conclude"], a: "B", e: "'Work' is pronounced /wɜːk/." },
-    { q: "92. /ʒ/", options: ["A. measure", "B. huge", "C. pressure", "D. church"], a: "A", e: "'Measure' is pronounced /ˈmeʒər/." },
-    { q: "93. /ʃ/", options: ["A. cheat", "B. match", "C. cash", "D. wage"], a: "C", e: "'Cash' is pronounced /kæʃ/." },
-    { q: "94. /ʌ/", options: ["A. rum", "B. raw", "C. foam", "D. wail"], a: "A", e: "'Rum' is pronounced /rʌm/." },
-    { q: "95. /z/", options: ["A. worse", "B. geese", "C. whose", "D. waist"], a: "B", e: "'Geese' ends with the /z/ sound." },
-    { q: "96. /θ/", options: ["A. therefore", "B. feather", "C. method", "D. bathe"], a: "C", e: "'Method' is pronounced /ˈmeθəd/." }
-  ];
+        // Oral: Phonetic Symbols (Questions 87-96)
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "87. Target Phonetic Symbol: /i:/", options: ["A. spill", "B. seize", "C. pretty", "D. funny"], correct: 1, exp: "'Seize' maps directly onto the long front close vowel sound /siːz/." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "88. Target Phonetic Symbol: /ɜ:/", options: ["A. steer", "B. peck", "C. fern", "D. clear"], correct: 2, exp: "'Fern' matches the standard open-mid central unrounded long vowel format /fɜːn/." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "89. Target Phonetic Symbol: /ʊ/", options: ["A. hook", "B. few", "C. blue", "D. rude"], correct: 0, exp: "'Hook' matches the short close-mid back rounded vowel pronunciation path /hʊk/." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "90. Target Phonetic Symbol: /ŋ/", options: ["A. calm", "B. cool", "C. dungeon", "D. pardon"], correct: 2, exp: "Evaluates acoustic nasals correctly over language settings." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "91. Target Phonetic Symbol: /ɜ:/", options: ["A. early", "B. work", "C. putrid", "D. conclude"], correct: 1, exp: "'Work' tracks production patterns using the standard /wɜːk/ long central model." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "92. Target Phonetic Symbol: /ʒ/", options: ["A. measure", "B. huge", "C. pressure", "D. church"], correct: 0, exp: "'Measure' articulates the voiced post-alveolar fricative sound perfectly." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "93. Target Phonetic Symbol: /ʃ/", options: ["A. cheat", "B. match", "C. cash", "D. wage"], correct: 2, exp: "'Cash' resolves perfectly into the voiceless post-alveolar fricative /kæʃ/." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "94. Target Phonetic Symbol: /ʌ/", options: ["A. rum", "B. raw", "C. foam", "D. wail"], correct: 0, exp: "'Rum' presents the classic short open-mid central unrounded wedge sound /rʌm/." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "95. Target Phonetic Symbol: /z/", options: ["A. worse", "B. geese", "C. whose", "D. waist"], correct: 2, exp: "'Whose' terminates in the voiced alveolar sibilant /huːz/ sound layout." },
+        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "96. Target Phonetic Symbol: /θ/", options: ["A. therefore", "B. feather", "C. method", "D. bathe"], correct: 2, exp: "'Method' carries the classic unvoiced dental fricative /θ/ component." }
+    ];
+
     let currentQ = 0;
     let score = 0;
+    let selectedOptionIdx = null;
 
     function initQuiz() {
+        selectedOptionIdx = null;
+        document.getElementById("submit-btn").classList.remove("hidden");
+        document.getElementById("submit-btn").disabled = true;
+        document.getElementById("next-btn").classList.add("hidden");
+        
         const current = questions[currentQ];
         document.getElementById("q-text").innerText = current.q;
+        document.getElementById("instruction-box").innerText = current.instr;
         document.getElementById("question-number").innerText = `Question ${currentQ + 1} of ${questions.length}`;
         
+        // Render Passage context box dynamically if it exists
+        const passageContainer = document.getElementById("passage-container");
+        if (current.passage) {
+            passageContainer.innerText = current.passage;
+            passageContainer.classList.remove("hidden");
+        } else {
+            passageContainer.classList.add("hidden");
+        }
+        
+        // Dynamically compute progress filling metric
+        const progressPercent = (currentQ / questions.length) * 100;
+        document.getElementById("progress-fill").style.width = `${progressPercent}%`;
+
         const grid = document.getElementById("options-grid");
         grid.innerHTML = "";
-        document.getElementById("explanation-bar").style.display = "none";
+        
+        const expBar = document.getElementById("explanation-bar");
+        expBar.style.display = "none";
+        expBar.innerText = "";
 
         current.options.forEach((opt, i) => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
             btn.innerText = opt;
-            btn.onclick = () => selectOption(i, btn);
+            btn.onclick = () => highlightSelection(i, btn);
             grid.appendChild(btn);
         });
-
-        document.getElementById("progress-fill").style.width = (currentQ / questions.length) * 100 + "%";
     }
 
-    function selectOption(idx, btn) {
+    function highlightSelection(index, btn) {
+        selectedOptionIdx = index;
+        const allBtns = document.querySelectorAll(".option-btn");
+        
+        allBtns.forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        
+        // Unlock submit validation button
+        document.getElementById("submit-btn").disabled = false;
+    }
+
+    function submitAnswer() {
+        if (selectedOptionIdx === null) return;
+        
         const current = questions[currentQ];
         const allBtns = document.querySelectorAll(".option-btn");
-        allBtns.forEach(b => b.disabled = true);
-
-        if (idx === current.correct) {
-            btn.classList.add("correct");
+        
+        // Disable choices selection immediately
+        allBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.remove("selected");
+        });
+        
+        // Evaluate inputs
+        if (selectedOptionIdx === current.correct) {
+            allBtns[selectedOptionIdx].classList.add("correct");
             score++;
         } else {
-            btn.classList.add("wrong");
+            allBtns[selectedOptionIdx].classList.add("wrong");
             allBtns[current.correct].classList.add("correct");
         }
-
-        const bar = document.getElementById("explanation-bar");
-        bar.innerText = current.exp;
-        bar.style.display = "block";
-
-        setTimeout(() => {
-            currentQ++;
-            if (currentQ < questions.length) {
-                initQuiz();
-            } else {
-                showResults();
-            }
-        }, 2500);
+        
+        // Display explanatory logic metrics
+        const expBar = document.getElementById("explanation-bar");
+        expBar.innerText = current.exp;
+        expBar.style.display = "block";
+        
+        // Control structural action triggers
+        document.getElementById("submit-btn").classList.add("hidden");
+        document.getElementById("next-btn").classList.remove("hidden");
     }
 
-    function showResults() {
+    function nextQuestion() {
+        currentQ++;
+        if (currentQ < questions.length) {
+            initQuiz();
+        } else {
+            showFinalResults();
+        }
+    }
+
+    function showFinalResults() {
         document.getElementById("quiz-box").classList.add("hidden");
-        document.getElementById("result-box").classList.remove("hidden");
         document.getElementById("progress-fill").style.width = "100%";
+        
+        const resultBox = document.getElementById("result-box");
+        resultBox.classList.remove("hidden");
+        
         document.getElementById("final-score").innerText = `${score} / ${questions.length}`;
         
-        let msg = score > 40 ? "Excellent Mastery!" : score > 25 ? "Good Job, keep practicing!" : "Need more study!";
-        document.getElementById("performance-msg").innerText = msg;
+        const msg = document.getElementById("performance-msg");
+        const rating = score / questions.length;
+        if (rating >= 0.85) {
+            msg.innerText = "Superb execution! Your advanced diagnostic literacy skills, morphological analysis, and oral vocal tracking systems show optimal proficiency levels.";
+        } else if (rating >= 0.65) {
+            msg.innerText = "Good performance! A clean score profile across semantic and contextual parameters. Continue optimizing structural oral phonetic symbols.";
+        } else {
+            msg.innerText = "Steady practice works best! Analyze structural feedback flags within grammar choices, and restart the diagnostic tracking routine.";
+        }
     }
 
-    initQuiz();
+    // Launch core engine
+    document.addEventListener("DOMContentLoaded", initQuiz);
 </script>
 
 </body>
