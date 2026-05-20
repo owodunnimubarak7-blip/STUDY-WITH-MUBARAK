@@ -90,6 +90,7 @@
         .message {
             max-width: 75%; padding: 12px 16px; border-radius: 15px;
             font-size: 0.95rem; line-height: 1.4;
+            word-wrap: break-word;
         }
 
         .message.bot {
@@ -162,7 +163,6 @@
             <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">CLOSE [X]</button>
         </div>
         
-        <!-- Replaced standard iframe with Native Interactive Chat App -->
         <div class="chat-container">
             <div class="chat-messages" id="chat-messages">
                 <div class="message bot">Hello! I am your Mubarak Study Assistant. Ask me anything about English, Government, or General Studies!</div>
@@ -181,12 +181,10 @@
         const top = document.getElementById('top-section');
         const bottom = document.getElementById('bottom-section');
 
-        // Make section visible and split screen (45% Top / 55% Bottom)
         bottom.style.visibility = "visible";
         top.style.flex = "0.45";
         bottom.style.flex = "0.55";
         
-        // Auto focus the input field for instant typing
         setTimeout(() => document.getElementById('chat-input').focus(), 600);
     }
 
@@ -197,7 +195,6 @@
         top.style.flex = "1";
         bottom.style.flex = "0";
         
-        // Hide panel completely after smooth transition finishes
         setTimeout(() => {
             if(top.style.flex === "1") bottom.style.visibility = "hidden";
         }, 600);
@@ -212,38 +209,49 @@
     function sendMessage() {
         const input = document.getElementById('chat-input');
         const text = input.value.trim();
+        
         if (!text) return;
 
-        const messagesContainer = document.getElementById('chat-messages');
-
         // Append User Message
-        const userDiv = document.createElement('div');
-        userDiv.className = 'message user';
-        userDiv.textContent = text;
-        messagesContainer.appendChild(userDiv);
-
-        // Clear input box
+        appendMessage(text, 'user');
         input.value = '';
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-        // Simulate AI academic response
+        // Generate AI Response after a short delay
         setTimeout(() => {
-            const botDiv = document.createElement('div');
-            botDiv.className = 'message bot';
-            botDiv.textContent = getSimulatedResponse(text);
-            messagesContainer.appendChild(botDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 800);
+            const botResponse = getAIResponse(text);
+            appendMessage(botResponse, 'bot');
+        }, 500);
     }
 
-    // Interactive fallback simulator for study help
-    function getSimulatedResponse(query) {
-        const q = query.toLowerCase();
-        if (q.includes('hi') || q.includes('hello')) return "Welcome back! What are we studying together today?";
-        if (q.includes('government') || q.includes('constitution')) return "The Nigerian 1999 Constitution is the supreme law. It features 8 chapters and outlines the separation of powers between Executive, Legislature, and Judiciary.";
-        if (q.includes('english') || q.includes('antonym')) return "Great choice! An antonym is a word opposite in meaning to another (e.g., 'Giant' vs 'Dwarf'). Need a specific example?";
-        if (q.includes('study') || q.includes('exam')) return "Consistency beats cramming! Focus on active recall and testing yourself using the quiz buttons above.";
-        return "That is an excellent study topic! Let's break it down together. Could you provide a bit more specific context?";
+    function appendMessage(text, sender) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+        messageDiv.innerText = text;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+    }
+
+    function getAIResponse(query) {
+        const lowerQuery = query.toLowerCase();
+
+        // Built-in intelligent academic responses
+        if (lowerQuery.includes('english') || lowerQuery.includes('antonym') || lowerQuery.includes('synonym')) {
+            return "In English, synonyms are words with similar meanings (e.g., 'Huge' and 'Gigantic'). Antonyms are opposites (e.g., 'Allure' vs 'Repel'). What specific word can I help you with?";
+        } 
+        if (lowerQuery.includes('government') || lowerQuery.includes('constitution') || lowerQuery.includes('nigeria')) {
+            return "Nigeria operates a federal system of government based on the 1999 Constitution. It divides power across three branches: Executive, Legislative, and Judiciary. Let me know if you need specific details on political histories!";
+        } 
+        if (lowerQuery.includes('economics') || lowerQuery.includes('geography') || lowerQuery.includes('general studies')) {
+            return "General Studies covers crucial fundamentals like demand & supply curves in Economics, or map-reading and rock formations in Geography. Which area should we test next?";
+        }
+        if (lowerQuery.includes('hello') || lowerQuery.includes('hi')) {
+            return "Hello! Ready to ace your exams? Drop your question about English, Government, or General Studies, and let's break it down.";
+        }
+
+        // Default Fallback Response
+        return "Interesting query! To help you prepare for your exams with Mubarak, let's look at this framework. Could you rephrase your question or specify if it falls under English, Government, or General Studies?";
     }
 </script>
 
