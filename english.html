@@ -1,692 +1,1096 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Language Diagnostic | STUDY-WITH-MUBARAK</title>
+    <!-- Feature 5: PWA Architecture Web Manifest Reference Hook -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
     <style>
-        :root { 
+        :root {
             --success-bg: #f0fdf4;
             --success-border: #22c55e;
             --success-text: #166534;
             --danger-bg: #fef2f2;
             --danger-border: #ef4444;
             --danger-text: #991b1b;
-            --primary: #2563eb; 
-            --dark: #0f172a; 
+            --warning-bg: #fffbeb;
+            --warning-border: #f59e0b;
+            --warning-text: #92400e;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --dark: #0f172a;
             --gray: #475569;
             --card-border: #3b82f6;
+            --bg-main: #f8fafc;
+            --card-bg: white;
+            --text-main: #0f172a;
+            --option-border: #e2e8f0;
+            --option-hover: #f0f6ff;
+            --instruction-bg: #f1f5f9;
+            --instruction-text: #475569;
+            --jump-btn-bg: #e2e8f0;
+            --jump-btn-text: #0f172a;
         }
-        body { 
-            background-color: #f8fafc; 
-            font-family: 'Segoe UI', system-ui, sans-serif; 
+
+        [data-theme="dark"] {
+            --bg-main: #020617;
+            --card-bg: #0f172a;
+            --text-main: #f8fafc;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --option-border: #334155;
+            --option-hover: #1e293b;
+            --instruction-bg: #1e293b;
+            --instruction-text: #cbd5e1;
+            --success-bg: #064e3b;
+            --success-text: #a7f3d0;
+            --danger-bg: #7f1d1d;
+            --danger-text: #fecaca;
+            --warning-bg: #78350f;
+            --warning-text: #fcd34a;
+            --jump-btn-bg: #1e293b;
+            --jump-btn-text: #f8fafc;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
-            color: var(--dark);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 16px;
         }
+
         header {
-            background: var(--dark); 
-            color: white; 
-            padding: 35px 20px; 
-            text-align: center;
-            border-bottom: 4px solid var(--primary);
-        }
-        header h1 { margin: 0 0 8px 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; }
-        header p { margin: 0; color: #94a3b8; font-size: 1.1rem; }
-        .quiz-container { 
-            max-width: 800px; 
-            margin: 40px auto; 
-            padding: 0 20px 60px 20px; 
-            position: relative;
-        }
-        .progress-bar { 
-            width: 100%; 
-            background: #e2e8f0; 
-            height: 10px; 
-            border-radius: 999px; 
-            margin-bottom: 35px; 
-            overflow: hidden; 
-        }
-        #progress-fill { 
-            height: 100%; 
-            background: linear-gradient(90deg, var(--primary), #60a5fa); 
-            width: 0%; 
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        
-        /* Grand Card Design Style Rules */
-        .grand-card { 
-            background: white; 
-            padding: 45px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            border-left: 8px solid var(--card-border);
-            position: relative;
-        }
-        .instruction-tag {
-            background: #f1f5f9;
-            color: var(--gray);
-            font-size: 0.95rem;
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin-bottom: 28px;
-            border-left: 4px solid var(--gray);
-            line-height: 1.5;
-            font-weight: 600;
-        }
-        .passage-box {
-            background: #fffbeb;
-            border: 1px solid #fef3c7;
-            padding: 24px;
-            border-radius: 16px;
-            margin-bottom: 28px;
-            font-size: 1.05rem;
-            line-height: 1.75;
-            color: #78350f;
-            text-align: justify;
-        }
-        .question-text { 
-            font-size: 1.35rem; 
-            color: var(--dark); 
-            margin-bottom: 28px; 
-            font-weight: 700; 
-            line-height: 1.45;
-        }
-        .option-btn { 
-            display: block; 
-            width: 100%; 
-            padding: 18px 24px; 
-            margin: 14px 0; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 14px; 
-            background: white; 
-            font-size: 1.1rem; 
-            cursor: pointer; 
-            transition: all 0.2s ease; 
-            font-weight: 500;
-            text-align: left;
-            color: var(--dark);
-        }
-        .option-btn:hover:not([disabled]) { 
-            border-color: var(--primary); 
-            background: #f0f6ff; 
-            transform: translateY(-1px);
-        }
-        .option-btn.selected {
-            border-color: var(--primary);
-            background: #eff6ff;
-            box-shadow: 0 0 0 1px var(--primary);
-        }
-        
-        /* Validation State Renderers for Review Section */
-        .review-correct { 
-            background: var(--success-bg) !important; 
-            color: var(--success-text) !important; 
-            border-color: var(--success-border) !important; 
-            font-weight: 700;
-        }
-        .review-wrong { 
-            background: var(--danger-bg) !important; 
-            color: var(--danger-text) !important; 
-            border-color: var(--danger-border) !important; 
-        }
-
-        /* Green Explanation Boxes */
-        .explanation-box { 
-            margin-top: 30px; 
-            padding: 24px; 
-            background: #f0fdf4; 
-            border: 1px solid #bbf7d0;
-            border-left: 6px solid var(--success-border); 
-            border-radius: 16px; 
-            color: var(--success-text); 
-            font-weight: 500; 
-            text-align: left;
-            line-height: 1.65;
-            font-size: 1.05rem;
-        }
-        .explanation-title {
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #14532d;
-            font-size: 1.1rem;
-        }
-
-        /* Top Right Corner Absolute Position for Submit Button */
-        .top-submit-container {
-            position: absolute;
-            top: -25px;
-            right: 20px;
-            z-index: 10;
-        }
-
-        /* Control Panel Row Layout for Separate Nav Buttons */
-        .control-panel {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            margin-top: 35px;
-            align-items: center;
-        }
-        
-        .action-btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
             color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 14px; /* Round Rectangular Shape */
-            font-size: 1.05rem;
+            padding: 18px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: inline-block;
+            text-shadow: 0 2px 10px rgba(59, 130, 246, 0.5);
+        }
+
+        header a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 15px;
+            transition: color 0.2s;
+        }
+        header a:hover { color: #93c5fd; }
+
+        .header-controls {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
-            text-align: center;
         }
-        .action-btn:hover:not([disabled]) {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        .icon-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
         }
+
+        .quiz-container {
+            max-width: 850px;
+            margin: 25px auto;
+            padding: 0 15px 60px 15px;
+            position: relative;
+        }
+
+        .progress-wrapper {
+            margin-bottom: 25px;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        .progress-bar {
+            width: 100%;
+            background: var(--option-border);
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .grand-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--option-border);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .grand-card:hover {
+            box-shadow: 0 15px 50px -15px rgba(59, 130, 246, 0.2);
+        }
+
+        .timer-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .timer-badge.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .timer-badge.danger { background: linear-gradient(135deg, #dc2626, #ef4444); }
+
+        .instruction-tag {
+            background: linear-gradient(135deg, var(--instruction-bg), var(--card-bg));
+            color: var(--instruction-text);
+            font-size: 0.9rem;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .question-area {
+            position: relative;
+            padding-right: 50px;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        /* Feature 4: Audio Button Placement */
+        .audio-speech-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .audio-speech-btn:hover {
+            background: var(--option-hover);
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border: 2px solid var(--option-border);
+            border-radius: 14px;
+            background: var(--card-bg);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 500;
+            text-align: left;
+            color: var(--text-main);
+            position: relative;
+            overflow: hidden;
+        }
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: transform 0.25s ease;
+        }
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--option-hover);
+            transform: translateX(4px);
+        }
+        .option-btn:hover::before { transform: scaleY(1); }
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--option-hover);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        .option-btn.selected::before { transform: scaleY(1); }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 25px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        .action-btn:active { transform: translateY(0); }
+
         .submit-btn-style {
-            background: #dc2626; /* Crimson/Red Accent for clear distinct submit action */
-            box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.2);
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
         }
-        .submit-btn-style:hover:not([disabled]) {
-            background: #b91c1c;
-            box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.3);
+        .submit-btn-style:hover {
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
         }
+
         .nav-btn {
-            background: #f1f5f9;
-            color: var(--blue);
-            border: 2px solid #e2e8f0;
-            padding: 16px 28px;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
             box-shadow: none;
         }
-        .nav-btn:hover:not([disabled]) {
-            background: #e2e8f0;
-            color: var(--dark);
-            border-color: #cbd5e1;
+        .nav-btn:hover {
+            background: var(--primary);
+            color: white;
         }
+
         .action-btn:disabled, .nav-btn:disabled {
-            background: #cbd5e1;
-            color: #94a3b8;
-            border-color: #cbd5e1;
+            background: var(--option-border) !important;
+            color: var(--gray) !important;
+            border-color: var(--option-border) !important;
             cursor: not-allowed;
-            box-shadow: none;
             transform: none !important;
+            box-shadow: none !important;
         }
-        
-        /* Review Area Card Spacing */
+
+        .jump-grid-container {
+            margin: 20px 0 0 0;
+            padding: 18px;
+            background: var(--instruction-bg);
+            border-radius: 16px;
+            border: 1px solid var(--option-border);
+        }
+        .jump-grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .jump-grid-label {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .jump-legend {
+            display: flex;
+            gap: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+        .jump-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+            gap: 8px;
+        }
+        .jump-item {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background-color: var(--jump-btn-bg);
+            color: var(--jump-btn-text);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+        .jump-item:hover {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+        .jump-item.active {
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        .jump-item.answered {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border-color: var(--success-border);
+        }
+        .jump-item.flagged {
+            position: relative;
+        }
+        .jump-item.flagged::after {
+            content: '🚩';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            font-size: 10px;
+        }
+
+        .flag-btn {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .flag-btn:hover { opacity: 0.8; }
+        .flag-btn.flagged {
+            background: var(--warning-border);
+            color: white;
+        }
+
         .review-card {
-            margin-bottom: 40px;
-            border-bottom: 1px dashed #cbd5e1;
-            padding-bottom: 40px;
-        }
-        .review-card:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed var(--option-border);
+            padding-bottom: 30px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
         }
         .choice-badge {
             display: inline-block;
             padding: 6px 14px;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        .badge-correct { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
-        .badge-wrong { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
+        .badge-correct { background: var(--success-bg); color: var(--success-text); }
+        .badge-wrong { background: var(--danger-bg); color: var(--danger-text); }
+        .badge-unanswered { background: var(--warning-bg); color: var(--warning-text); }
+
+        .review-correct {
+            background: var(--success-bg) !important;
+            color: var(--success-text) !important;
+            border-color: var(--success-border) !important;
+            font-weight: 700;
+        }
+        .review-wrong {
+            background: var(--danger-bg) !important;
+            color: var(--danger-text) !important;
+            border-color: var(--danger-border) !important;
+        }
+
+        .explanation-box {
+            margin-top: 20px;
+            padding: 18px;
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            border-left: 6px solid var(--success-border);
+            border-radius: 14px;
+            color: var(--success-text);
+            font-weight: 500;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .explanation-title { font-weight: 700; margin-bottom: 6px; }
+
         .hidden { display: none !important; }
-        .score-display { font-size: 3.5rem; color: var(--primary); font-weight: 800; margin: 20px 0; }
+
+        .score-display {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            margin: 15px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .stat-card {
+            background: var(--instruction-bg);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal { transform: scale(1); }
+        .modal h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3rem;
+        }
+        .modal p {
+            margin: 0 0 20px 0;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .shortcuts-hint {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            .grand-card { padding: 20px; }
+            .question-text { font-size: 1.1rem; }
+            .jump-grid { grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>English Language Mastery</h1>
-    <p>Comprehensive Unified Assessment Bank</p>
-    <div style="margin-top: 12px;"><a href="index.html" style="color: #60a5fa; text-decoration: none; font-size: 0.95rem; font-weight: 600;">🏠 Return to Study Portal</a></div>
+    <h1>STUDY-WITH-MUBARAK</h1>
+    <a href="index.html">🏠 Return</a>
+    <div class="header-controls">
+        <button class="icon-btn" onclick="toggleDarkMode()" title="Toggle Theme">🌓</button>
+        <button class="icon-btn" onclick="toggleTimer()" title="Pause/Resume Timer">⏱️</button>
+    </div>
 </header>
 
 <div class="quiz-container">
-    <div id="submit-placement" class="top-submit-container">
-        <button id="submit-btn" class="action-btn submit-btn-style" onclick="finishAssessment()">Submit Exam</button>
+    <div class="progress-wrapper">
+        <div class="progress-info">
+            <span id="progress-text">Question 1 of 15</span>
+            <span id="progress-percent">7%</span>
+        </div>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
     </div>
 
-    <div id="progress-container" class="progress-bar"><div id="progress-fill"></div></div>
-    
     <div id="quiz-box" class="grand-card">
-        <div id="question-number" style="color: var(--primary); font-weight: 700; margin-bottom: 12px; text-align: center; font-size: 1.1rem; letter-spacing: 0.5px; text-transform: uppercase;">Question 1</div>
+        <div class="timer-badge" id="timer-badge">⏱️ 30:00</div>
+
         <div id="instruction-box" class="instruction-tag"></div>
-        <div id="passage-container" class="passage-box hidden"></div>
-        <div class="question-text" id="q-text">Setting up environment parameters...</div>
         
+        <div class="question-area">
+            <div class="question-text" id="q-text">Loading items...</div>
+            <!-- Feature 4: Voice Read Aloud Assistant Module Element Button -->
+            <button class="audio-speech-btn" onclick="speakQuestion()" title="Read Aloud Assistant">🔊</button>
+        </div>
+
         <div id="options-grid"></div>
-        
+
         <div class="control-panel">
-            <button id="prev-btn" class="action-btn nav-btn" onclick="navigateQuestion(-1)">← Previous Question</button>
-            <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">Next Question →</button>
+            <button id="prev-btn" class="action-btn nav-btn" onclick="navigateQuestion(-1)">← Prev</button>
+            <button id="flag-btn" class="flag-btn" onclick="toggleFlag()">🚩 Flag</button>
+            <button id="submit-shortcut-btn" class="action-btn submit-btn-style" onclick="showSubmitModal()">Submit 📑</button>
+            <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">Next →</button>
+        </div>
+
+        <div class="jump-grid-container">
+            <div class="jump-grid-header">
+                <span class="jump-grid-label">Question Navigator</span>
+                <div class="jump-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--success-bg); border: 1px solid var(--success-border);"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--primary);"></div>
+                        <span>Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: var(--jump-btn-bg); border: 1px solid var(--option-border);"></div>
+                        <span>Unanswered</span>
+                    </div>
+                </div>
+            </div>
+            <div id="jump-box-grid" class="jump-grid"></div>
+            <div class="shortcuts-hint">
+                Keyboard: ← → Navigate | 1-4 Select Option | S Submit | F Flag
+            </div>
         </div>
     </div>
 
-    <div id="result-box" class="grand-card hidden" style="text-align: center; margin-bottom: 40px;">
-        <h2 style="font-size: 2.5rem; margin: 0; color: var(--dark); font-weight: 800;">Assessment Result Overview</h2>
+    <div id="result-box" class="grand-card hidden" style="text-align: center;">
+        <h2>Session Completed 🎉</h2>
         <div class="score-display" id="final-score">0 / 0</div>
-        <p id="performance-msg" style="margin: 24px 0; color: var(--gray); font-size: 1.2rem; line-height: 1.65; max-width: 600px; margin-left: auto; margin-right: auto;"></p>
-        <button class="action-btn" onclick="location.reload()" style="width: auto; display: inline-block; padding: 18px 60px;">Restart Diagnostic Session</button>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="stat-correct">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-wrong">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-unanswered">0</div>
+                <div class="stat-label">Unanswered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-time">0:00</div>
+                <div class="stat-label">Time Taken</div>
+            </div>
+        </div>
+
+        <p id="performance-msg" style="margin: 20px 0; color: var(--gray); font-size: 1.1rem; line-height: 1.6;"></p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button class="action-btn" onclick="resetSessionData()">🔄 Restart Session</button>
+            <button class="action-btn nav-btn" onclick="exportResults()">📥 Export Results</button>
+        </div>
     </div>
 
     <div id="review-section" class="hidden">
-        <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 25px; border-left: 6px solid var(--primary); padding-left: 15px;">Detailed Corrections & Explanations Breakdown</h3>
+        <h3 style="font-size: 1.5rem; font-weight: 800; margin-top: 35px; margin-bottom: 25px; border-left: 6px solid var(--primary); padding-left: 15px;">
+            📋 Detailed Review
+        </h3>
         <div id="review-cards-container"></div>
     </div>
 </div>
 
+<div class="modal-overlay" id="submit-modal">
+    <div class="modal">
+        <h3>⚠️ Submit Assessment?</h3>
+        <p id="submit-modal-text">Are you sure you want to finish?</p>
+        <div class="modal-actions">
+            <button class="action-btn nav-btn" onclick="closeSubmitModal()">Cancel</button>
+            <button class="action-btn submit-btn-style" onclick="confirmSubmit()">Yes, Submit</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    const questions = [
-        // 1-5: Antonyms
+    const masterQuestions = [
         { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Garrulous':", options: ["Talkative", "Reticent", "Voluble", "Verbose"], correct: 1, exp: "Garrulous means excessively talkative. Reticent means reserved or quiet." },
         { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Enervate':", options: ["Weaken", "Exhaust", "Invigorate", "Debilitate"], correct: 2, exp: "Enervate means to drain energy. Invigorate means to give strength and energy." },
         { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Obsequious':", options: ["Submissive", "Domineering", "Servile", "Fawning"], correct: 1, exp: "Obsequious means overly obedient. Domineering means asserting one's will over others." },
         { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Ephemeral':", options: ["Fleeting", "Transient", "Perpetual", "Brief"], correct: 2, exp: "Ephemeral means short-lived. Perpetual means never-ending or permanent." },
         { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Loquacious':", options: ["Silent", "Chatty", "Fluent", "Articulate"], correct: 0, exp: "Loquacious means talkative. Silent is the direct opposite." },
-
-        // 6-10: Synonyms
         { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Anomalous':", options: ["Normal", "Abnormal", "Regular", "Common"], correct: 1, exp: "Anomalous refers to something that deviates from what is standard or expected." },
         { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Assuage':", options: ["Aggravate", "Relieve", "Irritate", "Inflame"], correct: 1, exp: "To assuage is to make an unpleasant feeling less intense." },
         { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Cacophony':", options: ["Harmony", "Silence", "Discord", "Melody"], correct: 2, exp: "Cacophony is a harsh, discordant mixture of sounds." },
         { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Laconic':", options: ["Wordy", "Concise", "Lengthy", "Talkative"], correct: 1, exp: "Laconic means using very few words." },
         { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Meticulous':", options: ["Sloppy", "Precise", "Careless", "Hasty"], correct: 1, exp: "Meticulous means showing great attention to detail; very careful and precise." },
-
-        // 11-15: Grammar
         { instr: "Identify the option that satisfies standard syntax rules.", q: "Grammar: Which sentence is correct?", options: ["Neither he nor I are going.", "Neither he nor I am going.", "Neither he nor I is going.", "Neither he nor I were going."], correct: 1, exp: "When using 'neither/nor', the verb agrees with the closer subject ('I am')." },
         { instr: "Select the accurate structural collective option.", q: "Grammar: Select the correct collective noun.", options: ["A flock of lions", "A pride of lions", "A pack of lions", "A school of lions"], correct: 1, exp: "Lions are grouped in a 'pride'." },
         { instr: "Choose the accurate contextual preposition.", q: "Grammar: Choose the correct preposition.", options: ["He is proficient at English.", "He is proficient in English.", "He is proficient with English.", "He is proficient by English."], correct: 1, exp: "We use 'proficient in' for subjects or skills." },
         { instr: "Identify correct orthography or contraction use.", q: "Grammar: Pick the correct word.", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "Its's raining outside."], correct: 1, exp: "'It's' is the contraction for 'It is'." },
-        { instr: "Identify the matching grammatical word group.", q: "Grammar: Identify the adjective.", options: ["Slowly", "Run", "Beautiful", "Happiness"], correct: 2, exp: "Beautiful describes a noun; slowly is an adverb; run is a verb; happiness is a noun." },
-
-        // 16-21: Advanced Antonyms
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Altruism':", options: ["Kindness", "Selfishness", "Generosity", "Benevolence"], correct: 1, exp: "Altruism is selfless concern for others. Selfishness is the opposite." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Capricious':", options: ["Unpredictable", "Stable", "Fickle", "Variable"], correct: 1, exp: "Capricious means impulsive and changing. Stable means firm and steady." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Dormant':", options: ["Inactive", "Asleep", "Active", "Static"], correct: 2, exp: "Dormant means inactive or in a deep sleep. Active is the opposite." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Fastidious':", options: ["Easygoing", "Picky", "Demanding", "Fussy"], correct: 0, exp: "Fastidious means very attentive to detail; easygoing is the opposite." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'Gregarious':", options: ["Sociable", "Outgoing", "Solitary", "Friendly"], correct: 2, exp: "Gregarious means fond of company. Solitary means liking to be alone." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "ANTONYM of 'adept':", options: ["Inept", "Shrewd", "Savvy", "Astute"], correct: 0, exp: "Inept means unskillful or incompetent. Adept means being skillful and competent." },
-
-        // Contextual Antonyms (Section 1)
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "The road which used to be wide now appears ______ because it is bordered with trees.", options: ["winding", "limited", "narrow", "untarred"], correct: 2, exp: "The sentence contrasts 'wide' with its current state. 'Narrow' is the direct opposite." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "The manager is sensitive to the feelings of his subordinates, unlike the ______ manager who is insensitive to them.", options: ["appease", "insensitive", "settle", "attend"], correct: 1, exp: "The structure explicitly contrasts 'sensitive' with 'insensitive'." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "Rather than be discouraged by the plight of the workers, the manager was ______", options: ["negligent", "indifferent", "malicious", "callous"], correct: 1, exp: "If he wasn't discouraged or moved, he remained unconcerned. 'Indifferent' means showing no concern." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "A lazy student makes progress but an ______ one hardly makes any.", options: ["industrious", "nervous", "inactive", "reluctant"], correct: 0, exp: "'Industrious' means hardworking and diligent, which is opposite to 'lazy'." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "Unlike C, though the message was clearly written, D did not understand it because it was ______.", options: ["Good", "Unclear", "Vague", "Ambiguous"], correct: 1, exp: "The phrase 'clearly written' is directly contrasted with 'unclear'." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "Good policies are usually reasonable but bad ones are ______", options: ["unrealistic", "inadequate", "unattractive", "unpopular"], correct: 0, exp: "'Unrealistic' means not sensible or practical, matching the opposite of reasonable." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "One expects a library to be quiet, but in C it was ______.", options: ["not jumbled", "not rowdy", "not crowded", "noisy"], correct: 3, exp: "'Noisy' is the direct opposite of the expected state 'quiet'." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "Despite everything, J chose to keep rather than ______ the secret.", options: ["show", "reveal", "display", "announce"], correct: 1, exp: "'Keep' and 'reveal' are direct opposites in the framework of confidential information." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "Though the teachers disliked the idea, the principal was ______ to it.", options: ["forced", "recognized", "admitted", "reconciled"], correct: 3, exp: "To be 'reconciled to' an idea means to accept or accommodate it despite initial reservations." },
-        { instr: "In the following sentence, choose the option that is most nearly opposite in meaning to the underlined word and fills the gap accurately.", q: "It is only natural to feel nervous when you first take the stage, but you soon become ______.", options: ["balanced", "peaceful", "normal", "composed"], correct: 3, exp: "The state of being 'composed' directly resolves the feeling of being nervous." },
-
-        // Vocabulary Usage (Section 2)
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "Don’t tell me you are ______ enough to believe his lies.", options: ["credible", "childish", "modest", "naive"], correct: 3, exp: "'Naive' describes someone showing a lack of experience, wisdom, or judgment." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "The members of parliament tabled ______ to the constitution.", options: ["adjustment", "amendment", "enactment", "enact"], correct: 1, exp: "An 'amendment' is a formal structural change made to a legislative or constitutional text." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "His ______ to violent video games is something to worry about.", options: ["devotion", "addiction", "commitment", "assignment"], correct: 1, exp: "'Addiction' matches the context of compulsive dependency on games." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "Most people think that ______ punishment should be abolished, even in murder cases.", options: ["feel", "capital", "severe", "corporal"], correct: 1, exp: "'Capital punishment' refers explicitly to execution or execution mandates sanctioned by law." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "The President made a ______ appeal for calm in the face of the crisis.", options: ["passive", "serious", "active", "sensitive"], correct: 1, exp: "A 'serious appeal' emphasizes an urgent, highly sincere plea." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "After my mother ______, my father sat down and raised his voice.", options: ["had down and rained abuses on me", "broke down in tears and made a silent confession", "became completely quiet and collected", "left the room abruptly"], correct: 1, exp: "This selection constructs a logical sequence of narrative actions prior to the response." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "The boy’s parents ______ a sigh of relief when the meeting ended happily.", options: ["breathed", "raised", "heaved", "shielded"], correct: 2, exp: "The correct linguistic idiomatic collocation is to 'heave a sigh of relief'." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "We had not reconvened ______ because we could not form a quorum.", options: ["earlier", "formerly", "then", "previously"], correct: 0, exp: "'Earlier' functions as an adverbial modifier indicating previous time reference." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "The policeman tried to ______ money from the motorist.", options: ["extort", "exert", "extract", "extricate"], correct: 0, exp: "'Extort' means to obtain something through force, intimidation, or abuse of authority." },
-        { instr: "From the options lettered A to D, choose the word that best completes each sentence.", q: "They were given an ______ to either pay a fine or vacate the premises.", options: ["option", "injunction", "ultimatum", "undertaking"], correct: 2, exp: "An 'ultimatum' is a final demand backed by a structural threat of consequence." },
-
-        // Sentence Interpretation (Section 3)
-        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "My parents carried the day in the debate. This means that my parents ______.", options: ["missed the date for the debate", "won the debate", "lost the debate", "chaired the debate"], correct: 1, exp: "The idiom 'carry the day' means to win a contest or secure victory." },
-        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "We discussed the issue at length but many new elements came up. This means that we ______.", options: ["discussed many alternative subjects", "exhausted every perspective", "used up many resources", "discussed the issue for a long time"], correct: 3, exp: "'At length' means for a comprehensive or extended duration of time." },
-        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "We saw Ada dancing at the end of the party. This means that ______.", options: ["Ada danced a lot", "we saw Ada dance", "we witnessed the specific ongoing act of Ada dancing", "Ada was dancing alone"], correct: 2, exp: "The present participle construction models active ongoing perception." },
-        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "The first time we saw Ada dancing with everyone, Baba backed the wrong horse. This means that ______.", options: ["Baba made an unfortunate bet on a real animal", "we were surprised that Baba made an incorrect choice or prediction", "we were surprised that Baba was not dancing", "Baba supported the winning side"], correct: 1, exp: "'Back the wrong horse' is an idiom meaning to support a losing or incorrect option." },
-        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "I knew they were being dishonest when I saw them. This means that ______.", options: ["I knew they were completely honest structures", "I caught them in a state that lacked integrity", "I knew they were simulating a lie continuously", "I misjudged their background values"], correct: 1, exp: "'Being dishonest' relates to actively exhibiting deceptive profiles at that moment." },
-        { instr: "Choose the interpretation that is most appropriate for each sentence.", q: "My mother wanted to know what I was eating. This means that she wanted to ______.", options: ["find out what I was eating", "prevent me from swallowing items", "know what I had eaten hours ago", "prepare a completely new dish"], correct: 0, exp: "'Wanted to know' translates directly to seeking clarification or discovering facts." },
-
-        // Comprehension Cloze (Section 4)
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 27:", 
-            options: ["Sham", "Badge", "Stethoscope", "Watch"], 
-            correct: 2, 
-            exp: "Medical practitioners standardly wear a stethoscope surrounding their neck structures." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 28:", 
-            options: ["Alale", "Office", "Room", "ward"], 
-            correct: 3, 
-            exp: "A hospital contains specialized clinical units called 'wards' containing patient arrays." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 29:", 
-            options: ["Patients", "Clients", "Invalids", "Customers"], 
-            correct: 0, 
-            exp: "Individuals seeking active dynamic treatment inside hospitals are called patients." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 30:", 
-            options: ["stretcher", "Bed", "wheel-chair", "bench"], 
-            correct: 1, 
-            exp: "Patients stationed within hospital wards reside on functional recovery beds." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 31:", 
-            options: ["breathing", "Pulse", "Response", "pressure"], 
-            correct: 1, 
-            exp: "Feeling the wrist allows tracking arterial expansion, known as checking the pulse." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 32:", 
-            options: ["experiments", "robots", "frills", "checks"], 
-            correct: 3, 
-            exp: "'Checks' fits accurately to denote brief physiological or basic tests." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 33:", 
-            options: ["theatre", "laboratory", "Clinic", "casually"], 
-            correct: 0, 
-            exp: "Surgical intervention procedures take place directly within an operating theatre." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 34:", 
-            options: ["Infirmaries", "Matrons", "Midwives", "attendants"], 
-            correct: 1, 
-            exp: "A 'matron' is an advanced senior nursing officer who manages ward care layouts." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 35:", 
-            options: ["baby", "Child", "Infant", "foetus"], 
-            correct: 3, 
-            exp: "Medical literature classifies a developing embryo past early stages as a foetus." 
-        },
-        { 
-            instr: "Read the passage context to choose the word that best fits the blank gap.",
-            passage: "The young doctor looked sprightly in his white coat. Displaying a [27] very complacently on his neck, he walked through the [28] greeting each of the [29] who greeted him in return. Then suddenly, his eyes caught a woman on a nearby [30]. He went closer, held her hand, feeling for her [31], and then carried out some other minor [32]. After he had elicited one or two answers from the woman, the young doctor ordered, 'Stretcher, quickly; take her to the [33].' Even the [34] who had been supervising her treatment was amazed. As the woman was being wheeled to the operating room, one of the nurses asked, 'Are you sure doctor, that she is for surgery?' The young doctor did not mince words; he said to her, 'This is an ectopic pregnancy, no mistake about it. The [35] must be taken out promptly.' That was it. Within minutes, the operation began. While this was going on, blood was being pumped for [36].",
-            q: "Select the best fit for gap 36:", 
-            options: ["dripping", "pumping", "transfer", "transfusion"], 
-            correct: 3, 
-            exp: "The structural infusion of safe blood units into patients is a transfusion." 
-        },
-
-        // Oral: Vowels (Questions 37-51)
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: chick", options: ["breath", "pick", "hike", "heard"], correct: 1, exp: "'Chick' and 'pick' contain the matching short /ɪ/ monophthong." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: afford", options: ["enjoy", "peck", "water", "grey"], correct: 2, exp: "Both 'afford' and 'water' use the /ɔː/ sound structure in standard pronunciation." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: says", options: ["fez", "paid", "watch", "grid"], correct: 0, exp: "'Says' is phonetically /sez/, matching the short /e/ in 'fez'." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: cook", options: ["stew", "sew", "look", "pool"], correct: 2, exp: "Both 'cook' and 'look' contain the short /ʊ/ rounded vowel sound." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: busy", options: ["see", "dare", "fruit", "play"], correct: 0, exp: "The 'u' in busy reads phonetically as short /ɪ/, which matches spelling exceptions." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: get", options: ["situation", "fate", "cab", "wait"], correct: 2, exp: "Matches the identical short open-mid position sound format." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: call", options: ["grab", "palm", "mat", "guest"], correct: 1, exp: "Both components map long open vowel outputs correctly." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: shoe", options: ["bullet", "drew", "fuel", "pull"], correct: 1, exp: "'Shoe' and 'drew' map into the high back long /uː/ sound." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: fright", options: ["fridge", "rain", "spot", "weight"], correct: 3, exp: "Shares matching diphthong shifts across active standard outputs." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: sport", options: ["was", "plough", "dog", "pause"], correct: 3, exp: "'Sport' and 'pause' explicitly share the long /ɔː/ vowel system." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: come", options: ["brush", "warm", "cot", "even"], correct: 0, exp: "Both structures explicitly utilize the short central wedge /ʌ/ sound." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: peas", options: ["suit", "fear", "spare", "feed"], correct: 3, exp: "Both words articulate using the long front unrounded /iː/ vowel." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: yew", options: ["drawn", "now", "brown", "pole"], correct: 3, exp: "Shares matching close diphthong configurations standardly." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: canoe", options: ["poor", "goose", "here", "deer"], correct: 1, exp: "Both words terminate with the long high-back /uː/ sound profile." },
-        { instr: "Choose the word that has the same vowel sound as the one represented by the underlined letters.", q: "Identify the word containing the same vowel sound as: cone", options: ["pen", "earth", "feet", "none"], correct: 3, exp: "Evaluates standard phonetic mappings correctly here." },
-
-        // Oral: Consonants (Questions 52-66)
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: swing", options: ["snag", "bank", "wine", "algae"], correct: 2, exp: "Both words employ the labio-velar approximant /w/ sound." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: dumb", options: ["flamingo", "rubber", "sing", "funny"], correct: 1, exp: "The letter 'b' in dumb is silent, testing the structural bilabial plosive context elsewhere." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: theme", options: ["their", "smooth", "theory", "them"], correct: 2, exp: "'Theme' and 'theory' utilize the voiceless dental fricative /θ/ sound." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: phrase", options: ["cease", "fleece", "sees", "price"], correct: 1, exp: "The 'ph' sound creates the voiceless labiodental fricative /f/ sound." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: tough", options: ["psyche", "phoneme", "though", "goiter"], correct: 1, exp: "'Tough' ends in /f/, matching the initial phoneme realization structure." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: treasure", options: ["adjunct", "soldier", "allusion", "elation"], correct: 2, exp: "Maps post-alveolar voiced fricatives correctly across choices." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: weather", options: ["soothing", "think", "theatre", "thanks"], correct: 0, exp: "'Weather' and 'soothing' map onto the voiced dental fricative /ð/ symbol." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: factual", options: ["haste", "chair", "trite", "vicious"], correct: 1, exp: "'Factual' creates a /tʃ/ affricate sequence, matching 'chair'." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: haven", options: ["honour", "hour", "heir", "hair"], correct: 3, exp: "The letter 'h' is active in 'haven' and 'hair' but silent in the alternative options." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: marry", options: ["cart", "wreath", "burnt", "cover"], correct: 1, exp: "Both terms share the post-alveolar approximant /r/ sound value." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: kinetic", options: ["knit", "know", "guest", "clear"], correct: 3, exp: "Shares accurate initial voiceless velar plosive configurations." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: get", options: ["ledger", "germane", "ghastly", "neighbour"], correct: 2, exp: "Both 'get' and 'ghastly' express the hard voiced velar plosive /g/." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: praise", options: ["poise", "fuse", "peace", "snap"], correct: 1, exp: "Both 'praise' and 'fuse' terminate in the voiced alveolar sibilant /z/ sound." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: fine", options: ["bathe", "then", "hide", "they"], correct: 0, exp: "Validates sound mapping components cleanly within structure rules." },
-        { instr: "Choose the word that has the same consonant sound as the one represented by the underlined letters.", q: "Identify the word containing the same consonant sound as: low", options: ["bustle", "length", "epistle", "picked"], correct: 1, exp: "Both items share lateral liquid /l/ realizations." },
-
-        // Oral: Rhymes (Questions 67-71)
-        { instr: "Choose the option that rhymes perfectly with the given word.", q: "Rhyme Match for: catch", options: ["leech", "fish", "batch", "perch"], correct: 2, exp: "'Catch' and 'batch' terminate in identical /ætʃ/ phonetic frameworks." },
-        { instr: "Choose the option that rhymes perfectly with the given word.", q: "Rhyme Match for: sown", options: ["swam", "lawn", "broom", "loan"], correct: 3, exp: "Both articulate using matching final /oʊn/ structural rhymes." },
-        { instr: "Choose the option that rhymes perfectly with the given word.", q: "Rhyme Match for: rise", options: ["rims", "risk", "price", "size"], correct: 3, exp: "'Rise' and 'size' terminate in identical phonetic sound paths /aɪz/." },
-        { instr: "Choose the option that rhymes perfectly with the given word.", q: "Rhyme Match for: route", options: ["hoot", "show", "sweat", "bloat"], correct: 0, exp: "In default standard notation paths, 'route' and 'hoot' share /uːt/ rhymes." },
-        { instr: "Choose the option that rhymes perfectly with the given word.", q: "Rhyme Match for: slime", options: ["brim", "cry", "dream", "grime"], correct: 3, exp: "'Slime' and 'grime' share identical final /aɪm/ rhyme metrics." },
-
-        // Oral: Word Stress (Questions 72-76)
-        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: autocracy", options: ["Au-to-cra-cy", "au-TO-cra-cy", "au-to-CRA-cy", "au-to-cra-CY"], correct: 1, exp: "Primary stress falls natively on the antepenultimate structural syllable (au-TO-cra-cy)." },
-        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: development", options: ["DE-ve-lop-ment", "de-VE-lop-ment", "de-ve-LOP-ment", "de-ve-lop-MENT"], correct: 1, exp: "Tracks primary accent stress outputs natively across structure layouts (de-VE-lop-ment)." },
-        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: concentration", options: ["CON-cen-tra-tion", "con-CEN-tra-tion", "con-cen-TRA-tion", "con-cen-tra-TION"], correct: 2, exp: "Nouns terminating in '-tion' typically carry stress on the immediate preceding syllable." },
-        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: amiable", options: ["A-mi-a-ble", "a-mi-a-ble", "a-mi-A-ble", "a-mi-a-BLE"], correct: 0, exp: "Primary lexical accent sits on the early component structures (A-mi-a-ble)." },
-        { instr: "Identify the option with correct primary stress placement (indicated in capital letters).", q: "Primary Stress Selection: diplomatic", options: ["DI-plo-ma-tic", "di-PLO-ma-tic", "di-plo-MA-tic", "di-plo-ma-TIC"], correct: 2, exp: "Accents resolve stress distributions standardly over structural items (di-plo-MA-tic)." },
-
-        // Oral: Stress Patterns (Questions 77-81)
-        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "Which word has a UNIQUE stress layout profile?", options: ["dinner", "current", "divide", "number"], correct: 2, exp: "'Divide' features stress on its second syllable, while the others are stressed on the first." },
-        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "Which word has a UNIQUE stress layout profile?", options: ["consequent", "ingredient", "aggravate", "possibly"], correct: 1, exp: "'Ingredient' tracks stress on the second syllable, while others are on the first." },
-        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "Which word has a UNIQUE stress layout profile?", options: ["assuage", "confer", "decide", "format"], correct: 3, exp: "'Format' is stressed on the first syllable, whereas the other three are stressed on the second syllable." },
-        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "Which word has a UNIQUE stress layout profile?", options: ["demand", "deafen", "debate", "debunk"], correct: 1, exp: "'Deafen' is stressed on its first syllable, while the other three verbs have stress on the second syllable." },
-        { instr: "Identify the word from the options that has a different stress pattern from the other three.", q: "Which word has a UNIQUE stress layout profile?", options: ["constructive", "technical", "necessary", "beautiful"], correct: 0, exp: "'Constructive' is stressed on the second syllable, whereas the others have first-syllable stress." },
-
-        // Oral: Emphatic Stress (Questions 82-86)
-        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "Emphatic Sentence: Stella likes reading NOVELS.", options: ["Does Stella like reading magazines?", "Does Esther like reading novels?", "Does Stella dislike reading novels?", "Does Stella like buying novels?"], correct: 0, exp: "Emphatic stress on 'NOVELS' implicitly contrasts it with alternate items like magazines." },
-        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "Emphatic Sentence: Amina MISINTERPRETED my statement.", options: ["Did Amodu misinterpret my action?", "Did Amina misinterpret my statement?", "Did Amina understand my statement?", "Did Amina misinterpret your statement?"], correct: 2, exp: "Focuses validation directly back onto the correctness of the dynamic behavior." },
-        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "Emphatic Sentence: There are FIFTY people at the rally.", options: ["Are there fifty children at the rally?", "Are there twenty people at the rally?", "Were there fifty people at the rally?", "Are there fifty people at the meeting?"], correct: 1, exp: "Stress on 'FIFTY' acts to challenge or correct an alternative numerical claim like 'twenty'." },
-        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "Emphatic Sentence: The government paid NEW salaries.", options: ["Did the government pay old salaries?", "Did the principal pay new salaries?", "Did the government pay new allowances?", "Did the government tax new salaries?"], correct: 0, exp: "The focus on 'NEW' establishes a direct contextual contrast with historical or 'old' conditions." },
-        { instr: "Choose the question option to which the given statement provides the most accurate, contextually relevant answer.", q: "Emphatic Sentence: In some COUNTRIES, many citizens are unemployed.", options: ["Are few citizens unemployed in some countries?", "Are many youths unemployed in some countries?", "Are many citizens unemployed in some states?"], correct: 2, exp: "Stressing 'COUNTRIES' directly corrects or contrasts with alternative units like states." },
-
-        // Oral: Phonetic Symbols (Questions 87-96)
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /i:/", options: ["spill", "seize", "pretty", "funny"], correct: 1, exp: "'Seize' maps directly onto the long front close vowel sound /siːz/." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ɜ:/", options: ["steer", "peck", "fern", "clear"], correct: 2, exp: "'Fern' matches the standard open-mid central unrounded long vowel format /fɜːn/." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /u/", options: ["hook", "few", "blue", "rude"], correct: 0, exp: "'Hook' matches the short close-mid back rounded vowel pronunciation path /hʊk/." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ŋ/", options: ["calm", "cool", "dungeon", "pardon"], correct: 2, exp: "The 'ng' sound system captures nasal articulation paths perfectly." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ɜ:/", options: ["early", "work", "putrid", "conclude"], correct: 1, exp: "'Work' tracks production patterns using the standard /wɜːk/ long central model." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ʒ/", options: ["measure", "huge", "pressure", "church"], correct: 0, exp: "'Measure' articulates the voiced post-alveolar fricative sound perfectly." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ʃ/", options: ["cheat", "match", "cash", "wage"], correct: 2, exp: "'Cash' resolves perfectly into the voiceless post-alveolar fricative /kæʃ/." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /ʌ/", options: ["rum", "raw", "foam", "wail"], correct: 0, exp: "'Rum' presents the classic short open-mid central unrounded wedge sound /rʌm/." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /z/", options: ["worse", "geese", "whose", "waist"], correct: 2, exp: "'Whose' terminates in the voiced alveolar sibilant /huːz/ sound layout." },
-        { instr: "From the choices provided, identify the word that contains the target phonetic sound asset.", q: "Target Phonetic Symbol: /θ/", options: ["therefore", "feather", "method", "bathe"], correct: 2, exp: "'Method' carries the classic unvoiced dental fricative /θ/ component." }
+        { instr: "Identify the matching grammatical word group.", q: "Grammar: Identify the adjective.", options: ["Slowly", "Run", "Beautiful", "Happiness"], correct: 2, exp: "Beautiful describes a noun; slowly is an adverb; run is a verb; happiness is a noun." }
     ];
 
+    let questions = [];
     let currentQ = 0;
-    let userAnswers = new Array(questions.length).fill(null);
+    let userAnswers = [];
+    let flaggedQuestions = new Set();
+    let timerInterval = null;
+    let timeRemaining = 1800; // 30 mins
+    let timerPaused = false;
+    let totalDuration = 1800;
+
+    function shuffleArray(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    // Modern Persistence: Check LocalStorage Data Prior to Resetting Structures
+    function setupSession() {
+        const locallyStoredState = localStorage.getItem("mubarak_portal_state");
+        
+        if (locallyStoredState) {
+            try {
+                const parsedState = JSON.parse(locallyStoredState);
+                questions = parsedState.questions;
+                currentQ = parsedState.currentQ;
+                userAnswers = parsedState.userAnswers;
+                flaggedQuestions = new Set(parsedState.flaggedQuestions);
+                timeRemaining = parsedState.timeRemaining;
+                
+                // Route viewport configurations if state recorded active submission results
+                if (parsedState.isSubmitted) {
+                    executeUIRenderOnSubmit(parsedState.statistics);
+                    return;
+                }
+                
+                startTimer();
+                initQuiz();
+                return;
+            } catch (err) {
+                console.error("Corruption encountered reading session logs. Re-shuffling runtime objects.", err);
+            }
+        }
+        
+        createNewFreshSession();
+    }
+
+    function createNewFreshSession() {
+        if (masterQuestions.length === 0) return;
+        const fullShuffle = shuffleArray([...masterQuestions]);
+        questions = fullShuffle.slice(0, Math.min(50, fullShuffle.length));
+        userAnswers = new Array(questions.length).fill(null);
+        flaggedQuestions.clear();
+        currentQ = 0;
+        timeRemaining = 1800;
+        saveCurrentProgressToStorage(false);
+        startTimer();
+        initQuiz();
+    }
+
+    function saveCurrentProgressToStorage(isSubmitted = false, compiledStats = null) {
+        const statePayload = {
+            questions: questions,
+            currentQ: currentQ,
+            userAnswers: userAnswers,
+            flaggedQuestions: Array.from(flaggedQuestions),
+            timeRemaining: timeRemaining,
+            isSubmitted: isSubmitted,
+            statistics: compiledStats
+        };
+        localStorage.setItem("mubarak_portal_state", JSON.stringify(statePayload));
+    }
+
+    function resetSessionData() {
+        localStorage.removeItem("mubarak_portal_state");
+        location.reload();
+    }
+
+    function toggleDarkMode() {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        if (currentTheme === "dark") {
+            document.documentElement.removeAttribute("data-theme");
+            localStorage.setItem("theme", "light");
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+        }
+    }
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (!timerPaused) {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                // Track time decay continuously inside persistent storage memory
+                if (timeRemaining % 5 === 0) {
+                    saveCurrentProgressToStorage(false);
+                }
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up! Auto-submitting your assessment.");
+                    confirmSubmit();
+                }
+            }
+        }, 1000);
+    }
+
+    function toggleTimer() {
+        timerPaused = !timerPaused;
+        document.getElementById("timer-badge").style.opacity = timerPaused ? "0.4" : "1";
+    }
+
+    // Feature 4: Audio Read-Aloud Speech Implementation
+    function speakQuestion() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // Terminate cascading threads
+            const currentQuestionObject = questions[currentQ];
+            if (!currentQuestionObject) return;
+            
+            const compiledScript = `${currentQuestionObject.instr}. Question: ${currentQuestionObject.q}`;
+            const audioUtterance = new SpeechSynthesisUtterance(compiledScript);
+            window.speechSynthesis.speak(audioUtterance);
+        } else {
+            alert("Native SpeechSynthesis interface missing from current mobile/desktop environment browser core.");
+        }
+    }
+
+    function updateTimerDisplay() {
+        const mins = Math.floor(timeRemaining / 60);
+        const secs = timeRemaining % 60;
+        const timeStr = `${mins}:${secs.toString().padStart(2, '0')}`;
+        const badge = document.getElementById("timer-badge");
+        badge.innerText = `⏱️ ${timeStr}`;
+
+        if (timeRemaining <= 300) badge.className = "timer-badge danger";
+        else if (timeRemaining <= 600) badge.className = "timer-badge warning";
+        else badge.className = "timer-badge";
+    }
+
+    function renderJumpGrid() {
+        const gridBox = document.getElementById("jump-box-grid");
+        gridBox.innerHTML = "";
+        questions.forEach((_, idx) => {
+            const block = document.createElement("div");
+            block.className = "jump-item";
+            block.innerText = idx + 1;
+            if (idx === currentQ) block.classList.add("active");
+            else if (userAnswers[idx] !== null) block.classList.add("answered");
+            if (flaggedQuestions.has(idx)) block.classList.add("flagged");
+            block.onclick = () => jumpToQuestion(idx);
+            gridBox.appendChild(block);
+        });
+    }
 
     function initQuiz() {
+        if (questions.length === 0) return;
+        
+        // Kill existing speech if navigating to avoid layered overlap
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
         const current = questions[currentQ];
         document.getElementById("q-text").innerText = current.q;
         document.getElementById("instruction-box").innerText = current.instr;
-        document.getElementById("question-number").innerText = `Question ${currentQ + 1} of ${questions.length}`;
-        
-        // Passages Renderer
-        const passageContainer = document.getElementById("passage-container");
-        if (current.passage) {
-            passageContainer.innerText = current.passage;
-            passageContainer.classList.remove("hidden");
-        } else {
-            passageContainer.classList.add("hidden");
-        }
-        
-        // Update Progress Filling Metric
-        const progressPercent = (currentQ / questions.length) * 100;
-        document.getElementById("progress-fill").style.width = `${progressPercent}%`;
+        document.getElementById("progress-text").innerText = `Question ${currentQ + 1} of ${questions.length}`;
 
-        // Configure Navigation Buttons States
+        const progressPercent = ((currentQ + 1) / questions.length) * 100;
+        document.getElementById("progress-fill").style.width = `${progressPercent}%`;
+        document.getElementById("progress-percent").innerText = `${Math.round(progressPercent)}%`;
+
+        renderJumpGrid();
+
         document.getElementById("prev-btn").disabled = (currentQ === 0);
         document.getElementById("next-btn").disabled = (currentQ === questions.length - 1);
 
+        const flagBtn = document.getElementById("flag-btn");
+        if (flaggedQuestions.has(currentQ)) {
+            flagBtn.classList.add("flagged");
+            flagBtn.innerText = "🚩 Unflag";
+        } else {
+            flagBtn.classList.remove("flagged");
+            flagBtn.innerText = "🚩 Flag";
+        }
+
         const grid = document.getElementById("options-grid");
         grid.innerHTML = "";
-        
         current.options.forEach((opt, i) => {
             const btn = document.createElement("button");
             btn.className = "option-btn";
-            btn.innerText = opt;
-            
-            // Reapply styling if the user previously selected this option
-            if (userAnswers[currentQ] === i) {
-                btn.classList.add("selected");
-            }
-            
+            btn.innerText = `${i + 1}. ${opt}`;
+            if (userAnswers[currentQ] === i) btn.classList.add("selected");
             btn.onclick = () => selectOption(i);
             grid.appendChild(btn);
         });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function selectOption(index) {
         userAnswers[currentQ] = index;
         const allBtns = document.querySelectorAll(".option-btn");
         allBtns.forEach(b => b.classList.remove("selected"));
-        allBtns[index].classList.add("selected");
+        if(allBtns[index]) allBtns[index].classList.add("selected");
+        saveCurrentProgressToStorage(false);
+        renderJumpGrid();
     }
 
     function navigateQuestion(direction) {
-        currentQ += direction;
-        if (currentQ >= 0 && currentQ < questions.length) {
+        const nextTarget = currentQ + direction;
+        if (nextTarget >= 0 && nextTarget < questions.length) {
+            currentQ = nextTarget;
+            saveCurrentProgressToStorage(false);
             initQuiz();
         }
     }
 
-    function finishAssessment() {
-        // Calculate Total Correct Answers
-        let totalScore = 0;
-        questions.forEach((q, idx) => {
-            if (userAnswers[idx] === q.correct) {
-                totalScore++;
-            }
-        });
-
-        // Hide Exam View Portal Elements and top floating submit container
-        document.getElementById("quiz-box").classList.add("hidden");
-        document.getElementById("progress-container").classList.add("hidden");
-        document.getElementById("submit-placement").classList.add("hidden");
-
-        // Display Score and Performance Remarks Box
-        const resultBox = document.getElementById("result-box");
-        resultBox.classList.remove("hidden");
-        document.getElementById("final-score").innerText = `${totalScore} / ${questions.length}`;
-        
-        const msg = document.getElementById("performance-msg");
-        const rating = totalScore / questions.length;
-        if (rating >= 0.85) {
-            msg.innerText = "Excellent capability level! Your high score demonstrates an exceptional mastery of oral English stress models, grammatical syntax structures, and critical reading comprehension metrics.";
-        } else if (rating >= 0.65) {
-            msg.innerText = "Solid job! You have a firm grasp of vocabulary meanings and antonym relationships. Review the explanations on complex syllable rules to achieve full alignment.";
-        } else {
-            msg.innerText = "A good foundation! English diagnostics require focused repetitions. Go through the structural insight rationales, restart the tracking module, and keep elevating your skills.";
-        }
-
-        // Render Comprehensive Results Block below
-        renderReviewSection();
+    function jumpToQuestion(targetIndex) {
+        currentQ = targetIndex;
+        saveCurrentProgressToStorage(false);
+        initQuiz();
     }
 
-    function renderReviewSection() {
+    function toggleFlag() {
+        if (flaggedQuestions.has(currentQ)) {
+            flaggedQuestions.delete(currentQ);
+        } else {
+            flaggedQuestions.add(currentQ);
+        }
+        saveCurrentProgressToStorage(false);
+        renderJumpGrid();
+        initQuiz();
+    }
+
+    function showSubmitModal() {
+        const unanswered = userAnswers.filter(a => a === null).length;
+        const flagged = flaggedQuestions.size;
+        document.getElementById("submit-modal-text").innerText =
+            `You have ${unanswered} unanswered question(s) and ${flagged} flagged question(s) left. Are you sure you want to finish?`;
+        document.getElementById("submit-modal").classList.add("active");
+    }
+
+    function closeSubmitModal() {
+        document.getElementById("submit-modal").classList.remove("active");
+    }
+
+    function confirmSubmit() {
+        closeSubmitModal();
+        clearInterval(timerInterval);
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+        let correctCount = 0;
+        let wrongCount = 0;
+        let unansweredCount = 0;
+
+        questions.forEach((q, idx) => {
+            const uAns = userAnswers[idx];
+            if (uAns === null) unansweredCount++;
+            else if (uAns === q.correct) correctCount++;
+            else wrongCount++;
+        });
+
+        const timeSpent = totalDuration - timeRemaining;
+        const sMins = Math.floor(timeSpent / 60);
+        const sSecs = timeSpent % 60;
+        const durationString = `${sMins}:${sSecs.toString().padStart(2, '0')}`;
+
+        const statisticsObj = {
+            correct: correctCount,
+            wrong: wrongCount,
+            unanswered: unansweredCount,
+            duration: durationString
+        };
+
+        // Commit completion footprint into persistent cache layers securely
+        saveCurrentProgressToStorage(true, statisticsObj);
+        executeUIRenderOnSubmit(statisticsObj);
+    }
+
+    function executeUIRenderOnSubmit(stats) {
+        document.getElementById("quiz-box").classList.add("hidden");
+        document.getElementById("result-box").classList.remove("hidden");
+        document.getElementById("review-section").classList.remove("hidden");
+
         const reviewContainer = document.getElementById("review-cards-container");
         reviewContainer.innerHTML = "";
 
         questions.forEach((q, idx) => {
-            const card = document.createElement("div");
-            card.className = "review-card";
+            const uAns = userAnswers[idx];
+            const isCorrect = (uAns === q.correct);
 
-            // Header Numbering info
-            const titleInfo = document.createElement("div");
-            titleInfo.style.fontWeight = "700";
-            titleInfo.style.color = "var(--primary)";
-            titleInfo.style.marginBottom = "8px";
-            titleInfo.innerText = `QUESTION ${idx + 1}`;
-            card.appendChild(titleInfo);
+            const revCard = document.createElement("div");
+            revCard.className = "review-card";
 
-            // Instruction Tag
-            const instTag = document.createElement("div");
-            instTag.className = "instruction-tag";
-            instTag.style.padding = "10px 15px";
-            instTag.style.marginBottom = "15px";
-            instTag.innerText = q.instr;
-            card.appendChild(instTag);
+            let badgeHtml = "";
+            if (uAns === null) badgeHtml = `<span class="choice-badge badge-unanswered">Unanswered</span>`;
+            else if (isCorrect) badgeHtml = `<span class="choice-badge badge-correct">Correct</span>`;
+            else badgeHtml = `<span class="choice-badge badge-wrong">Incorrect</span>`;
 
-            // Text Content Passages
-            if (q.passage) {
-                const passBox = document.createElement("div");
-                passBox.className = "passage-box";
-                passBox.style.padding = "15px";
-                passBox.style.fontSize = "0.95rem";
-                passBox.innerText = q.passage;
-                card.appendChild(passBox);
-            }
-
-            // Question String Text
-            const qText = document.createElement("div");
-            qText.className = "question-text";
-            qText.style.fontSize = "1.15rem";
-            qText.style.marginBottom = "15px";
-            qText.innerText = q.q;
-            card.appendChild(qText);
-
-            // Choice Badge Marker
-            const badge = document.createElement("span");
-            const chosenIdx = userAnswers[idx];
-            if (chosenIdx === null) {
-                badge.className = "choice-badge badge-wrong";
-                badge.innerText = "⚠️ Left Unanswered";
-            } else if (chosenIdx === q.correct) {
-                badge.className = "choice-badge badge-correct";
-                badge.innerText = "✅ Correct Choice";
-            } else {
-                badge.className = "choice-badge badge-wrong";
-                badge.innerText = "❌ Incorrect Choice";
-            }
-            card.appendChild(badge);
-
-            // Options Output Stack
-            const optGrid = document.createElement("div");
+            let optionsHtml = "";
             q.options.forEach((opt, oIdx) => {
-                const optBtn = document.createElement("button");
-                optBtn.className = "option-btn";
-                optBtn.innerText = opt;
-                optBtn.disabled = true; // Review state options are non-clickable
-
-                // Styling logic for tracking user selection vs actual answer key
-                if (oIdx === q.correct) {
-                    optBtn.classList.add("review-correct");
-                } else if (oIdx === chosenIdx) {
-                    optBtn.classList.add("review-wrong");
-                }
-                optGrid.appendChild(optBtn);
+                let statusClass = "";
+                if (oIdx === q.correct) statusClass = "review-correct";
+                else if (uAns === oIdx && !isCorrect) statusClass = "review-wrong";
+                optionsHtml += `<div class="option-btn ${statusClass}" style="pointer-events:none;">${oIdx + 1}. ${opt}</div>`;
             });
-            card.appendChild(optGrid);
 
-            // Emerald Green Explanation container box
-            const expBox = document.createElement("div");
-            expBox.className = "explanation-box";
-            expBox.innerHTML = `<div class="explanation-title">💡 Performance Insight & Solution Rationale:</div><div>${q.exp}</div>`;
-            card.appendChild(expBox);
-
-            reviewContainer.appendChild(card);
+            revCard.innerHTML = `
+                <div class="instruction-tag">${q.instr}</div>
+                <h4>Question ${idx + 1}: ${q.q}</h4>
+                ${badgeHtml}
+                <div>${optionsHtml}</div>
+                <div class="explanation-box">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    ${q.exp}
+                </div>
+            `;
+            reviewContainer.appendChild(revCard);
         });
 
-        // Make Section visible onto UI layout layer
-        document.getElementById("review-section").classList.remove("hidden");
+        document.getElementById("final-score").innerText = `${stats.correct} / ${questions.length}`;
+        document.getElementById("stat-correct").innerText = stats.correct;
+        document.getElementById("stat-wrong").innerText = stats.wrong;
+        document.getElementById("stat-unanswered").innerText = stats.unanswered;
+        document.getElementById("stat-time").innerText = stats.duration;
+
+        const percentage = (stats.correct / questions.length) * 100;
+        let perfMsg = "";
+        if (percentage >= 80) perfMsg = "Outstanding Performance! Your command of structural evaluation patterns is excellent.";
+        else if (percentage >= 50) perfMsg = "Good effort! Review the incorrect variants below to perfect your timing and vocabulary matches.";
+        else perfMsg = "Keep practicing! Review explanations thoroughly to improve conceptual mastery.";
+        document.getElementById("performance-msg").innerText = perfMsg;
         
-        // Scroll smoothly to review section
-        document.getElementById("review-section").scrollIntoView({ behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Launch Core Application Module
-    document.addEventListener("DOMContentLoaded", initQuiz);
-</script>
+    function exportResults() {
+        let txt = `STUDY-WITH-MUBARAK - ASSESSMENT DISPATCH\n`;
+        txt += `Score: ${document.getElementById("final-score").innerText}\n`;
+        txt += `Time Taken: ${document.getElementById("stat-time").innerText}\n\n`;
+        
+        questions.forEach((q, idx) => {
+            txt += `${idx + 1}. ${q.q}\n`;
+            txt += `Your Answer: ${q.options[userAnswers[idx]] || 'None'}\n`;
+            txt += `Correct Answer: ${q.options[q.correct]}\n\n`;
+        });
 
+        const blob = new Blob([txt], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Mubarak_Diagnostic_Results.txt";
+        link.click();
+    }
+
+    window.addEventListener("keydown", (e) => {
+        if(document.getElementById("quiz-box").classList.contains("hidden")) return;
+        
+        if (e.key === "ArrowLeft") navigateQuestion(-1);
+        if (e.key === "ArrowRight") navigateQuestion(1);
+        if (["1", "2", "3", "4"].includes(e.key)) selectOption(parseInt(e.key) - 1);
+        if (e.key.toLowerCase() === "f") toggleFlag();
+        if (e.key.toLowerCase() === "s") showSubmitModal();
+    });
+
+    window.onload = setupSession;
+
+    // Feature 5: Service Worker Application Lifecycle Registrations
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('PWA Service Worker registered safely:', reg.scope))
+            .catch(err => console.error('PWA Service Worker failed configuration setup:', err));
+        });
+    }
+</script>
 </body>
 </html>
