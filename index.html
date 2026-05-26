@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>  
-<meta name="google-site-verification" content="1doyGg58vWDB63OnwXSzxvwwUUJ8kNNR79OKxCnPeAU" />
- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="1doyGg58vWDB63OnwXSzxvwwUUJ8kNNR79OKxCnPeAU" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>STUDY WITH MUBARAK | Grand Dual Portal</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <style>
         :root {
@@ -13,146 +15,255 @@
             --accent: #f59e0b;
             --success: #10b981;
             --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --chat-bot-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --sidebar-bg: #111827;
+        }
+
+        /* Dark Mode Override variables */
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --chat-bot-bg: #334155;
+            --border-color: #334155;
+            --secondary: #0f172a;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         body, html { 
             margin: 0; 
             padding: 0; 
-            height: 100%; 
+            height: 100%;
+            height: 100dvh; 
             font-family: 'Segoe UI', system-ui, sans-serif; 
             background: var(--bg);
+            color: var(--text-main);
+            overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* Master Container */
+        /* Meta AI Structural Split Wrapper Layout */
+        .app-wrapper {
+            display: flex;
+            height: 100%;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* Meta AI Left Hand Side Drawer Grid */
+        .history-sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            position: absolute;
+            left: -280px;
+            top: 0;
+            bottom: 0;
+            z-index: 999;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .history-sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .new-chat-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .history-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-item {
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: 1px solid transparent;
+        }
+        .history-item.active-thread {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: var(--primary);
+        }
+
+        /* Portal Content Body Wrapper */
         .master-container { 
+            flex: 1;
             display: flex; 
             flex-direction: column; 
-            height: 100vh; 
-            width: 100vw;
+            height: 100%; 
             overflow: hidden;
+            position: relative;
         }
 
-        /* TOP SECTION: The Scrollable Study Hall */
         #top-section {
             flex: 1 1 auto;
             background: var(--bg);
             overflow-y: auto;
-            transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* BOTTOM SECTION: The AI Hall */
         #bottom-section {
             flex: 0 0 0%; 
-            background: #ffffff;
-            transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--card-bg);
+            transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.08);
-            border-top: 5px solid var(--secondary);
+            box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
+            border-top: 4px solid var(--secondary);
             overflow: hidden;
         }
 
         header { 
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: white; 
-            padding: 40px 20px; 
+            padding: 40px 15px 25px 15px; 
             text-align: center;
+            position: relative;
+        }
+
+        .header-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .container { 
-            padding: 30px 20px; 
+            padding: 20px 15px; 
             max-width: 900px; 
             margin: auto; 
         }
 
-        /* Grand Subject Cards */
         .subject-card {
-            background: white; 
-            border-radius: 20px; 
-            padding: 25px;
-            margin-bottom: 25px; 
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            background: var(--card-bg); 
+            border-radius: 16px; 
+            padding: 20px;
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color);
             text-align: center; 
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .subject-card:hover { 
-            transform: translateY(-4px); 
-            border-color: var(--primary); 
         }
 
         .btn {
             display: inline-block; 
             background: var(--primary); 
             color: white;
-            padding: 12px 30px; 
+            padding: 10px 24px; 
             text-decoration: none; 
             border-radius: 50px;
             font-weight: bold; 
             margin-top: 10px;
-            transition: opacity 0.2s ease;
+            font-size: 0.95rem;
         }
-        .btn:hover { opacity: 0.9; }
 
-        /* The AI Trigger Button */
-        .ai-trigger-box { text-align: center; margin: 40px 0; }
+        .ai-trigger-box { text-align: center; margin: 30px 0; }
         .ai-button {
             background: linear-gradient(90deg, #f59e0b, #d97706);
             color: white; 
             border: none; 
-            padding: 18px 45px;
-            font-size: 1.1rem; 
-            border-radius: 60px; 
+            padding: 14px 28px;
+            font-size: 1rem; 
+            border-radius: 50px; 
             font-weight: bold;
             cursor: pointer; 
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.25);
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
         }
-        .ai-button:hover { transform: scale(1.02); }
 
-        /* AI Chat Window Interface */
+        /* AI balanced UI window items */
         .ai-nav { 
             background: #1e293b; 
             color: white; 
-            padding: 14px 20px; 
+            padding: 10px 15px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
+            min-height: 44px;
         }
         
         .chat-container {
             flex: 1; 
             display: flex; 
             flex-direction: column;
-            background: #f1f5f9; 
+            background: var(--bg); 
             overflow: hidden;
         }
 
         .chat-messages {
             flex: 1; 
-            padding: 20px; 
+            padding: 12px; 
             overflow-y: auto;
             display: flex; 
             flex-direction: column; 
-            gap: 12px;
+            gap: 10px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .message {
-            max-width: 80%; 
-            padding: 12px 16px; 
+            max-width: 88%; 
+            padding: 10px 14px; 
             border-radius: 16px;
-            font-size: 0.95rem; 
-            line-height: 1.5;
+            font-size: 0.92rem; 
+            line-height: 1.45;
             word-wrap: break-word;
-            animation: fadeIn 0.3s ease-out;
         }
 
         .message.bot {
-            background: white; 
-            color: #1e293b; 
+            background: var(--chat-bot-bg); 
+            color: var(--text-main); 
             align-self: flex-start;
             border-bottom-left-radius: 2px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
         }
 
         .message.user {
@@ -163,144 +274,188 @@
         }
 
         .message.system {
-            background: #e2e8f0;
-            color: #475569;
+            background: var(--border-color);
+            color: var(--text-muted);
             align-self: center;
-            font-size: 0.85rem;
-            border-radius: 8px;
-            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            padding: 4px 10px;
+            text-align: center;
         }
 
         .chat-input-area {
             display: flex; 
-            padding: 15px; 
-            background: white;
-            border-top: 1px solid #e2e8f0; 
-            gap: 10px;
+            padding: 10px; 
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color); 
+            gap: 8px;
+            align-items: center;
         }
 
         .chat-input-area input {
             flex: 1; 
-            padding: 14px; 
-            border: 1px solid #cbd5e1;
-            border-radius: 10px; 
-            font-size: 1rem; 
+            padding: 10px 12px; 
+            border: 1px solid var(--border-color);
+            background: var(--bg);
+            color: var(--text-main);
+            border-radius: 20px; 
+            font-size: 0.95rem; 
             outline: none;
-            transition: border-color 0.2s;
+            height: 40px;
         }
-
-        .chat-input-area input:focus { border-color: var(--primary); }
 
         .chat-input-area button {
             background: var(--primary); 
             color: white; 
             border: none;
-            padding: 0 24px; 
-            border-radius: 10px; 
+            padding: 0 16px; 
+            border-radius: 20px; 
             font-weight: bold; 
+            height: 40px;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .chat-input-area button:hover { background: #1d4ed8; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+        .sidebar-overlay {
+            display: none;
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.4);
+            z-index: 990;
+        }
+        .sidebar-overlay.visible { display: block; }
+
+        /* Media adjustments to make absolutely sure everything fits small phone displays */
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.5rem !important; margin-top: 10px !important; }
+            .subject-card h2 { font-size: 1.25rem; }
+            .message { max-width: 90%; }
         }
     </style>
 </head>
 <body>
 
-<div class="master-container">
-    
-    <!-- TOP SECTION -->
-    <div id="top-section">
-        <header>
-            <h1 style="margin:0; letter-spacing: 2px;">STUDY WITH MUBARAK</h1>
-            <p style="opacity: 0.8; margin-top: 10px;">Your Premium Academic Success Portal</p>
-        </header>
+<div class="app-wrapper">
 
-        <div class="container">
-            <div class="subject-card">
-                <h2 style="color: var(--primary);">English Language</h2>
-                <p>Master 50+ Antonyms, Synonyms, and essential Grammar rules for your exams.</p>
-                <a href="english.html" class="btn">Launch English Quiz</a>
-            </div>
-
-            <div class="subject-card">
-                <h2 style="color: var(--secondary);">Government</h2>
-                <p>Deep dive into the Nigerian Constitution, Political History, and Governance.</p>
-                <a href="government.html" class="btn">Launch Government Quiz</a>
-            </div>
-
-            <div class="subject-card" style="border-top: 5px solid var(--success);">
-                <h2 style="color: var(--success);">General Studies</h2>
-                <p>A mix of Economics, Civic Education, and Geography practice questions.</p>
-                <a href="random%20subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
-            </div>
-
-            <div class="ai-trigger-box">
-                <button class="ai-button" onclick="activateSplit()">✨ ACTIVATE DUAL-VIEW AI</button>
-                <p style="color: #64748b; margin-top: 15px;">This will split your screen so you can study and chat at the same time!</p>
-            </div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="history-sidebar" id="history-sidebar">
+        <div class="sidebar-header">
+            <h3 style="margin:0; font-size:1.1rem; color:#60a5fa;">Meta AI History</h3>
+            <button onclick="toggleSidebar()" style="background:transparent; color:#9ca3af; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
+        </div>
+        <div style="padding:15px; border-bottom:1px solid rgba(255,255,255,0.08)">
+            <button class="new-chat-btn" onclick="startNewChatThread()">+ New Chat Thread</button>
+        </div>
+        <div class="history-list" id="history-list"></div>
+        <div style="padding:15px; border-top:1px solid rgba(255,255,255,0.08)">
+            <button onclick="clearAllChatHistories()" style="width:100%; background:#ef4444; border:none; padding:10px; color:white; border-radius:8px; cursor:pointer; font-weight:bold;">Wipe Chat History</button>
         </div>
     </div>
 
-    <!-- BOTTOM SECTION -->
-    <div id="bottom-section">
-        <div class="ai-nav">
-            <span style="font-weight: bold; display: flex; align-items: center; gap: 8px;">
-                <span style="height: 8px; width: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
-                STUDY ASSISTANT ACTIVE
-            </span>
-            <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">CLOSE [X]</button>
-        </div>
-        
-        <div class="chat-container">
-            <div class="chat-messages" id="chat-messages">
-                <!-- Chat history loads here -->
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Type your academic question here..." onkeypress="handleKeyPress(event)">
-                <button id="send-btn" onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-    </div>
+    <div class="master-container">
+        <div id="top-section">
+            <header>
+                <div class="header-controls">
+                    <button class="toggle-btn" onclick="toggleSidebar()">📜 History</button>
+                    <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+                </div>
+                <h1 style="margin-top:15px; margin-bottom:0; letter-spacing: 1px; font-size: 1.8rem;">STUDY WITH MUBARAK</h1>
+                <p style="opacity: 0.8; margin-top: 5px; font-size: 0.9rem;">Your Premium Academic Success Portal</p>
+            </header>
 
+            <div class="container">
+                <div class="subject-card">
+                    <h2 style="color: var(--primary); margin-top:0;">English Language</h2>
+                    <p style="color: var(--text-muted);">Master 50+ Antonyms, Synonyms, and essential Grammar rules for your exams.</p>
+                    <a href="english.html" class="btn">Launch English Quiz</a>
+                </div>
+
+                <div class="subject-card">
+                    <h2 style="color: #475569; margin-top:0;">Government</h2>
+                    <p style="color: var(--text-muted);">Deep dive into the Nigerian Constitution, Political History, and Governance.</p>
+                    <a href="government.html" class="btn" style="background:#475569;">Launch Government Quiz</a>
+                </div>
+
+                <div class="subject-card" style="border-top: 5px solid var(--success);">
+                    <h2 style="color: var(--success); margin-top:0;">General Studies</h2>
+                    <p style="color: var(--text-muted);">A mix of Economics, Civic Education, and Geography practice questions.</p>
+                    <a href="random%20subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
+                </div>
+
+                <div class="ai-trigger-box">
+                    <button class="ai-button" onclick="activateSplit()">✨ LAUNCH MUBARAK AI</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="bottom-section">
+            <div class="ai-nav">
+                <span style="font-weight: bold; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">
+                    <span style="height: 8px; width: 8px; background: #10b981; border-radius: 50%;"></span>
+                    MUBARAK AI ASSISTANT
+                </span>
+                <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;">CLOSE [X]</button>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type an academic question..." onkeypress="handleKeyPress(event)">
+                    <button id="send-btn" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script>
-    // System Initialization & State Recovery
+    let activeThreadId = 'default_session';
+
     document.addEventListener("DOMContentLoaded", () => {
-        loadChatHistory();
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('theme-btn').innerHTML = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+
+        loadSidebarThreads();
+        loadChatMessagesFromThread(activeThreadId);
         
-        // Restore layout state safely
-        const aiOpenState = localStorage.getItem('ai_view_open');
-        if (aiOpenState === 'true') {
+        if (localStorage.getItem('ai_view_open') === 'true') {
             applySplitLayout();
         } else {
             resetLayoutStyles();
         }
     });
 
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+
+    function toggleSidebar() {
+        document.getElementById('history-sidebar').classList.toggle('open');
+        document.getElementById('sidebar-overlay').classList.toggle('visible');
+    }
+
     function applySplitLayout() {
-        const top = document.getElementById('top-section');
-        const bottom = document.getElementById('bottom-section');
-        top.style.flex = "0.45";
-        bottom.style.flex = "0.55";
+        // Balanced layout on phone split screen view
+        document.getElementById('top-section').style.flex = "0.30";
+        document.getElementById('bottom-section').style.flex = "0.70";
+        setTimeout(scrollToBottom, 100);
     }
 
     function resetLayoutStyles() {
-        const top = document.getElementById('top-section');
-        const bottom = document.getElementById('bottom-section');
-        top.style.flex = "1 1 auto";
-        bottom.style.flex = "0 0 0%";
+        document.getElementById('top-section').style.flex = "1 1 auto";
+        document.getElementById('bottom-section').style.flex = "0 0 0%";
     }
 
     function activateSplit() {
         applySplitLayout();
         localStorage.setItem('ai_view_open', 'true');
-        setTimeout(() => document.getElementById('chat-input').focus(), 500);
+        setTimeout(() => document.getElementById('chat-input').focus(), 400);
     }
 
     function deactivateSplit() {
@@ -309,12 +464,73 @@
     }
 
     function handleKeyPress(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
+        if (event.key === 'Enter') sendMessage();
     }
 
-    // Advanced API AI Engine Integration
+    function getChatHistoryObject() {
+        let storageData = localStorage.getItem('mubarak_meta_chats');
+        if (!storageData) {
+            const initialData = {
+                'default_session': {
+                    title: 'Welcome Session',
+                    messages: [{ text: "Hello! I am your Mubarak AI Assistant. Ask me any question from English, Government, or General Studies and I will answer instantly!", sender: 'bot' }]
+                }
+            };
+            localStorage.setItem('mubarak_meta_chats', JSON.stringify(initialData));
+            return initialData;
+        }
+        return JSON.parse(storageData);
+    }
+
+    function loadSidebarThreads() {
+        const chats = getChatHistoryObject();
+        const container = document.getElementById('history-list');
+        container.innerHTML = '';
+        
+        Object.keys(chats).forEach(id => {
+            const item = document.createElement('div');
+            item.classList.add('history-item');
+            if(id === activeThreadId) item.classList.add('active-thread');
+            item.innerText = chats[id].title || 'Academic Session';
+            item.onclick = () => {
+                activeThreadId = id;
+                loadChatMessagesFromThread(id);
+                toggleSidebar();
+            };
+            container.appendChild(item);
+        });
+    }
+
+    function startNewChatThread() {
+        const chats = getChatHistoryObject();
+        const newId = 'thread_' + Date.now();
+        chats[newId] = {
+            title: 'New Question...',
+            messages: [{ text: "Fresh session active. Ask your question below!", sender: 'bot' }]
+        };
+        localStorage.setItem('mubarak_meta_chats', JSON.stringify(chats));
+        activeThreadId = newId;
+        loadSidebarThreads();
+        loadChatMessagesFromThread(newId);
+        toggleSidebar();
+        activateSplit();
+    }
+
+    function loadChatMessagesFromThread(threadId) {
+        activeThreadId = threadId;
+        const chats = getChatHistoryObject();
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.innerHTML = '';
+        loadSidebarThreads();
+
+        if(chats[threadId] && chats[threadId].messages) {
+            chats[threadId].messages.forEach(msg => {
+                appendMessageMarkup(msg.text, msg.sender);
+            });
+        }
+        scrollToBottom();
+    }
+
     async function sendMessage() {
         const input = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
@@ -322,85 +538,97 @@
         
         if (!queryText) return;
 
-        // Display user message & lock inputs
-        appendMessage(queryText, 'user');
-        saveMessage(queryText, 'user');
+        appendMessageMarkup(queryText, 'user');
+        saveMessageToThread(queryText, 'user');
         input.value = '';
         input.disabled = true;
         sendBtn.disabled = true;
 
-        // Show typing indicator
-        const typingIndicator = appendMessage('Thinking...', 'system');
+        const typingIndicator = appendMessageMarkup('Mubarak AI is thinking...', 'system');
+        scrollToBottom();
 
         try {
-            // Free and robust open serverless endpoint access framework
-            const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(queryText + " (Keep the explanation academic, clear, and tailored for a Nigerian student studying English, Government, or General Studies)")}`);
+            const promptContext = `Explain clearly for a Nigerian student: ${queryText}`;
+            const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=openai`);
             
-            typingIndicator.remove(); // Remove indicator
+            typingIndicator.remove();
             
             if (response.ok) {
-                const data = await response.text();
-                appendMessage(data, 'bot');
-                saveMessage(data, 'bot');
+                const textReply = await response.text();
+                appendMessageMarkup(textReply, 'bot');
+                saveMessageToThread(textReply, 'bot');
+                updateThreadTitleIfNeeded(queryText);
             } else {
-                throw new Error("API Offline");
+                throw new Error();
             }
         } catch (error) {
             typingIndicator.remove();
-            // Intelligent Offline Local Knowledge Fallback Engine
             const fallbackResponse = getLocalFallback(queryText);
-            appendMessage(fallbackResponse, 'bot');
-            saveMessage(fallbackResponse, 'bot');
+            appendMessageMarkup(fallbackResponse, 'bot');
+            saveMessageToThread(fallbackResponse, 'bot');
         } finally {
             input.disabled = false;
             sendBtn.disabled = false;
             input.focus();
+            scrollToBottom();
         }
     }
 
-    function appendMessage(text, sender) {
+    function appendMessageMarkup(text, sender) {
         const chatMessages = document.getElementById('chat-messages');
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', sender);
-        messageDiv.innerText = text;
+        
+        if (sender === 'bot') {
+            messageDiv.innerHTML = marked.parse(text);
+        } else {
+            messageDiv.innerText = text;
+        }
         
         chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        scrollToBottom();
         return messageDiv;
     }
 
-    // Local Storage Progress Retention Drivers
-    function saveMessage(text, sender) {
-        let history = JSON.parse(localStorage.getItem('study_mubarak_chat')) || [];
-        history.push({ text, sender });
-        localStorage.setItem('study_mubarak_chat', JSON.stringify(history));
+    function scrollToBottom() {
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function loadChatHistory() {
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.innerHTML = ''; // Sanitize initial window
-        
-        let history = JSON.parse(localStorage.getItem('study_mubarak_chat')) || [];
-        
-        if (history.length === 0) {
-            appendMessage("Hello! I am your Mubarak Study Assistant. Ask me anything about English, Government, or General Studies!", 'bot');
-        } else {
-            history.forEach(msg => {
-                appendMessage(msg.text, msg.sender);
-            });
+    function saveMessageToThread(text, sender) {
+        const chats = getChatHistoryObject();
+        if(!chats[activeThreadId]) chats[activeThreadId] = { title: 'Study Session', messages: [] };
+        chats[activeThreadId].messages.push({ text, sender });
+        localStorage.setItem('mubarak_meta_chats', JSON.stringify(chats));
+    }
+
+    function updateThreadTitleIfNeeded(firstQuery) {
+        const chats = getChatHistoryObject();
+        if (chats[activeThreadId] && (chats[activeThreadId].title === 'New Question...' || chats[activeThreadId].title === 'Welcome Session')) {
+            chats[activeThreadId].title = firstQuery.length > 20 ? firstQuery.substring(0, 20) + '...' : firstQuery;
+            localStorage.setItem('mubarak_meta_chats', JSON.stringify(chats));
+            loadSidebarThreads();
         }
     }
 
-    // High Quality Offline Backup Router
+    function clearAllChatHistories() {
+        if(confirm("Wipe out all your Meta AI chat history data?")) {
+            localStorage.removeItem('mubarak_meta_chats');
+            activeThreadId = 'default_session';
+            loadSidebarThreads();
+            loadChatMessagesFromThread(activeThreadId);
+        }
+    }
+
     function getLocalFallback(query) {
         const lower = query.toLowerCase();
         if (lower.includes('english') || lower.includes('antonym') || lower.includes('synonym')) {
-            return "[Offline Mode] Synonyms are words with similar meanings (e.g., 'Huge' and 'Gigantic'). Antonyms are opposites. Check your internet connection for full live explanations!";
+            return "### [Local Knowledge Engine Active]\n* **Synonyms**: Words with identical meanings.\n* **Antonyms**: Opposites. Check your connection to resume live chat.";
         } 
         if (lower.includes('government') || lower.includes('constitution') || lower.includes('nigeria')) {
-            return "[Offline Mode] Nigeria runs a federal structure derived via historical constitutional updates (Clifford, Richards, Macpherson, down to 1999). Reconnect to the internet for a deep breakdown!";
+            return "### [Local Knowledge Engine Active]\n* **Nigeria Structure**: Federal republic running on the 1999 Constitution. Check your data connection to ask for deep academic details!";
         }
-        return "[Offline Mode] I could not reach my cloud server database right now, but keep studying! Check your network connection and try again.";
+        return "### [Connection Notice]\nPlease make sure your internet data connection is active and click send again!";
     }
 </script>
 
