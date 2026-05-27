@@ -1,2 +1,6 @@
+
+title: STUDY-WITH-MUBARAK
+url: https://owodunnimubarak7-blip.github.io
+baseurl: /STUDY-WITH-MUBARAK
 plugins:
-     - jekyll-sitemap
+    - jekyll-sitemap
