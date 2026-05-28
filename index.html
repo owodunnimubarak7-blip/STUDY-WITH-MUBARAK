@@ -629,6 +629,47 @@
             return "### [Local Knowledge Engine Active]\n* **Nigeria Structure**: Federal republic running on the 1999 Constitution. Check your data connection to ask for deep academic details!";
         }
         return "### [Connection Notice]\nPlease make sure your internet data connection is active and click send again!";
+    }// Run this function automatically when index.html loads
+document.addEventListener('DOMContentLoaded', () => {
+    checkForReviewExplanations();
+});
+
+function checkForReviewExplanations() {
+    const savedPayload = localStorage.getItem('pendingAiPrompt');
+    
+    if (savedPayload) {
+        const data = JSON.parse(savedPayload);
+        
+        // Prevent old, stale prompts from triggering if they return later (expires in 1 minute)
+        if (Date.now() - data.timestamp < 60000) {
+            
+            // 1. Open your AI Chatboard if it's hidden (Example: panel.classList.add('open'))
+            openAiChatboard(); 
+
+            // 2. Insert the prompt into your AI input field
+            const aiInputField = document.getElementById('ai-input'); // Replace with your actual input ID
+            if (aiInputField) {
+                aiInputField.value = data.prompt;
+            }
+
+            // 3. Automatically trigger your existing AI send function
+            // Replace 'sendAiMessage()' with your actual function name
+            if (typeof sendAiMessage === 'function') {
+                sendAiMessage(); 
+            }
+        }
+        
+        // Clear the item so it doesn't trigger again on a normal page refresh
+        localStorage.removeItem('pendingAiPrompt');
+    }
+}
+
+// Optional helper to ensure the AI container is visible
+function openAiChatboard() {
+    const aiContainer = document.getElementById('ai-container'); // Replace with your AI panel ID
+    if (aiContainer) {
+        aiContainer.style.display = 'block'; // Or your custom open logic
+    }
     }
 </script>
 
