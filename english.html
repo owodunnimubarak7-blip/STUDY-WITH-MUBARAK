@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -219,7 +218,6 @@
             line-height: 1.5;
         }
 
-        /* Feature 4: Audio Button Placement */
         .audio-speech-btn {
             position: absolute;
             right: 0;
@@ -282,24 +280,36 @@
         .option-btn.selected::before { transform: scaleY(1); }
 
         .control-panel {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 25px;
-            align-items: center;
+        }
+        
+        @media (min-width: 480px) {
+            .control-panel {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
         .action-btn {
             background: linear-gradient(135deg, var(--primary), #60a5fa);
             color: white;
             border: none;
-            padding: 14px 24px;
+            padding: 14px 20px;
             border-radius: 14px;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 90px;
         }
         .action-btn:hover {
             transform: translateY(-2px);
@@ -313,6 +323,28 @@
         }
         .submit-btn-style:hover {
             box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .flag-btn {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 90px;
+        }
+        .flag-btn:hover { opacity: 0.8; }
+        .flag-btn.flagged {
+            background: var(--warning-border);
+            color: white;
         }
 
         .nav-btn {
@@ -417,23 +449,6 @@
             font-size: 10px;
         }
 
-        .flag-btn {
-            background: var(--warning-bg);
-            color: var(--warning-text);
-            border: 1px solid var(--warning-border);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .flag-btn:hover { opacity: 0.8; }
-        .flag-btn.flagged {
-            background: var(--warning-border);
-            color: white;
-        }
-
         .review-card {
             margin-bottom: 30px;
             border-bottom: 1px dashed var(--option-border);
@@ -479,6 +494,29 @@
             font-size: 0.95rem;
         }
         .explanation-title { font-weight: 700; margin-bottom: 6px; }
+
+        /* Integrated Design Styling for the New AI Button Trigger */
+        .ai-explain-action-btn {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+        }
+        .ai-explain-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+            background: linear-gradient(135deg, #6d28d9, #9333ea);
+        }
 
         .hidden { display: none !important; }
 
@@ -604,7 +642,6 @@
         
         <div class="question-area">
             <div class="question-text" id="q-text">Loading items...</div>
-            <!-- Feature 4: Voice Read Aloud Assistant Module Element Button -->
             <button class="audio-speech-btn" onclick="speakQuestion()" title="Read Aloud Assistant">🔊</button>
         </div>
 
@@ -715,7 +752,7 @@
     let userAnswers = [];
     let flaggedQuestions = new Set();
     let timerInterval = null;
-    let timeRemaining = 1800; // 30 mins
+    let timeRemaining = 1800; 
     let timerPaused = false;
     let totalDuration = 1800;
 
@@ -729,10 +766,8 @@
         return array;
     }
 
-    // Modern Persistence: Check LocalStorage Data Prior to Resetting Structures
     function setupSession() {
         const locallyStoredState = localStorage.getItem("mubarak_portal_state");
-        
         if (locallyStoredState) {
             try {
                 const parsedState = JSON.parse(locallyStoredState);
@@ -742,26 +777,23 @@
                 flaggedQuestions = new Set(parsedState.flaggedQuestions);
                 timeRemaining = parsedState.timeRemaining;
                 
-                // Route viewport configurations if state recorded active submission results
                 if (parsedState.isSubmitted) {
                     executeUIRenderOnSubmit(parsedState.statistics);
                     return;
                 }
-                
                 startTimer();
                 initQuiz();
                 return;
             } catch (err) {
-                console.error("Corruption encountered reading session logs. Re-shuffling runtime objects.", err);
+                console.error("Corruption encountered reading session logs.", err);
             }
         }
-        
         createNewFreshSession();
     }
 
     function createNewFreshSession() {
         if (masterQuestions.length === 0) return;
-        const fullShuffle = shuffleArray([...masterQuestions]);
+        const fullShuffle = [...masterQuestions];
         questions = fullShuffle.slice(0, Math.min(50, fullShuffle.length));
         userAnswers = new Array(questions.length).fill(null);
         flaggedQuestions.clear();
@@ -811,12 +843,9 @@
             if (!timerPaused) {
                 timeRemaining--;
                 updateTimerDisplay();
-                
-                // Track time decay continuously inside persistent storage memory
                 if (timeRemaining % 5 === 0) {
                     saveCurrentProgressToStorage(false);
                 }
-
                 if (timeRemaining <= 0) {
                     clearInterval(timerInterval);
                     alert("Time's up! Auto-submitting your assessment.");
@@ -831,113 +860,90 @@
         document.getElementById("timer-badge").style.opacity = timerPaused ? "0.4" : "1";
     }
 
-    // Feature 4: Audio Read-Aloud Speech Implementation
+    function updateTimerDisplay() {
+        const badge = document.getElementById("timer-badge");
+        if (!badge) return;
+        const mins = Math.floor(timeRemaining / 60);
+        const secs = timeRemaining % 60;
+        badge.textContent = `⏱️ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        
+        if (timeRemaining < 300) {
+            badge.className = "timer-badge danger";
+        } else if (timeRemaining < 900) {
+            badge.className = "timer-badge warning";
+        } else {
+            badge.className = "timer-badge";
+        }
+    }
+
     function speakQuestion() {
         if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // Terminate cascading threads
+            window.speechSynthesis.cancel();
             const currentQuestionObject = questions[currentQ];
             if (!currentQuestionObject) return;
-            
             const compiledScript = `${currentQuestionObject.instr}. Question: ${currentQuestionObject.q}`;
             const audioUtterance = new SpeechSynthesisUtterance(compiledScript);
             window.speechSynthesis.speak(audioUtterance);
         } else {
-            alert("Native SpeechSynthesis interface missing from current mobile/desktop environment browser core.");
+            alert("Speech synthesis is not supported in this environment.");
         }
-    }
-
-    function updateTimerDisplay() {
-        const mins = Math.floor(timeRemaining / 60);
-        const secs = timeRemaining % 60;
-        const timeStr = `${mins}:${secs.toString().padStart(2, '0')}`;
-        const badge = document.getElementById("timer-badge");
-        badge.innerText = `⏱️ ${timeStr}`;
-
-        if (timeRemaining <= 300) badge.className = "timer-badge danger";
-        else if (timeRemaining <= 600) badge.className = "timer-badge warning";
-        else badge.className = "timer-badge";
-    }
-
-    function renderJumpGrid() {
-        const gridBox = document.getElementById("jump-box-grid");
-        gridBox.innerHTML = "";
-        questions.forEach((_, idx) => {
-            const block = document.createElement("div");
-            block.className = "jump-item";
-            block.innerText = idx + 1;
-            if (idx === currentQ) block.classList.add("active");
-            else if (userAnswers[idx] !== null) block.classList.add("answered");
-            if (flaggedQuestions.has(idx)) block.classList.add("flagged");
-            block.onclick = () => jumpToQuestion(idx);
-            gridBox.appendChild(block);
-        });
     }
 
     function initQuiz() {
         if (questions.length === 0) return;
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+    }
+
+    function renderActiveQuestion() {
+        const item = questions[currentQ];
+        document.getElementById("instruction-box").textContent = item.instr;
+        document.getElementById("q-text").textContent = `${currentQ + 1}. ${item.q}`;
         
-        // Kill existing speech if navigating to avoid layered overlap
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
-        const current = questions[currentQ];
-        document.getElementById("q-text").innerText = current.q;
-        document.getElementById("instruction-box").innerText = current.instr;
-        document.getElementById("progress-text").innerText = `Question ${currentQ + 1} of ${questions.length}`;
-
-        const progressPercent = ((currentQ + 1) / questions.length) * 100;
-        document.getElementById("progress-fill").style.width = `${progressPercent}%`;
-        document.getElementById("progress-percent").innerText = `${Math.round(progressPercent)}%`;
-
-        renderJumpGrid();
-
-        document.getElementById("prev-btn").disabled = (currentQ === 0);
-        document.getElementById("next-btn").disabled = (currentQ === questions.length - 1);
-
-        const flagBtn = document.getElementById("flag-btn");
-        if (flaggedQuestions.has(currentQ)) {
-            flagBtn.classList.add("flagged");
-            flagBtn.innerText = "🚩 Unflag";
-        } else {
-            flagBtn.classList.remove("flagged");
-            flagBtn.innerText = "🚩 Flag";
-        }
-
         const grid = document.getElementById("options-grid");
         grid.innerHTML = "";
-        current.options.forEach((opt, i) => {
+        
+        item.options.forEach((opt, idx) => {
             const btn = document.createElement("button");
-            btn.className = "option-btn";
-            btn.innerText = `${i + 1}. ${opt}`;
-            if (userAnswers[currentQ] === i) btn.classList.add("selected");
-            btn.onclick = () => selectOption(i);
+            btn.className = `option-btn ${userAnswers[currentQ] === idx ? 'selected' : ''}`;
+            btn.textContent = opt;
+            btn.onclick = () => selectOptionIndex(idx);
             grid.appendChild(btn);
         });
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function selectOption(index) {
-        userAnswers[currentQ] = index;
-        const allBtns = document.querySelectorAll(".option-btn");
-        allBtns.forEach(b => b.classList.remove("selected"));
-        if(allBtns[index]) allBtns[index].classList.add("selected");
-        saveCurrentProgressToStorage(false);
-        renderJumpGrid();
-    }
-
-    function navigateQuestion(direction) {
-        const nextTarget = currentQ + direction;
-        if (nextTarget >= 0 && nextTarget < questions.length) {
-            currentQ = nextTarget;
-            saveCurrentProgressToStorage(false);
-            initQuiz();
+        document.getElementById("prev-btn").disabled = currentQ === 0;
+        document.getElementById("next-btn").disabled = currentQ === questions.length - 1;
+        
+        const flagBtn = document.getElementById("flag-btn");
+        if (flaggedQuestions.has(currentQ)) {
+            flagBtn.classList.add("flagged");
+            flagBtn.innerHTML = "🚩 Flagged";
+        } else {
+            flagBtn.classList.remove("flagged");
+            flagBtn.innerHTML = "🚩 Flag";
         }
     }
 
-    function jumpToQuestion(targetIndex) {
-        currentQ = targetIndex;
+    function selectOptionIndex(idx) {
+        userAnswers[currentQ] = idx;
+        renderActiveQuestion();
+        renderNavigatorGrid();
         saveCurrentProgressToStorage(false);
-        initQuiz();
+    }
+
+    function navigateQuestion(step) {
+        currentQ += step;
+        if (currentQ < 0) currentQ = 0;
+        if (currentQ >= questions.length) currentQ = questions.length - 1;
+        renderActiveQuestion();
+        updateProgressIndicators();
+    }
+
+    function jumpToQuestionIndex(idx) {
+        currentQ = idx;
+        renderActiveQuestion();
+        updateProgressIndicators();
     }
 
     function toggleFlag() {
@@ -946,16 +952,36 @@
         } else {
             flaggedQuestions.add(currentQ);
         }
+        renderActiveQuestion();
+        renderNavigatorGrid();
         saveCurrentProgressToStorage(false);
-        renderJumpGrid();
-        initQuiz();
+    }
+
+    function renderNavigatorGrid() {
+        const container = document.getElementById("jump-box-grid");
+        container.innerHTML = "";
+        questions.forEach((_, idx) => {
+            const block = document.createElement("div");
+            block.className = `jump-item ${currentQ === idx ? 'active' : ''} ${userAnswers[idx] !== null ? 'answered' : ''} ${flaggedQuestions.has(idx) ? 'flagged' : ''}`;
+            block.textContent = idx + 1;
+            block.onclick = () => jumpToQuestionIndex(idx);
+            container.appendChild(block);
+        });
+    }
+
+    function updateProgressIndicators() {
+        document.getElementById("progress-text").textContent = `Question ${currentQ + 1} of ${questions.length}`;
+        const pct = Math.round(((currentQ + 1) / questions.length) * 100);
+        document.getElementById("progress-percent").textContent = `${pct}%`;
+        document.getElementById("progress-fill").style.width = `${pct}%`;
     }
 
     function showSubmitModal() {
-        const unanswered = userAnswers.filter(a => a === null).length;
-        const flagged = flaggedQuestions.size;
-        document.getElementById("submit-modal-text").innerText =
-            `You have ${unanswered} unanswered question(s) and ${flagged} flagged question(s) left. Are you sure you want to finish?`;
+        const unansweredCount = userAnswers.filter(ans => ans === null).length;
+        const statusText = unansweredCount > 0 
+            ? `You have left ${unansweredCount} item(s) blank. Ready to submit?`
+            : "All items have answers. Do you want to submit your session responses?";
+        document.getElementById("submit-modal-text").textContent = statusText;
         document.getElementById("submit-modal").classList.add("active");
     }
 
@@ -966,162 +992,146 @@
     function confirmSubmit() {
         closeSubmitModal();
         clearInterval(timerInterval);
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
+        
         let correctCount = 0;
         let wrongCount = 0;
         let unansweredCount = 0;
-
-        questions.forEach((q, idx) => {
-            const uAns = userAnswers[idx];
-            if (uAns === null) unansweredCount++;
-            else if (uAns === q.correct) correctCount++;
+        
+        questions.forEach((item, idx) => {
+            if (userAnswers[idx] === null) unansweredCount++;
+            else if (userAnswers[idx] === item.correct) correctCount++;
             else wrongCount++;
         });
 
-        const timeSpent = totalDuration - timeRemaining;
-        const sMins = Math.floor(timeSpent / 60);
-        const sSecs = timeSpent % 60;
-        const durationString = `${sMins}:${sSecs.toString().padStart(2, '0')}`;
+        const timeSpentSeconds = totalDuration - timeRemaining;
+        const finalMinutes = Math.floor(timeSpentSeconds / 60);
+        const finalSeconds = timeSpentSeconds % 60;
+        const timeStr = `${finalMinutes}:${finalSeconds < 10 ? '0' : ''}${finalSeconds}`;
 
-        const statisticsObj = {
+        const compiledStats = {
             correct: correctCount,
             wrong: wrongCount,
             unanswered: unansweredCount,
-            duration: durationString
+            time: timeStr,
+            total: questions.length
         };
 
-        // Commit completion footprint into persistent cache layers securely
-        saveCurrentProgressToStorage(true, statisticsObj);
-        executeUIRenderOnSubmit(statisticsObj);
+        saveCurrentProgressToStorage(true, compiledStats);
+        executeUIRenderOnSubmit(compiledStats);
     }
 
     function executeUIRenderOnSubmit(stats) {
         document.getElementById("quiz-box").classList.add("hidden");
         document.getElementById("result-box").classList.remove("hidden");
         document.getElementById("review-section").classList.remove("hidden");
+        
+        document.getElementById("final-score").textContent = `${stats.correct} / ${stats.total}`;
+        document.getElementById("stat-correct").textContent = stats.correct;
+        document.getElementById("stat-wrong").textContent = stats.wrong;
+        document.getElementById("stat-unanswered").textContent = stats.unanswered;
+        document.getElementById("stat-time").textContent = stats.time;
+        
+        const perfPercent = (stats.correct / stats.total) * 100;
+        let feedback = "";
+        if (perfPercent >= 80) feedback = "Excellent performance! Your command of grammar rules is solid.";
+        else if (perfPercent >= 50) feedback = "Good effort! Review targeted elements to optimize performance outputs.";
+        else feedback = "Keep studying! Systematically break down grammatical mechanics and build vocabulary.";
+        
+        document.getElementById("performance-msg").textContent = feedback;
+        renderDetailedReview();
+    }
 
-        const reviewContainer = document.getElementById("review-cards-container");
-        reviewContainer.innerHTML = "";
-
-        questions.forEach((q, idx) => {
-            const uAns = userAnswers[idx];
-            const isCorrect = (uAns === q.correct);
-
-            const revCard = document.createElement("div");
-            revCard.className = "review-card";
-
+    // Updated to programmatically build the payload interaction link for index.html AI Chatboard
+    function renderDetailedReview() {
+        const container = document.getElementById("review-cards-container");
+        container.innerHTML = "";
+        
+        questions.forEach((item, idx) => {
+            const card = document.createElement("div");
+            card.className = "review-card";
+            
             let badgeHtml = "";
-            if (uAns === null) badgeHtml = `<span class="choice-badge badge-unanswered">Unanswered</span>`;
-            else if (isCorrect) badgeHtml = `<span class="choice-badge badge-correct">Correct</span>`;
-            else badgeHtml = `<span class="choice-badge badge-wrong">Incorrect</span>`;
-
+            if (userAnswers[idx] === null) {
+                badgeHtml = `<span class="choice-badge badge-unanswered">Unanswered</span>`;
+            } else if (userAnswers[idx] === item.correct) {
+                badgeHtml = `<span class="choice-badge badge-correct">Correct</span>`;
+            } else {
+                badgeHtml = `<span class="choice-badge badge-wrong">Incorrect</span>`;
+            }
+            
             let optionsHtml = "";
-            q.options.forEach((opt, oIdx) => {
-                let statusClass = "";
-                if (oIdx === q.correct) statusClass = "review-correct";
-                else if (uAns === oIdx && !isCorrect) statusClass = "review-wrong";
-                optionsHtml += `<div class="option-btn ${statusClass}" style="pointer-events:none;">${oIdx + 1}. ${opt}</div>`;
+            item.options.forEach((opt, optIdx) => {
+                let optClass = "";
+                if (optIdx === item.correct) optClass = "review-correct";
+                else if (userAnswers[idx] === optIdx) optClass = "review-wrong";
+                optionsHtml += `<div class="option-btn ${optClass}" style="pointer-events:none; margin:6px 0;">${opt}</div>`;
             });
 
-            revCard.innerHTML = `
-                <div class="instruction-tag">${q.instr}</div>
-                <h4>Question ${idx + 1}: ${q.q}</h4>
+            // Target the plain text string value of the correct option choice index
+            const exactCorrectAnswerText = item.options[item.correct];
+
+            card.innerHTML = `
                 ${badgeHtml}
+                <div class="question-text" style="font-size:1.1rem; margin-bottom:10px;">${idx + 1}. ${item.q}</div>
                 <div>${optionsHtml}</div>
                 <div class="explanation-box">
                     <div class="explanation-title">💡 Explanation:</div>
-                    ${q.exp}
+                    ${item.exp}
                 </div>
+                <!-- AI Integration Request Trigger Button Linking back to index.html -->
+                <button class="ai-explain-action-btn" onclick="requestAiExplanationHub('${escapeJsString(item.q)}', '${escapeJsString(exactCorrectAnswerText)}')">
+                    ✨ Get AI Explanation
+                </button>
             `;
-            reviewContainer.appendChild(revCard);
+            container.appendChild(card);
         });
+    }
 
-        document.getElementById("final-score").innerText = `${stats.correct} / ${questions.length}`;
-        document.getElementById("stat-correct").innerText = stats.correct;
-        document.getElementById("stat-wrong").innerText = stats.wrong;
-        document.getElementById("stat-unanswered").innerText = stats.unanswered;
-        document.getElementById("stat-time").innerText = stats.duration;
-
-        const percentage = (stats.correct / questions.length) * 100;
-        let perfMsg = "";
-        if (percentage >= 80) perfMsg = "Outstanding Performance! Your command of structural evaluation patterns is excellent.";
-        else if (percentage >= 50) perfMsg = "Good effort! Review the incorrect variants below to perfect your timing and vocabulary matches.";
-        else perfMsg = "Keep practicing! Review explanations thoroughly to improve conceptual mastery.";
-        document.getElementById("performance-msg").innerText = perfMsg;
+    // Cross-page payload state transmission protocol
+    function requestAiExplanationHub(questionText, correctAnswerText) {
+        const aiPromptPayload = {
+            prompt: `In the study portal english assessment, please explain why the correct answer to the question "${questionText}" is "${correctAnswerText}". Break down the grammatical mechanics clearly.`,
+            timestamp: Date.now()
+        };
         
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Pass message via local memory register 
+        localStorage.setItem('pendingAiPrompt', JSON.stringify(aiPromptPayload));
+        
+        // Direct route transition back to index.html
+        window.location.href = 'index.html';
+    }
+
+    // Helper sanitization logic loop to avoid raw attribute string breaking
+    function escapeJsString(str) {
+        return str.replace(/'/g, "\\'").replace(/"/g, "&quot;");
     }
 
     function exportResults() {
-        let txt = `STUDY-WITH-MUBARAK - ASSESSMENT DISPATCH\n`;
-        txt += `Score: ${document.getElementById("final-score").innerText}\n`;
-        txt += `Time Taken: ${document.getElementById("stat-time").innerText}\n\n`;
-        
-        questions.forEach((q, idx) => {
-            txt += `${idx + 1}. ${q.q}\n`;
-            txt += `Your Answer: ${q.options[userAnswers[idx]] || 'None'}\n`;
-            txt += `Correct Answer: ${q.options[q.correct]}\n\n`;
-        });
-
-        const blob = new Blob([txt], { type: "text/plain" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "Mubarak_Diagnostic_Results.txt";
+        const locallyStoredState = localStorage.getItem("mubarak_portal_state");
+        if (!locallyStoredState) return;
+        const dataBlob = new Blob([locallyStoredState], { type: 'application/json' });
+        const dummyUrl = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = dummyUrl;
+        link.download = "assessment_performance_records.json";
         link.click();
     }
 
-    window.addEventListener("keydown", (e) => {
-        if(document.getElementById("quiz-box").classList.contains("hidden")) return;
-        
+    document.addEventListener("keydown", (e) => {
+        if (document.getElementById("quiz-box").classList.contains("hidden")) return;
         if (e.key === "ArrowLeft") navigateQuestion(-1);
         if (e.key === "ArrowRight") navigateQuestion(1);
-        if (["1", "2", "3", "4"].includes(e.key)) selectOption(parseInt(e.key) - 1);
+        if (e.key >= "1" && e.key <= "4") {
+            const parsedIdx = parseInt(e.key) - 1;
+            if (questions[currentQ] && questions[currentQ].options[parsedIdx]) {
+                selectOptionIndex(parsedIdx);
+            }
+        }
         if (e.key.toLowerCase() === "f") toggleFlag();
         if (e.key.toLowerCase() === "s") showSubmitModal();
     });
 
     window.onload = setupSession;
-
-    // Feature 5: Service Worker Application Lifecycle Registrations
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('PWA Service Worker registered safely:', reg.scope))
-            .catch(err => console.error('PWA Service Worker failed configuration setup:', err));
-        });
-    }
 </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Only run on quiz pages, not homepage
-  if (window.location.pathname === "/" || window.location.pathname === "/index.html") return;
-
-  // Wait for your quiz script to show the explanation
-  // Adjust the selector to match your explanation container
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      mutation.addedNodes.forEach(function(node) {
-        if (node.nodeType === 1 && node.matches(".explanation, .review-area, #explanation")) {
-         
-          // Check if button already exists
-          if (!node.querySelector(".ai-btn")) {
-            const aiButton = document.createElement("a");
-            aiButton.href = "/#bottom- section";
-            aiButton.textContent = "Get Mubarak AI explanation";
-            aiButton.className = "ai-btn";
-            node.appendChild(aiButton);
-          }
-        }
-      });
-    });
-  });
-
-  // Watch the whole body for when explanation div appears
-  observer.observe(document.body, { childList: true, subtree: true });
-});
-</script>
-
 </body>
 </html>
