@@ -1092,5 +1092,36 @@
         });
     }
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Only run on quiz pages, not homepage
+  if (window.location.pathname === "/" || window.location.pathname === "/index.html") return;
+
+  // Wait for your quiz script to show the explanation
+  // Adjust the selector to match your explanation container
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      mutation.addedNodes.forEach(function(node) {
+        if (node.nodeType === 1 && node.matches(".explanation, .review-area, #explanation")) {
+         
+          // Check if button already exists
+          if (!node.querySelector(".ai-btn")) {
+            const aiButton = document.createElement("a");
+            aiButton.href = "/#bottom- section";
+            aiButton.textContent = "Get Mubarak AI explanation";
+            aiButton.className = "ai-btn";
+            node.appendChild(aiButton);
+          }
+        }
+      });
+    });
+  });
+
+  // Watch the whole body for when explanation div appears
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+</script>
+
 </body>
 </html>
