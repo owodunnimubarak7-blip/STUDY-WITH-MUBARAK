@@ -508,10 +508,10 @@
         }
 
         [data-theme="dark"] .ai-explanation-box {
-            background: linear-gradient(135deg, #581c87, #7c3aed);
+            background: linear-gradient(135deg, #3b0764, #581c87);
             border-color: #a855f7;
             border-left-color: #d8b4fe;
-            color: #e9d5ff;
+            color: #f3e8ff;
         }
 
         .ai-explanation-title {
@@ -536,13 +536,8 @@
         }
 
         .ai-loading::after {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: #a855f7;
-            animation: dotPulse 1.5s ease-in-out infinite;
+            content: '...';
+            animation: dotPulse 1.5s infinite;
         }
 
         @keyframes dotPulse {
@@ -817,8 +812,7 @@
     let totalDuration = 1800;
     let aiExplanationCache = {};
 
-    const POLLINATION_API_KEY = 'pollin-'; // Note: Add your actual Pollination.ai API key here
-    const POLLINATION_API_URL = 'https://api.pollinations.ai/v1/completions';
+    const POLLINATION_API_URL = 'https://text.pollinations.ai/';
 
     function shuffleArray(array) {
         let currentIndex = array.length, randomIndex;
@@ -1176,7 +1170,7 @@
             }
 
             reviewHTML += `
-                <button class="ai-explain-action-btn" onclick="fetchAIExplanation(${idx})">
+                <button class="ai-explain-action-btn" onclick="fetchAIExplanation(${idx}, event)">
                     ✨ Get Mubarak AI Explanation
                 </button>
                 <div id="ai-explanation-${idx}" class="hidden"></div>
@@ -1187,7 +1181,7 @@
         });
     }
 
-    async function fetchAIExplanation(questionIdx) {
+    async function fetchAIExplanation(questionIdx, event) {
         const q = questions[questionIdx];
         const cacheKey = `q-${questionIdx}`;
 
@@ -1196,54 +1190,45 @@
             return;
         }
 
-        const button = event.target;
+        const button = event.currentTarget || event.target;
         button.disabled = true;
         button.innerHTML = '<span class="ai-loading">Fetching AI Explanation</span>';
 
-        const prompt = `As an English tutor, explain why the correct answer to this question is option ${q.correct + 1} ("${q.options[q.correct]}"). 
-
-Question: ${q.q}
-Options:
-${q.options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}
-
-Provide a clear, concise explanation of why this is the correct answer and why the other options are incorrect. Keep it educational and helpful.`;
+        const systemInstructions = "You are an expert English language tutor with deep knowledge of vocabulary, grammar, and language conventions. Keep explanations concise, clear, educational, and structured.";
+        const promptText = `Explain why the correct answer to this question is option ${q.correct + 1} ("${q.options[q.correct]}").\n\nQuestion: ${q.q}\nOptions:\n${q.options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}\n\nBriefly explain why it is correct and why the others fail.`;
 
         try {
             const response = await fetch(POLLINATION_API_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${POLLINATION_API_KEY}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: 'openai',
                     messages: [
-                        {
-                            role: 'system',
-                            content: 'You are an expert English language tutor with deep knowledge of vocabulary, grammar, and language conventions.'
-                        },
-                        {
-                            role: 'user',
-                            content: prompt
-                        }
+                        { role: 'system', content: systemInstructions },
+                        { role: 'user', content: promptText }
                     ],
-                    max_tokens: 500,
-                    temperature: 0.7
+                    model: 'openai',
+                    jsonMode: false
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
+                throw new Error(`Server returned status: ${response.status}`);
             }
 
-            const data = await response.json();
-            const explanation = data.choices?.[0]?.message?.content || 'Unable to generate explanation.';
+            const explanation = await response.text();
+
+            if (!explanation || explanation.trim() === "") {
+                throw new Error("Empty response received.");
+            }
 
             aiExplanationCache[cacheKey] = explanation;
             displayAIExplanation(questionIdx, explanation);
         } catch (error) {
             console.error('Error fetching AI explanation:', error);
-            displayAIExplanation(questionIdx, `Error: Unable to fetch AI explanation. ${error.message}`);
+            const backupText = q.exp || "No standard context available for this question item.";
+            displayAIExplanation(questionIdx, `<em>Notice: Unable to reach the live AI stream right now (${error.message}). Displaying local default backup instead:</em><br><br>${backupText}`);
         } finally {
             button.disabled = false;
             button.innerHTML = '✨ Get Mubarak AI Explanation';
@@ -1252,6 +1237,7 @@ Provide a clear, concise explanation of why this is the correct answer and why t
 
     function displayAIExplanation(questionIdx, explanation) {
         const container = document.getElementById(`ai-explanation-${questionIdx}`);
+        if (!container) return;
         container.classList.remove('hidden');
         container.innerHTML = `
             <div class="ai-explanation-box">
@@ -1259,7 +1245,7 @@ Provide a clear, concise explanation of why this is the correct answer and why t
                     🤖 Mubarak AI Tutor Explanation
                 </div>
                 <div class="ai-explanation-content">
-                    ${explanation}
+                    ${explanation.replace(/\n/g, '<br>')}
                 </div>
             </div>
         `;
