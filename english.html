@@ -790,21 +790,21 @@
 
 <script>
     const masterQuestions = [
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Garrulous':", options: ["Talkative", "Reticent", "Voluble", "Verbose"], correct: 1, exp: "Garrulous means talkative; Reticent means quiet or reserved." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Enervate':", options: ["Weaken", "Exhaust", "Invigorate", "Debilitate"], correct: 2, exp: "Enervate means to weaken; Invigorate means to strengthen or energize." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Obsequious':", options: ["Submissive", "Domineering", "Servile", "Fawning"], correct: 1, exp: "Obsequious means submissive; Domineering means commanding or forceful." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Ephemeral':", options: ["Fleeting", "Transient", "Perpetual", "Brief"], correct: 2, exp: "Ephemeral means short-lived; Perpetual means lasting forever." },
-        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Loquacious':", options: ["Silent", "Chatty", "Fluent", "Articulate"], correct: 0, exp: "Loquacious means talkative; Silent means quiet or not speaking." },
-        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Anomalous':", options: ["Normal", "Abnormal", "Regular", "Common"], correct: 1, exp: "Anomalous means irregular or abnormal." },
-        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Assuage':", options: ["Aggravate", "Relieve", "Irritate", "Inflame"], correct: 1, exp: "Assuage means to calm or relieve pain or distress." },
-        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Cacophony':", options: ["Harmony", "Silence", "Discord", "Melody"], correct: 2, exp: "Cacophony means harsh or discordant sound." },
-        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Laconic':", options: ["Wordy", "Concise", "Lengthy", "Talkative"], correct: 1, exp: "Laconic means brief and concise in speech." },
-        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Meticulous':", options: ["Sloppy", "Precise", "Careless", "Hasty"], correct: 1, exp: "Meticulous means very careful and precise." },
-        { instr: "Identify the option that satisfies standard syntax rules.", q: "Grammar: Which sentence is correct?", options: ["Neither he nor I are going.", "Neither he nor I am going.", "Neither he or I are going.", "Neither he or I am going."], correct: 1, exp: "With 'neither...nor', use singular verb form 'am' when first person is involved." },
-        { instr: "Select the accurate structural collective option.", q: "Grammar: Select the correct collective noun.", options: ["A flock of lions", "A pride of lions", "A pack of lions", "A school of lions"], correct: 1, exp: "A pride of lions is the correct collective noun." },
-        { instr: "Choose the accurate contextual preposition.", q: "Grammar: Choose the correct preposition.", options: ["He is proficient at English.", "He is proficient in English.", "He is proficient on English.", "He is proficient for English."], correct: 1, exp: "'Proficient in' is the correct usage." },
-        { instr: "Identify correct orthography or contraction use.", q: "Grammar: Pick the correct word.", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "Its's raining outside."], correct: 1, exp: "'It's' is the contraction of 'it is'." },
-        { instr: "Identify the matching grammatical word group.", q: "Grammar: Identify the adjective.", options: ["Slowly", "Run", "Beautiful", "Happiness"], correct: 2, exp: "An adjective describes nouns. 'Beautiful' is an adjective." }
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Garrulous':", options: ["Talkative", "Reticent", "Voluble", "Verbose"], correct: 1, exp: "'Garrulous' means talkative. 'Reticent' means silent or reserved, the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Enervate':", options: ["Weaken", "Exhaust", "Invigorate", "Debilitate"], correct: 2, exp: "'Enervate' means to weaken. 'Invigorate' means to energize, the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Obsequious':", options: ["Submissive", "Domineering", "Servile", "Fawning"], correct: 1, exp: "'Obsequious' means excessively servile. 'Domineering' means commanding, the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Ephemeral':", options: ["Fleeting", "Transient", "Perpetual", "Brief"], correct: 2, exp: "'Ephemeral' means temporary. 'Perpetual' means lasting forever, the opposite." },
+        { instr: "Choose the option most nearly opposite in meaning to the given word.", q: "Choose the ANTONYM of 'Loquacious':", options: ["Silent", "Chatty", "Fluent", "Articulate"], correct: 0, exp: "'Loquacious' means talkative. 'Silent' means without speech, the opposite." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Anomalous':", options: ["Normal", "Abnormal", "Regular", "Common"], correct: 1, exp: "'Anomalous' means deviating from normal. 'Abnormal' is a synonym." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Assuage':", options: ["Aggravate", "Relieve", "Irritate", "Inflame"], correct: 1, exp: "'Assuage' means to calm or ease. 'Relieve' is a synonym." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Cacophony':", options: ["Harmony", "Silence", "Discord", "Melody"], correct: 2, exp: "'Cacophony' means harsh or discordant sound. 'Discord' is a synonym." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Laconic':", options: ["Wordy", "Concise", "Lengthy", "Talkative"], correct: 1, exp: "'Laconic' means brief or concise. 'Concise' is a synonym." },
+        { instr: "Choose the option most nearly identical in meaning to the given word.", q: "Choose the SYNONYM of 'Meticulous':", options: ["Sloppy", "Precise", "Careless", "Hasty"], correct: 1, exp: "'Meticulous' means extremely careful and precise. 'Precise' is a synonym." },
+        { instr: "Identify the option that satisfies standard syntax rules.", q: "Grammar: Which sentence is correct?", options: ["Neither he nor I are going.", "Neither he nor I am going.", "Neither he or I am going.", "Neither he or I are going."], correct: 1, exp: "With 'neither...nor' construction, the verb agrees with the nearer subject. Since 'I' is nearer and singular, use 'am'." },
+        { instr: "Select the accurate structural collective option.", q: "Grammar: Select the correct collective noun.", options: ["A flock of lions", "A pride of lions", "A pack of lions", "A school of lions"], correct: 1, exp: "A group of lions is correctly called 'a pride of lions'. The other options refer to different animal groups." },
+        { instr: "Choose the accurate contextual preposition.", q: "Grammar: Choose the correct preposition.", options: ["He is proficient at English.", "He is proficient in English.", "He is proficient about English.", "He is proficient on English."], correct: 1, exp: "The correct phrase is 'proficient in', not 'at', 'about', or 'on'." },
+        { instr: "Identify correct orthography or contraction use.", q: "Grammar: Pick the correct word.", options: ["Its raining outside.", "It's raining outside.", "Its' raining outside.", "Its's raining outside."], correct: 1, exp: "The contraction 'It's' (It is) is correct. 'Its' is possessive and inappropriate here." },
+        { instr: "Identify the matching grammatical word group.", q: "Grammar: Identify the adjective.", options: ["Slowly", "Run", "Beautiful", "Happiness"], correct: 2, exp: "An adjective describes a noun. 'Beautiful' is an adjective. The others are an adverb, verb, and noun respectively." }
     ];
 
     let questions = [];
@@ -816,6 +816,9 @@
     let timerPaused = false;
     let totalDuration = 1800;
     let aiExplanationCache = {};
+
+    const POLLINATION_API_KEY = 'pollin-'; // Note: Add your actual Pollination.ai API key here
+    const POLLINATION_API_URL = 'https://api.pollinations.ai/v1/completions';
 
     function shuffleArray(array) {
         let currentIndex = array.length, randomIndex;
@@ -1002,6 +1005,38 @@
         updateProgressIndicators();
     }
 
+    function updateProgressIndicators() {
+        const totalQuestions = questions.length;
+        const progressPercent = Math.round((currentQ + 1) / totalQuestions * 100);
+        document.getElementById("progress-text").textContent = `Question ${currentQ + 1} of ${totalQuestions}`;
+        document.getElementById("progress-percent").textContent = `${progressPercent}%`;
+        document.getElementById("progress-fill").style.width = `${progressPercent}%`;
+    }
+
+    function renderNavigatorGrid() {
+        const gridContainer = document.getElementById("jump-box-grid");
+        gridContainer.innerHTML = "";
+        
+        questions.forEach((_, index) => {
+            const item = document.createElement("div");
+            item.className = `jump-item`;
+            
+            if (index === currentQ) item.classList.add("active");
+            if (userAnswers[index] !== null) item.classList.add("answered");
+            if (flaggedQuestions.has(index)) item.classList.add("flagged");
+            
+            item.textContent = index + 1;
+            item.onclick = () => {
+                currentQ = index;
+                renderActiveQuestion();
+                renderNavigatorGrid();
+                updateProgressIndicators();
+            };
+            
+            gridContainer.appendChild(item);
+        });
+    }
+
     function toggleFlag() {
         if (flaggedQuestions.has(currentQ)) {
             flaggedQuestions.delete(currentQ);
@@ -1013,37 +1048,6 @@
         saveCurrentProgressToStorage(false);
     }
 
-    function renderNavigatorGrid() {
-        const gridContainer = document.getElementById("jump-box-grid");
-        gridContainer.innerHTML = "";
-        
-        questions.forEach((_, idx) => {
-            const item = document.createElement("button");
-            item.className = "jump-item";
-            item.textContent = idx + 1;
-            item.onclick = () => {
-                currentQ = idx;
-                renderActiveQuestion();
-                renderNavigatorGrid();
-                updateProgressIndicators();
-            };
-            
-            if (idx === currentQ) item.classList.add("active");
-            if (userAnswers[idx] !== null) item.classList.add("answered");
-            if (flaggedQuestions.has(idx)) item.classList.add("flagged");
-            
-            gridContainer.appendChild(item);
-        });
-    }
-
-    function updateProgressIndicators() {
-        const total = questions.length;
-        const percent = Math.round(((currentQ + 1) / total) * 100);
-        document.getElementById("progress-text").textContent = `Question ${currentQ + 1} of ${total}`;
-        document.getElementById("progress-percent").textContent = `${percent}%`;
-        document.getElementById("progress-fill").style.width = `${percent}%`;
-    }
-
     function showSubmitModal() {
         document.getElementById("submit-modal").classList.add("active");
     }
@@ -1052,153 +1056,207 @@
         document.getElementById("submit-modal").classList.remove("active");
     }
 
+    document.getElementById("submit-modal").addEventListener("click", (e) => {
+        if (e.target.id === "submit-modal") closeSubmitModal();
+    });
+
     function confirmSubmit() {
         closeSubmitModal();
-        const correctCount = userAnswers.filter((ans, idx) => ans === questions[idx].correct).length;
-        const wrongCount = userAnswers.filter((ans, idx) => ans !== null && ans !== questions[idx].correct).length;
-        const unansweredCount = userAnswers.filter(ans => ans === null).length;
+        calculateResults();
+    }
+
+    function calculateResults() {
+        let correct = 0, wrong = 0, unanswered = 0;
         
-        const stats = {
-            correct: correctCount,
-            wrong: wrongCount,
-            unanswered: unansweredCount,
-            score: correctCount,
-            total: questions.length,
-            percentage: Math.round((correctCount / questions.length) * 100),
-            timeTaken: totalDuration - timeRemaining
+        questions.forEach((q, idx) => {
+            if (userAnswers[idx] === null) {
+                unanswered++;
+            } else if (userAnswers[idx] === q.correct) {
+                correct++;
+            } else {
+                wrong++;
+            }
+        });
+
+        const timeTaken = totalDuration - timeRemaining;
+        const mins = Math.floor(timeTaken / 60);
+        const secs = timeTaken % 60;
+
+        const statistics = {
+            correct: correct,
+            wrong: wrong,
+            unanswered: unanswered,
+            timeTaken: `${mins}:${secs < 10 ? '0' : ''}${secs}`,
+            score: correct
         };
-        
-        saveCurrentProgressToStorage(true, stats);
-        executeUIRenderOnSubmit(stats);
+
+        saveCurrentProgressToStorage(true, statistics);
+        executeUIRenderOnSubmit(statistics);
     }
 
     function executeUIRenderOnSubmit(stats) {
         clearInterval(timerInterval);
         document.getElementById("quiz-box").classList.add("hidden");
         document.getElementById("result-box").classList.remove("hidden");
-        
-        document.getElementById("final-score").textContent = `${stats.score} / ${stats.total}`;
+        document.getElementById("review-section").classList.remove("hidden");
+
+        document.getElementById("final-score").textContent = `${stats.correct} / ${questions.length}`;
         document.getElementById("stat-correct").textContent = stats.correct;
         document.getElementById("stat-wrong").textContent = stats.wrong;
         document.getElementById("stat-unanswered").textContent = stats.unanswered;
-        
-        const mins = Math.floor(stats.timeTaken / 60);
-        const secs = stats.timeTaken % 60;
-        document.getElementById("stat-time").textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        
+        document.getElementById("stat-time").textContent = stats.timeTaken;
+
+        const percentage = Math.round((stats.correct / questions.length) * 100);
         let message = "";
-        if (stats.percentage >= 90) {
-            message = "Outstanding performance! 🌟 You've demonstrated excellent understanding.";
-        } else if (stats.percentage >= 70) {
-            message = "Great job! 👏 You've shown solid comprehension of the material.";
-        } else if (stats.percentage >= 50) {
-            message = "Good effort! 💪 Review the explanations to improve further.";
+        if (percentage >= 90) {
+            message = "🌟 Outstanding! You demonstrated excellent understanding!";
+        } else if (percentage >= 75) {
+            message = "✅ Great job! You have a solid grasp of the material.";
+        } else if (percentage >= 60) {
+            message = "👍 Good effort! Review the concepts you found challenging.";
         } else {
-            message = "Keep practicing! 📚 Don't worry, every mistake is a learning opportunity.";
+            message = "📚 Keep studying! Focus on strengthening weak areas.";
         }
-        
         document.getElementById("performance-msg").textContent = message;
-        renderDetailedReview();
+
+        renderReviewCards();
     }
 
-    function renderDetailedReview() {
-        const reviewContainer = document.getElementById("review-cards-container");
-        reviewContainer.innerHTML = "";
-        
+    function renderReviewCards() {
+        const container = document.getElementById("review-cards-container");
+        container.innerHTML = "";
+
         questions.forEach((q, idx) => {
+            const userAnswer = userAnswers[idx];
+            const isCorrect = userAnswer === q.correct;
+            const isUnanswered = userAnswer === null;
+
             const card = document.createElement("div");
             card.className = "review-card";
-            
-            const userAns = userAnswers[idx];
-            const isCorrect = userAns === q.correct;
-            const answered = userAns !== null;
-            
-            let statusBadge = "";
-            if (!answered) {
-                statusBadge = '<span class="choice-badge badge-unanswered">Unanswered</span>';
-            } else if (isCorrect) {
-                statusBadge = '<span class="choice-badge badge-correct">✓ Correct</span>';
-            } else {
-                statusBadge = '<span class="choice-badge badge-wrong">✗ Wrong</span>';
+
+            let statusBadgeClass = "badge-unanswered";
+            let statusText = "Unanswered";
+            if (!isUnanswered) {
+                statusBadgeClass = isCorrect ? "badge-correct" : "badge-wrong";
+                statusText = isCorrect ? "✓ Correct" : "✗ Wrong";
             }
-            
-            card.innerHTML = `
-                <p><strong>Q${idx + 1}: ${q.q}</strong></p>
-                ${statusBadge}
-                <div>
-                    ${answered ? `
-                        <p>Your answer: <strong class="${isCorrect ? 'review-correct' : 'review-wrong'}">${q.options[userAns]}</strong></p>
-                    ` : ''}
-                    <p>Correct answer: <strong class="review-correct">${q.options[q.correct]}</strong></p>
+
+            let reviewHTML = `
+                <div style="margin-bottom: 15px;">
+                    <span class="choice-badge ${statusBadgeClass}">${statusText}</span>
                 </div>
-                <div class="explanation-box">
-                    <div class="explanation-title">📖 Explanation:</div>
-                    <div>${q.exp || "Study the correct answer to understand this concept better."}</div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Question ${idx + 1}:</strong> ${q.q}
                 </div>
-                ${answered && !isCorrect ? `
-                    <button class="ai-explain-action-btn" onclick="fetchAIExplanation(${idx})">
-                        ✨ Get AI Explanation
-                    </button>
-                    <div id="ai-explanation-${idx}" class="hidden"></div>
-                ` : ''}
+                <div style="margin-bottom: 15px;">
+                    <div style="font-weight: 600; margin-bottom: 8px;">Options:</div>
             `;
-            
-            reviewContainer.appendChild(card);
+
+            q.options.forEach((opt, optIdx) => {
+                let optClass = "";
+                if (optIdx === q.correct) optClass = "review-correct";
+                else if (optIdx === userAnswer && !isCorrect) optClass = "review-wrong";
+                
+                reviewHTML += `
+                    <div style="margin-bottom: 8px; padding: 10px; border: 2px solid var(--option-border); border-radius: 8px; ${optClass ? 'border-color: var(--primary);' : ''}" class="${optClass}">
+                        ${optIdx === q.correct ? '✓ ' : ''}${optIdx === userAnswer && !isCorrect ? '✗ ' : ''}${opt}
+                    </div>
+                `;
+            });
+
+            reviewHTML += `</div>`;
+
+            if (q.exp) {
+                reviewHTML += `
+                    <div class="explanation-box">
+                        <div class="explanation-title">📝 Explanation:</div>
+                        ${q.exp}
+                    </div>
+                `;
+            }
+
+            reviewHTML += `
+                <button class="ai-explain-action-btn" onclick="fetchAIExplanation(${idx})">
+                    ✨ Get Mubarak AI Explanation
+                </button>
+                <div id="ai-explanation-${idx}" class="hidden"></div>
+            `;
+
+            card.innerHTML = reviewHTML;
+            container.appendChild(card);
         });
-        
-        document.getElementById("review-section").classList.remove("hidden");
     }
 
-    function fetchAIExplanation(qIdx) {
-        if (aiExplanationCache[qIdx]) {
-            displayAIExplanation(qIdx, aiExplanationCache[qIdx]);
+    async function fetchAIExplanation(questionIdx) {
+        const q = questions[questionIdx];
+        const cacheKey = `q-${questionIdx}`;
+
+        if (aiExplanationCache[cacheKey]) {
+            displayAIExplanation(questionIdx, aiExplanationCache[cacheKey]);
             return;
         }
-        
-        const q = questions[qIdx];
-        const userAns = userAnswers[qIdx];
-        const correctAns = q.options[q.correct];
-        const userChoice = userAns !== null ? q.options[userAns] : "Not answered";
-        
-        const explanationBox = document.getElementById(`ai-explanation-${qIdx}`);
-        explanationBox.innerHTML = `
-            <div class="ai-explanation-box">
-                <div class="ai-explanation-title">
-                    <span>🤖 AI Analysis</span>
-                </div>
-                <div class="ai-loading">Generating detailed explanation...</div>
-            </div>
-        `;
-        explanationBox.classList.remove("hidden");
-        
-        // Simulate AI explanation generation
-        setTimeout(() => {
-            const explanation = generateAIExplanation(q, userChoice, correctAns);
-            aiExplanationCache[qIdx] = explanation;
-            displayAIExplanation(qIdx, explanation);
-        }, 1500);
+
+        const button = event.target;
+        button.disabled = true;
+        button.innerHTML = '<span class="ai-loading">Fetching AI Explanation</span>';
+
+        const prompt = `As an English tutor, explain why the correct answer to this question is option ${q.correct + 1} ("${q.options[q.correct]}"). 
+
+Question: ${q.q}
+Options:
+${q.options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}
+
+Provide a clear, concise explanation of why this is the correct answer and why the other options are incorrect. Keep it educational and helpful.`;
+
+        try {
+            const response = await fetch(POLLINATION_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${POLLINATION_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: 'openai',
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'You are an expert English language tutor with deep knowledge of vocabulary, grammar, and language conventions.'
+                        },
+                        {
+                            role: 'user',
+                            content: prompt
+                        }
+                    ],
+                    max_tokens: 500,
+                    temperature: 0.7
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const explanation = data.choices?.[0]?.message?.content || 'Unable to generate explanation.';
+
+            aiExplanationCache[cacheKey] = explanation;
+            displayAIExplanation(questionIdx, explanation);
+        } catch (error) {
+            console.error('Error fetching AI explanation:', error);
+            displayAIExplanation(questionIdx, `Error: Unable to fetch AI explanation. ${error.message}`);
+        } finally {
+            button.disabled = false;
+            button.innerHTML = '✨ Get Mubarak AI Explanation';
+        }
     }
 
-    function generateAIExplanation(q, userChoice, correctAns) {
-        const explanations = {
-            "antonym": `The word you're studying is the opposite of what you chose. ${q.q} requires selecting an antonym (opposite meaning). The correct answer "${correctAns}" directly contrasts with the original word's meaning, while your choice "${userChoice}" is similar or identical in meaning.`,
-            "synonym": `The word you're studying requires a synonym (similar meaning). ${q.q} asks for a word with nearly identical meaning. The correct answer "${correctAns}" shares the same essential meaning, whereas your choice "${userChoice}" has a different or opposite meaning.`,
-            "grammar": `This is a grammar question testing your knowledge of English rules. The correct answer "${correctAns}" follows proper syntax and grammar conventions. Your choice "${userChoice}" violates standard grammar rules. Remember the key rule: ${q.exp || "review the grammar pattern"}.`
-        };
-        
-        let type = "synonym";
-        if (q.instr.includes("opposite")) type = "antonym";
-        if (q.instr.includes("Grammar")) type = "grammar";
-        
-        return explanations[type] || `The correct answer is "${correctAns}". ${q.exp || "Study this concept more carefully."}`;
-    }
-
-    function displayAIExplanation(qIdx, explanation) {
-        const explanationBox = document.getElementById(`ai-explanation-${qIdx}`);
-        explanationBox.innerHTML = `
+    function displayAIExplanation(questionIdx, explanation) {
+        const container = document.getElementById(`ai-explanation-${questionIdx}`);
+        container.classList.remove('hidden');
+        container.innerHTML = `
             <div class="ai-explanation-box">
                 <div class="ai-explanation-title">
-                    <span>🤖 AI Analysis</span>
+                    🤖 Mubarak AI Tutor Explanation
                 </div>
                 <div class="ai-explanation-content">
                     ${explanation}
@@ -1212,46 +1270,57 @@
             correct: document.getElementById("stat-correct").textContent,
             wrong: document.getElementById("stat-wrong").textContent,
             unanswered: document.getElementById("stat-unanswered").textContent,
-            score: document.getElementById("final-score").textContent,
-            time: document.getElementById("stat-time").textContent
+            time: document.getElementById("stat-time").textContent,
+            score: document.getElementById("final-score").textContent
         };
-        
-        let csvContent = "Question Quiz Results\n";
-        csvContent += `Score: ${stats.score}\n`;
-        csvContent += `Correct: ${stats.correct}\n`;
-        csvContent += `Wrong: ${stats.wrong}\n`;
-        csvContent += `Unanswered: ${stats.unanswered}\n`;
-        csvContent += `Time Taken: ${stats.time}\n\n`;
-        csvContent += "Detailed Results:\n";
-        csvContent += "Question, Your Answer, Correct Answer, Status\n";
-        
+
+        const csvContent = [
+            ["English Language Diagnostic Test Results"],
+            ["Score", stats.score],
+            ["Correct", stats.correct],
+            ["Wrong", stats.wrong],
+            ["Unanswered", stats.unanswered],
+            ["Time Taken", stats.time],
+            [],
+            ["Question", "Your Answer", "Correct Answer", "Status"]
+        ];
+
         questions.forEach((q, idx) => {
-            const userAns = userAnswers[idx];
-            const status = userAns === null ? "Unanswered" : (userAns === q.correct ? "Correct" : "Wrong");
-            const userChoice = userAns !== null ? q.options[userAns] : "N/A";
-            csvContent += `"${q.q}", "${userChoice}", "${q.options[q.correct]}", "${status}"\n`;
+            const userAnswer = userAnswers[idx] !== null ? q.options[userAnswers[idx]] : "Unanswered";
+            const correctAnswer = q.options[q.correct];
+            const status = userAnswers[idx] === q.correct ? "Correct" : userAnswers[idx] === null ? "Unanswered" : "Wrong";
+            csvContent.push([q.q.substring(0, 50), userAnswer, correctAnswer, status]);
         });
-        
-        const link = document.createElement("a");
-        link.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
-        link.download = "quiz-results.csv";
-        link.click();
+
+        let csvString = csvContent.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+        const blob = new Blob([csvString], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'quiz-results.csv';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
     }
 
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener('keydown', (e) => {
         if (document.getElementById("quiz-box").classList.contains("hidden")) return;
-        
+
         if (e.key === "ArrowLeft") navigateQuestion(-1);
         if (e.key === "ArrowRight") navigateQuestion(1);
-        if (e.key === "f" || e.key === "F") toggleFlag();
         if (e.key === "s" || e.key === "S") showSubmitModal();
-        if (["1", "2", "3", "4"].includes(e.key)) {
-            const idx = parseInt(e.key) - 1;
-            if (idx < questions[currentQ].options.length) selectOptionIndex(idx);
+        if (e.key === "f" || e.key === "F") toggleFlag();
+
+        if (e.key >= "1" && e.key <= "4") {
+            const optionIdx = parseInt(e.key) - 1;
+            if (optionIdx < questions[currentQ].options.length) {
+                selectOptionIndex(optionIdx);
+            }
         }
     });
 
-    window.addEventListener("load", setupSession);
+    setupSession();
 </script>
 </body>
 </html>
