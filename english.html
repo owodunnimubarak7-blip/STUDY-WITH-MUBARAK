@@ -540,6 +540,64 @@
             animation: dotPulse 1.5s infinite;
         }
 
+        /* Wiki-Specific Styles */
+        .wiki-box {
+            margin-top: 15px;
+            padding: 18px;
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            border-left: 6px solid var(--primary);
+            border-radius: 14px;
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .wiki-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wiki-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .wiki-link:hover { text-decoration: underline; }
+
+        .wiki-action-btn {
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 12px;
+            margin-left: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+        }
+        .wiki-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+        }
+        .wiki-action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         @keyframes dotPulse {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 1; }
@@ -811,6 +869,7 @@
     let timerPaused = false;
     let totalDuration = 1800;
     let aiExplanationCache = {};
+    let wikiCache = {};
 
     const POLLINATION_API_URL = 'https://text.pollinations.ai/';
 
@@ -1169,11 +1228,18 @@
                 `;
             }
 
+            // Cleanly integrated AI and Wikipedia actions
             reviewHTML += `
-                <button class="ai-explain-action-btn" onclick="fetchAIExplanation(${idx}, event)">
-                    ✨ Get Mubarak AI Explanation
-                </button>
+                <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+                    <button class="ai-explain-action-btn" style="margin-top: 0;" onclick="fetchAIExplanation(${idx}, event)">
+                        ✨ Get Mubarak AI Explanation
+                    </button>
+                    <button class="wiki-action-btn" style="margin-top: 0;" onclick="fetchWikiData(${idx}, event)">
+                        📚 Look up on Wikipedia
+                    </button>
+                </div>
                 <div id="ai-explanation-${idx}" class="hidden"></div>
+                <div id="wiki-preview-${idx}" class="hidden"></div>
             `;
 
             card.innerHTML = reviewHTML;
@@ -1251,6 +1317,80 @@
         `;
     }
 
+    /* Automated Wikipedia Look-up Engine */
+    async function fetchWikiData(questionIdx, event) {
+        const q = questions[questionIdx];
+        const cacheKey = `wiki-${questionIdx}`;
+        
+        if (wikiCache[cacheKey]) {
+            displayWikiData(questionIdx, wikiCache[cacheKey]);
+            return;
+        }
+
+        const button = event.currentTarget || event.target;
+        button.disabled = true;
+        button.innerHTML = '<span class="ai-loading" style="color: white;">Searching Wiki</span>';
+
+        // Auto-extract targeted educational terms from query structural tokens
+        let queryTerm = "";
+        const singleQuoteMatch = q.q.match(/'([^']+)'/);
+        if (singleQuoteMatch && singleQuoteMatch[1]) {
+            queryTerm = singleQuoteMatch[1];
+        } else if (q.q.includes("Neither")) {
+            queryTerm = "Neither...nor";
+        } else if (q.q.toLowerCase().includes("collective")) {
+            queryTerm = "Collective noun";
+        } else if (q.q.toLowerCase().includes("preposition")) {
+            queryTerm = "Preposition";
+        } else if (q.q.toLowerCase().includes("adjective")) {
+            queryTerm = "Adjective";
+        } else {
+            queryTerm = q.options[q.correct];
+        }
+
+        const endpoint = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(queryTerm)}`;
+
+        try {
+            const res = await fetch(endpoint, {
+                headers: { 'Api-User-Agent': 'StudyPortalDiagnostic/1.0 (mubarak@example.com)' }
+            });
+            if (!res.ok) throw new Error("No Wikipedia definition found.");
+            
+            const data = await res.json();
+            const payload = {
+                title: data.title,
+                extract: data.extract,
+                url: data.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${queryTerm}`
+            };
+
+            wikiCache[cacheKey] = payload;
+            displayWikiData(questionIdx, payload);
+        } catch (err) {
+            console.error(err);
+            displayWikiData(questionIdx, {
+                title: queryTerm,
+                extract: "Could not retrieve automated definition profile stream right now. Please verify active offline rules or network endpoints.",
+                url: `https://en.wikipedia.org/wiki/${queryTerm}`
+            });
+        } finally {
+            button.disabled = false;
+            button.innerHTML = '📚 Look up on Wikipedia';
+        }
+    }
+
+    function displayWikiData(questionIdx, data) {
+        const targetElement = document.getElementById(`wiki-preview-${questionIdx}`);
+        if (!targetElement) return;
+        targetElement.classList.remove("hidden");
+        targetElement.innerHTML = `
+            <div class="wiki-box">
+                <div class="wiki-title">🌐 Wikipedia Profile: ${data.title}</div>
+                <div>${data.extract}</div>
+                <a class="wiki-link" href="${data.url}" target="_blank">Read Full Article on Wikipedia →</a>
+            </div>
+        `;
+    }
+
     function exportResults() {
         const stats = {
             correct: document.getElementById("stat-correct").textContent,
@@ -1310,3 +1450,4 @@
 </script>
 </body>
 </html>
+
