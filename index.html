@@ -403,6 +403,14 @@
             border-bottom-left-radius: 4px;
         }
 
+        .message.bot p {
+            margin: 0 0 8px 0;
+        }
+
+        .message.bot p:last-child {
+            margin-bottom: 0;
+        }
+
         .message.user {
             background: var(--gradient-primary);
             color: white;
@@ -801,6 +809,27 @@
         scrollToBottom();
     }
 
+    // New auxiliary engine function designed to query Wikipedia quickly
+    async function fetchWikipediaSummary(query) {
+        try {
+            // Clean up academic questions into simple subject keywords
+            let searchKeyword = query.replace(/(who is|what is|explain|tell me about|meaning of|definition of)/gi, "").trim();
+            if (!searchKeyword) return null;
+
+            const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchKeyword)}`;
+            const res = await fetch(url);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.extract) {
+                    return `### 📚 Reference Info (Wikipedia):\n> ${data.extract}\n\n---\n`;
+                }
+            }
+        } catch (e) {
+            console.log("Wikipedia Engine skipped or offline");
+        }
+        return null;
+    }
+
     async function sendMessage() {
         const input = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
@@ -814,7 +843,7 @@
         input.disabled = true;
         sendBtn.disabled = true;
 
-        const typingIndicator = appendMessageMarkup('⏳ Generating response...', 'system');
+        const typingIndicator = appendMessageMarkup('⏳ Scanning reference libraries & generating detailed response...', 'system');
         scrollToBottom();
 
         try {
@@ -826,13 +855,25 @@
                 saveMessageToThread(aiRequestCache[cacheKey].response, 'bot');
                 updateThreadTitleIfNeeded(queryText);
             } else {
-                const promptContext = `You are Mubarak, an expert academic tutor specializing in Nigerian JAMB & SSCE exams. Provide a clear, concise, and educational response. Student Question: ${queryText}`;
-                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=openai`);
+                // Fire off both requests in parallel to guarantee incredible performance speeds
+                const wikiPromise = fetchWikipediaSummary(queryText);
+                
+                // Structured system blueprint instruction forcing the model to provide highly descriptive, long academic text
+                const promptContext = `You are Mubarak, an expert academic tutor for JAMB, WAEC & SSCE. Provide an extensive, deeply explanatory, structural text response matching standard textbook definitions, examples, subcategories, and structural breakdowns. Question: ${queryText}`;
+                const aiPromise = fetch(`https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=openai`);
+                
+                const [wikiSummary, aiResponse] = await Promise.all([wikiPromise, aiPromise]);
                 
                 typingIndicator.remove();
                 
-                if (response.ok) {
-                    const textReply = await response.text();
+                if (aiResponse.ok) {
+                    let textReply = await aiResponse.text();
+                    
+                    // If a verified Wikipedia source card was fetched, append it directly above the breakdown
+                    if (wikiSummary) {
+                        textReply = wikiSummary + textReply;
+                    }
+
                     aiRequestCache[cacheKey] = {
                         response: textReply,
                         timestamp: Date.now()
