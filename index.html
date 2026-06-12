@@ -32,6 +32,8 @@
             --border-color: #e2e8f0;
             --sidebar-bg: #111827;
             --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            /* Meta AI Inspired Gradient Palette */
+            --meta-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 30%, #7a00ff 70%, #ff007a 100%);
         }
 
         [data-theme="dark"] {
@@ -55,6 +57,7 @@
             background: var(--bg);
             color: var(--text-main);
             transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+            scroll-behavior: smooth;
         }
 
         .app-wrapper {
@@ -241,7 +244,51 @@
             font-size: 1rem;
         }
 
-        /* NEW UI STYLES FOR THE INTEGRATED AI PANEL */
+        /* NEW FLOATING META AI BUTTON STYLES */
+        .meta-floating-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.65rem;
+            font-weight: 800;
+            cursor: pointer;
+            z-index: 900;
+            border: none;
+            box-shadow: 0 6px 24px rgba(0, 114, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .meta-floating-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 32px rgba(122, 0, 255, 0.5);
+        }
+
+        .meta-floating-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Ambient spinning outer aura for the floating button */
+        .meta-floating-btn::after {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            z-index: -1;
+            opacity: 0.4;
+            filter: blur(6px);
+            transition: opacity 0.3s ease;
+        }
+
+        /* AI STUDIO LAYOUT PANEL WITH FOCUS TRIGGER AMBIENT HIGHLIGHT */
         .ai-studio-section {
             border: 1px solid var(--border-color);
             border-radius: 24px;
@@ -250,6 +297,12 @@
             margin-top: 35px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
             position: relative;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .ai-studio-section.focus-highlight {
+            border-color: #0072ff;
+            box-shadow: 0 0 25px rgba(0, 114, 255, 0.25);
         }
         
         .ai-badge {
@@ -339,7 +392,6 @@
             display: block;
         }
 
-        /* Global formatting inside AI response */
         .ai-response-content h3 { margin-top: 0; color: var(--primary); }
         .ai-response-content ul { padding-left: 20px; }
         .ai-response-content code { background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
@@ -402,19 +454,24 @@
             .subject-card { padding: 24px; }
             .ai-action-bar { flex-direction: column; align-items: stretch; }
             .btn.ai-submit { width: 100%; text-align: center; }
+            /* Reposition FAB on mobile so it stays out of the way of card taps */
+            .meta-floating-btn { bottom: 20px; right: 20px; width: 54px; height: 54px; font-size: 1.45rem; }
         }
 
         @media (max-width: 480px) {
             header h1 { font-size: 1.5rem; }
             header p { font-size: 0.9rem; }
             .subject-card h2 { font-size: 1.3rem; }
-            .btn { width: 100%; padding: 12px; }
+            .btn { width: 100%; padding: 12px; margin-bottom: 5px; }
         }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
+    <!-- Meta AI Floating Action Button Structure -->
+    <button class="meta-floating-btn" id="metaFloatingBtn" onclick="scrollToAIStudio()" title="Open Mubarak AI Studio">M</button>
+
     <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
     <div class="history-sidebar" id="history-sidebar">
@@ -439,7 +496,7 @@
         </header>
 
         <div class="container">
-            <!-- Main Academic Quiz Hub -->
+            <!-- Quiz Route Hub Grid -->
             <div class="subject-grid">
                 <div class="subject-card">
                     <h2 style="color: var(--primary); margin-top:0;">🌐 English Language</h2>
@@ -460,8 +517,8 @@
                 </div>
             </div>
 
-            <!-- INTEGRATED CUSTOM AI STUDIO PANEL -->
-            <div class="ai-studio-section">
+            <!-- AI STUDIO SECTION (TARGET INTERACTION NODE) -->
+            <div class="ai-studio-section" id="aiStudioContainer">
                 <div class="ai-badge">⚡ Mubarak AI Academic Studio</div>
                 <h2 style="margin: 0 0 8px 0; font-weight: 800; font-size: 1.5rem;">Instant Exam Expert Insights</h2>
                 <p style="color: var(--text-muted); margin: 0 0 20px 0; font-size: 0.95rem;">Ask complex syllabus questions or parse tricky past questions instantly.</p>
@@ -509,9 +566,30 @@
     }
 
     /* ===================================================================
-      INTEGRATED STUDIO AI ENGINE FUNCTIONS
-      ===================================================================
+      FLOATING ACTION TRIGGER CONTROL
+       ===================================================================
     */
+    function scrollToAIStudio() {
+        const targetSection = document.getElementById('aiStudioContainer');
+        const inputField = document.getElementById('studio-ai-input');
+        
+        if (targetSection) {
+            // Scroll down cleanly
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Highlight container border temporarily to lock focus
+            targetSection.classList.add('focus-highlight');
+            setTimeout(() => {
+                targetSection.classList.remove('focus-highlight');
+            }, 1500);
+
+            // Ready input focus for immediate mobile keyboard mapping
+            if (inputField) {
+                setTimeout(() => inputField.focus(), 600);
+            }
+        }
+    }
+
     function applyQuickPrompt(type) {
         const inputField = document.getElementById('studio-ai-input');
         if (type === 'jamb') {
@@ -533,30 +611,25 @@
         const query = inputField.value.trim();
         if (!query) return alert("Please input a study topic or exam question first!");
 
-        // Update UI State to loading
         submitBtn.disabled = true;
         submitBtn.innerText = "Processing...";
         responseText.innerHTML = `<p style="color: var(--text-muted);">⏳ Formulating structured expert explanation... Please hold on.</p>`;
         responseBox.classList.add('active');
 
-        // Target System Instructions aligning with West African academic expectations
         const systemCore = `You are Mubarak, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down this request expertly using clear bullet points, clean headings, and actionable insights. Query: ${query}`;
 
         try {
             let aiResultText = "";
             
-            // Route 1: Attempt ultra-fast response via integrated Puter SDK
             if (typeof puter !== 'undefined' && puter.ai) {
                 aiResultText = await puter.ai.chat(systemCore);
             } else { 
-                // Route 2: Fallback seamlessly to Pollinations Engine if Puter CDN is blocked/delayed
                 const fallbackUrl = `https://text.pollinations.ai/${encodeURIComponent(systemCore)}?model=searchgpt`;
                 const response = await fetch(fallbackUrl);
                 if (!response.ok) throw new Error("Infrastructure timeout");
                 aiResultText = await response.text();
             }
 
-            // Parse response safely with marked.js & cache history log
             responseText.innerHTML = marked.parse(aiResultText);
             saveExplanationToLog(query, aiResultText, "AI Studio");
 
