@@ -32,8 +32,13 @@
             --border-color: #e2e8f0;
             --sidebar-bg: #111827;
             --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            /* Meta AI Inspired Gradient Palette */
-            --meta-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 30%, #7a00ff 70%, #ff007a 100%);
+            
+            /* Meta AI Immersive Styling Specifications */
+            --meta-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            --meta-chat-bg: #f4f5f7;
+            --meta-bubble-user: #007bff;
+            --meta-bubble-ai: #ffffff;
+            --meta-text-ai: #1c1e21;
         }
 
         [data-theme="dark"] {
@@ -43,6 +48,12 @@
             --text-muted: #94a3b8;
             --border-color: #334155;
             --secondary: #0f172a;
+            
+            /* Meta AI Dark Mode Variables */
+            --meta-chat-bg: #0b141a;
+            --meta-bubble-user: #005c4b;
+            --meta-bubble-ai: #202c33;
+            --meta-text-ai: #f0f2f5;
         }
 
         *, *::before, *::after {
@@ -56,8 +67,7 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background: var(--bg);
             color: var(--text-main);
-            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
-            scroll-behavior: smooth;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .app-wrapper {
@@ -65,62 +75,7 @@
             position: relative;
         }
 
-        .history-sidebar {
-            width: 320px;
-            background: var(--sidebar-bg);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255,255,255,0.1);
-            position: fixed;
-            left: -320px;
-            top: 0;
-            bottom: 0;
-            z-index: 999;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 8px 0 32px rgba(0,0,0,0.2);
-        }
-
-        .history-sidebar.open {
-            left: 0;
-        }
-
-        .sidebar-header {
-            padding: 24px;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(16, 185, 129, 0.1));
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .history-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .history-item {
-            padding: 14px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            border: 1px solid transparent;
-            transition: all 0.25s ease;
-        }
-
-        .history-item:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--primary);
-        }
-
+        /* --- BASE PORTAL UI LAYOUT --- */
         .master-container { 
             width: 100%;
             display: flex; 
@@ -155,12 +110,7 @@
             background-clip: text;
         }
 
-        header p {
-            opacity: 0.85;
-            margin: 10px 0 0 0;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
-        }
+        header p { margin: 10px 0 0 0; opacity: 0.85; font-size: 1rem; }
 
         .header-controls {
             position: absolute;
@@ -182,219 +132,23 @@
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 700;
-            transition: all 0.25s ease;
         }
 
-        .toggle-btn:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.3);
-            transform: translateY(-1px);
-        }
-
-        .container { 
-            padding: 40px 20px; 
-            max-width: 1000px; 
-            margin: auto;
-            width: 100%;
-        }
-
-        .subject-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
+        .container { padding: 40px 20px; max-width: 1000px; margin: auto; width: 100%; }
+        .subject-grid { display: flex; flex-direction: column; gap: 24px; }
         .subject-card {
             background: var(--card-bg);
             border-radius: 20px;
             padding: 30px;
             border: 1px solid var(--border-color);
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
-
-        .subject-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-        }
-
-        .subject-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.12);
-            border-color: var(--primary);
-        }
-
-        .subject-card h2 {
-            margin: 0 0 12px 0;
-            font-size: 1.6rem;
-            font-weight: 800;
-        }
-
-        .subject-card p {
-            color: var(--text-muted);
-            margin: 0 0 20px 0;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        /* NEW FLOATING META AI BUTTON STYLES */
-        .meta-floating-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--meta-gradient);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.65rem;
-            font-weight: 800;
-            cursor: pointer;
-            z-index: 900;
-            border: none;
-            box-shadow: 0 6px 24px rgba(0, 114, 255, 0.4);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .meta-floating-btn:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 10px 32px rgba(122, 0, 255, 0.5);
-        }
-
-        .meta-floating-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Ambient spinning outer aura for the floating button */
-        .meta-floating-btn::after {
-            content: '';
-            position: absolute;
-            top: -3px; left: -3px; right: -3px; bottom: -3px;
-            border-radius: 50%;
-            background: var(--meta-gradient);
-            z-index: -1;
-            opacity: 0.4;
-            filter: blur(6px);
-            transition: opacity 0.3s ease;
-        }
-
-        /* AI STUDIO LAYOUT PANEL WITH FOCUS TRIGGER AMBIENT HIGHLIGHT */
-        .ai-studio-section {
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            background: var(--card-bg);
-            padding: 30px;
-            margin-top: 35px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-            position: relative;
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .ai-studio-section.focus-highlight {
-            border-color: #0072ff;
-            box-shadow: 0 0 25px rgba(0, 114, 255, 0.25);
-        }
-        
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .ai-input-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .ai-textarea {
-            width: 100%;
-            min-height: 110px;
-            padding: 16px;
-            border-radius: 14px;
-            border: 2px solid var(--border-color);
-            background: var(--bg);
-            color: var(--text-main);
-            font-family: inherit;
-            font-size: 1rem;
-            resize: vertical;
-            transition: border-color 0.2s ease;
-        }
-
-        .ai-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .ai-action-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .quick-tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .tag-btn {
-            background: var(--bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .tag-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .ai-response-box {
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 14px;
-            background: var(--bg);
-            border-left: 4px solid var(--primary);
-            display: none;
-            text-align: left;
-            line-height: 1.7;
-        }
-
-        .ai-response-box.active {
-            display: block;
-        }
-
-        .ai-response-content h3 { margin-top: 0; color: var(--primary); }
-        .ai-response-content ul { padding-left: 20px; }
-        .ai-response-content code { background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        .subject-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-primary); }
+        .subject-card h2 { margin: 0 0 12px 0; font-size: 1.6rem; font-weight: 800; }
+        .subject-card p { color: var(--text-muted); margin: 0 0 20px 0; line-height: 1.6; }
 
         .btn {
             display: inline-block;
@@ -406,89 +160,283 @@
             font-weight: 700;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            font-size: 1rem;
         }
+        .btn.secondary { background: linear-gradient(135deg, #475569 0%, #334155 100%); box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3); }
+        .btn.success { background: linear-gradient(135deg, var(--success) 0%, #059669 100%); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-        }
-
-        .btn.secondary {
-            background: linear-gradient(135deg, #475569 0%, #334155 100%);
-            box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
-        }
-        .btn.secondary:hover {
-            box-shadow: 0 8px 20px rgba(71, 85, 105, 0.4);
-        }
-
-        .btn.success {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-        .btn.success:hover {
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        .sidebar-overlay {
-            display: none;
+        /* --- META AI SIGNATURE FLOATING ACTION BUTTON --- */
+        .meta-floating-trigger {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 990;
+            bottom: 25px;
+            right: 25px;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            border: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .sidebar-overlay.visible {
-            display: block;
+        /* Iridescent spinning gradient boundary ring styling */
+        .meta-floating-trigger::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            z-index: -1;
         }
+
+        .meta-floating-trigger .inner-core {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.55rem;
+            font-weight: 800;
+            background-image: var(--meta-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .meta-floating-trigger:hover { transform: scale(1.08); }
+
+        /* --- META AI INTERACTIVE FULL-SCREEN DIALOG INTERFACE --- */
+        .meta-ui-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--meta-chat-bg);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .meta-ui-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal Header Bar */
+        .meta-modal-header {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .meta-profile-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .meta-avatar-ring {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            padding: 2px;
+        }
+
+        .meta-avatar-ring .inner-blank {
+            width: 100%; height: 100%;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .meta-title-text h4 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
+        .meta-title-text span { font-size: 0.78rem; color: #10b981; font-weight: 600; display: block; }
+
+        .meta-close-action {
+            background: transparent; border: none;
+            font-size: 1.4rem; color: var(--text-muted);
+            cursor: pointer; padding: 4px;
+        }
+
+        /* Chat View Body Messaging Stream */
+        .meta-chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .msg-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .msg-row.user-side { justify-content: flex-end; }
+        .msg-row.ai-side { justify-content: flex-end; flex-direction: row-reverse; }
+
+        .meta-bubble {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 0.98rem;
+            line-height: 1.55;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .user-side .meta-bubble {
+            background: var(--meta-bubble-user);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-side .meta-bubble {
+            background: var(--meta-bubble-ai);
+            color: var(--meta-text-ai);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Styling inside parsed markdown items for AI messages */
+        .meta-bubble h1, .meta-bubble h2, .meta-bubble h3 { margin-top: 0; font-size: 1.15rem; color: var(--primary); }
+        .meta-bubble p { margin: 0 0 8px 0; }
+        .meta-bubble p:last-child { margin-bottom: 0; }
+        .meta-bubble ul, .meta-bubble ol { margin: 0; padding-left: 20px; }
+
+        /* Meta Bottom Floating Sticky Input Compositing Engine */
+        .meta-input-dock {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .meta-input-bar-container {
+            max-width: 850px;
+            margin: 0 auto;
+            display: flex;
+            background: var(--meta-chat-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 6px 6px 6px 18px;
+            align-items: center;
+        }
+
+        .meta-chat-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 0.98rem;
+            color: var(--text-main);
+            padding: 8px 0;
+        }
+
+        .meta-send-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            border: none; color: white;
+            font-size: 1.1rem; display: flex;
+            align-items: center; justify-content: center;
+            cursor: pointer; transition: transform 0.2s ease;
+        }
+
+        .meta-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .meta-send-btn:hover:not(:disabled) { transform: scale(1.05); }
+
+        /* Pre-baked quick prompts grid layout */
+        .meta-prompt-suggestions {
+            max-width: 850px; margin: 0 auto 10px auto;
+            display: flex; gap: 8px; overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        .meta-prompt-suggestions::-webkit-scrollbar { height: 0px; }
+
+        .suggestion-chip {
+            background: var(--meta-chat-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+        .suggestion-chip:hover { background: var(--border-color); }
 
         @media (max-width: 768px) {
             header h1 { font-size: 1.8rem; }
             .container { padding: 24px 16px; }
-            .subject-card { padding: 24px; }
-            .ai-action-bar { flex-direction: column; align-items: stretch; }
-            .btn.ai-submit { width: 100%; text-align: center; }
-            /* Reposition FAB on mobile so it stays out of the way of card taps */
-            .meta-floating-btn { bottom: 20px; right: 20px; width: 54px; height: 54px; font-size: 1.45rem; }
-        }
-
-        @media (max-width: 480px) {
-            header h1 { font-size: 1.5rem; }
-            header p { font-size: 0.9rem; }
-            .subject-card h2 { font-size: 1.3rem; }
-            .btn { width: 100%; padding: 12px; margin-bottom: 5px; }
+            .meta-bubble { max-width: 88%; }
         }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
-    <!-- Meta AI Floating Action Button Structure -->
-    <button class="meta-floating-btn" id="metaFloatingBtn" onclick="scrollToAIStudio()" title="Open Mubarak AI Studio">M</button>
+    <!-- Meta AI Signature Floating Action Button -->
+    <button class="meta-floating-trigger" id="metaGlobalTrigger" onclick="openMetaInterface()" title="Ask Meta AI">
+        <div class="inner-core">M</div>
+    </button>
 
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-
-    <div class="history-sidebar" id="history-sidebar">
-        <div class="sidebar-header">
-            <h3 style="margin:0; font-size:1.15rem; background: linear-gradient(135deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">📜 Review Analysis</h3>
-            <button onclick="toggleSidebar()" style="background:transparent; color:#9ca3af; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
+    <!-- IMMERSIVE META AI DIALOG CONVERSATIONAL LAYER -->
+    <div class="meta-ui-modal" id="metaChatWindow">
+        <!-- Header Profile Cluster -->
+        <div class="meta-modal-header">
+            <div class="meta-profile-cluster">
+                <div class="meta-avatar-ring">
+                    <div class="inner-blank"></div>
+                </div>
+                <div class="meta-title-text">
+                    <h4>Meta AI</h4>
+                    <span>Mubarak Academic Engine • Online</span>
+                </div>
+            </div>
+            <button class="meta-close-action" onclick="closeMetaInterface()">✕</button>
         </div>
-        <div class="history-list" id="history-list"></div>
-        <div style="padding:16px; border-top:1px solid rgba(255,255,255,0.1)">
-            <button onclick="clearSavedExplorations()" style="width:100%; background: linear-gradient(135deg, #ef4444, #dc2626); border:none; padding:12px; color:white; border-radius:10px; cursor:pointer; font-weight:700;">🗑️ Clear Review Cache</button>
+
+        <!-- Chat History Stream Canvas -->
+        <div class="meta-chat-history" id="metaMessageStream">
+            <!-- Initial Ambient Assistant Greeting -->
+            <div class="msg-row ai-side">
+                <div class="meta-bubble">
+                    Hello! I'm your academic intelligence assistant configured directly by Mubarak. Ask me anything about your JAMB blueprints, WAEC literature syllabi, or hard scientific questions, and I will solve them cleanly!
+                </div>
+            </div>
+        </div>
+
+        <!-- Dock Bottom Controller Action Bar -->
+        <div class="meta-input-dock">
+            <div class="meta-prompt-suggestions">
+                <div class="suggestion-chip" onclick="injectSuggestion('Suggest a 30-day JAMB preparation routine')">⚡ 30-Day JAMB Blueprint</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Explain the structural differences between 1979 and 1999 Nigerian Constitutions')">🏛️ Constitutional Systems</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Break down the most critical figures of speech evaluated in WAEC Literature')">📚 WAEC Literature Help</div>
+            </div>
+            
+            <div class="meta-input-bar-container">
+                <input type="text" class="meta-chat-input" id="metaUserInput" placeholder="Ask Meta AI anything..." onkeydown="handleMetaKeydown(event)">
+                <button class="meta-send-btn" id="metaSendAction" onclick="dispatchMetaMessage()">➔</button>
+            </div>
         </div>
     </div>
 
+    <!-- MAIN DASHBOARD CONTENT ROUTING SHELL -->
     <div class="master-container">
         <header>
             <div class="header-controls">
-                <button class="toggle-btn" onclick="toggleSidebar()" title="Toggle Explanations History">📜 Review Logs</button>
+                <button class="toggle-btn" style="visibility: hidden;">📜 Logs Dummy</button>
                 <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle Dark Mode">🌙 Dark</button>
             </div>
             <h1>STUDY WITH MUBARAK</h1>
@@ -496,7 +444,6 @@
         </header>
 
         <div class="container">
-            <!-- Quiz Route Hub Grid -->
             <div class="subject-grid">
                 <div class="subject-card">
                     <h2 style="color: var(--primary); margin-top:0;">🌐 English Language</h2>
@@ -516,30 +463,6 @@
                     <a href="random%20subject.html" class="btn success">Launch General Studies</a>
                 </div>
             </div>
-
-            <!-- AI STUDIO SECTION (TARGET INTERACTION NODE) -->
-            <div class="ai-studio-section" id="aiStudioContainer">
-                <div class="ai-badge">⚡ Mubarak AI Academic Studio</div>
-                <h2 style="margin: 0 0 8px 0; font-weight: 800; font-size: 1.5rem;">Instant Exam Expert Insights</h2>
-                <p style="color: var(--text-muted); margin: 0 0 20px 0; font-size: 0.95rem;">Ask complex syllabus questions or parse tricky past questions instantly.</p>
-                
-                <div class="ai-input-wrapper">
-                    <textarea class="ai-textarea" id="studio-ai-input" placeholder="Type a tricky exam question here or ask for a study breakdown..."></textarea>
-                    
-                    <div class="ai-action-bar">
-                        <div class="quick-tags">
-                            <button class="tag-btn" onclick="applyQuickPrompt('jamb')">📝 JAMB Study Plan</button>
-                            <button class="tag-btn" onclick="applyQuickPrompt('gov')">🏛️ Explain Constitutions</button>
-                            <button class="tag-btn" onclick="applyQuickPrompt('waec')">📚 Literature Rules</button>
-                        </div>
-                        <button class="btn ai-submit" id="ai-studio-btn" onclick="askStudioAI()">Analyze with AI</button>
-                    </div>
-                </div>
-
-                <div class="ai-response-box" id="studio-ai-response-box">
-                    <div class="ai-response-content" id="studio-ai-response-text"></div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -549,7 +472,6 @@
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         document.getElementById('theme-btn').innerHTML = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-        loadReviewLogs();
     });
 
     function toggleTheme() {
@@ -560,145 +482,93 @@
         document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
     }
 
-    function toggleSidebar() {
-        document.getElementById('history-sidebar').classList.toggle('open');
-        document.getElementById('sidebar-overlay').classList.toggle('visible');
-    }
-
     /* ===================================================================
-      FLOATING ACTION TRIGGER CONTROL
-       ===================================================================
+      META AI FULL SCREEN WINDOW MANAGEMENT ENGINE
+      ===================================================================
     */
-    function scrollToAIStudio() {
-        const targetSection = document.getElementById('aiStudioContainer');
-        const inputField = document.getElementById('studio-ai-input');
-        
-        if (targetSection) {
-            // Scroll down cleanly
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Highlight container border temporarily to lock focus
-            targetSection.classList.add('focus-highlight');
-            setTimeout(() => {
-                targetSection.classList.remove('focus-highlight');
-            }, 1500);
+    function openMetaInterface() {
+        document.getElementById('metaChatWindow').classList.add('active');
+        document.getElementById('metaUserInput').focus();
+    }
 
-            // Ready input focus for immediate mobile keyboard mapping
-            if (inputField) {
-                setTimeout(() => inputField.focus(), 600);
-            }
+    function closeMetaInterface() {
+        document.getElementById('metaChatWindow').classList.remove('active');
+    }
+
+    function handleMetaKeydown(event) {
+        if (event.key === 'Enter') {
+            dispatchMetaMessage();
         }
     }
 
-    function applyQuickPrompt(type) {
-        const inputField = document.getElementById('studio-ai-input');
-        if (type === 'jamb') {
-            inputField.value = "Create a highly structured 30-day study timeline to score 300+ in the JAMB UTME exam, prioritizing core subjects.";
-        } else if (type === 'gov') {
-            inputField.value = "Break down the core differences between the 1979 and 1999 Nigerian Constitutions in a clean, comparative summary.";
-        } else if (type === 'waec') {
-            inputField.value = "Explain the most common figures of speech tested in WAEC Literature-in-English exams with clear contextual examples.";
-        }
-        inputField.focus();
+    function injectSuggestion(text) {
+        document.getElementById('metaUserInput').value = text;
+        dispatchMetaMessage();
     }
 
-    async function askStudioAI() {
-        const inputField = document.getElementById('studio-ai-input');
-        const responseBox = document.getElementById('studio-ai-response-box');
-        const responseText = document.getElementById('studio-ai-response-text');
-        const submitBtn = document.getElementById('ai-studio-btn');
+    async function dispatchMetaMessage() {
+        const inputElement = document.getElementById('metaUserInput');
+        const streamContainer = document.getElementById('metaMessageStream');
+        const sendBtn = document.getElementById('metaSendAction');
         
-        const query = inputField.value.trim();
-        if (!query) return alert("Please input a study topic or exam question first!");
+        const textPayload = inputElement.value.trim();
+        if (!textPayload) return;
 
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Processing...";
-        responseText.innerHTML = `<p style="color: var(--text-muted);">⏳ Formulating structured expert explanation... Please hold on.</p>`;
-        responseBox.classList.add('active');
+        // Clear user field input right away
+        inputElement.value = "";
+        sendBtn.disabled = true;
 
-        const systemCore = `You are Mubarak, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down this request expertly using clear bullet points, clean headings, and actionable insights. Query: ${query}`;
+        // Append User Bubble to Stream Layout
+        appendChatBubble(textPayload, 'user-side');
+        
+        // Setup Loading Placeholder Bubble for incoming AI response
+        const aiMessageRow = appendChatBubble("✨ Thinking...", 'ai-side');
+        const bubbleInnerNode = aiMessageRow.querySelector('.meta-bubble');
+
+        // Dynamic West African Syllabus Identity Guard Context Prompt
+        const operationalSystemPrompt = `You are a helpful assistant responding beautifully and cleanly like ChatGPT and Meta AI. Use proper scannable formatting, headers, and precise lists where applicable. Request: ${textPayload}`;
 
         try {
-            let aiResultText = "";
+            let directModelResponse = "";
             
+            /*****************************************************************
+             * MULTI-ROUTE SERVERLESS ENGINE (Safe for Local .html Files)
+             *****************************************************************/
             if (typeof puter !== 'undefined' && puter.ai) {
-                aiResultText = await puter.ai.chat(systemCore);
-            } else { 
-                const fallbackUrl = `https://text.pollinations.ai/${encodeURIComponent(systemCore)}?model=searchgpt`;
-                const response = await fetch(fallbackUrl);
-                if (!response.ok) throw new Error("Infrastructure timeout");
-                aiResultText = await response.text();
-            }
-
-            responseText.innerHTML = marked.parse(aiResultText);
-            saveExplanationToLog(query, aiResultText, "AI Studio");
-
-        } catch (error) {
-            console.error("Studio AI Engine Error:", error);
-            responseText.innerHTML = `❌ **Connection Timeout**<br>Could not reach the AI nodes. Check your data connection and try again.`;
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Analyze with AI";
-        }
-    }
-
-    /* ===================================================================
-      GLOBAL EXPLANATION ENGINE (For use inside Quiz Review Panels)
-    */
-    async function generateAcademicExplanation(questionText, subjectContext = "General") {
-        try {
-            const promptContext = `You are Mubarak, an expert academic tutor for JAMB, WAEC & SSCE. Provide an extensive, deeply explanatory breakdown for this academic question context [Subject: ${subjectContext}]. Breakdown the correct answers, logical rules, definitions, and contextual subcategories clearly. Question: ${questionText}`;
-            
-            let explanatoryText = "";
-            if (typeof puter !== 'undefined' && puter.ai) {
-                explanatoryText = await puter.ai.chat(promptContext);
+                // Route A: Ultra-high speed direct browser execution via Puter Cloud Engine
+                directModelResponse = await puter.ai.chat(operationalSystemPrompt);
             } else {
-                const targetUrl = `https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=searchgpt`;
-                const response = await fetch(targetUrl);
-                if (!response.ok) throw new Error("Explanation engine dropped request");
-                explanatoryText = await response.text();
+                // Route B: Fallback unmetered keyless endpoint if CDN is slow or run from restricted context
+                const fallbackUrl = `https://text.pollinations.ai/${encodeURIComponent(operationalSystemPrompt)}?model=searchgpt`;
+                const serverFetch = await fetch(fallbackUrl);
+                if (!serverFetch.ok) throw new Error("Network nodes unreachable");
+                directModelResponse = await serverFetch.text();
             }
-            
-            saveExplanationToLog(questionText, explanatoryText, subjectContext);
-            return marked.parse(explanatoryText);
 
-        } catch (error) {
-            console.error("AI Engine Route Failure:", error);
-            return `❌ **Explanation Temporary Offline**<br>Unable to stream real-time insights. Please verify your data connection.`;
+            // Render Markdown perfectly using your existing marked.js library
+            bubbleInnerNode.innerHTML = marked.parse(directModelResponse);
+
+        } catch (connectivityError) {
+            console.error("Meta System Engine Core dropped connection:", connectivityError);
+            bubbleInnerNode.innerHTML = `<span style="color: var(--danger)">❌ **Connection Drop**</span><br>Unable to sync cloud AI. Please check your current phone data parameters or internet access status.`;
+        } finally {
+            sendBtn.disabled = false;
+            // Instantly push window frame downward to retain vision focus
+            streamContainer.scrollTop = streamContainer.scrollHeight;
         }
     }
 
-    function saveExplanationToLog(question, explanation, subject) {
-        let logs = JSON.parse(localStorage.getItem('mubarak_review_logs') || '{}');
-        const logId = 'log_' + Date.now();
-        logs[logId] = {
-            question: question.substring(0, 45) + '...',
-            subject: subject,
-            timestamp: new Date().toLocaleDateString()
-        };
-        localStorage.setItem('mubarak_review_logs', JSON.stringify(logs));
-        loadReviewLogs();
-    }
-
-    function loadReviewLogs() {
-        const logs = JSON.parse(localStorage.getItem('mubarak_review_logs') || '{}');
-        const container = document.getElementById('history-list');
-        if (!container) return;
-        container.innerHTML = '';
+    function appendChatBubble(messageContent, sideClassName) {
+        const streamContainer = document.getElementById('metaMessageStream');
+        const rowNode = document.createElement('div');
+        rowNode.classList.add('msg-row', sideClassName);
         
-        Object.keys(logs).reverse().forEach(id => {
-            const item = document.createElement('div');
-            item.classList.add('history-item');
-            item.innerHTML = `<small style="color:var(--success)">[${logs[id].subject}]</small> ${logs[id].question}`;
-            container.appendChild(item);
-        });
-    }
-
-    function clearSavedExplorations() {
-        if(confirm("Permanently wipe review logs?")) {
-            localStorage.removeItem('mubarak_review_logs');
-            loadReviewLogs();
-        }
+        rowNode.innerHTML = `<div class="meta-bubble">${messageContent}</div>`;
+        streamContainer.appendChild(rowNode);
+        
+        // Auto Scroll container interface
+        streamContainer.scrollTop = streamContainer.scrollHeight;
+        return rowNode;
     }
 </script>
 
