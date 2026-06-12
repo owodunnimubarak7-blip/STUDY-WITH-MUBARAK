@@ -9,11 +9,9 @@
     <meta name="theme-color" content="#2563eb">
     <title>STUDY WITH MUBARAK | Academic Excellence Portal</title>
     
-    <!-- External Infrastructure Libraries -->
+    <!-- External Formatting Parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
-    <!-- Puter JS SDK for Serverless Browser-Side AI -->
-    <script src="https://js.puter.com/v2/"></script>
     
     <style>
         :root {
@@ -33,7 +31,7 @@
             --sidebar-bg: #111827;
             --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             
-            /* Custom AI Immersive Styling Specifications */
+            /* Mubarak AI Core Fluid UI Gradients */
             --meta-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 30%, #7a00ff 70%, #ff007a 100%);
             --meta-chat-bg: #f4f5f7;
             --meta-bubble-user: #007bff;
@@ -49,7 +47,7 @@
             --border-color: #334155;
             --secondary: #0f172a;
             
-            /* AI Dark Mode Variables */
+            /* Dark Canvas Configurations */
             --meta-chat-bg: #0b141a;
             --meta-bubble-user: #005c4b;
             --meta-bubble-ai: #202c33;
@@ -75,7 +73,7 @@
             position: relative;
         }
 
-        /* --- BASE PORTAL UI LAYOUT --- */
+        /* --- DASHBOARD PRESENTATION ENGINE --- */
         .master-container { 
             width: 100%;
             display: flex; 
@@ -165,7 +163,7 @@
         .btn.secondary { background: linear-gradient(135deg, #475569 0%, #334155 100%); box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3); }
         .btn.success { background: linear-gradient(135deg, var(--success) 0%, #059669 100%); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
 
-        /* --- SIGNATURE FLOATING ACTION BUTTON --- */
+        /* --- RESTORED MUBARAK M TRIGGER BUTTON --- */
         .meta-floating-trigger {
             position: fixed;
             bottom: 25px;
@@ -184,7 +182,6 @@
             transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Iridescent gradient boundary ring styling */
         .meta-floating-trigger::before {
             content: '';
             position: absolute;
@@ -211,7 +208,7 @@
 
         .meta-floating-trigger:hover { transform: scale(1.08); }
 
-        /* --- INTERACTIVE FULL-SCREEN DIALOG INTERFACE --- */
+        /* --- COMPLETE CORE CHAT VIEWPORT LAYER --- */
         .meta-ui-modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -229,7 +226,6 @@
             pointer-events: auto;
         }
 
-        /* Modal Header Bar */
         .meta-modal-header {
             padding: 16px 20px;
             background: var(--card-bg);
@@ -268,7 +264,6 @@
             cursor: pointer; padding: 4px;
         }
 
-        /* Chat View Body Messaging Stream */
         .meta-chat-history {
             flex: 1;
             overflow-y: auto;
@@ -283,8 +278,9 @@
             width: 100%;
         }
 
+        /* Fixed Row Alignments to avoid errors visible in 93.jpg */
         .msg-row.user-side { justify-content: flex-end; }
-        .msg-row.ai-side { justify-content: flex-start; } /* Fixed alignment for AI row responses */
+        .msg-row.ai-side { justify-content: flex-start; }
 
         .meta-bubble {
             max-width: 80%;
@@ -308,13 +304,11 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Styling inside parsed markdown items for AI messages */
         .meta-bubble h1, .meta-bubble h2, .meta-bubble h3 { margin-top: 0; font-size: 1.15rem; color: var(--primary); }
         .meta-bubble p { margin: 0 0 8px 0; }
         .meta-bubble p:last-child { margin-bottom: 0; }
         .meta-bubble ul, .meta-bubble ol { margin: 0; padding-left: 20px; }
 
-        /* Bottom Floating Sticky Input Compositing Engine */
         .meta-input-dock {
             padding: 16px 20px;
             background: var(--card-bg);
@@ -356,7 +350,6 @@
         .meta-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .meta-send-btn:hover:not(:disabled) { transform: scale(1.05); }
 
-        /* Pre-baked quick prompts grid layout */
         .meta-prompt-suggestions {
             max-width: 850px; margin: 0 auto 10px auto;
             display: flex; gap: 8px; overflow-x: auto;
@@ -386,14 +379,13 @@
 <body>
 
 <div class="app-wrapper">
-    <!-- Restored "M" Button Panel -->
+    <!-- Restored Floating Trigger -->
     <button class="meta-floating-trigger" id="metaGlobalTrigger" onclick="openMetaInterface()" title="Ask Mubarak AI">
         <div class="inner-core">M</div>
     </button>
 
-    <!-- IMMERSIVE MUBARAK AI DIALOG LAYER -->
+    <!-- IMMERSIVE CHAT MODAL INTERFACE -->
     <div class="meta-ui-modal" id="metaChatWindow">
-        <!-- Header Profile Cluster -->
         <div class="meta-modal-header">
             <div class="meta-profile-cluster">
                 <div class="meta-avatar-ring">
@@ -407,9 +399,8 @@
             <button class="meta-close-action" onclick="closeMetaInterface()">✕</button>
         </div>
 
-        <!-- Chat History Stream Canvas -->
+        <!-- Chat Stream Container -->
         <div class="meta-chat-history" id="metaMessageStream">
-            <!-- Initial Ambient Assistant Greeting -->
             <div class="msg-row ai-side">
                 <div class="meta-bubble">
                     Hello! I'm your academic intelligence assistant, **Mubarak AI**. Ask me any exam question from your syllabus or past prep material, and I'll break down the solution right here!
@@ -417,7 +408,7 @@
             </div>
         </div>
 
-        <!-- Dock Bottom Controller Action Bar -->
+        <!-- Interactive Control Dock -->
         <div class="meta-input-dock">
             <div class="meta-prompt-suggestions">
                 <div class="suggestion-chip" onclick="injectSuggestion('Suggest a 30-day JAMB preparation routine')">⚡ 30-Day JAMB Blueprint</div>
@@ -432,11 +423,11 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD CONTENT ROUTING SHELL -->
+    <!-- PORTAL SHELL -->
     <div class="master-container">
         <header>
             <div class="header-controls">
-                <button class="toggle-btn" style="visibility: hidden;">📜 Logs Dummy</button>
+                <button class="toggle-btn" style="visibility: hidden;">📜 Dummy</button>
                 <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle Dark Mode">🌙 Dark</button>
             </div>
             <h1>STUDY WITH MUBARAK</h1>
@@ -482,23 +473,15 @@
         document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
     }
 
-    /* ===================================================================
-      MUBARAK AI CORE INTERACTION AND ROUTING PARSER
-      ===================================================================
-    */
     function openMetaInterface() {
         document.getElementById('metaChatWindow').classList.add('active');
         document.getElementById('metaUserInput').focus();
     }
 
-    function closeMetaInterface() {
-        document.getElementById('metaChatWindow').classList.remove('active');
-    }
+    var closeMetaInterface = () => document.getElementById('metaChatWindow').classList.remove('active');
 
     function handleMetaKeydown(event) {
-        if (event.key === 'Enter') {
-            dispatchMetaMessage();
-        }
+        if (event.key === 'Enter') dispatchMetaMessage();
     }
 
     function injectSuggestion(text) {
@@ -506,6 +489,10 @@
         dispatchMetaMessage();
     }
 
+    /* ===================================================================
+      HIGH SPEED MULTI-COMPATIBILITY FETCH ARCHITECTURE
+      ===================================================================
+    */
     async function dispatchMetaMessage() {
         const inputElement = document.getElementById('metaUserInput');
         const streamContainer = document.getElementById('metaMessageStream');
@@ -520,39 +507,27 @@
         // Render User Query Bubble
         appendChatBubble(textPayload, 'user-side');
         
-        // Render Loading/Thinking State Bubble on the left side
+        // Render Loading State on the AI side
         const aiMessageRow = appendChatBubble("✨ Thinking...", 'ai-side');
         const bubbleInnerNode = aiMessageRow.querySelector('.meta-bubble');
 
-        const systemCoreInstructions = `You are Mubarak AI, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down solutions expertly with formatting, bold definitions, and bullet lists. Query: ${textPayload}`;
+        const systemCoreInstructions = `You are Mubarak AI, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down solutions expertly with clear formatting, bold key definitions, and bullet lists. Request: ${textPayload}`;
 
         try {
-            let aiResultText = "";
+            // Direct GET method targeting the fast text delivery engine to avoid any local CORS file issues
+            const apiTargetUrl = `https://text.pollinations.ai/${encodeURIComponent(systemCoreInstructions)}?model=openai&cache=false`;
             
-            // Primary Route via Puter.js
-            if (typeof puter !== 'undefined' && puter.ai) {
-                aiResultText = await puter.ai.chat(systemCoreInstructions);
-            } else {
-                // Guaranteed local fallback via a clean direct HTTP POST endpoint to bypass CORS blocks
-                const response = await fetch(`https://text.pollinations.ai/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        messages: [{ role: 'user', content: systemCoreInstructions }],
-                        cache: false
-                    })
-                });
-                
-                if (!response.ok) throw new Error("API Route Down");
-                aiResultText = await response.text();
-            }
-
-            // Convert markdown response directly into the inner layout
-            bubbleInnerNode.innerHTML = marked.parse(aiResultText);
+            const nativeFetch = await fetch(apiTargetUrl);
+            if (!nativeFetch.ok) throw new Error("Connection dropped");
+            
+            const cleanTextResponse = await nativeFetch.text();
+            
+            // Render structured markdown inline
+            bubbleInnerNode.innerHTML = marked.parse(cleanTextResponse);
 
         } catch (error) {
-            console.error("Mubarak AI Engine Error:", error);
-            bubbleInnerNode.innerHTML = `❌ **Connection Sync Error**<br>Could not retrieve data locally. Please check your network connection and tap send again.`;
+            console.error("Mubarak AI System Drop:", error);
+            bubbleInnerNode.innerHTML = `❌ **Connection Timeout**<br>Could not reach the processing engine. Please confirm you have an active network connection and try again.`;
         } finally {
             sendBtn.disabled = false;
             streamContainer.scrollTop = streamContainer.scrollHeight;
