@@ -9,8 +9,11 @@
     <meta name="theme-color" content="#2563eb">
     <title>STUDY WITH MUBARAK | Academic Excellence Portal</title>
     
+    <!-- External Infrastructure Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <!-- Puter JS SDK for Serverless Browser-Side AI -->
+    <script src="https://js.puter.com/v2/"></script>
     
     <style>
         :root {
@@ -238,6 +241,109 @@
             font-size: 1rem;
         }
 
+        /* NEW UI STYLES FOR THE INTEGRATED AI PANEL */
+        .ai-studio-section {
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            background: var(--card-bg);
+            padding: 30px;
+            margin-top: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            position: relative;
+        }
+        
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .ai-input-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .ai-textarea {
+            width: 100%;
+            min-height: 110px;
+            padding: 16px;
+            border-radius: 14px;
+            border: 2px solid var(--border-color);
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+        }
+
+        .ai-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .ai-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .quick-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag-btn {
+            background: var(--bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .tag-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .ai-response-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 14px;
+            background: var(--bg);
+            border-left: 4px solid var(--primary);
+            display: none;
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        .ai-response-box.active {
+            display: block;
+        }
+
+        /* Global formatting inside AI response */
+        .ai-response-content h3 { margin-top: 0; color: var(--primary); }
+        .ai-response-content ul { padding-left: 20px; }
+        .ai-response-content code { background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+
         .btn {
             display: inline-block;
             background: var(--gradient-primary);
@@ -294,6 +400,8 @@
             header h1 { font-size: 1.8rem; }
             .container { padding: 24px 16px; }
             .subject-card { padding: 24px; }
+            .ai-action-bar { flex-direction: column; align-items: stretch; }
+            .btn.ai-submit { width: 100%; text-align: center; }
         }
 
         @media (max-width: 480px) {
@@ -331,6 +439,7 @@
         </header>
 
         <div class="container">
+            <!-- Main Academic Quiz Hub -->
             <div class="subject-grid">
                 <div class="subject-card">
                     <h2 style="color: var(--primary); margin-top:0;">🌐 English Language</h2>
@@ -348,6 +457,30 @@
                     <h2 style="color: var(--success); margin-top:0;">📊 General Studies</h2>
                     <p>Comprehensive coverage of Economics, Civic Education, and Geography essentials.</p>
                     <a href="random%20subject.html" class="btn success">Launch General Studies</a>
+                </div>
+            </div>
+
+            <!-- INTEGRATED CUSTOM AI STUDIO PANEL -->
+            <div class="ai-studio-section">
+                <div class="ai-badge">⚡ Mubarak AI Academic Studio</div>
+                <h2 style="margin: 0 0 8px 0; font-weight: 800; font-size: 1.5rem;">Instant Exam Expert Insights</h2>
+                <p style="color: var(--text-muted); margin: 0 0 20px 0; font-size: 0.95rem;">Ask complex syllabus questions or parse tricky past questions instantly.</p>
+                
+                <div class="ai-input-wrapper">
+                    <textarea class="ai-textarea" id="studio-ai-input" placeholder="Type a tricky exam question here or ask for a study breakdown..."></textarea>
+                    
+                    <div class="ai-action-bar">
+                        <div class="quick-tags">
+                            <button class="tag-btn" onclick="applyQuickPrompt('jamb')">📝 JAMB Study Plan</button>
+                            <button class="tag-btn" onclick="applyQuickPrompt('gov')">🏛️ Explain Constitutions</button>
+                            <button class="tag-btn" onclick="applyQuickPrompt('waec')">📚 Literature Rules</button>
+                        </div>
+                        <button class="btn ai-submit" id="ai-studio-btn" onclick="askStudioAI()">Analyze with AI</button>
+                    </div>
+                </div>
+
+                <div class="ai-response-box" id="studio-ai-response-box">
+                    <div class="ai-response-content" id="studio-ai-response-text"></div>
                 </div>
             </div>
         </div>
@@ -376,25 +509,83 @@
     }
 
     /* ===================================================================
-      GLOBAL EXPLANATION ENGINE (For use inside Quiz Review Panels)
+      INTEGRATED STUDIO AI ENGINE FUNCTIONS
       ===================================================================
-      Call this asynchronous function from english.html, government.html, 
-      or random subject.html when a student requests an explanation.
+    */
+    function applyQuickPrompt(type) {
+        const inputField = document.getElementById('studio-ai-input');
+        if (type === 'jamb') {
+            inputField.value = "Create a highly structured 30-day study timeline to score 300+ in the JAMB UTME exam, prioritizing core subjects.";
+        } else if (type === 'gov') {
+            inputField.value = "Break down the core differences between the 1979 and 1999 Nigerian Constitutions in a clean, comparative summary.";
+        } else if (type === 'waec') {
+            inputField.value = "Explain the most common figures of speech tested in WAEC Literature-in-English exams with clear contextual examples.";
+        }
+        inputField.focus();
+    }
+
+    async function askStudioAI() {
+        const inputField = document.getElementById('studio-ai-input');
+        const responseBox = document.getElementById('studio-ai-response-box');
+        const responseText = document.getElementById('studio-ai-response-text');
+        const submitBtn = document.getElementById('ai-studio-btn');
+        
+        const query = inputField.value.trim();
+        if (!query) return alert("Please input a study topic or exam question first!");
+
+        // Update UI State to loading
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Processing...";
+        responseText.innerHTML = `<p style="color: var(--text-muted);">⏳ Formulating structured expert explanation... Please hold on.</p>`;
+        responseBox.classList.add('active');
+
+        // Target System Instructions aligning with West African academic expectations
+        const systemCore = `You are Mubarak, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down this request expertly using clear bullet points, clean headings, and actionable insights. Query: ${query}`;
+
+        try {
+            let aiResultText = "";
+            
+            // Route 1: Attempt ultra-fast response via integrated Puter SDK
+            if (typeof puter !== 'undefined' && puter.ai) {
+                aiResultText = await puter.ai.chat(systemCore);
+            } else { 
+                // Route 2: Fallback seamlessly to Pollinations Engine if Puter CDN is blocked/delayed
+                const fallbackUrl = `https://text.pollinations.ai/${encodeURIComponent(systemCore)}?model=searchgpt`;
+                const response = await fetch(fallbackUrl);
+                if (!response.ok) throw new Error("Infrastructure timeout");
+                aiResultText = await response.text();
+            }
+
+            // Parse response safely with marked.js & cache history log
+            responseText.innerHTML = marked.parse(aiResultText);
+            saveExplanationToLog(query, aiResultText, "AI Studio");
+
+        } catch (error) {
+            console.error("Studio AI Engine Error:", error);
+            responseText.innerHTML = `❌ **Connection Timeout**<br>Could not reach the AI nodes. Check your data connection and try again.`;
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Analyze with AI";
+        }
+    }
+
+    /* ===================================================================
+      GLOBAL EXPLANATION ENGINE (For use inside Quiz Review Panels)
     */
     async function generateAcademicExplanation(questionText, subjectContext = "General") {
         try {
-            // Structured system instruction prompt template targeting West African syllabus criteria (JAMB/WAEC)
             const promptContext = `You are Mubarak, an expert academic tutor for JAMB, WAEC & SSCE. Provide an extensive, deeply explanatory breakdown for this academic question context [Subject: ${subjectContext}]. Breakdown the correct answers, logical rules, definitions, and contextual subcategories clearly. Question: ${questionText}`;
             
-            // Fast, public domain alternative infrastructure stream endpoint
-            const targetUrl = `https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=searchgpt`;
+            let explanatoryText = "";
+            if (typeof puter !== 'undefined' && puter.ai) {
+                explanatoryText = await puter.ai.chat(promptContext);
+            } else {
+                const targetUrl = `https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=searchgpt`;
+                const response = await fetch(targetUrl);
+                if (!response.ok) throw new Error("Explanation engine dropped request");
+                explanatoryText = await response.text();
+            }
             
-            const response = await fetch(targetUrl);
-            if (!response.ok) throw new Error("Explanation engine dropped request");
-
-            const explanatoryText = await response.text();
-            
-            // Cache performance logs locally for study tracking analytics
             saveExplanationToLog(questionText, explanatoryText, subjectContext);
             return marked.parse(explanatoryText);
 
