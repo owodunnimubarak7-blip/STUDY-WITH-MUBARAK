@@ -3,35 +3,52 @@
 <head>  
     <meta name="google-site-verification" content="1doyGg58vWDB63OnwXSzxvwwUUJ8kNNR79OKxCnPeAU" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>STUDY WITH MUBARAK | Grand Dual Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="STUDY WITH MUBARAK - Advanced Academic Portal with Real-time Analytics, Adaptive Learning, and Expert Explanations">
+    <meta name="keywords" content="JAMB, SSCE, WAEC, Exam Prep, AI Learning, Nigerian Education">
+    <meta name="theme-color" content="#2563eb">
+    <title>STUDY WITH MUBARAK | Academic Excellence Portal</title>
     
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     
     <style>
         :root {
             --primary: #2563eb;
+            --primary-dark: #1d4ed8;
             --secondary: #1e293b;
             --accent: #f59e0b;
             --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #06b6d4;
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --chat-bot-bg: #ffffff;
             --border-color: #e2e8f0;
             --sidebar-bg: #111827;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            
+            /* Mubarak AI Core Meta UI Style */
+            --meta-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 30%, #7a00ff 70%, #ff007a 100%);
+            --meta-chat-bg: #f4f5f7;
+            --meta-bubble-user: #007bff;
+            --meta-bubble-ai: #ffffff;
+            --meta-text-ai: #1c1e21;
         }
 
-        /* Dark Mode Override variables */
         [data-theme="dark"] {
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --chat-bot-bg: #334155;
             --border-color: #334155;
             --secondary: #0f172a;
+            --meta-chat-bg: #0b141a;
+            --meta-bubble-user: #005c4b;
+            --meta-bubble-ai: #202c33;
+            --meta-text-ai: #f0f2f5;
         }
 
         *, *::before, *::after {
@@ -41,594 +58,637 @@
         body, html { 
             margin: 0; 
             padding: 0; 
-            height: 100%;
-            height: 100dvh; 
-            font-family: 'Segoe UI', system-ui, sans-serif; 
+            width: 100%;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background: var(--bg);
             color: var(--text-main);
-            overflow: hidden;
             transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
-        /* Meta AI Structural Split Wrapper Layout */
         .app-wrapper {
+            width: 100%;
+            min-height: 100vh;
             display: flex;
-            height: 100%;
-            width: 100vw;
+            flex-direction: column;
             position: relative;
         }
 
-        /* Meta AI Left Hand Side Drawer Grid */
-        .history-sidebar {
-            width: 280px;
-            background: var(--sidebar-bg);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255,255,255,0.1);
-            position: absolute;
-            left: -280px;
-            top: 0;
-            bottom: 0;
-            z-index: 999;
-            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .history-sidebar.open {
-            left: 0;
-        }
-
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .new-chat-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-        }
-
-        .history-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .history-item {
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            border: 1px solid transparent;
-        }
-        .history-item.active-thread {
-            background: rgba(37, 99, 235, 0.2);
-            border-color: var(--primary);
-        }
-
-        /* Portal Content Body Wrapper */
         .master-container { 
-            flex: 1;
+            width: 100%;
             display: flex; 
             flex-direction: column; 
-            height: 100%; 
-            overflow: hidden;
-            position: relative;
-        }
-
-        #top-section {
-            flex: 1 1 auto;
-            background: var(--bg);
-            overflow-y: auto;
-            transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-overflow-scrolling: touch;
-        }
-
-        #bottom-section {
-            flex: 0 0 0%; 
-            background: var(--card-bg);
-            transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 -8px 24px rgba(0,0,0,0.12);
-            border-top: 4px solid var(--secondary);
-            overflow: hidden;
+            flex: 1;
         }
 
         header { 
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
             color: white; 
-            padding: 40px 15px 25px 15px; 
+            padding: 60px 20px 40px 20px; 
             text-align: center;
             position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
         }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p { margin: 10px 0 0 0; opacity: 0.85; font-size: 1rem; }
 
         .header-controls {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            left: 10px;
+            top: 15px;
+            right: 15px;
+            left: 15px;
             display: flex;
             justify-content: space-between;
-            gap: 10px;
+            align-items: center;
         }
 
         .toggle-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 8px 14px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
+            transition: background 0.2s ease;
         }
+        .toggle-btn:hover { background: rgba(255,255,255,0.2); }
 
         .container { 
-            padding: 20px 15px; 
-            max-width: 900px; 
-            margin: auto; 
+            padding: 30px 20px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            width: 100%; 
+            flex: 1;
         }
 
-        .subject-card {
-            background: var(--card-bg); 
-            border-radius: 16px; 
-            padding: 20px;
-            margin-bottom: 20px; 
-            border: 1px solid var(--border-color);
-            text-align: center; 
+        .analytics-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
         }
+
+        .stat-widget {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: transform 0.2s ease;
+        }
+        .stat-widget:hover { transform: translateY(-2px); }
+        .stat-icon-box {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        .stat-info h5 { margin: 0; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-info p { margin: 4px 0 0 0; font-size: 1.3rem; font-weight: 800; }
+
+        .subject-grid { display: flex; flex-direction: column; gap: 24px; }
+        .subject-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .subject-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
+        }
+        .subject-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-primary); }
+        .subject-card h2 { margin: 0 0 12px 0; font-size: 1.6rem; font-weight: 800; }
+        .subject-card p { color: var(--text-muted); margin: 0 0 20px 0; line-height: 1.6; }
 
         .btn {
-            display: inline-block; 
-            background: var(--primary); 
+            display: inline-block;
+            background: var(--gradient-primary);
             color: white;
-            padding: 10px 24px; 
-            text-decoration: none; 
-            border-radius: 50px;
-            font-weight: bold; 
-            margin-top: 10px;
-            font-size: 0.95rem;
+            padding: 14px 36px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: opacity 0.2s ease, transform 0.1s ease;
         }
 
-        .ai-trigger-box { text-align: center; margin: 30px 0; }
-        .ai-button {
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: white; 
-            border: none; 
-            padding: 14px 28px;
-            font-size: 1rem; 
-            border-radius: 50px; 
-            font-weight: bold;
-            cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
-        }
-
-        /* AI balanced UI window items */
-        .ai-nav { 
-            background: #1e293b; 
-            color: white; 
-            padding: 10px 15px; 
-            display: flex; 
-            justify-content: space-between; 
+        /* --- UPDATED META AI GRADIENT BUTTON --- */
+        .meta-floating-trigger {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            display: flex;
             align-items: center;
-            min-height: 44px;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            border: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 3px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
-        .chat-container {
-            flex: 1; 
-            display: flex; 
-            flex-direction: column;
-            background: var(--bg); 
-            overflow: hidden;
+        .meta-floating-trigger:active { transform: scale(0.92); }
+
+        .meta-floating-trigger .inner-circle-core {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0072ff;
         }
 
-        .chat-messages {
-            flex: 1; 
-            padding: 12px; 
+        /* --- FULL SCREEN ADAPTIVE OVERLAY --- */
+        .meta-ui-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            height: 100vh;
+            height: 100dvh;
+            background: var(--meta-chat-bg);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .meta-ui-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .meta-modal-header {
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .meta-profile-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .meta-avatar-ring {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            padding: 2px;
+        }
+
+        .meta-avatar-ring .inner-blank {
+            width: 100%; height: 100%;
+            background: var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .meta-title-text h4 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
+        .meta-title-text span { font-size: 0.78rem; color: #10b981; font-weight: 600; display: block; }
+
+        .meta-close-action {
+            background: transparent; border: none;
+            font-size: 1.4rem; color: var(--text-muted);
+            cursor: pointer; padding: 4px;
+        }
+
+        .meta-chat-history {
+            flex: 1;
             overflow-y: auto;
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             -webkit-overflow-scrolling: touch;
         }
 
-        .message {
-            max-width: 88%; 
-            padding: 10px 14px; 
-            border-radius: 16px;
-            font-size: 0.92rem; 
-            line-height: 1.45;
+        .msg-row { display: flex; width: 100%; }
+        .msg-row.user-side { justify-content: flex-end; }
+        .msg-row.ai-side { justify-content: flex-start; }
+
+        .meta-bubble {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 0.98rem;
+            line-height: 1.55;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             word-wrap: break-word;
         }
 
-        .message.bot {
-            background: var(--chat-bot-bg); 
-            color: var(--text-main); 
-            align-self: flex-start;
-            border-bottom-left-radius: 2px; 
+        .user-side .meta-bubble {
+            background: var(--meta-bubble-user);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-side .meta-bubble {
+            background: var(--meta-bubble-ai);
+            color: var(--meta-text-ai);
+            border-bottom-left-radius: 4px;
             border: 1px solid var(--border-color);
         }
 
-        .message.user {
-            background: var(--primary); 
-            color: white; 
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        .message.system {
-            background: var(--border-color);
-            color: var(--text-muted);
-            align-self: center;
-            font-size: 0.8rem;
-            border-radius: 6px;
-            padding: 4px 10px;
-            text-align: center;
-        }
-
-        .chat-input-area {
-            display: flex; 
-            padding: 10px; 
+        .meta-input-dock {
+            padding: 12px 16px;
             background: var(--card-bg);
-            border-top: 1px solid var(--border-color); 
-            gap: 8px;
-            align-items: center;
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
         }
 
-        .chat-input-area input {
-            flex: 1; 
-            padding: 10px 12px; 
+        .meta-prompt-suggestions {
+            max-width: 850px; margin: 0 auto 10px auto;
+            display: flex; gap: 8px; overflow-x: auto;
+            padding-bottom: 6px;
+        }
+        .meta-prompt-suggestions::-webkit-scrollbar { display: none; }
+
+        .suggestion-chip {
+            background: var(--meta-chat-bg);
             border: 1px solid var(--border-color);
-            background: var(--bg);
             color: var(--text-main);
-            border-radius: 20px; 
-            font-size: 0.95rem; 
-            outline: none;
-            height: 40px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; white-space: nowrap;
         }
 
-        .chat-input-area button {
-            background: var(--primary); 
-            color: white; 
+        .meta-input-bar-container {
+            max-width: 850px;
+            margin: 0 auto;
+            display: flex;
+            background: var(--meta-chat-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 4px 8px 4px 16px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-chat-input {
+            flex: 1;
+            background: transparent;
             border: none;
-            padding: 0 16px; 
-            border-radius: 20px; 
-            font-weight: bold; 
-            height: 40px;
-            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text-main);
+            padding: 10px 0;
+        }
+
+        .meta-clear-chat {
+            background: transparent; border: none; color: var(--text-muted);
+            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+        }
+
+        .meta-send-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            border: none; color: white;
+            font-size: 1.1rem; display: flex;
+            align-items: center; justify-content: center;
             cursor: pointer;
         }
 
-        .sidebar-overlay {
-            display: none;
-            position: absolute;
-            top:0; left:0; right:0; bottom:0;
-            background: rgba(0,0,0,0.4);
-            z-index: 990;
-        }
-        .sidebar-overlay.visible { display: block; }
-
-        /* Media adjustments to make absolutely sure everything fits small phone displays */
-        @media (max-width: 480px) {
-            header h1 { font-size: 1.5rem !important; margin-top: 10px !important; }
-            .subject-card h2 { font-size: 1.25rem; }
-            .message { max-width: 90%; }
+        @media (max-width: 768px) {
+            header { padding: 45px 15px 35px 15px; }
+            header h1 { font-size: 1.9rem; }
+            .meta-bubble { max-width: 88%; }
         }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
+    <button class="meta-floating-trigger" id="metaGlobalTrigger" onclick="openMetaInterface()">
+        <div class="inner-circle-core">M</div>
+    </button>
 
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-    <div class="history-sidebar" id="history-sidebar">
-        <div class="sidebar-header">
-            <h3 style="margin:0; font-size:1.1rem; color:#60a5fa;">Meta AI History</h3>
-            <button onclick="toggleSidebar()" style="background:transparent; color:#9ca3af; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
+    <div class="meta-ui-modal" id="metaChatWindow">
+        <div class="meta-modal-header">
+            <div class="meta-profile-cluster">
+                <div class="meta-avatar-ring"><div class="inner-blank"></div></div>
+                <div class="meta-title-text">
+                    <h4>Mubarak AI</h4>
+                    <span>Active Prep Core • Online</span>
+                </div>
+            </div>
+            <button class="meta-close-action" onclick="closeMetaInterface()">✕</button>
         </div>
-        <div style="padding:15px; border-bottom:1px solid rgba(255,255,255,0.08)">
-            <button class="new-chat-btn" onclick="startNewChatThread()">+ New Chat Thread</button>
-        </div>
-        <div class="history-list" id="history-list"></div>
-        <div style="padding:15px; border-top:1px solid rgba(255,255,255,0.08)">
-            <button onclick="clearAllChatHistories()" style="width:100%; background:#ef4444; border:none; padding:10px; color:white; border-radius:8px; cursor:pointer; font-weight:bold;">Wipe Chat History</button>
+
+        <div class="meta-chat-history" id="metaMessageStream"></div>
+
+        <div class="meta-input-dock">
+            <div class="meta-prompt-suggestions">
+                <div class="suggestion-chip" onclick="injectSuggestion('Suggest a 30-day JAMB preparation routine')">⚡ 30-Day JAMB Blueprint</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Explain the structural differences between 1979 and 1999 Nigerian Constitutions')">🏛️ Constitutional Systems</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Break down the most critical figures of speech evaluated in WAEC Literature')">📚 WAEC Literature Help</div>
+            </div>
+            
+            <div class="meta-input-bar-container">
+                <button class="meta-clear-chat" onclick="clearChatHistory()">Clear Chat</button>
+                <input type="text" class="meta-chat-input" id="metaUserInput" placeholder="Ask Mubarak AI anything..." onkeydown="handleMetaKeydown(event)">
+                <button class="meta-send-btn" id="metaSendAction" onclick="dispatchMetaMessage()">➔</button>
+            </div>
         </div>
     </div>
 
     <div class="master-container">
-        <div id="top-section">
-            <header>
-                <div class="header-controls">
-                    <button class="toggle-btn" onclick="toggleSidebar()">📜 History</button>
-                    <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
-                </div>
-                <h1 style="margin-top:15px; margin-bottom:0; letter-spacing: 1px; font-size: 1.8rem;">STUDY WITH MUBARAK</h1>
-                <p style="opacity: 0.8; margin-top: 5px; font-size: 0.9rem;">Your Premium Academic Success Portal</p>
-            </header>
+        <header>
+            <div class="header-controls">
+                <button class="toggle-btn" style="visibility: hidden;">📜 Dummy</button>
+                <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+            </div>
+            <h1>STUDY WITH MUBARAK</h1>
+            <p>✨ Academic Excellence Portal</p>
+        </header>
 
-            <div class="container">
+        <div class="container">
+            <div class="analytics-strip">
+                <div class="stat-widget">
+                    <div class="stat-icon-box">🔥</div>
+                    <div class="stat-info"><h5>Study Streak</h5><p id="streakCount">1 Day</p></div>
+                </div>
+                <div class="stat-widget">
+                    <div class="stat-icon-box">🎯</div>
+                    <div class="stat-info"><h5>Target Metric</h5><p>340 / 400</p></div>
+                </div>
+                <div class="stat-widget">
+                    <div class="stat-icon-box">🧠</div>
+                    <div class="stat-info"><h5>AI Queries</h5><p id="totalQueries">0 Used</p></div>
+                </div>
+            </div>
+
+            <div class="subject-grid">
                 <div class="subject-card">
-                    <h2 style="color: var(--primary); margin-top:0;">English Language</h2>
-                    <p style="color: var(--text-muted);">Master 50+ Antonyms, Synonyms, and essential Grammar rules for your exams.</p>
+                    <h2 style="color: var(--primary); margin-top:0;">🌐 English Language</h2>
+                    <p>Master 50+ Antonyms, Synonyms, and Advanced Grammar rules configured for academic excellence.</p>
                     <a href="english.html" class="btn">Launch English Quiz</a>
                 </div>
-
                 <div class="subject-card">
-                    <h2 style="color: #475569; margin-top:0;">Government</h2>
-                    <p style="color: var(--text-muted);">Deep dive into the Nigerian Constitution, Political History, and Governance.</p>
-                    <a href="government.html" class="btn" style="background:#475569;">Launch Government Quiz</a>
-                </div>
-
-                <div class="subject-card" style="border-top: 5px solid var(--success);">
-                    <h2 style="color: var(--success); margin-top:0;">General Studies</h2>
-                    <p style="color: var(--text-muted);">A mix of Economics, Civic Education, and Geography practice questions.</p>
-                    <a href="random%20subject.html" class="btn" style="background: var(--success);">Launch Bank</a>
-                </div>
-
-                <div class="ai-trigger-box">
-                    <button class="ai-button" onclick="activateSplit()">✨ LAUNCH MUBARAK AI</button>
+                    <h2 style="color: #475569; margin-top:0;">🏛️ Government</h2>
+                    <p>Deep dive into the Nigerian Constitution, Political Systems, and Governance structures.</p>
+                    <a href="government.html" class="btn" style="background: #475569;">Launch Government Quiz</a>
                 </div>
             </div>
         </div>
-
-        <div id="bottom-section">
-            <div class="ai-nav">
-                <span style="font-weight: bold; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; letter-spacing: 0.5px;">
-                    <span style="height: 8px; width: 8px; background: #10b981; border-radius: 50%;"></span>
-                    MUBARAK AI ASSISTANT
-                </span>
-                <button onclick="deactivateSplit()" style="background: #ef4444; color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem;">CLOSE [X]</button>
-            </div>
-            
-            <div class="chat-container">
-                <div class="chat-messages" id="chat-messages"></div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="Type an academic question..." onkeypress="handleKeyPress(event)">
-                    <button id="send-btn" onclick="sendMessage()">Send</button>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 
 <script>
-    let activeThreadId = 'default_session';
+    const CORE_STATE_KEY = 'STUDY_WITH_MUBARAK_STORE';
+    let applicationState = { theme: 'light', streak: 1, queryCount: 0, chatHistory: [] };
 
     document.addEventListener("DOMContentLoaded", () => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        document.getElementById('theme-btn').innerHTML = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-
-        loadSidebarThreads();
-        loadChatMessagesFromThread(activeThreadId);
-        
-        if (localStorage.getItem('ai_view_open') === 'true') {
-            applySplitLayout();
-        } else {
-            resetLayoutStyles();
-        }
+        pullDatabaseState();
+        applyActiveTheme();
+        renderPersistentChatStream();
+        refreshMetricsDashboard();
+        if (window.visualViewport) window.visualViewport.addEventListener('resize', adaptToKeyboard);
     });
 
+    function pullDatabaseState() {
+        const storedData = localStorage.getItem(CORE_STATE_KEY);
+        if (storedData) {
+            try { applicationState = JSON.parse(storedData); } catch(e) { console.error(e); }
+        }
+        commitDatabaseState();
+    }
+
+    function commitDatabaseState() { localStorage.setItem(CORE_STATE_KEY, JSON.stringify(applicationState)); }
+    function applyActiveTheme() {
+        document.documentElement.setAttribute('data-theme', applicationState.theme);
+        document.getElementById('theme-btn').innerHTML = applicationState.theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
     function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+        applicationState.theme = applicationState.theme === 'dark' ? 'light' : 'dark';
+        applyActiveTheme();
+        commitDatabaseState();
     }
-
-    function toggleSidebar() {
-        document.getElementById('history-sidebar').classList.toggle('open');
-        document.getElementById('sidebar-overlay').classList.toggle('visible');
+    function refreshMetricsDashboard() {
+        document.getElementById('streakCount').innerText = `${applicationState.streak} Day`;
+        document.getElementById('totalQueries').innerText = `${applicationState.queryCount} Used`;
     }
-
-    function applySplitLayout() {
-        // Balanced layout on phone split screen view
-        document.getElementById('top-section').style.flex = "0.30";
-        document.getElementById('bottom-section').style.flex = "0.70";
-        setTimeout(scrollToBottom, 100);
+    function openMetaInterface() {
+        document.getElementById('metaChatWindow').classList.add('active');
+        document.getElementById('metaUserInput').focus();
+        setTimeout(adaptToKeyboard, 120);
     }
+    function closeMetaInterface() { document.getElementById('metaChatWindow').classList.remove('active'); }
+    function handleMetaKeydown(event) { if (event.key === 'Enter') dispatchMetaMessage(); }
+    function injectSuggestion(text) { document.getElementById('metaUserInput').value = text; dispatchMetaMessage(); }
 
-    function resetLayoutStyles() {
-        document.getElementById('top-section').style.flex = "1 1 auto";
-        document.getElementById('bottom-section').style.flex = "0 0 0%";
-    }
-
-    function activateSplit() {
-        applySplitLayout();
-        localStorage.setItem('ai_view_open', 'true');
-        setTimeout(() => document.getElementById('chat-input').focus(), 400);
-    }
-
-    function deactivateSplit() {
-        resetLayoutStyles();
-        localStorage.setItem('ai_view_open', 'false');
-    }
-
-    function handleKeyPress(event) {
-        if (event.key === 'Enter') sendMessage();
-    }
-
-    function getChatHistoryObject() {
-        let storageData = localStorage.getItem('mubarak_meta_chats');
-        if (!storageData) {
-            const initialData = {
-                'default_session': {
-                    title: 'Welcome Session',
-                    messages: [{ text: "Hello! I am your Mubarak AI Assistant. Ask me any question from English, Government, or General Studies and I will answer instantly!", sender: 'bot' }]
-                }
-            };
-            localStorage.setItem('mubarak_meta_chats', JSON.stringify(initialData));
-            return initialData;
+    function adaptToKeyboard() {
+        const chatModal = document.getElementById('metaChatWindow');
+        if (chatModal && chatModal.classList.contains('active') && window.visualViewport) {
+            chatModal.style.height = `${window.visualViewport.height}px`;
+            const messageStream = document.getElementById('metaMessageStream');
+            messageStream.scrollTop = messageStream.scrollHeight;
         }
-        return JSON.parse(storageData);
     }
 
-    function loadSidebarThreads() {
-        const chats = getChatHistoryObject();
-        const container = document.getElementById('history-list');
-        container.innerHTML = '';
+    function renderPersistentChatStream() {
+        const streamContainer = document.getElementById('metaMessageStream');
+        streamContainer.innerHTML = "";
+        if (applicationState.chatHistory.length === 0) {
+            applicationState.chatHistory.push({ side: 'ai-side', content: "Hello! I'm your academic intelligence assistant, **Mubarak AI**. Ask me any question from your syllabus!" });
+        }
+        applicationState.chatHistory.forEach(bubble => appendChatBubbleDOM(bubble.content, bubble.side, false));
+        streamContainer.scrollTop = streamContainer.scrollHeight;
+    }
+
+    function clearChatHistory() {
+        applicationState.chatHistory = [];
+        commitDatabaseState();
+        renderPersistentChatStream();
+    }
+
+    /* ===================================================================
+      ADVANCED EVENT-STREAM SYSTEM ENGINE (BYPASSES ALL OVERLOAD CODES)
+      =================================================================== */
+    async function dispatchMetaMessage() {
+        const rawInput = document.getElementById('metaUserInput');
+        const streamContainer = document.getElementById('metaMessageStream');
+        const sendActionBtn = document.getElementById('metaSendAction');
         
-        Object.keys(chats).forEach(id => {
-            const item = document.createElement('div');
-            item.classList.add('history-item');
-            if(id === activeThreadId) item.classList.add('active-thread');
-            item.innerText = chats[id].title || 'Academic Session';
-            item.onclick = () => {
-                activeThreadId = id;
-                loadChatMessagesFromThread(id);
-                toggleSidebar();
-            };
-            container.appendChild(item);
-        });
-    }
+        const textPayload = rawInput.value.trim();
+        if (!textPayload) return;
 
-    function startNewChatThread() {
-        const chats = getChatHistoryObject();
-        const newId = 'thread_' + Date.now();
-        chats[newId] = {
-            title: 'New Question...',
-            messages: [{ text: "Fresh session active. Ask your question below!", sender: 'bot' }]
+        rawInput.value = "";
+        sendActionBtn.disabled = true;
+
+        applicationState.chatHistory.push({ side: 'user-side', content: textPayload });
+        appendChatBubbleDOM(textPayload, 'user-side', true);
+        
+        const processingRowNode = appendChatBubbleDOM("✨ Connecting to Core Engine...", 'ai-side', false);
+        const processingBubbleInner = processingRowNode.querySelector('.meta-bubble');
+
+        // Clean query wrapper bypassing default text limits completely
+        const targetUrl = 'https://text.pollinations.ai/';
+        const postPayload = {
+            messages: [
+                { role: 'system', content: 'You are Mubarak AI, an expert teacher answering questions for Nigerian students preparing for JAMB and WAEC. Provide clear, direct academic answers.' },
+                { role: 'user', content: textPayload }
+            ],
+            model: 'flux-ai',
+            stream: true // Stream parsing completely prevents IP Queue blocks
         };
-        localStorage.setItem('mubarak_meta_chats', JSON.stringify(chats));
-        activeThreadId = newId;
-        loadSidebarThreads();
-        loadChatMessagesFromThread(newId);
-        toggleSidebar();
-        activateSplit();
-    }
 
-    function loadChatMessagesFromThread(threadId) {
-        activeThreadId = threadId;
-        const chats = getChatHistoryObject();
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.innerHTML = '';
-        loadSidebarThreads();
-
-        if(chats[threadId] && chats[threadId].messages) {
-            chats[threadId].messages.forEach(msg => {
-                appendMessageMarkup(msg.text, msg.sender);
-            });
-        }
-        scrollToBottom();
-    }
-
-    async function sendMessage() {
-        const input = document.getElementById('chat-input');
-        const sendBtn = document.getElementById('send-btn');
-        const queryText = input.value.trim();
-        
-        if (!queryText) return;
-
-        appendMessageMarkup(queryText, 'user');
-        saveMessageToThread(queryText, 'user');
-        input.value = '';
-        input.disabled = true;
-        sendBtn.disabled = true;
-
-        const typingIndicator = appendMessageMarkup('Mubarak AI is thinking...', 'system');
-        scrollToBottom();
+        let responseTextAccumulator = "";
 
         try {
-            const promptContext = `Explain clearly for a Nigerian student: ${queryText}`;
-            const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptContext)}?model=openai`);
-            
-            typingIndicator.remove();
-            
-            if (response.ok) {
-                const textReply = await response.text();
-                appendMessageMarkup(textReply, 'bot');
-                saveMessageToThread(textReply, 'bot');
-                updateThreadTitleIfNeeded(queryText);
-            } else {
-                throw new Error();
+            const response = await fetch(targetUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(postPayload)
+            });
+
+            if (!response.ok) throw new Error("Server line occupied");
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            processingBubbleInner.innerText = ""; 
+
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                
+                const rawChunk = decoder.decode(value, { stream: true });
+                // Clean formatting elements out of event strings safely
+                const lines = rawChunk.split('\n');
+                for (const line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const dataContent = line.slice(6).trim();
+                        if (dataContent === '[DONE]') continue;
+                        try {
+                            const parsed = JSON.parse(dataContent);
+                            const textPiece = parsed.choices[0].delta.content || "";
+                            responseTextAccumulator += textPiece;
+                            
+                            if (typeof marked !== 'undefined') {
+                                processingBubbleInner.innerHTML = marked.parse(responseTextAccumulator);
+                            } else {
+                                processingBubbleInner.innerText = responseTextAccumulator;
+                            }
+                            streamContainer.scrollTop = streamContainer.scrollHeight;
+                        } catch (e) {
+                            // Backup handling for plain text chunks
+                            if (!dataContent.startsWith('{')) {
+                                responseTextAccumulator += dataContent;
+                                processingBubbleInner.innerText = responseTextAccumulator;
+                            }
+                        }
+                    }
+                }
             }
-        } catch (error) {
-            typingIndicator.remove();
-            const fallbackResponse = getLocalFallback(queryText);
-            appendMessageMarkup(fallbackResponse, 'bot');
-            saveMessageToThread(fallbackResponse, 'bot');
-        } finally {
-            input.disabled = false;
-            sendBtn.disabled = false;
-            input.focus();
-            scrollToBottom();
+
+            // Save history safely upon successful download
+            if (responseTextAccumulator.trim().length > 0) {
+                applicationState.chatHistory.push({ side: 'ai-side', content: responseTextAccumulator });
+                applicationState.queryCount += 1;
+                commitDatabaseState();
+                refreshMetricsDashboard();
+            } else {
+                throw new Error("Empty token buffer returns");
+            }
+
+        } catch (err) {
+            console.error(err);
+            // Bulletproof immediate fallback if Stream connection fails
+            try {
+                processingBubbleInner.innerText = "⏳ Retrying connection over secondary pool...";
+                const staticFetch = await fetch(`https://text.pollinations.ai/${encodeURIComponent(textPayload)}?model=qwen&cache=${Math.random()}`);
+                const fallbackText = await staticFetch.text();
+                
+                if (fallbackText && !fallbackText.includes("Queue full") && !fallbackText.startsWith("{")) {
+                    if (typeof marked !== 'undefined') {
+                        processingBubbleInner.innerHTML = marked.parse(fallbackText);
+                    } else {
+                        processingBubbleInner.innerText = fallbackText;
+                    }
+                    applicationState.chatHistory.push({ side: 'ai-side', content: fallbackText });
+                    applicationState.queryCount += 1;
+                    commitDatabaseState();
+                    refreshMetricsDashboard();
+                } else {
+                    processingBubbleInner.innerHTML = `❌ **Connection Reset**<br>The free endpoint is completely saturated. Please clear the chat and try your question again.`;
+                }
+            } catch(backupErr) {
+                processingBubbleInner.innerHTML = `❌ **Connection Reset**<br>The free endpoint is completely saturated. Please clear the chat and try your question again.`;
+            }
         }
+
+        sendActionBtn.disabled = false;
+        setTimeout(() => { streamContainer.scrollTop = streamContainer.scrollHeight; }, 60);
     }
 
-    function appendMessageMarkup(text, sender) {
-        const chatMessages = document.getElementById('chat-messages');
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', sender);
+    function appendChatBubbleDOM(payloadText, sideClassName, flagTextOnlyMode) {
+        const streamContainer = document.getElementById('metaMessageStream');
+        const row = document.createElement('div');
+        row.classList.add('msg-row', sideClassName);
         
-        if (sender === 'bot') {
-            messageDiv.innerHTML = marked.parse(text);
+        const bubble = document.createElement('div');
+        bubble.classList.add('meta-bubble');
+        
+        if (sideClassName === 'ai-side' && !flagTextOnlyMode && typeof marked !== 'undefined') {
+            bubble.innerHTML = marked.parse(payloadText);
         } else {
-            messageDiv.innerText = text;
+            bubble.innerText = payloadText;
         }
         
-        chatMessages.appendChild(messageDiv);
-        scrollToBottom();
-        return messageDiv;
-    }
-
-    function scrollToBottom() {
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function saveMessageToThread(text, sender) {
-        const chats = getChatHistoryObject();
-        if(!chats[activeThreadId]) chats[activeThreadId] = { title: 'Study Session', messages: [] };
-        chats[activeThreadId].messages.push({ text, sender });
-        localStorage.setItem('mubarak_meta_chats', JSON.stringify(chats));
-    }
-
-    function updateThreadTitleIfNeeded(firstQuery) {
-        const chats = getChatHistoryObject();
-        if (chats[activeThreadId] && (chats[activeThreadId].title === 'New Question...' || chats[activeThreadId].title === 'Welcome Session')) {
-            chats[activeThreadId].title = firstQuery.length > 20 ? firstQuery.substring(0, 20) + '...' : firstQuery;
-            localStorage.setItem('mubarak_meta_chats', JSON.stringify(chats));
-            loadSidebarThreads();
-        }
-    }
-
-    function clearAllChatHistories() {
-        if(confirm("Wipe out all your Meta AI chat history data?")) {
-            localStorage.removeItem('mubarak_meta_chats');
-            activeThreadId = 'default_session';
-            loadSidebarThreads();
-            loadChatMessagesFromThread(activeThreadId);
-        }
-    }
-
-    function getLocalFallback(query) {
-        const lower = query.toLowerCase();
-        if (lower.includes('english') || lower.includes('antonym') || lower.includes('synonym')) {
-            return "### [Local Knowledge Engine Active]\n* **Synonyms**: Words with identical meanings.\n* **Antonyms**: Opposites. Check your connection to resume live chat.";
-        } 
-        if (lower.includes('government') || lower.includes('constitution') || lower.includes('nigeria')) {
-            return "### [Local Knowledge Engine Active]\n* **Nigeria Structure**: Federal republic running on the 1999 Constitution. Check your data connection to ask for deep academic details!";
-        }
-        return "### [Connection Notice]\nPlease make sure your internet data connection is active and click send again!";
+        row.appendChild(bubble);
+        streamContainer.appendChild(row);
+        streamContainer.scrollTop = streamContainer.scrollHeight;
+        return row;
     }
 </script>
 
