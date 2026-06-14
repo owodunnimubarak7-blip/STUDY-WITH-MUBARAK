@@ -417,7 +417,7 @@
         }
         .suggestion-chip:hover { background: var(--border-color); }
 
-        /* --- FIX: ZERO OVERLAP SECURE INPUT CONTAINER LAYER --- */
+        /* --- MOBILE SCREEN OVERLAP INSURANCE DESIGN --- */
         .meta-input-bar-container {
             max-width: 850px;
             margin: 0 auto;
@@ -425,14 +425,14 @@
             background: var(--meta-chat-bg);
             border: 1px solid var(--border-color);
             border-radius: 28px;
-            padding: 4px 6px 4px 14px;
+            padding: 4px 8px 4px 16px;
             align-items: center;
-            gap: 8px; /* Safe element separation spacing */
+            gap: 10px;
         }
 
         .meta-chat-input {
             flex: 1;
-            min-width: 0; /* Prevents input element from blowing layout boundaries on small viewports */
+            min-width: 0;
             background: transparent;
             border: none;
             outline: none;
@@ -445,7 +445,7 @@
         .meta-clear-chat {
             background: transparent; border: none; color: var(--text-muted);
             font-size: 0.82rem; font-weight: 600; cursor: pointer;
-            padding: 4px 8px; border-radius: 6px;
+            padding: 4px 6px; border-radius: 6px;
             white-space: nowrap;
             flex-shrink: 0;
         }
@@ -459,7 +459,7 @@
             font-size: 1.1rem; display: flex;
             align-items: center; justify-content: center;
             cursor: pointer; transition: transform 0.2s ease;
-            flex-shrink: 0; /* Forces standard dimension profile without context squishing */
+            flex-shrink: 0;
         }
 
         .meta-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -475,6 +475,8 @@
         }
         @media (max-width: 480px) {
             .analytics-strip { grid-template-columns: 1fr; }
+            .meta-input-bar-container { padding: 4px 6px 4px 12px; gap: 6px; }
+            .meta-clear-chat { font-size: 0.78rem; padding: 4px 2px; }
         }
     </style>
 </head>
@@ -581,7 +583,6 @@
 </div>
 
 <script>
-    // System Local Data State Setup 
     const CORE_STATE_KEY = 'STUDY_WITH_MUBARAK_STORE';
     let applicationState = {
         theme: 'light',
@@ -620,7 +621,7 @@
                     applicationState.lastActiveStamp = currentDayString;
                     commitDatabaseState();
                 }
-            } catch(error) { console.error("Database schema re-initialization required:", error); }
+            } catch(error) { console.error("Database initialization fault:", error); }
         } else {
             commitDatabaseState();
         }
@@ -702,14 +703,14 @@
     }
 
     /* ===================================================================
-      SECURE API PIPELINE WITH MULTI-ENGINE INTEGRATION & AUTO RETRY LOGIC
+      REWRITTEN SECURE API PIPELINE WITH SAFE STRING PATTERNS & RETRY LOOPS
       ===================================================================
     */
     async function dispatchMetaMessage() {
         const rawInput = document.getElementById('metaUserInput');
         const streamContainer = document.getElementById('metaMessageStream');
         const sendActionBtn = document.getElementById('metaSendAction');
-        const designatedEngine = document.getElementById('metaEngineSelector').value;
+        let designatedEngine = document.getElementById('metaEngineSelector').value;
         
         const textPayload = rawInput.value.trim();
         if (!textPayload) return;
@@ -717,31 +718,29 @@
         rawInput.value = "";
         sendActionBtn.disabled = true;
 
-        // Process User Query Node
         applicationState.chatHistory.push({ side: 'user-side', content: textPayload });
         appendChatBubbleDOM(textPayload, 'user-side', true);
         
-        // Setup AI Stream Container Node
         const processingRowNode = appendChatBubbleDOM("✨ Thinking...", 'ai-side', false);
         const processingBubbleInner = processingRowNode.querySelector('.meta-bubble');
 
-        const diagnosticDirectives = `You are Mubarak AI, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down solutions expertly with clear formatting, bold key definitions, and bullet lists. Request: ${textPayload}`;
+        // Expert instructions optimized without character-break glitches
+        const diagnosticDirectives = `You are Mubarak AI, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down answers expertly using clear bold markdown parameters and bullet lists. Student Question: ${textPayload}`;
+
+        // Map selection options to reliable API system parameters
+        let activeModelId = designatedEngine === 'gemini' ? 'gemini' : 'openai';
 
         try {
-            const endpointPipelineUrl = `https://text.pollinations.ai/${encodeURIComponent(diagnosticDirectives)}?model=${designatedEngine}&cache=true`;
+            // Correct template construction strategy for Pollinations plain text delivery
+            const endpointPipelineUrl = `https://text.pollinations.ai/${encodeURIComponent(diagnosticDirectives)}?model=${activeModelId}&cache=false`;
             
-            const serverTransaction = await fetch(endpointPipelineUrl, {
-                method: 'GET',
-                headers: { 'Accept': 'text/plain, text/html, */*' }
-            });
-            
-            if (!serverTransaction.ok) throw new Error("Primary Gateway Disconnection");
+            const serverTransaction = await fetch(endpointPipelineUrl);
+            if (!serverTransaction.ok) throw new Error("Primary pipeline drop");
             
             const coreTextResponse = await serverTransaction.text();
             
-            // FIX: Block and filter raw JSON error messages from printing inside user chat boxes
-            if (!coreTextResponse || !coreTextResponse.trim() || coreTextResponse.trim().startsWith('{')) {
-                throw new Error("Data Segment Fault / Rate Limit");
+            if (!coreTextResponse || !coreTextResponse.trim() || coreTextResponse.trim().startsWith('{') || coreTextResponse.trim().startsWith('<!DOCTYPE')) {
+                throw new Error("Invalid output formatting or channel limit");
             }
 
             if (typeof marked !== 'undefined') {
@@ -757,24 +756,29 @@
             refreshMetricsDashboard();
 
         } catch (connectionFault) {
-            console.warn("Fault caught on primary thread. Re-routing payload down backup pipeline...", connectionFault);
+            console.warn("Fault active on current channel. Shifting model engines dynamically...", connectionFault);
             try {
-                processingBubbleInner.innerHTML = `⚠️ *Network latency timeout: shifting optimization routes...*`;
-                const rescueEndpointUrl = `https://text.pollinations.ai/${encodeURIComponent(textPayload)}?model=openai&cache=false`;
+                // Instantly try alternative engine without alerting the student
+                const alternativeModelId = activeModelId === 'openai' ? 'qwen-turner' : 'mistral';
+                const rescueEndpointUrl = `https://text.pollinations.ai/${encodeURIComponent(diagnosticDirectives)}?model=${alternativeModelId}&cache=false`;
                 
                 const backupTransaction = await fetch(rescueEndpointUrl);
                 const recoveryResponseText = await backupTransaction.text();
                 
-                // Backup pipeline check for raw JSON objects
-                if (recoveryResponseText.trim().startsWith('{')) {
-                    throw new Error("Backup rate limit reached");
+                if (recoveryResponseText.trim().startsWith('{') || recoveryResponseText.trim().startsWith('<!DOCTYPE')) {
+                    throw new Error("Backup rate limit fault");
                 }
                 
-                processingBubbleInner.innerHTML = marked.parse(`**Engine Recovered:** \n\n${recoveryResponseText}`);
+                processingBubbleInner.innerHTML = marked.parse(recoveryResponseText);
+                bindDynamicCopyTriggers(processingBubbleInner);
+                
                 applicationState.chatHistory.push({ side: 'ai-side', content: recoveryResponseText });
+                applicationState.queryCount += 1;
                 commitDatabaseState();
+                refreshMetricsDashboard();
             } catch(secondaryFault) {
-                processingBubbleInner.innerHTML = `❌ **Mubarak AI Engine Notice**<br>The current AI pool is temporarily busy answering other students. Please wait a few seconds and try sending your query again!`;
+                // Ultimate clean fallback if completely offline or blocked
+                processingBubbleInner.innerHTML = `⚠️ **Network Sync Notice**<br>Mubarak AI is processing a lot of exam queries right now. Please tap the text box and try submitting your question one more time!`;
             }
         } finally {
             sendActionBtn.disabled = false;
