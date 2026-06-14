@@ -261,7 +261,7 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             height: 100vh;
-            height: 100dvh; /* Enforces adaptive system display constraints on Android */
+            height: 100dvh;
             background: var(--meta-chat-bg);
             z-index: 2000;
             display: flex;
@@ -368,7 +368,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Formatting nested structures in Markdown streams */
         .meta-bubble pre {
             background: #1e293b;
             color: #f8fafc;
@@ -418,6 +417,7 @@
         }
         .suggestion-chip:hover { background: var(--border-color); }
 
+        /* --- FIX: ZERO OVERLAP SECURE INPUT CONTAINER LAYER --- */
         .meta-input-bar-container {
             max-width: 850px;
             margin: 0 auto;
@@ -427,10 +427,12 @@
             border-radius: 28px;
             padding: 4px 6px 4px 14px;
             align-items: center;
+            gap: 8px; /* Safe element separation spacing */
         }
 
         .meta-chat-input {
             flex: 1;
+            min-width: 0; /* Prevents input element from blowing layout boundaries on small viewports */
             background: transparent;
             border: none;
             outline: none;
@@ -443,8 +445,9 @@
         .meta-clear-chat {
             background: transparent; border: none; color: var(--text-muted);
             font-size: 0.82rem; font-weight: 600; cursor: pointer;
-            padding: 4px 8px; border-radius: 6px; margin-right: 4px;
+            padding: 4px 8px; border-radius: 6px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .meta-clear-chat:hover { color: var(--danger); }
 
@@ -456,7 +459,7 @@
             font-size: 1.1rem; display: flex;
             align-items: center; justify-content: center;
             cursor: pointer; transition: transform 0.2s ease;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Forces standard dimension profile without context squishing */
         }
 
         .meta-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -606,7 +609,6 @@
                 applicationState = JSON.parse(storedData);
                 const currentDayString = new Date().toDateString();
                 
-                // Track dynamic user retention streak shifts
                 if (applicationState.lastActiveStamp !== currentDayString) {
                     const trackingCalendar = new Date();
                     trackingCalendar.setDate(trackingCalendar.getDate() - 1);
@@ -736,9 +738,12 @@
             if (!serverTransaction.ok) throw new Error("Primary Gateway Disconnection");
             
             const coreTextResponse = await serverTransaction.text();
-            if (!coreTextResponse || !coreTextResponse.trim()) throw new Error("Data Segment Fault");
+            
+            // FIX: Block and filter raw JSON error messages from printing inside user chat boxes
+            if (!coreTextResponse || !coreTextResponse.trim() || coreTextResponse.trim().startsWith('{')) {
+                throw new Error("Data Segment Fault / Rate Limit");
+            }
 
-            // Complete Document Parsing Implementation
             if (typeof marked !== 'undefined') {
                 processingBubbleInner.innerHTML = marked.parse(coreTextResponse);
                 bindDynamicCopyTriggers(processingBubbleInner);
@@ -746,7 +751,6 @@
                 processingBubbleInner.innerText = coreTextResponse;
             }
 
-            // Save state on validation
             applicationState.chatHistory.push({ side: 'ai-side', content: coreTextResponse });
             applicationState.queryCount += 1;
             commitDatabaseState();
@@ -761,11 +765,16 @@
                 const backupTransaction = await fetch(rescueEndpointUrl);
                 const recoveryResponseText = await backupTransaction.text();
                 
+                // Backup pipeline check for raw JSON objects
+                if (recoveryResponseText.trim().startsWith('{')) {
+                    throw new Error("Backup rate limit reached");
+                }
+                
                 processingBubbleInner.innerHTML = marked.parse(`**Engine Recovered:** \n\n${recoveryResponseText}`);
                 applicationState.chatHistory.push({ side: 'ai-side', content: recoveryResponseText });
                 commitDatabaseState();
             } catch(secondaryFault) {
-                processingBubbleInner.innerHTML = `❌ **Connection Dropout**<br>Unable to bridge communication channels to processing arrays. Ensure your active data plan is valid and resubmit query parameters.`;
+                processingBubbleInner.innerHTML = `❌ **Mubarak AI Engine Notice**<br>The current AI pool is temporarily busy answering other students. Please wait a few seconds and try sending your query again!`;
             }
         } finally {
             sendActionBtn.disabled = false;
