@@ -3,13 +3,12 @@
 <head>  
     <meta name="google-site-verification" content="1doyGg58vWDB63OnwXSzxvwwUUJ8kNNR79OKxCnPeAU" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="STUDY WITH MUBARAK - Advanced Academic Portal with Real-time Analytics, Adaptive Learning, and Expert Explanations">
     <meta name="keywords" content="JAMB, SSCE, WAEC, Exam Prep, AI Learning, Nigerian Education">
     <meta name="theme-color" content="#2563eb">
     <title>STUDY WITH MUBARAK | Academic Excellence Portal</title>
     
-    <!-- External Formatting Parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     
@@ -61,15 +60,21 @@
         body, html { 
             margin: 0; 
             padding: 0; 
+            width: 100%;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background: var(--bg);
             color: var(--text-main);
             transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
         .app-wrapper {
             width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
 
@@ -78,6 +83,7 @@
             width: 100%;
             display: flex; 
             flex-direction: column; 
+            flex: 1;
         }
 
         header { 
@@ -85,7 +91,7 @@
             background-size: 200% 200%;
             animation: gradientShift 8s ease infinite;
             color: white; 
-            padding: 50px 20px 40px 20px; 
+            padding: 60px 20px 40px 20px; 
             text-align: center;
             position: relative;
             box-shadow: 0 8px 32px rgba(0,0,0,0.12);
@@ -130,9 +136,46 @@
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 700;
+            transition: background 0.2s ease;
+        }
+        .toggle-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .container { 
+            padding: 30px 20px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            width: 100%; 
+            flex: 1;
         }
 
-        .container { padding: 40px 20px; max-width: 1000px; margin: auto; width: 100%; }
+        /* --- STATE CARDS PANEL --- */
+        .analytics-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-widget {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: transform 0.2s ease;
+        }
+        .stat-widget:hover { transform: translateY(-2px); }
+        .stat-icon-box {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        .stat-info h5 { margin: 0; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-info p { margin: 4px 0 0 0; font-size: 1.3rem; font-weight: 800; }
+
         .subject-grid { display: flex; flex-direction: column; gap: 24px; }
         .subject-card {
             background: var(--card-bg);
@@ -142,7 +185,11 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .subject-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
         }
         .subject-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-primary); }
         .subject-card h2 { margin: 0 0 12px 0; font-size: 1.6rem; font-weight: 800; }
@@ -159,11 +206,13 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: opacity 0.2s ease, transform 0.1s ease;
         }
+        .btn:active { transform: scale(0.98); }
         .btn.secondary { background: linear-gradient(135deg, #475569 0%, #334155 100%); box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3); }
         .btn.success { background: linear-gradient(135deg, var(--success) 0%, #059669 100%); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
 
-        /* --- RESTORED MUBARAK M TRIGGER BUTTON --- */
+        /* --- FLOATING TRIGGER BUTTON --- */
         .meta-floating-trigger {
             position: fixed;
             bottom: 25px;
@@ -205,25 +254,28 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .meta-floating-trigger:hover { transform: scale(1.08); }
 
-        /* --- COMPLETE CORE CHAT VIEWPORT LAYER --- */
+        /* --- HIGH PERFORMANCE FLEX-VIEWPORT MODAL LAYER --- */
         .meta-ui-modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
+            height: 100vh;
+            height: 100dvh; /* Enforces adaptive system display constraints on Android */
             background: var(--meta-chat-bg);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
         .meta-ui-modal.active {
             opacity: 1;
             pointer-events: auto;
+            transform: translateY(0);
         }
 
         .meta-modal-header {
@@ -233,6 +285,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-shrink: 0;
         }
 
         .meta-profile-cluster {
@@ -258,10 +311,23 @@
         .meta-title-text h4 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
         .meta-title-text span { font-size: 0.78rem; color: #10b981; font-weight: 600; display: block; }
 
+        .meta-engine-picker {
+            background: var(--bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
         .meta-close-action {
             background: transparent; border: none;
             font-size: 1.4rem; color: var(--text-muted);
             cursor: pointer; padding: 4px;
+            margin-left: 10px;
         }
 
         .meta-chat-history {
@@ -271,24 +337,22 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .msg-row {
-            display: flex;
-            width: 100%;
-        }
-
-        /* Fixed Row Alignments to avoid errors visible in 93.jpg */
+        .msg-row { display: flex; width: 100%; }
         .msg-row.user-side { justify-content: flex-end; }
         .msg-row.ai-side { justify-content: flex-start; }
 
         .meta-bubble {
-            max-width: 80%;
-            padding: 12px 18px;
+            max-width: 85%;
+            padding: 14px 18px;
             border-radius: 18px;
             font-size: 0.98rem;
             line-height: 1.55;
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            word-wrap: break-word;
+            position: relative;
         }
 
         .user-side .meta-bubble {
@@ -304,58 +368,43 @@
             border: 1px solid var(--border-color);
         }
 
-        .meta-bubble h1, .meta-bubble h2, .meta-bubble h3 { margin-top: 0; font-size: 1.15rem; color: var(--primary); }
+        /* Formatting nested structures in Markdown streams */
+        .meta-bubble pre {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+            position: relative;
+            margin: 8px 0;
+        }
+        .meta-bubble code { font-family: monospace; font-size: 0.9rem; }
+        .code-copy-btn {
+            position: absolute; top: 4px; right: 4px;
+            background: rgba(255,255,255,0.15); border: none;
+            border-radius: 4px; color: white; padding: 2px 6px;
+            font-size: 0.75rem; cursor: pointer;
+        }
+
+        .meta-bubble h1, .meta-bubble h2, .meta-bubble h3 { margin-top: 5px; font-size: 1.15rem; color: var(--primary); }
         .meta-bubble p { margin: 0 0 8px 0; }
         .meta-bubble p:last-child { margin-bottom: 0; }
-        .meta-bubble ul, .meta-bubble ol { margin: 0; padding-left: 20px; }
+        .meta-bubble ul, .meta-bubble ol { margin: 0 0 8px 0; padding-left: 20px; }
 
         .meta-input-dock {
-            padding: 16px 20px;
+            padding: 12px 16px;
             background: var(--card-bg);
             border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
         }
-
-        .meta-input-bar-container {
-            max-width: 850px;
-            margin: 0 auto;
-            display: flex;
-            background: var(--meta-chat-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 6px 6px 6px 18px;
-            align-items: center;
-        }
-
-        .meta-chat-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            font-family: inherit;
-            font-size: 0.98rem;
-            color: var(--text-main);
-            padding: 8px 0;
-        }
-
-        .meta-send-btn {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: var(--meta-gradient);
-            border: none; color: white;
-            font-size: 1.1rem; display: flex;
-            align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s ease;
-        }
-
-        .meta-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .meta-send-btn:hover:not(:disabled) { transform: scale(1.05); }
 
         .meta-prompt-suggestions {
             max-width: 850px; margin: 0 auto 10px auto;
             display: flex; gap: 8px; overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 6px;
+            -webkit-overflow-scrolling: touch;
         }
-        .meta-prompt-suggestions::-webkit-scrollbar { height: 0px; }
+        .meta-prompt-suggestions::-webkit-scrollbar { display: none; height: 0; }
 
         .suggestion-chip {
             background: var(--meta-chat-bg);
@@ -369,22 +418,70 @@
         }
         .suggestion-chip:hover { background: var(--border-color); }
 
+        .meta-input-bar-container {
+            max-width: 850px;
+            margin: 0 auto;
+            display: flex;
+            background: var(--meta-chat-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 4px 6px 4px 14px;
+            align-items: center;
+        }
+
+        .meta-chat-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text-main);
+            padding: 10px 0;
+        }
+
+        .meta-clear-chat {
+            background: transparent; border: none; color: var(--text-muted);
+            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            padding: 4px 8px; border-radius: 6px; margin-right: 4px;
+            white-space: nowrap;
+        }
+        .meta-clear-chat:hover { color: var(--danger); }
+
+        .meta-send-btn {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: var(--meta-gradient);
+            border: none; color: white;
+            font-size: 1.1rem; display: flex;
+            align-items: center; justify-content: center;
+            cursor: pointer; transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .meta-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .meta-send-btn:hover:not(:disabled) { transform: scale(1.05); }
+
         @media (max-width: 768px) {
-            header h1 { font-size: 1.8rem; }
-            .container { padding: 24px 16px; }
+            header { padding: 45px 15px 35px 15px; }
+            header h1 { font-size: 1.9rem; }
+            .container { padding: 20px 14px; }
+            .analytics-strip { grid-template-columns: repeat(2, 1fr); }
             .meta-bubble { max-width: 88%; }
+            .meta-floating-trigger { bottom: 20px; right: 20px; width: 56px; height: 56px; }
+        }
+        @media (max-width: 480px) {
+            .analytics-strip { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="app-wrapper">
-    <!-- Restored Floating Trigger -->
     <button class="meta-floating-trigger" id="metaGlobalTrigger" onclick="openMetaInterface()" title="Ask Mubarak AI">
         <div class="inner-core">M</div>
     </button>
 
-    <!-- IMMERSIVE CHAT MODAL INTERFACE -->
     <div class="meta-ui-modal" id="metaChatWindow">
         <div class="meta-modal-header">
             <div class="meta-profile-cluster">
@@ -396,19 +493,17 @@
                     <span>Academic Prep Portal • Online</span>
                 </div>
             </div>
-            <button class="meta-close-action" onclick="closeMetaInterface()">✕</button>
-        </div>
-
-        <!-- Chat Stream Container -->
-        <div class="meta-chat-history" id="metaMessageStream">
-            <div class="msg-row ai-side">
-                <div class="meta-bubble">
-                    Hello! I'm your academic intelligence assistant, **Mubarak AI**. Ask me any exam question from your syllabus or past prep material, and I'll break down the solution right here!
-                </div>
+            <div style="display: flex; align-items: center;">
+                <select class="meta-engine-picker" id="metaEngineSelector" title="Switch Intelligence Engine">
+                    <option value="openai">OpenAI (Speed)</option>
+                    <option value="gemini">Gemini (Search)</option>
+                </select>
+                <button class="meta-close-action" onclick="closeMetaInterface()">✕</button>
             </div>
         </div>
 
-        <!-- Interactive Control Dock -->
+        <div class="meta-chat-history" id="metaMessageStream"></div>
+
         <div class="meta-input-dock">
             <div class="meta-prompt-suggestions">
                 <div class="suggestion-chip" onclick="injectSuggestion('Suggest a 30-day JAMB preparation routine')">⚡ 30-Day JAMB Blueprint</div>
@@ -417,13 +512,13 @@
             </div>
             
             <div class="meta-input-bar-container">
+                <button class="meta-clear-chat" onclick="clearChatHistory()" title="Reset session logs">Clear Chat</button>
                 <input type="text" class="meta-chat-input" id="metaUserInput" placeholder="Ask Mubarak AI anything..." onkeydown="handleMetaKeydown(event)">
                 <button class="meta-send-btn" id="metaSendAction" onclick="dispatchMetaMessage()">➔</button>
             </div>
         </div>
     </div>
 
-    <!-- PORTAL SHELL -->
     <div class="master-container">
         <header>
             <div class="header-controls">
@@ -435,6 +530,30 @@
         </header>
 
         <div class="container">
+            <div class="analytics-strip">
+                <div class="stat-widget">
+                    <div class="stat-icon-box">🔥</div>
+                    <div class="stat-info">
+                        <h5>Study Streak</h5>
+                        <p id="streakCount">1 Day</p>
+                    </div>
+                </div>
+                <div class="stat-widget">
+                    <div class="stat-icon-box">🎯</div>
+                    <div class="stat-info">
+                        <h5>Target Metric</h5>
+                        <p>340 / 400</p>
+                    </div>
+                </div>
+                <div class="stat-widget">
+                    <div class="stat-icon-box">🧠</div>
+                    <div class="stat-info">
+                        <h5>AI Queries</h5>
+                        <p id="totalQueries">0 Used</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="subject-grid">
                 <div class="subject-card">
                     <h2 style="color: var(--primary); margin-top:0;">🌐 English Language</h2>
@@ -459,26 +578,81 @@
 </div>
 
 <script>
+    // System Local Data State Setup 
+    const CORE_STATE_KEY = 'STUDY_WITH_MUBARAK_STORE';
+    let applicationState = {
+        theme: 'light',
+        streak: 1,
+        lastActiveStamp: new Date().toDateString(),
+        queryCount: 0,
+        chatHistory: []
+    };
+
     document.addEventListener("DOMContentLoaded", () => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        document.getElementById('theme-btn').innerHTML = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+        pullDatabaseState();
+        applyActiveTheme();
+        renderPersistentChatStream();
+        refreshMetricsDashboard();
+        
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', adaptToKeyboard);
+        }
     });
 
+    function pullDatabaseState() {
+        const storedData = localStorage.getItem(CORE_STATE_KEY);
+        if (storedData) {
+            try {
+                applicationState = JSON.parse(storedData);
+                const currentDayString = new Date().toDateString();
+                
+                // Track dynamic user retention streak shifts
+                if (applicationState.lastActiveStamp !== currentDayString) {
+                    const trackingCalendar = new Date();
+                    trackingCalendar.setDate(trackingCalendar.getDate() - 1);
+                    if (applicationState.lastActiveStamp === trackingCalendar.toDateString()) {
+                        applicationState.streak += 1;
+                    } else {
+                        applicationState.streak = 1;
+                    }
+                    applicationState.lastActiveStamp = currentDayString;
+                    commitDatabaseState();
+                }
+            } catch(error) { console.error("Database schema re-initialization required:", error); }
+        } else {
+            commitDatabaseState();
+        }
+    }
+
+    function commitDatabaseState() {
+        localStorage.setItem(CORE_STATE_KEY, JSON.stringify(applicationState));
+    }
+
+    function applyActiveTheme() {
+        document.documentElement.setAttribute('data-theme', applicationState.theme);
+        document.getElementById('theme-btn').innerHTML = applicationState.theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+
     function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        document.getElementById('theme-btn').innerHTML = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+        applicationState.theme = applicationState.theme === 'dark' ? 'light' : 'dark';
+        applyActiveTheme();
+        commitDatabaseState();
+    }
+
+    function refreshMetricsDashboard() {
+        document.getElementById('streakCount').innerText = `${applicationState.streak} Day${applicationState.streak > 1 ? 's' : ''}`;
+        document.getElementById('totalQueries').innerText = `${applicationState.queryCount} Used`;
     }
 
     function openMetaInterface() {
         document.getElementById('metaChatWindow').classList.add('active');
         document.getElementById('metaUserInput').focus();
+        setTimeout(adaptToKeyboard, 120);
     }
 
-    var closeMetaInterface = () => document.getElementById('metaChatWindow').classList.remove('active');
+    function closeMetaInterface() {
+        document.getElementById('metaChatWindow').classList.remove('active');
+    }
 
     function handleMetaKeydown(event) {
         if (event.key === 'Enter') dispatchMetaMessage();
@@ -489,61 +663,159 @@
         dispatchMetaMessage();
     }
 
-    /* ===================================================================
-      HIGH SPEED MULTI-COMPATIBILITY FETCH ARCHITECTURE
-      ===================================================================
-    */
-    async function dispatchMetaMessage() {
-        const inputElement = document.getElementById('metaUserInput');
-        const streamContainer = document.getElementById('metaMessageStream');
-        const sendBtn = document.getElementById('metaSendAction');
-        
-        const textPayload = inputElement.value.trim();
-        if (!textPayload) return;
-
-        inputElement.value = "";
-        sendBtn.disabled = true;
-
-        // Render User Query Bubble
-        appendChatBubble(textPayload, 'user-side');
-        
-        // Render Loading State on the AI side
-        const aiMessageRow = appendChatBubble("✨ Thinking...", 'ai-side');
-        const bubbleInnerNode = aiMessageRow.querySelector('.meta-bubble');
-
-        const systemCoreInstructions = `You are Mubarak AI, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down solutions expertly with clear formatting, bold key definitions, and bullet lists. Request: ${textPayload}`;
-
-        try {
-            // Direct GET method targeting the fast text delivery engine to avoid any local CORS file issues
-            const apiTargetUrl = `https://text.pollinations.ai/${encodeURIComponent(systemCoreInstructions)}?model=openai&cache=false`;
-            
-            const nativeFetch = await fetch(apiTargetUrl);
-            if (!nativeFetch.ok) throw new Error("Connection dropped");
-            
-            const cleanTextResponse = await nativeFetch.text();
-            
-            // Render structured markdown inline
-            bubbleInnerNode.innerHTML = marked.parse(cleanTextResponse);
-
-        } catch (error) {
-            console.error("Mubarak AI System Drop:", error);
-            bubbleInnerNode.innerHTML = `❌ **Connection Timeout**<br>Could not reach the processing engine. Please confirm you have an active network connection and try again.`;
-        } finally {
-            sendBtn.disabled = false;
-            streamContainer.scrollTop = streamContainer.scrollHeight;
+    function adaptToKeyboard() {
+        const chatModal = document.getElementById('metaChatWindow');
+        if (chatModal && chatModal.classList.contains('active') && window.visualViewport) {
+            chatModal.style.height = `${window.visualViewport.height}px`;
+            window.scrollTo(0, 0);
+            const messageStream = document.getElementById('metaMessageStream');
+            messageStream.scrollTop = messageStream.scrollHeight;
         }
     }
 
-    function appendChatBubble(messageContent, sideClassName) {
+    function renderPersistentChatStream() {
         const streamContainer = document.getElementById('metaMessageStream');
-        const rowNode = document.createElement('div');
-        rowNode.classList.add('msg-row', sideClassName);
+        streamContainer.innerHTML = "";
         
-        rowNode.innerHTML = `<div class="meta-bubble">${messageContent}</div>`;
-        streamContainer.appendChild(rowNode);
+        if (applicationState.chatHistory.length === 0) {
+            applicationState.chatHistory.push({
+                side: 'ai-side',
+                content: "Hello! I'm your academic intelligence assistant, **Mubarak AI**. Ask me any exam question from your syllabus or past prep material, and I'll break down the solution right here!"
+            });
+            commitDatabaseState();
+        }
         
+        applicationState.chatHistory.forEach(bubblePacket => {
+            appendChatBubbleDOM(bubblePacket.content, bubblePacket.side, false);
+        });
         streamContainer.scrollTop = streamContainer.scrollHeight;
-        return rowNode;
+    }
+
+    function clearChatHistory() {
+        if (confirm("Reset current dialogue history? This action cannot be undone.")) {
+            applicationState.chatHistory = [];
+            commitDatabaseState();
+            renderPersistentChatStream();
+        }
+    }
+
+    /* ===================================================================
+      SECURE API PIPELINE WITH MULTI-ENGINE INTEGRATION & AUTO RETRY LOGIC
+      ===================================================================
+    */
+    async function dispatchMetaMessage() {
+        const rawInput = document.getElementById('metaUserInput');
+        const streamContainer = document.getElementById('metaMessageStream');
+        const sendActionBtn = document.getElementById('metaSendAction');
+        const designatedEngine = document.getElementById('metaEngineSelector').value;
+        
+        const textPayload = rawInput.value.trim();
+        if (!textPayload) return;
+
+        rawInput.value = "";
+        sendActionBtn.disabled = true;
+
+        // Process User Query Node
+        applicationState.chatHistory.push({ side: 'user-side', content: textPayload });
+        appendChatBubbleDOM(textPayload, 'user-side', true);
+        
+        // Setup AI Stream Container Node
+        const processingRowNode = appendChatBubbleDOM("✨ Thinking...", 'ai-side', false);
+        const processingBubbleInner = processingRowNode.querySelector('.meta-bubble');
+
+        const diagnosticDirectives = `You are Mubarak AI, an elite academic advisor for West African examinations (JAMB, WAEC, SSCE). Break down solutions expertly with clear formatting, bold key definitions, and bullet lists. Request: ${textPayload}`;
+
+        try {
+            const endpointPipelineUrl = `https://text.pollinations.ai/${encodeURIComponent(diagnosticDirectives)}?model=${designatedEngine}&cache=true`;
+            
+            const serverTransaction = await fetch(endpointPipelineUrl, {
+                method: 'GET',
+                headers: { 'Accept': 'text/plain, text/html, */*' }
+            });
+            
+            if (!serverTransaction.ok) throw new Error("Primary Gateway Disconnection");
+            
+            const coreTextResponse = await serverTransaction.text();
+            if (!coreTextResponse || !coreTextResponse.trim()) throw new Error("Data Segment Fault");
+
+            // Complete Document Parsing Implementation
+            if (typeof marked !== 'undefined') {
+                processingBubbleInner.innerHTML = marked.parse(coreTextResponse);
+                bindDynamicCopyTriggers(processingBubbleInner);
+            } else {
+                processingBubbleInner.innerText = coreTextResponse;
+            }
+
+            // Save state on validation
+            applicationState.chatHistory.push({ side: 'ai-side', content: coreTextResponse });
+            applicationState.queryCount += 1;
+            commitDatabaseState();
+            refreshMetricsDashboard();
+
+        } catch (connectionFault) {
+            console.warn("Fault caught on primary thread. Re-routing payload down backup pipeline...", connectionFault);
+            try {
+                processingBubbleInner.innerHTML = `⚠️ *Network latency timeout: shifting optimization routes...*`;
+                const rescueEndpointUrl = `https://text.pollinations.ai/${encodeURIComponent(textPayload)}?model=openai&cache=false`;
+                
+                const backupTransaction = await fetch(rescueEndpointUrl);
+                const recoveryResponseText = await backupTransaction.text();
+                
+                processingBubbleInner.innerHTML = marked.parse(`**Engine Recovered:** \n\n${recoveryResponseText}`);
+                applicationState.chatHistory.push({ side: 'ai-side', content: recoveryResponseText });
+                commitDatabaseState();
+            } catch(secondaryFault) {
+                processingBubbleInner.innerHTML = `❌ **Connection Dropout**<br>Unable to bridge communication channels to processing arrays. Ensure your active data plan is valid and resubmit query parameters.`;
+            }
+        } finally {
+            sendActionBtn.disabled = false;
+            setTimeout(() => {
+                streamContainer.scrollTop = streamContainer.scrollHeight;
+            }, 60);
+        }
+    }
+
+    function appendChatBubbleDOM(payloadText, sideClassName, flagTextOnlyMode) {
+        const streamContainer = document.getElementById('metaMessageStream');
+        const rowStructureNode = document.createElement('div');
+        rowStructureNode.classList.add('msg-row', sideClassName);
+        
+        const messageBubbleNode = document.createElement('div');
+        messageBubbleNode.classList.add('meta-bubble');
+        
+        if (sideClassName === 'ai-side' && !flagTextOnlyMode && typeof marked !== 'undefined') {
+            messageBubbleNode.innerHTML = marked.parse(payloadText);
+            bindDynamicCopyTriggers(messageBubbleNode);
+        } else {
+            messageBubbleNode.innerText = payloadText;
+            if (sideClassName === 'ai-side' && typeof marked !== 'undefined') {
+                messageBubbleNode.innerHTML = marked.parse(payloadText);
+                bindDynamicCopyTriggers(messageBubbleNode);
+            }
+        }
+        
+        rowStructureNode.appendChild(messageBubbleNode);
+        streamContainer.appendChild(rowStructureNode);
+        streamContainer.scrollTop = streamContainer.scrollHeight;
+        return rowStructureNode;
+    }
+
+    function bindDynamicCopyTriggers(nodeContext) {
+        const codePreblocks = nodeContext.querySelectorAll('pre');
+        codePreblocks.forEach(pre => {
+            if (pre.querySelector('.code-copy-btn')) return;
+            const copyElementAction = document.createElement('button');
+            copyElementAction.className = 'code-copy-btn';
+            copyElementAction.innerText = 'Copy';
+            copyElementAction.onclick = () => {
+                const innerCodeSegment = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+                navigator.clipboard.writeText(innerCodeSegment).then(() => {
+                    copyElementAction.innerText = 'Copied!';
+                    setTimeout(() => copyElementAction.innerText = 'Copy', 2000);
+                });
+            };
+            pre.appendChild(copyElementAction);
+        });
     }
 </script>
 
