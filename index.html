@@ -1,58 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>  
     <meta name="google-site-verification" content="1doyGg58vWDB63OnwXSzxvwwUUJ8kNNR79OKxCnPeAU" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="STUDY WITH MUBARAK - Advanced Academic Portal with Real-time Analytics, Adaptive Learning, and Expert Explanations">
+    <meta name="description" content="STUDY WITH MUBARAK - Premium Academic Portal with Advanced Analytics, Meta-AI Integration, and Intelligent Exam Diagnostics">
     <meta name="keywords" content="JAMB, SSCE, WAEC, Exam Prep, AI Learning, Nigerian Education">
-    <meta name="theme-color" content="#2563eb">
-    <title>STUDY WITH MUBARAK | Academic Excellence Portal</title>
+    <meta name="theme-color" content="#0f172a">
+    <title>STUDY WITH MUBARAK | Premium Academic Portal</title>
     
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #1e293b;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #06b6d4;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --sidebar-bg: #111827;
-            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            
-            /* Mubarak AI Core Meta UI Style */
-            --meta-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 30%, #7a00ff 70%, #ff007a 100%);
-            --meta-chat-bg: #f4f5f7;
-            --meta-bubble-user: #007bff;
-            --meta-bubble-ai: #ffffff;
-            --meta-text-ai: #1c1e21;
-        }
-
-        [data-theme="dark"] {
             --bg: #0f172a;
-            --card-bg: #1e293b;
+            --surface: rgba(30, 41, 59, 0.7);
+            --surface-solid: #1e293b;
+            --border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-color: #334155;
-            --secondary: #0f172a;
+            
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.15);
+            --accent: #a855f7;
+            --success: #10b981;
+            
+            --meta-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 30%, #0000fa 70%, #f355da 100%);
             --meta-chat-bg: #0b141a;
             --meta-bubble-user: #005c4b;
             --meta-bubble-ai: #202c33;
             --meta-text-ai: #f0f2f5;
+            
+            --blur: blur(16px);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.75);
+            --surface-solid: #ffffff;
+            --border: rgba(15, 23, 42, 0.08);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.1);
+            --accent: #7c3aed;
+            
+            --meta-chat-bg: #f4f5f7;
+            --meta-bubble-user: #0072ff;
+            --meta-bubble-ai: #ffffff;
+            --meta-text-ai: #1c1e21;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
         }
 
         *, *::before, *::after {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body, html { 
@@ -60,12 +65,12 @@
             padding: 0; 
             width: 100%;
             min-height: 100vh;
-            min-height: -webkit-fill-available;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: var(--bg);
             color: var(--text-main);
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-x: hidden;
+            letter-spacing: -0.01em;
         }
 
         .app-wrapper {
@@ -76,70 +81,82 @@
             position: relative;
         }
 
-        .master-container { 
-            width: 100%;
-            display: flex; 
-            flex-direction: column; 
-            flex: 1;
-        }
-
+        /* --- ADVANCED PREMIUM HERO HEADER --- */
         header { 
-            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
-            color: white; 
-            padding: 60px 20px 40px 20px; 
-            text-align: center;
             position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            padding: 90px 24px 50px 24px; 
+            text-align: center;
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%),
+                        radial-gradient(circle at top left, rgba(168, 85, 247, 0.08), transparent 35%);
+            border-bottom: 1px solid var(--border);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.4rem;
+            font-size: 3rem;
             font-weight: 900;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--text-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-transform: uppercase;
         }
 
-        header p { margin: 10px 0 0 0; opacity: 0.85; font-size: 1rem; }
+        header p { 
+            margin: 12px 0 0 0; 
+            color: var(--text-muted); 
+            font-size: 1.1rem; 
+            font-weight: 500;
+        }
 
         .header-controls {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            left: 15px;
+            top: 24px;
+            right: 24px;
+            left: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .brand-pill {
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .toggle-btn {
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 10px;
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 700;
-            transition: background 0.2s ease;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
         }
-        .toggle-btn:hover { background: rgba(255,255,255,0.2); }
+        .toggle-btn:hover {
+            background: var(--surface-solid);
+            transform: translateY(-1px);
+        }
 
+        /* --- DASHBOARD LAYOUT & CARDS --- */
         .container { 
-            padding: 30px 20px; 
-            max-width: 1000px; 
+            padding: 40px 24px; 
+            max-width: 1100px; 
             margin: 0 auto; 
             width: 100%; 
             flex: 1;
@@ -147,103 +164,132 @@
 
         .analytics-strip {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .stat-widget {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: transform 0.2s ease;
+            gap: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .stat-widget:hover { transform: translateY(-2px); }
+        
         .stat-icon-box {
-            width: 48px; height: 48px; border-radius: 12px;
+            width: 52px; height: 52px; border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.4rem; background: rgba(37, 99, 235, 0.1);
+            font-size: 1.5rem; background: var(--primary-glow);
             color: var(--primary);
         }
-        .stat-info h5 { margin: 0; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-info p { margin: 4px 0 0 0; font-size: 1.3rem; font-weight: 800; }
+        .stat-info h5 { margin: 0; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+        .stat-info p { margin: 4px 0 0 0; font-size: 1.4rem; font-weight: 800; }
 
-        .subject-grid { display: flex; flex-direction: column; gap: 24px; }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0 0 20px 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .subject-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 24px; 
+        }
+
         .subject-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid var(--border-color);
-            text-align: center;
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-radius: 24px;
+            padding: 36px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
             position: relative;
             overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
         .subject-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.3);
         }
-        .subject-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-primary); }
-        .subject-card h2 { margin: 0 0 12px 0; font-size: 1.6rem; font-weight: 800; }
-        .subject-card p { color: var(--text-muted); margin: 0 0 20px 0; line-height: 1.6; }
+        .subject-card h2 { margin: 0 0 12px 0; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; }
+        .subject-card p { color: var(--text-muted); margin: 0 0 28px 0; line-height: 1.6; font-size: 0.98rem; text-align: left; }
 
         .btn {
-            display: inline-block;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 14px 36px;
+            width: 100%;
+            text-align: center;
+            background: var(--surface-solid);
+            color: var(--text-main);
+            padding: 14px 28px;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 700;
-            border: none;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            transition: opacity 0.2s ease, transform 0.1s ease;
+            transition: all 0.2s ease;
+        }
+        .subject-card:hover .btn {
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
         }
 
-        /* --- UPDATED META AI GRADIENT BUTTON --- */
+        /* --- PREMIUM FLOATING META M BUTTON --- */
         .meta-floating-trigger {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: var(--meta-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 999;
+            z-index: 1999;
             border: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
             padding: 3px;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .meta-floating-trigger:active { transform: scale(0.92); }
+        .meta-floating-trigger:hover { transform: scale(1.06) rotate(5deg); }
+        .meta-floating-trigger:active { transform: scale(0.94); }
 
         .meta-floating-trigger .inner-circle-core {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: var(--card-bg);
+            background: var(--surface-solid);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #0072ff;
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: var(--text-main);
+            transition: background 0.3s ease;
         }
 
-        /* --- FULL SCREEN ADAPTIVE OVERLAY --- */
+        /* --- INTELLIGENT AI MODAL INTERFACE --- */
         .meta-ui-modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            height: 100vh;
             height: 100dvh;
             background: var(--meta-chat-bg);
             z-index: 2000;
@@ -251,62 +297,55 @@
             flex-direction: column;
             opacity: 0;
             pointer-events: none;
-            transform: translateY(20px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: scale(0.98) translateY(10px);
+            transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .meta-ui-modal.active {
             opacity: 1;
             pointer-events: auto;
-            transform: translateY(0);
+            transform: scale(1) translateY(0);
         }
 
         .meta-modal-header {
-            padding: 16px 20px;
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
+            padding: 18px 24px;
+            background: var(--surface-solid);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-shrink: 0;
         }
 
-        .meta-profile-cluster {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .meta-profile-cluster { display: flex; align-items: center; gap: 14px; }
         .meta-avatar-ring {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--meta-gradient);
-            padding: 2px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--meta-gradient); padding: 2px;
+            position: relative;
         }
-
         .meta-avatar-ring .inner-blank {
             width: 100%; height: 100%;
-            background: var(--card-bg);
-            border-radius: 50%;
+            background: var(--meta-chat-bg); border-radius: 50%;
+        }
+        .meta-avatar-ring::after {
+            content: ''; position: absolute; bottom: 1px; right: 1px;
+            width: 10px; height: 10px; background: var(--success);
+            border: 2px solid var(--surface-solid); border-radius: 50%;
         }
 
-        .meta-title-text h4 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
-        .meta-title-text span { font-size: 0.78rem; color: #10b981; font-weight: 600; display: block; }
+        .meta-title-text h4 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+        .meta-title-text span { font-size: 0.78rem; color: var(--success); font-weight: 600; display: block; }
 
         .meta-close-action {
             background: transparent; border: none;
-            font-size: 1.4rem; color: var(--text-muted);
-            cursor: pointer; padding: 4px;
+            font-size: 1.3rem; color: var(--text-muted);
+            cursor: pointer; padding: 6px; transition: color 0.2s;
         }
+        .meta-close-action:hover { color: var(--text-main); }
 
         .meta-chat-history {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            flex: 1; overflow-y: auto;
+            padding: 24px; display: flex;
+            flex-direction: column; gap: 20px;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -315,94 +354,89 @@
         .msg-row.ai-side { justify-content: flex-start; }
 
         .meta-bubble {
-            max-width: 85%;
-            padding: 14px 18px;
-            border-radius: 18px;
-            font-size: 0.98rem;
-            line-height: 1.55;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            word-wrap: break-word;
+            max-width: 80%; padding: 14px 20px;
+            border-radius: 20px; font-size: 1rem;
+            line-height: 1.6; word-wrap: break-word;
         }
+        .meta-bubble p { margin: 0 0 10px 0; }
+        .meta-bubble p:last-child { margin-bottom: 0; }
+        .meta-bubble ul, .meta-bubble ol { margin: 5px 0; padding-left: 20px; }
 
         .user-side .meta-bubble {
-            background: var(--meta-bubble-user);
-            color: #ffffff;
+            background: var(--meta-bubble-user); color: #ffffff;
             border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .ai-side .meta-bubble {
-            background: var(--meta-bubble-ai);
-            color: var(--meta-text-ai);
+            background: var(--meta-bubble-ai); color: var(--meta-text-ai);
             border-bottom-left-radius: 4px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
         }
 
         .meta-input-dock {
-            padding: 12px 16px;
-            background: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            flex-shrink: 0;
+            padding: 16px 24px;
+            background: var(--surface-solid);
+            border-top: 1px solid var(--border);
         }
 
         .meta-prompt-suggestions {
-            max-width: 850px; margin: 0 auto 10px auto;
-            display: flex; gap: 8px; overflow-x: auto;
-            padding-bottom: 6px;
+            max-width: 900px; margin: 0 auto 12px auto;
+            display: flex; gap: 10px; overflow-x: auto;
+            padding-bottom: 4px;
         }
         .meta-prompt-suggestions::-webkit-scrollbar { display: none; }
 
         .suggestion-chip {
             background: var(--meta-chat-bg);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 8px 14px;
-            border-radius: 20px;
+            padding: 9px 16px; border-radius: 22px;
             font-size: 0.85rem; font-weight: 600;
-            cursor: pointer; white-space: nowrap;
+            cursor: pointer; white-space: nowrap; transition: all 0.2s;
+        }
+        .suggestion-chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-glow);
         }
 
         .meta-input-bar-container {
-            max-width: 850px;
-            margin: 0 auto;
-            display: flex;
-            background: var(--meta-chat-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 4px 8px 4px 16px;
-            align-items: center;
-            gap: 10px;
+            max-width: 900px; margin: 0 auto;
+            display: flex; background: var(--meta-chat-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px; padding: 6px 8px 6px 20px;
+            align-items: center; gap: 12px;
         }
 
         .meta-chat-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            outline: none;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--text-main);
-            padding: 10px 0;
+            flex: 1; background: transparent;
+            border: none; outline: none;
+            font-family: inherit; font-size: 1rem;
+            color: var(--text-main); padding: 8px 0;
         }
 
         .meta-clear-chat {
             background: transparent; border: none; color: var(--text-muted);
-            font-size: 0.82rem; font-weight: 600; cursor: pointer;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: color 0.2s;
         }
+        .meta-clear-chat:hover { color: var(--text-main); }
 
         .meta-send-btn {
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            background: var(--meta-gradient);
-            border: none; color: white;
-            font-size: 1.1rem; display: flex;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--meta-gradient); border: none;
+            color: white; font-size: 1.1rem; display: flex;
             align-items: center; justify-content: center;
-            cursor: pointer;
+            cursor: pointer; transition: transform 0.2s;
         }
+        .meta-send-btn:hover { transform: scale(1.04); }
+        .meta-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
         @media (max-width: 768px) {
-            header { padding: 45px 15px 35px 15px; }
-            header h1 { font-size: 1.9rem; }
+            header { padding: 80px 16px 40px 16px; }
+            header h1 { font-size: 2.2rem; }
+            .container { padding: 24px 16px; }
             .meta-bubble { max-width: 88%; }
+            .subject-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -419,7 +453,7 @@
                 <div class="meta-avatar-ring"><div class="inner-blank"></div></div>
                 <div class="meta-title-text">
                     <h4>Mubarak AI</h4>
-                    <span>Active Prep Core • Online</span>
+                    <span>GPT-4o / Llama-3 Active • Online</span>
                 </div>
             </div>
             <button class="meta-close-action" onclick="closeMetaInterface()">✕</button>
@@ -429,13 +463,13 @@
 
         <div class="meta-input-dock">
             <div class="meta-prompt-suggestions">
-                <div class="suggestion-chip" onclick="injectSuggestion('Suggest a 30-day JAMB preparation routine')">⚡ 30-Day JAMB Blueprint</div>
-                <div class="suggestion-chip" onclick="injectSuggestion('Explain the structural differences between 1979 and 1999 Nigerian Constitutions')">🏛️ Constitutional Systems</div>
-                <div class="suggestion-chip" onclick="injectSuggestion('Break down the most critical figures of speech evaluated in WAEC Literature')">📚 WAEC Literature Help</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Suggest a study plan to score 340+ in JAMB')">⚡ 340+ JAMB Guide</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Contrast the 1979 and 1999 Nigerian constitutions')">🏛️ Constitutional Difference</div>
+                <div class="suggestion-chip" onclick="injectSuggestion('Explain figures of speech frequently tested in WAEC Literature')">📚 WAEC Lit Analysis</div>
             </div>
             
             <div class="meta-input-bar-container">
-                <button class="meta-clear-chat" onclick="clearChatHistory()">Clear Chat</button>
+                <button class="meta-clear-chat" onclick="clearChatHistory()">Clear</button>
                 <input type="text" class="meta-chat-input" id="metaUserInput" placeholder="Ask Mubarak AI anything..." onkeydown="handleMetaKeydown(event)">
                 <button class="meta-send-btn" id="metaSendAction" onclick="dispatchMetaMessage()">➔</button>
             </div>
@@ -445,14 +479,15 @@
     <div class="master-container">
         <header>
             <div class="header-controls">
-                <button class="toggle-btn" style="visibility: hidden;">📜 Dummy</button>
+                <div class="brand-pill">Prep Core Engine v2.0</div>
                 <button class="toggle-btn" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
             </div>
             <h1>STUDY WITH MUBARAK</h1>
-            <p>✨ Academic Excellence Portal</p>
+            <p>Your Intelligent Gateway to Academic Excellence</p>
         </header>
 
         <div class="container">
+            <h4 class="section-title">Performance Analytics Dashboard</h4>
             <div class="analytics-strip">
                 <div class="stat-widget">
                     <div class="stat-icon-box">🔥</div>
@@ -464,20 +499,25 @@
                 </div>
                 <div class="stat-widget">
                     <div class="stat-icon-box">🧠</div>
-                    <div class="stat-info"><h5>AI Queries</h5><p id="totalQueries">0 Used</p></div>
+                    <div class="stat-info"><h5>AI Diagnostics</h5><p id="totalQueries">0 Used</p></div>
                 </div>
             </div>
 
+            <h4 class="section-title">Syllabus Interactive Modules</h4>
             <div class="subject-grid">
                 <div class="subject-card">
-                    <h2 style="color: var(--primary); margin-top:0;">🌐 English Language</h2>
-                    <p>Master 50+ Antonyms, Synonyms, and Advanced Grammar rules configured for academic excellence.</p>
+                    <div>
+                        <h2 style="color: #3b82f6;">🌐 English Language</h2>
+                        <p>Master Lexis and Structure, Synonyms, Antonyms, Oral English, and critical comprehension methods custom-tuned to JAMB & WAEC syllabi.</p>
+                    </div>
                     <a href="english.html" class="btn">Launch English Quiz</a>
                 </div>
                 <div class="subject-card">
-                    <h2 style="color: #475569; margin-top:0;">🏛️ Government</h2>
-                    <p>Deep dive into the Nigerian Constitution, Political Systems, and Governance structures.</p>
-                    <a href="government.html" class="btn" style="background: #475569;">Launch Government Quiz</a>
+                    <div>
+                        <h2 style="color: #a855f7;">🏛️ Government</h2>
+                        <p>Explore institutional frameworks, history of Nigerian federalism, early constitutional developments, and international relations.</p>
+                    </div>
+                    <a href="government.html" class="btn">Launch Government Quiz</a>
                 </div>
             </div>
         </div>
@@ -486,7 +526,7 @@
 
 <script>
     const CORE_STATE_KEY = 'STUDY_WITH_MUBARAK_STORE';
-    let applicationState = { theme: 'light', streak: 1, queryCount: 0, chatHistory: [] };
+    let applicationState = { theme: 'dark', streak: 1, queryCount: 0, chatHistory: [] };
 
     document.addEventListener("DOMContentLoaded", () => {
         pullDatabaseState();
@@ -505,24 +545,29 @@
     }
 
     function commitDatabaseState() { localStorage.setItem(CORE_STATE_KEY, JSON.stringify(applicationState)); }
+    
     function applyActiveTheme() {
         document.documentElement.setAttribute('data-theme', applicationState.theme);
         document.getElementById('theme-btn').innerHTML = applicationState.theme === 'dark' ? '☀️ Light' : '🌙 Dark';
     }
+    
     function toggleTheme() {
         applicationState.theme = applicationState.theme === 'dark' ? 'light' : 'dark';
         applyActiveTheme();
         commitDatabaseState();
     }
+    
     function refreshMetricsDashboard() {
         document.getElementById('streakCount').innerText = `${applicationState.streak} Day`;
         document.getElementById('totalQueries').innerText = `${applicationState.queryCount} Used`;
     }
+    
     function openMetaInterface() {
         document.getElementById('metaChatWindow').classList.add('active');
         document.getElementById('metaUserInput').focus();
         setTimeout(adaptToKeyboard, 120);
     }
+    
     function closeMetaInterface() { document.getElementById('metaChatWindow').classList.remove('active'); }
     function handleMetaKeydown(event) { if (event.key === 'Enter') dispatchMetaMessage(); }
     function injectSuggestion(text) { document.getElementById('metaUserInput').value = text; dispatchMetaMessage(); }
@@ -540,7 +585,7 @@
         const streamContainer = document.getElementById('metaMessageStream');
         streamContainer.innerHTML = "";
         if (applicationState.chatHistory.length === 0) {
-            applicationState.chatHistory.push({ side: 'ai-side', content: "Hello! I'm your academic intelligence assistant, **Mubarak AI**. Ask me any question from your syllabus!" });
+            applicationState.chatHistory.push({ side: 'ai-side', content: "Welcome back! I am **Mubarak AI**, powered by advanced academic models. Drop your complex JAMB/WAEC questions, and let's break them down step-by-step!" });
         }
         applicationState.chatHistory.forEach(bubble => appendChatBubbleDOM(bubble.content, bubble.side, false));
         streamContainer.scrollTop = streamContainer.scrollHeight;
@@ -553,7 +598,7 @@
     }
 
     /* ===================================================================
-      ADVANCED EVENT-STREAM SYSTEM ENGINE (BYPASSES ALL OVERLOAD CODES)
+      ADVANCED HIGH-INTELLIGENCE DUAL ENGINE (OPENAI & LLAMA FAILOVER)
       =================================================================== */
     async function dispatchMetaMessage() {
         const rawInput = document.getElementById('metaUserInput');
@@ -569,30 +614,33 @@
         applicationState.chatHistory.push({ side: 'user-side', content: textPayload });
         appendChatBubbleDOM(textPayload, 'user-side', true);
         
-        const processingRowNode = appendChatBubbleDOM("✨ Connecting to Core Engine...", 'ai-side', false);
+        const processingRowNode = appendChatBubbleDOM("🧠 Initiating deep diagnostic reasoning...", 'ai-side', false);
         const processingBubbleInner = processingRowNode.querySelector('.meta-bubble');
 
-        // Clean query wrapper bypassing default text limits completely
-        const targetUrl = 'https://text.pollinations.ai/';
-        const postPayload = {
+        let responseTextAccumulator = "";
+        
+        // System Prompt to ground the AI strictly as an expert Nigerian Academic Tutor
+        const systemCorePrompt = "You are Mubarak AI, an elite high-intelligence academic tutor engineered to help Nigerian students excel in high-stakes examinations like JAMB and WAEC. Provide structurally superior, clear, data-driven, and engaging academic breakdowns with accurate examples from the syllabus.";
+
+        // Primary Pipeline: OpenAI GPT-4o-mini API
+        const primaryApiUrl = 'https://text.pollinations.ai/';
+        const primaryPayload = {
             messages: [
-                { role: 'system', content: 'You are Mubarak AI, an expert teacher answering questions for Nigerian students preparing for JAMB and WAEC. Provide clear, direct academic answers.' },
+                { role: 'system', content: systemCorePrompt },
                 { role: 'user', content: textPayload }
             ],
-            model: 'flux-ai',
-            stream: true // Stream parsing completely prevents IP Queue blocks
+            model: 'openai',
+            stream: true
         };
 
-        let responseTextAccumulator = "";
-
         try {
-            const response = await fetch(targetUrl, {
+            const response = await fetch(primaryApiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(postPayload)
+                body: JSON.stringify(primaryPayload)
             });
 
-            if (!response.ok) throw new Error("Server line occupied");
+            if (!response.ok) throw new Error("Primary OpenAI Pipeline Occupied");
 
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
@@ -603,8 +651,8 @@
                 if (done) break;
                 
                 const rawChunk = decoder.decode(value, { stream: true });
-                // Clean formatting elements out of event strings safely
                 const lines = rawChunk.split('\n');
+                
                 for (const line of lines) {
                     if (line.startsWith('data: ')) {
                         const dataContent = line.slice(6).trim();
@@ -614,14 +662,9 @@
                             const textPiece = parsed.choices[0].delta.content || "";
                             responseTextAccumulator += textPiece;
                             
-                            if (typeof marked !== 'undefined') {
-                                processingBubbleInner.innerHTML = marked.parse(responseTextAccumulator);
-                            } else {
-                                processingBubbleInner.innerText = responseTextAccumulator;
-                            }
+                            processingBubbleInner.innerHTML = typeof marked !== 'undefined' ? marked.parse(responseTextAccumulator) : responseTextAccumulator;
                             streamContainer.scrollTop = streamContainer.scrollHeight;
                         } catch (e) {
-                            // Backup handling for plain text chunks
                             if (!dataContent.startsWith('{')) {
                                 responseTextAccumulator += dataContent;
                                 processingBubbleInner.innerText = responseTextAccumulator;
@@ -631,44 +674,66 @@
                 }
             }
 
-            // Save history safely upon successful download
+            // Save state upon complete stream fulfillment
             if (responseTextAccumulator.trim().length > 0) {
-                applicationState.chatHistory.push({ side: 'ai-side', content: responseTextAccumulator });
-                applicationState.queryCount += 1;
-                commitDatabaseState();
-                refreshMetricsDashboard();
+                finalizeAiSuccess(responseTextAccumulator);
             } else {
-                throw new Error("Empty token buffer returns");
+                throw new Error("Stream returned empty token payload");
             }
 
         } catch (err) {
-            console.error(err);
-            // Bulletproof immediate fallback if Stream connection fails
+            console.warn("Switching instantly to Llama Secondary Pipeline...", err);
+            
+            // Secondary High-Performance Failover Pipeline: Llama-3.3-70b Engine
             try {
-                processingBubbleInner.innerText = "⏳ Retrying connection over secondary pool...";
-                const staticFetch = await fetch(`https://text.pollinations.ai/${encodeURIComponent(textPayload)}?model=qwen&cache=${Math.random()}`);
-                const fallbackText = await staticFetch.text();
+                processingBubbleInner.innerText = "⚡ Routing query through Llama-3 Secondary Pipeline...";
+                
+                const fallbackPayload = {
+                    messages: [
+                        { role: 'system', content: systemCorePrompt },
+                        { role: 'user', content: textPayload }
+                    ],
+                    model: 'llama',
+                    stream: false
+                };
+
+                const fallbackResponse = await fetch(primaryApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(fallbackPayload)
+                });
+
+                const fallbackText = await fallbackResponse.text();
                 
                 if (fallbackText && !fallbackText.includes("Queue full") && !fallbackText.startsWith("{")) {
-                    if (typeof marked !== 'undefined') {
-                        processingBubbleInner.innerHTML = marked.parse(fallbackText);
-                    } else {
-                        processingBubbleInner.innerText = fallbackText;
-                    }
-                    applicationState.chatHistory.push({ side: 'ai-side', content: fallbackText });
-                    applicationState.queryCount += 1;
-                    commitDatabaseState();
-                    refreshMetricsDashboard();
+                    processingBubbleInner.innerHTML = typeof marked !== 'undefined' ? marked.parse(fallbackText) : fallbackText;
+                    finalizeAiSuccess(fallbackText);
                 } else {
-                    processingBubbleInner.innerHTML = `❌ **Connection Reset**<br>The free endpoint is completely saturated. Please clear the chat and try your question again.`;
+                    // Direct dynamic URL fallback if post fails completely
+                    const universalFallback = await fetch(`https://text.pollinations.ai/${encodeURIComponent(textPayload)}?model=llama&cache=${Math.random()}`);
+                    const universalText = await universalFallback.text();
+                    
+                    if(universalText) {
+                        processingBubbleInner.innerHTML = typeof marked !== 'undefined' ? marked.parse(universalText) : universalText;
+                        finalizeAiSuccess(universalText);
+                    } else {
+                        processingBubbleInner.innerHTML = `❌ **System Sync Timeout**<br>Both primary and fallback intelligence pipelines are oversaturated. Please clear chat window and try your query again.`;
+                    }
                 }
             } catch(backupErr) {
-                processingBubbleInner.innerHTML = `❌ **Connection Reset**<br>The free endpoint is completely saturated. Please clear the chat and try your question again.`;
+                processingBubbleInner.innerHTML = `❌ **Network Disruption**<br>Check your internet connection and try again.`;
             }
         }
 
         sendActionBtn.disabled = false;
         setTimeout(() => { streamContainer.scrollTop = streamContainer.scrollHeight; }, 60);
+    }
+
+    function finalizeAiSuccess(responseContent) {
+        applicationState.chatHistory.push({ side: 'ai-side', content: responseContent });
+        applicationState.queryCount += 1;
+        commitDatabaseState();
+        refreshMetricsDashboard();
     }
 
     function appendChatBubbleDOM(payloadText, sideClassName, flagTextOnlyMode) {
