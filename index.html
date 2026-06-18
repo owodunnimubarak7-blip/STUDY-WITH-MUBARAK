@@ -353,14 +353,44 @@
         .msg-row.user-side { justify-content: flex-end; }
         .msg-row.ai-side { justify-content: flex-start; }
 
+        /* --- UPDATED RESPONSIVE CONTAINER & FORCED WORD-WRAP Logic --- */
         .meta-bubble {
             max-width: 80%; padding: 14px 20px;
             border-radius: 20px; font-size: 1rem;
-            line-height: 1.6; word-wrap: break-word;
+            line-height: 1.6;
+            
+            /* Structural parameters preventing right-edge leakage */
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
         .meta-bubble p { margin: 0 0 10px 0; }
         .meta-bubble p:last-child { margin-bottom: 0; }
         .meta-bubble ul, .meta-bubble ol { margin: 5px 0; padding-left: 20px; }
+
+        /* Forces Markdown structural containers to respect bubble limits */
+        .meta-bubble pre, .meta-bubble code {
+            white-space: pre-wrap !important;
+            word-break: break-all !important;
+        }
+        
+        /* Forces parsed Markdown tables to fully scale layout within bounds without scrolling horizontally */
+        .meta-bubble table {
+            width: 100% !important;
+            max-width: 100% !important;
+            border-collapse: collapse;
+            margin: 12px 0;
+            table-layout: fixed;
+            word-break: break-word;
+        }
+        .meta-bubble th, .meta-bubble td {
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            text-align: left;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
 
         .user-side .meta-bubble {
             background: var(--meta-bubble-user); color: #ffffff;
