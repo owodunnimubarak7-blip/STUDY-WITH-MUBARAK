@@ -193,6 +193,63 @@
         .stat-info h5 { margin: 0; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
         .stat-info p { margin: 4px 0 0 0; font-size: 1.4rem; font-weight: 800; }
 
+        /* --- ABOUT ME PROFILE CARD --- */
+        .about-me-card {
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .about-me-avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .about-me-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .about-me-details h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        .about-me-details .subtitle {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .about-me-details p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .about-me-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 24px;
+                gap: 20px;
+            }
+        }
+
         .section-title {
             font-size: 1.3rem;
             font-weight: 800;
@@ -350,9 +407,10 @@
         }
         .meta-close-action:hover { color: var(--text-main); }
 
+        /* WIDER CHATBOX INTERFACE (Minimized Left/Right Margins) */
         .meta-chat-history {
             flex: 1; overflow-y: auto;
-            padding: 24px; display: flex;
+            padding: 24px 12px; display: flex;
             flex-direction: column; gap: 20px;
             -webkit-overflow-scrolling: touch;
         }
@@ -363,7 +421,7 @@
 
         /* --- STABLE RESPONSIVE CONTAINER & NATURAL WORD-WRAP (FIXED) --- */
         .meta-bubble {
-            max-width: 95%; padding: 14px 20px;
+            max-width: 98%; padding: 14px 20px;
             border-radius: 20px; font-size: 1rem;
             line-height: 1.6;
             white-space: normal;
@@ -417,13 +475,13 @@
         }
 
         .meta-input-dock {
-            padding: 16px 24px;
+            padding: 16px 12px;
             background: var(--surface-solid);
             border-top: 1px solid var(--border);
         }
 
         .meta-prompt-suggestions {
-            max-width: 900px; margin: 0 auto 12px auto;
+            max-width: 98%; margin: 0 auto 12px auto;
             display: flex; gap: 10px; overflow-x: auto;
             padding-bottom: 4px;
         }
@@ -443,7 +501,7 @@
         }
 
         .meta-input-bar-container {
-            max-width: 900px; margin: 0 auto;
+            max-width: 98%; margin: 0 auto;
             display: flex; background: var(--meta-chat-bg);
             border: 1px solid var(--border);
             border-radius: 30px; padding: 6px 8px 6px 20px;
@@ -477,7 +535,7 @@
             header { padding: 80px 16px 40px 16px; }
             header h1 { font-size: 2.2rem; }
             .container { padding: 24px 16px; }
-            .meta-bubble { max-width: 90%; }
+            .meta-bubble { max-width: 96%; }
             .subject-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -529,6 +587,19 @@
         </header>
 
         <div class="container">
+            <!-- --- ABOUT ME COMPONENT --- -->
+            <h4 class="section-title">About the Founder</h4>
+            <div class="about-me-card">
+                <div class="about-me-avatar-wrapper">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Mubarak" class="about-me-img">
+                </div>
+                <div class="about-me-details">
+                    <h3>Mubarak</h3>
+                    <span class="subtitle">Academic Mentor & Educator</span>
+                    <p>Welcome to my academic hub! I designed this premium portal to empower Nigerian students striving for exceptional scores in JAMB, WAEC, and NECO exams. Combining targeted diagnostic questions with cutting-edge AI support, our mission is to eliminate academic guesswork and unlock your true potential.</p>
+                </div>
+            </div>
+
             <h4 class="section-title">Performance Analytics Dashboard</h4>
             <div class="analytics-strip">
                 <div class="stat-widget">
