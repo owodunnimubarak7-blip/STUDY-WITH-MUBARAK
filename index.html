@@ -249,6 +249,14 @@
             border-color: transparent;
             box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
         }
+        .subject-card.math-card:hover .btn {
+            background: var(--accent);
+            box-shadow: 0 10px 20px -5px rgba(168, 85, 247, 0.4);
+        }
+        .subject-card.random-card:hover .btn {
+            background: var(--success);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+        }
 
         /* --- PREMIUM FLOATING META M BUTTON --- */
         .meta-floating-trigger {
@@ -353,43 +361,47 @@
         .msg-row.user-side { justify-content: flex-end; }
         .msg-row.ai-side { justify-content: flex-start; }
 
-        /* --- UPDATED RESPONSIVE CONTAINER & FORCED WORD-WRAP Logic --- */
+        /* --- STABLE RESPONSIVE CONTAINER & NATURAL WORD-WRAP (FIXED) --- */
         .meta-bubble {
-            max-width: 98%; padding: 14px 20px;
+            max-width: 95%; padding: 14px 20px;
             border-radius: 20px; font-size: 1rem;
             line-height: 1.6;
-            
-            /* Structural parameters preventing right-edge leakage */
             white-space: normal;
-            word-break: break-word;
+            word-break: normal;
             overflow-wrap: break-word;
-            word-wrap: break-word;
         }
         .meta-bubble p { margin: 0 0 10px 0; }
         .meta-bubble p:last-child { margin-bottom: 0; }
         .meta-bubble ul, .meta-bubble ol { margin: 5px 0; padding-left: 20px; }
 
-        /* Forces Markdown structural containers to respect bubble limits */
         .meta-bubble pre, .meta-bubble code {
             white-space: pre-wrap !important;
-            word-break: break-all !important;
+            word-break: normal !important;
         }
         
-        /* Forces parsed Markdown tables to fully scale layout within bounds without scrolling horizontally */
+        /* Dynamic table handling ensuring words remain intact without mid-word breaks */
         .meta-bubble table {
             width: 100% !important;
             max-width: 100% !important;
             border-collapse: collapse;
             margin: 12px 0;
-            table-layout: fixed;
-            word-break: break-word;
+            table-layout: auto;
         }
         .meta-bubble th, .meta-bubble td {
-            padding: 6px 10px;
+            padding: 10px 14px;
             border: 1px solid var(--border);
             text-align: left;
+            white-space: normal;
+            word-break: normal;
             overflow-wrap: break-word;
-            word-wrap: break-word;
+        }
+        
+        /* Table Wrapper to support lateral clearance if screens get extremely narrow */
+        .meta-table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 12px 0;
         }
 
         .user-side .meta-bubble {
@@ -465,7 +477,7 @@
             header { padding: 80px 16px 40px 16px; }
             header h1 { font-size: 2.2rem; }
             .container { padding: 24px 16px; }
-            .meta-bubble { max-width: 88%; }
+            .meta-bubble { max-width: 90%; }
             .subject-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -542,12 +554,29 @@
                     </div>
                     <a href="english.html" class="btn">Launch English Quiz</a>
                 </div>
+                
+                <div class="subject-card math-card">
+                    <div>
+                        <h2 style="color: #a855f7;">📐 Mathematics</h2>
+                        <p>Conquer complex formulas, Surds, Indices, Logarithms, Calculus, Matrix Transformations, and Geometry questions built precisely around the structural blueprint of current syllabus standards.</p>
+                    </div>
+                    <a href="mathematics.html" class="btn">Launch Mathematics Quiz</a>
+                </div>
+
                 <div class="subject-card">
                     <div>
-                        <h2 style="color: #a855f7;">🏛️ Government</h2>
+                        <h2 style="color: #10b981;">🏛️ Government</h2>
                         <p>Explore institutional frameworks, history of Nigerian federalism, early constitutional developments, and international relations.</p>
                     </div>
                     <a href="government.html" class="btn">Launch Government Quiz</a>
+                </div>
+
+                <div class="subject-card random-card">
+                    <div>
+                        <h2 style="color: #f59e0b;">🔮 Elective Hub</h2>
+                        <p>Access randomized diagnostic assessments covering Biology, Chemistry, Physics, Economics, Literature in English, and CRK/IRK syllabus segments instantly.</p>
+                    </div>
+                    <a href="random-subjects.html" class="btn">Launch General Quiz</a>
                 </div>
             </div>
         </div>
@@ -692,7 +721,12 @@
                             const textPiece = parsed.choices[0].delta.content || "";
                             responseTextAccumulator += textPiece;
                             
-                            processingBubbleInner.innerHTML = typeof marked !== 'undefined' ? marked.parse(responseTextAccumulator) : responseTextAccumulator;
+                            // Wrap dynamic content cleanly
+                            let htmlContent = typeof marked !== 'undefined' ? marked.parse(responseTextAccumulator) : responseTextAccumulator;
+                            if (htmlContent.includes('<table>') && !htmlContent.includes('class="meta-table-container"')) {
+                                htmlContent = htmlContent.replace(/<table>/g, '<div class="meta-table-container"><table>').replace(/<\/table>/g, '</table></div>');
+                            }
+                            processingBubbleInner.innerHTML = htmlContent;
                             streamContainer.scrollTop = streamContainer.scrollHeight;
                         } catch (e) {
                             if (!dataContent.startsWith('{')) {
@@ -736,7 +770,11 @@
                 const fallbackText = await fallbackResponse.text();
                 
                 if (fallbackText && !fallbackText.includes("Queue full") && !fallbackText.startsWith("{")) {
-                    processingBubbleInner.innerHTML = typeof marked !== 'undefined' ? marked.parse(fallbackText) : fallbackText;
+                    let htmlContent = typeof marked !== 'undefined' ? marked.parse(fallbackText) : fallbackText;
+                    if (htmlContent.includes('<table>')) {
+                        htmlContent = htmlContent.replace(/<table>/g, '<div class="meta-table-container"><table>').replace(/<\/table>/g, '</table></div>');
+                    }
+                    processingBubbleInner.innerHTML = htmlContent;
                     finalizeAiSuccess(fallbackText);
                 } else {
                     // Direct dynamic URL fallback if post fails completely
@@ -744,7 +782,11 @@
                     const universalText = await universalFallback.text();
                     
                     if(universalText) {
-                        processingBubbleInner.innerHTML = typeof marked !== 'undefined' ? marked.parse(universalText) : universalText;
+                        let htmlContent = typeof marked !== 'undefined' ? marked.parse(universalText) : universalText;
+                        if (htmlContent.includes('<table>')) {
+                            htmlContent = htmlContent.replace(/<table>/g, '<div class="meta-table-container"><table>').replace(/<\/table>/g, '</table></div>');
+                        }
+                        processingBubbleInner.innerHTML = htmlContent;
                         finalizeAiSuccess(universalText);
                     } else {
                         processingBubbleInner.innerHTML = `❌ **System Sync Timeout**<br>Both primary and fallback intelligence pipelines are oversaturated. Please clear chat window and try your query again.`;
@@ -775,7 +817,11 @@
         bubble.classList.add('meta-bubble');
         
         if (sideClassName === 'ai-side' && !flagTextOnlyMode && typeof marked !== 'undefined') {
-            bubble.innerHTML = marked.parse(payloadText);
+            let htmlContent = marked.parse(payloadText);
+            if (htmlContent.includes('<table>')) {
+                htmlContent = htmlContent.replace(/<table>/g, '<div class="meta-table-container"><table>').replace(/<\/table>/g, '</table></div>');
+            }
+            bubble.innerHTML = htmlContent;
         } else {
             bubble.innerText = payloadText;
         }
