@@ -1,15 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master Portal | STUDY-WITH-MUBARAK</title>
-<style>
-:root {
-    --primary: #2563eb;
-    --secondary: #0f172a;
-    --accent: #10b981;
-    --danger: #ef4444;
-    --gold: #f59e0b;
-    --purple: #8b5cf6;
-    --cyan: #06b6d4
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mathematics Module | Study With Mubarak</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --surface-solid: #1e293b;
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --accent: #a855f7;
+            --blur: blur(16px);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.75);
+            --surface-solid: #ffffff;
+            --border: rgba(15, 23, 42, 0.08);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --accent: #7c3aed;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg); color: var(--text-main);
+            min-height: 100vh; transition: background 0.3s, color 0.3s;
+        }
+
+        .navbar {
+            padding: 20px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface); backdrop-filter: var(--blur);
+        }
+
+        .back-btn {
+            color: var(--text-main); text-decoration: none; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .container {
+            max-width: 800px; margin: 40px auto; padding: 0 24px;
+        }
+
+        .quiz-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 24px; padding: 40px; box-shadow: var(--shadow);
+            backdrop-filter: var(--blur); margin-bottom: 24px;
+        }
+
+        .badge {
+            background: var(--accent); color: white; padding: 6px 12px;
+            border-radius: 12px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.3rem; font-weight: 700; margin: 24px 0; line-height: 1.5;
+        }
+
+        .options-grid {
+            display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px;
+        }
+
+        .option-btn {
+            background: var(--surface-solid); border: 1px solid var(--border);
+            color: var(--text-main); padding: 16px 24px; border-radius: 14px;
+            text-align: left; font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent); background: rgba(168, 85, 247, 0.1);
+            transform: translateX(4px);
+        }
+
+        .action-dock {
+            display: flex; justify-content: space-between; margin-top: 32px;
+        }
+
+        .nav-action {
+            background: var(--surface-solid); color: var(--text-main);
+            border: 1px solid var(--border); padding: 12px 24px;
+            border-radius: 12px; cursor: pointer; font-weight: 700;
+        }
+
+        .nav-action.primary {
+            background: var(--accent); color: white; border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="back-btn">➔ Back to Portal</a>
+    <div style="font-weight: 800; letter-spacing: -0.02em;">MATHEMATICS WORKSPACE</div>
+</div>
+
+<div class="container">
+    <div class="quiz-card">
+        <span class="badge">JAMB / WAEC Target Question</span>
+        <div class="question-text">
+            Evaluate the following logarithmic equation without using tables:
+            <div style="margin: 15px 0; font-size: 1.5rem; text-align: center;">
+                $$\log_2 (x^2 - 4) - \log_2 (x - 2) = 3$$
+            </div>
+            Find the real value of \(x\).
+        </div>
+
+        <div class="options-grid">
+            <button class="option-btn" onclick="checkMathAnswer(this)">A. \(x = 2\)</button>
+            <button class="option-btn" onclick="checkMathAnswer(this)">B. \(x = 4\)</button>
+            <button class="option-btn" onclick="checkMathAnswer(this)">C. \(x = 6\)</button>
+            <button class="option-btn" onclick="checkMathAnswer(this)">D. \(x = 8\)</button>
+        </div>
+
+        <div class="action-dock">
+            <button class="nav-action">Skip Question</button>
+            <button class="nav-action primary">Submit Diagnostic</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Pull shared global core theme configuration from parental application storage
+    const CORE_STATE_KEY = 'STUDY_WITH_MUBARAK_STORE';
+    try {
+        const storedData = localStorage.getItem(CORE_STATE_KEY);
+        if (storedData) {
+            const parsed = JSON.parse(storedData);
+            document.documentElement.setAttribute('data-theme', parsed.theme || 'dark');
+        }
+    } catch(e) { console.error("Sync error:", e); }
+
+    function checkMathAnswer(element) {
+        alert("Diagnostic noted! Use the floating Mubarak AI core anytime on the homepage if you need a step-by-step mathematical breakdown.");
+    }
+</script>
+</body>
+</html>
