@@ -3,12 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Mathematics Module | Study With Mubarak</title>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
-
+    <title>Elective Hub | Study With Mubarak</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -18,7 +13,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --primary: #3b82f6;
-            --accent: #a855f7;
+            --success: #10b981;
             --blur: blur(16px);
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
@@ -31,7 +26,7 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --primary: #2563eb;
-            --accent: #7c3aed;
+            --success: #059669;
             --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
         }
 
@@ -64,13 +59,22 @@
             backdrop-filter: var(--blur); margin-bottom: 24px;
         }
 
-        .badge {
-            background: var(--accent); color: white; padding: 6px 12px;
-            border-radius: 12px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+        .subject-selector {
+            display: flex; gap: 10px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 8px;
+        }
+        .subject-selector::-webkit-scrollbar { display: none; }
+
+        .chip {
+            background: var(--surface-solid); border: 1px solid var(--border);
+            color: var(--text-main); padding: 8px 16px; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+        }
+        .chip.active {
+            background: var(--success); color: white; border-color: transparent;
         }
 
         .question-text {
-            font-size: 1.3rem; font-weight: 700; margin: 24px 0; line-height: 1.5;
+            font-size: 1.25rem; font-weight: 700; margin: 24px 0; line-height: 1.6;
         }
 
         .options-grid {
@@ -85,7 +89,7 @@
         }
 
         .option-btn:hover {
-            border-color: var(--accent); background: rgba(168, 85, 247, 0.1);
+            border-color: var(--success); background: rgba(16, 185, 129, 0.1);
             transform: translateX(4px);
         }
 
@@ -100,7 +104,7 @@
         }
 
         .nav-action.primary {
-            background: var(--accent); color: white; border: none;
+            background: var(--success); color: white; border: none;
         }
     </style>
 </head>
@@ -108,36 +112,39 @@
 
 <div class="navbar">
     <a href="index.html" class="back-btn">➔ Back to Portal</a>
-    <div style="font-weight: 800; letter-spacing: -0.02em;">MATHEMATICS WORKSPACE</div>
+    <div style="font-weight: 800; letter-spacing: -0.02em;">DYNAMIC ELECTIVE HUB</div>
 </div>
 
 <div class="container">
+    <div class="subject-selector">
+        <div class="chip active">🧬 Biology</div>
+        <div class="chip">⚗️ Chemistry</div>
+        <div class="chip">🔋 Physics</div>
+        <div class="chip">📈 Economics</div>
+        <div class="chip">📖 Literature</div>
+    </div>
+
     <div class="quiz-card">
-        <span class="badge">JAMB / WAEC Target Question</span>
-        <div class="question-text">
-            Evaluate the following logarithmic equation without using tables:
-            <div style="margin: 15px 0; font-size: 1.5rem; text-align: center;">
-                $$\log_2 (x^2 - 4) - \log_2 (x - 2) = 3$$
-            </div>
-            Find the real value of \(x\).
+        <div class="question-text" id="questionBox">
+            Which of the following cell organelles is primarily responsible for synthesis and transport of lipids and steroid hormones within a mammalian cell architecture?
         </div>
 
         <div class="options-grid">
-            <button class="option-btn" onclick="checkMathAnswer(this)">A. \(x = 2\)</button>
-            <button class="option-btn" onclick="checkMathAnswer(this)">B. \(x = 4\)</button>
-            <button class="option-btn" onclick="checkMathAnswer(this)">C. \(x = 6\)</button>
-            <button class="option-btn" onclick="checkMathAnswer(this)">D. \(x = 8\)</button>
+            <button class="option-btn" onclick="triggerSelection()">A. Smooth Endoplasmic Reticulum</button>
+            <button class="option-btn" onclick="triggerSelection()">B. Rough Endoplasmic Reticulum</button>
+            <button class="option-btn" onclick="triggerSelection()">C. Golgi Apparatus Complex</button>
+            <button class="option-btn" onclick="triggerSelection()">D. Lysosomal Matrix</button>
         </div>
 
         <div class="action-dock">
-            <button class="nav-action">Skip Question</button>
-            <button class="nav-action primary">Submit Diagnostic</button>
+            <button class="nav-action">Shuffle Subject</button>
+            <button class="nav-action primary">Verify Answer</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Pull shared global core theme configuration from parental application storage
+    // Sync UI display system configuration parameter variants dynamically 
     const CORE_STATE_KEY = 'STUDY_WITH_MUBARAK_STORE';
     try {
         const storedData = localStorage.getItem(CORE_STATE_KEY);
@@ -147,8 +154,8 @@
         }
     } catch(e) { console.error("Sync error:", e); }
 
-    function checkMathAnswer(element) {
-        alert("Diagnostic noted! Use the floating Mubarak AI core anytime on the homepage if you need a step-by-step mathematical breakdown.");
+    function triggerSelection() {
+        alert("Choice tracked successfully. Explore your dashboard tracking values to monitor progression milestones!");
     }
 </script>
 </body>
