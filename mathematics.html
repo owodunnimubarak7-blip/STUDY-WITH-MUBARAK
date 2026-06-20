@@ -483,6 +483,23 @@
         }
         .stat-val { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
         .stat-lbl { font-size: 0.65rem; font-weight: 700; color: var(--gray); text-transform: uppercase; }
+
+        .mubarak-ai-trigger-btn {
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            transition: opacity 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .mubarak-ai-trigger-btn:active { opacity: 0.9; }
     </style>
 </head>
 <body>
@@ -842,7 +859,7 @@
             processDiagnosticsResult(); 
         }
 
-        async function processDiagnosticsResult() {
+        function processDiagnosticsResult() {
             clearInterval(countdownTimer);
             window.speechSynthesis.cancel();
             document.getElementById('quiz-workspace').style.display = 'none';
@@ -895,7 +912,10 @@
                 reviewHTML += `
                         </div>
                         <div class="explanation-box"><div class="explanation-title">📝 Core Resolution Derivation</div>${data.explanation}</div>
-                        <div class="ai-explanation-box" id="ai-explanation-${index}">
+                        
+                        <button class="mubarak-ai-trigger-btn" id="ai-btn-${index}" onclick="triggerMubarakAI(${index})">Get Mubarak AI explanation</button>
+
+                        <div class="ai-explanation-box" id="ai-explanation-${index}" style="display: none;">
                             <div class="ai-explanation-title">⚡ Mubarak AI Deep Synthesis Node</div>
                             <div class="ai-content-target" id="ai-target-${index}">Syncing analysis step vectors...</div>
                         </div>
@@ -904,20 +924,23 @@
             });
 
             reviewWorkspace.innerHTML = reviewHTML;
-
-            // Asynchronous staggered execution loop to guarantee rate-limiting compliance
-            for (let index = 0; index < quizData.length; index++) {
-                await fetchMubarakAIExplanation(index, quizData[index]);
-                await new Promise(resolve => setTimeout(resolve, 400));
-            }
         }
 
-        async function fetchMubarakAIExplanation(index, data) {
+        async function triggerMubarakAI(index) {
+            const btn = document.getElementById(`ai-btn-${index}`);
+            const box = document.getElementById(`ai-explanation-${index}`);
             const targetDiv = document.getElementById(`ai-target-${index}`);
-            
+            const data = quizData[index];
+
+            btn.innerText = "Analyzing metrics...";
+            btn.disabled = true;
+            box.style.display = "block";
+            targetDiv.innerText = "Computing step vectors...";
+
             const promptText = `You are the specialized Mubarak AI educational assistant. Provide a highly precise, crisp, step-by-step mathematical breakdown for this question: "${data.question}". The verified correct answer option is "${data.options[data.answer]}". Directly show mathematical steps and formulas. Keep output direct, clean, and professional. Do not use markdown titles, dividers, bold summary headings, or friendly greetings.`;
-            
+
             try {
+                // Primary endpoint method
                 const response = await fetch("https://text.pollinations.ai/v1/chat/completions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -931,18 +954,29 @@
                     })
                 });
 
-                if (!response.ok) throw new Error("Network Response Error");
-                
+                if (!response.ok) throw new Error("Primary API offline");
                 const jsonResult = await response.json();
-                const aiOutput = jsonResult.choices[0].message.content;
-                
+                let aiOutput = jsonResult.choices[0].message.content;
+
                 if (!aiOutput || (aiOutput.trim().startsWith('{') && aiOutput.includes('"error"'))) {
-                    throw new Error("JSON Error Signature Found");
+                    throw new Error("Invalid format returned");
                 }
-                
+
                 targetDiv.innerText = aiOutput.trim();
+                btn.innerText = "Explanation Synced Successfully";
             } catch (e) {
-                targetDiv.innerText = "The processing channel is currently prioritizing heavy computing calculations. Here is the core structural verification:\n\n" + data.explanation;
+                // Reliable raw fallback path execution method
+                try {
+                    const fallbackUrl = `https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=openai`;
+                    const fallbackRes = await fetch(fallbackUrl);
+                    if (!fallbackRes.ok) throw new Error("Fallback failed");
+                    const fallbackText = await fallbackRes.text();
+                    targetDiv.innerText = fallbackText.trim();
+                    btn.innerText = "Explanation Synced via Fallback Node";
+                } catch (fallbackErr) {
+                    targetDiv.innerText = "The processing channel is currently prioritizing heavy computing calculations. Here is the core structural verification:\n\n" + data.explanation;
+                    btn.innerText = "Local Breakdown Restored";
+                }
             }
         }
 
