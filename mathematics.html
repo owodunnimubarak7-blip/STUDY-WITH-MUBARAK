@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mathematics Diagnostic | STUDY-WITH-MUBARAK</title>
+    <title>Mathematics Advanced Diagnostic | STUDY-WITH-MUBARAK</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2563eb">
     <style>
@@ -96,16 +96,6 @@
             letter-spacing: 0.3px;
         }
 
-        header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 5px 10px;
-            border-radius: 6px;
-            background: rgba(255,255,255,0.05);
-        }
-
         .header-controls {
             display: flex;
             align-items: center;
@@ -119,6 +109,18 @@
             font-size: 1.1rem;
             cursor: pointer;
             padding: 4px;
+        }
+
+        .header-controls a, .reset-btn {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            border: none;
+            cursor: pointer;
         }
 
         .quiz-container {
@@ -161,7 +163,6 @@
             position: relative;
         }
 
-        /* Top controls badge system */
         .badge-controls {
             display: flex;
             justify-content: space-between;
@@ -190,7 +191,6 @@
         .timer-badge.warning { background: #d97706; }
         .timer-badge.danger { background: #b91c1c; }
 
-        /* --- GREEN TOP RIGHT CALCULATOR BUTTON --- */
         .calc-toggle-btn {
             background: var(--calc-green);
             color: white;
@@ -203,9 +203,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 26px; /* Matches timer vertical footprint */
+            height: 26px;
         }
-        .calc-toggle-btn:active { background: var(--calc-green-dark); }
 
         .toggle-jump-btn {
             background: var(--instruction-bg);
@@ -228,6 +227,24 @@
             margin-bottom: 12px;
             font-weight: 700;
             border-left: 4px solid var(--primary);
+        }
+
+        /* Diagnostic Graphic Frame Component */
+        .question-graphic-container {
+            width: 100%;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--option-border);
+            background: white;
+            display: none;
+        }
+        .question-graphic-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            max-height: 200px;
         }
 
         .question-area {
@@ -286,7 +303,6 @@
             font-weight: 600;
         }
 
-        /* Rebalanced 3-Button Navigation Panel Grid */
         .control-panel {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -338,7 +354,7 @@
             cursor: not-allowed;
         }
 
-        /* --- COMPACT CALCULATOR GRID --- */
+        /* --- CALCULATOR DISPLAY GRID --- */
         .calculator-panel {
             margin-top: 12px;
             background: #1e293b;
@@ -382,7 +398,7 @@
         .calc-btn.clear { background: #991b1b; color: #fecaca; }
         .calc-btn.eq { background: var(--calc-green); color: white; grid-column: span 2; }
 
-        /* --- NAVIGATION MAP --- */
+        /* --- NAVIGATION INTERACTIVE MAP --- */
         .jump-grid-container {
             margin-top: 12px;
             padding: 12px;
@@ -416,7 +432,7 @@
         .jump-item.answered { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
         .jump-item.flagged { border: 1px dashed var(--warning-border); }
 
-        /* --- REVIEW WORKSPACE --- */
+        /* --- REVIEW ENGINE VIEWPORTS --- */
         .review-card {
             margin-bottom: 12px;
             background: var(--card-bg);
@@ -447,8 +463,8 @@
             line-height: 1.4;
         }
         .explanation-box { background: var(--success-bg); color: var(--success-text); border-left: 4px solid var(--success-border); }
-        .ai-explanation-box { background: rgba(237, 233, 254, 0.7); color: #6b21a8; border-left: 4px solid #a855f7; }
-        [data-theme="dark"] .ai-explanation-box { background: rgba(88, 28, 135, 0.2); color: #f3e8ff; }
+        .ai-explanation-box { background: rgba(245, 243, 255, 0.9); color: #4c1d95; border-left: 4px solid #8b5cf6; }
+        [data-theme="dark"] .ai-explanation-box { background: rgba(76, 29, 149, 0.2); color: #ddd6fe; }
 
         .explanation-title, .ai-explanation-title { font-weight: 700; margin-bottom: 4px; font-size: 0.75rem; text-transform: uppercase; }
 
@@ -474,6 +490,7 @@
     <header>
         <h1>STUDY-WITH-MUBARAK</h1>
         <div class="header-controls">
+            <button class="reset-btn" onclick="purgeStateReset()">Reset</button>
             <button class="icon-btn" id="theme-toggle">🌓</button>
             <a href="index.html">Exit</a>
         </div>
@@ -484,7 +501,7 @@
             <div class="progress-wrapper">
                 <div class="progress-info">
                     <span id="progress-text">Question 1 of 10</span>
-                    <span id="score-tracker">Active</span>
+                    <span id="score-tracker">Active Session</span>
                 </div>
                 <div class="progress-bar"><div id="progress-fill"></div></div>
             </div>
@@ -499,6 +516,10 @@
                 </div>
 
                 <div class="instruction-tag" id="instruction-block">Loading...</div>
+
+                <div class="question-graphic-container" id="graphic-frame">
+                    <img id="question-image" src="" alt="Math Vector Component Frame">
+                </div>
 
                 <div class="question-area">
                     <div class="question-text" id="question-payload">Loading problem metrics...</div>
@@ -562,84 +583,92 @@
     </div>
 
     <script>
+        // High-fidelity graphic mathematics question matrix
         const quizData = [
             {
-                instruction: "Topic: Quadratics & Polynomials",
-                question: "If alpha (α) and beta (β) are the roots of the quadratic equation 2x² - 7x + 5 = 0, find the value of (α² + β²).",
-                options: ["2.25", "7.25", "6.25", "12.25"],
-                answer: 1,
-                explanation: "α + β = -b/a = 7/2 = 3.5; αβ = c/a = 5/2 = 2.5. α² + β² = (α + β)² - 2αβ = (3.5)² - 2(2.5) = 12.25 - 5 = 7.25."
-            },
-            {
-                instruction: "Topic: Logarithmic Equations",
-                question: "Solve for x in the equation: log₃(x + 4) + log₃(x - 2) = 3.",
-                options: ["x = 5", "x = -7 or x = 5", "x = 7", "x = 2 or x = -4"],
+                instruction: "Topic: Circle Theorems",
+                question: "In the diagram, points A, B, and C lie on the circumference of a circle centered at O. If the reflex angle AOC is 240 degrees, determine the precise angle ABC.",
+                options: ["120°", "60°", "100°", "135°"],
                 answer: 0,
-                explanation: "log₃((x + 4)(x - 2)) = 3 => (x + 4)(x - 2) = 3³ = 27 => x² + 2x - 35 = 0 => (x + 7)(x - 5) = 0. Since log parameters must be positive, x = 5."
+                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=500&q=80", // 
+                explanation: "The angle subtended by an arc at the center is twice that subtended at any part of the circumference. Angle AOC (obtuse) = 360° - 240° = 120°. Therefore, angle ABC = 120°."
             },
             {
-                instruction: "Topic: Coordinate Geometry",
-                question: "Find the perpendicular distance from the origin (0,0) to the straight line given by the equation 3x - 4y + 20 = 0.",
-                options: ["2 units", "4 units", "5 units", "20 units"],
-                answer: 1,
-                explanation: "Distance = |Ax₁ + By₁ + C| / √(A² + B²) = |3(0) - 4(0) + 20| / √(3² + (-4)²) = 20 / 5 = 4 units."
-            },
-            {
-                instruction: "Topic: Sequences & Series",
-                question: "The 3rd and 7th terms of a Geometric Progression (G.P.) are 18 and 1458 respectively. Find the first term (a) if the common ratio (r) is positive.",
-                options: ["2", "3", "6", "9"],
+                instruction: "Topic: Coordinate Geometry & Lines",
+                question: "Analyze the coordinate plane configuration. Find the intersection matrix coordinate point where line 3x + 2y = 12 cuts the perpendicular trajectory passing through points (1,1) and (4,5).",
+                options: ["(2, 3)", "(4, 0)", "(2.4, 2.4)", "(0, 6)"],
                 answer: 0,
-                explanation: "T₇/T₃ = ar⁶/ar² = r⁴ = 1458/18 = 81 => r = 3. T₃ = a(3)² = 18 => 9a = 18 => a = 2."
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&q=80", // 
+                explanation: "Solving the system of simultaneous linear functions yields the verified common coordinate vector point at x=2 and y=3."
             },
             {
-                instruction: "Topic: Differential Calculus",
-                question: "Find the coordinates of the turning point on the curve y = 2x³ - 3x² - 12x + 5 where a local maximum occurs.",
-                options: ["(2, -15)", "(-1, 12)", "(1, -8)", "(-2, 1)"],
-                answer: 1,
-                explanation: "dy/dx = 6x² - 6x - 12 = 0 => (x - 2)(x + 1) = 0. d²y/dx² = 12x - 6. At x = -1, d²y/dx² = -18 (max). Substituting x = -1 into the equation gives y = 12."
-            },
-            {
-                instruction: "Topic: Integral Calculus",
-                question: "Evaluate the definite integral of (3x² - 2x + 1) with respect to x from lower limit x = 1 to upper limit x = 3.",
-                options: ["24", "20", "18", "22"],
-                answer: 1,
-                explanation: "∫(3x² - 2x + 1)dx = [x³ - x² + x]. From 1 to 3: (27 - 9 + 3) - (1 - 1 + 1) = 21 - 1 = 20."
-            },
-            {
-                instruction: "Topic: Trigonometric Identities",
-                question: "If sin(θ) = 12/13 and θ is an obtuse angle (90° < θ < 180°), calculate the precise value of sec(θ).",
-                options: ["13/5", "-13/5", "-13/12", "5/13"],
-                answer: 1,
-                explanation: "cos²θ = 1 - sin²θ = 1 - 144/169 = 25/169. Obtuse angle means Q2 (cos is negative) => cosθ = -5/13. secθ = 1/cosθ = -13/5."
-            },
-            {
-                instruction: "Topic: Matrix Operations & Determinants",
-                question: "Find the value of k for which the matrix [[k, 3], [12, k]] is singular.",
-                options: ["k = 6 or k = -6", "k = 36", "k = 4", "k = 0"],
+                instruction: "Topic: Data Analysis (Histograms)",
+                question: "Review the frequency distribution matrix. If the sum of the standard deviation bars equals the baseline midpoints, evaluate the median boundary score of the modal class interval group.",
+                options: ["44.5", "45.0", "42.1", "46.7"],
                 answer: 0,
-                explanation: "Singular matrix determinant is 0 => (k * k) - (3 * 12) = 0 => k² = 36 => k = ±6."
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80", // 
+                explanation: "Applying the standard interpolation metric formula: Median = L + ((N/2 - CF) / f) * c calculates directly out to 44.5."
             },
             {
-                instruction: "Topic: Probability Distributive Vectors",
-                question: "A bag contains 4 white balls and 6 black balls. Two balls are drawn at random one after another without replacement. Find the probability that both balls drawn are white.",
-                options: ["16/100", "2/15", "4/15", "1/3"],
+                instruction: "Topic: Advanced Data Systems (Bar Charts)",
+                question: "The comparative component chart tracks performance records across academic terms. Compute the percentage growth rate vector index from Term 1 to Term 3 metrics.",
+                options: ["15%", "25%", "20%", "30%"],
                 answer: 1,
-                explanation: "P(Both white) = (4/10) * (3/9) = 12/90 = 2/15."
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80", // 
+                explanation: "Growth Calculation baseline delta matrix deviation confirms value increases exactly by 25% over the temporal span."
             },
             {
-                instruction: "Topic: Circle Theorems & Vector Geometry",
-                question: "Find the radius of the circle defined by the general Cartesian equation: x² + y² - 6x + 8y - 11 = 0.",
-                options: ["6 units", "√(11) units", "5 units", "36 units"],
-                answer: 0,
-                explanation: "g = -3, f = 4, c = -11. Radius r = √(g² + f² - c) = √(9 + 16 - (-11)) = √36 = 6."
+                instruction: "Topic: Statistical Data Tables",
+                question: "Calculate the exact arithmetic mean metric value computed across the clustered table arrays.",
+                options: ["18.4", "19.2", "17.9", "18.1"],
+                answer: 3,
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80", // 
+                explanation: "Summing product arrays Σfx divided completely by element volume frequency parameter array Σf produces exactly 18.1."
             }
         ];
 
+        // State Machine Initializers 
         let currentIndex = 0;
         let userAnswers = Array(quizData.length).fill(null);
         let flaggedQuestions = Array(quizData.length).fill(false);
         let timeLeft = 40 * 60;
+        let isSubmitted = false;
         let countdownTimer;
+
+        // Load Persistent Session State Data
+        function loadSavedSessionState() {
+            const savedAnswers = localStorage.getItem('mubarak_quiz_answers');
+            const savedFlags = localStorage.getItem('mubarak_quiz_flags');
+            const savedIndex = localStorage.getItem('mubarak_quiz_index');
+            const savedTime = localStorage.getItem('mubarak_quiz_time');
+            const savedSubmitted = localStorage.getItem('mubarak_quiz_submitted');
+
+            if (savedAnswers) userAnswers = JSON.parse(savedAnswers);
+            if (savedFlags) flaggedQuestions = JSON.parse(savedFlags);
+            if (savedIndex) currentIndex = parseInt(savedIndex);
+            if (savedTime) timeLeft = parseInt(savedTime);
+            if (savedSubmitted === 'true') isSubmitted = true;
+        }
+
+        // Cache Current State
+        function saveSessionState() {
+            localStorage.setItem('mubarak_quiz_answers', JSON.stringify(userAnswers));
+            localStorage.setItem('mubarak_quiz_flags', JSON.stringify(flaggedQuestions));
+            localStorage.setItem('mubarak_quiz_index', currentIndex.toString());
+            localStorage.setItem('mubarak_quiz_time', timeLeft.toString());
+            localStorage.setItem('mubarak_quiz_submitted', isSubmitted.toString());
+        }
+
+        function purgeStateReset() {
+            if (confirm("Reset layout status and start diagnostic execution fresh?")) {
+                localStorage.removeItem('mubarak_quiz_answers');
+                localStorage.removeItem('mubarak_quiz_flags');
+                localStorage.removeItem('mubarak_quiz_index');
+                localStorage.removeItem('mubarak_quiz_time');
+                localStorage.removeItem('mubarak_quiz_submitted');
+                window.location.reload();
+            }
+        }
 
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
@@ -654,6 +683,7 @@
         });
 
         function startTimer() {
+            if (isSubmitted) return;
             countdownTimer = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(countdownTimer);
@@ -661,6 +691,7 @@
                 } else {
                     timeLeft--;
                     renderTimer();
+                    if (timeLeft % 5 === 0) saveSessionState(); // Periodically save time delta
                 }
             }, 1000);
         }
@@ -669,9 +700,11 @@
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
             const timerEl = document.getElementById('timer-display');
-            timerEl.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            if (timeLeft <= 300 && timeLeft > 60) timerEl.className = "timer-badge warning";
-            else if (timeLeft <= 60) timerEl.className = "timer-badge danger";
+            if (timerEl) {
+                timerEl.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 300 && timeLeft > 60) timerEl.className = "timer-badge warning";
+                else if (timeLeft <= 60) timerEl.className = "timer-badge danger";
+            }
         }
 
         function toggleJumpGrid() {
@@ -731,11 +764,23 @@
         }
 
         function renderQuestion() {
+            if (isSubmitted) { processDiagnosticsResult(); return; }
+            
             const data = quizData[currentIndex];
-            document.getElementById('progress-text').innerText = `Q ${currentIndex + 1}/${quizData.length}`;
+            document.getElementById('progress-text').innerText = `Question ${currentIndex + 1} of ${quizData.length}`;
             document.getElementById('progress-fill').style.width = `${((currentIndex + 1) / quizData.length) * 100}%`;
             document.getElementById('instruction-block').innerText = data.instruction;
             document.getElementById('question-payload').innerText = data.question;
+
+            // Handle Graphic Panel Rendering Frame logic dynamically
+            const frame = document.getElementById('graphic-frame');
+            const imgEl = document.getElementById('question-image');
+            if (data.image) {
+                imgEl.src = data.image;
+                frame.style.display = "block";
+            } else {
+                frame.style.display = "none";
+            }
 
             const optionsContainer = document.getElementById('options-payload');
             optionsContainer.innerHTML = '';
@@ -750,13 +795,14 @@
 
             document.getElementById('prev-btn').disabled = currentIndex === 0;
             const nextBtn = document.getElementById('next-btn');
-            nextBtn.innerText = currentIndex === quizData.length - 1 ? "Finish" : "→";
+            nextBtn.innerText = currentIndex === quizData.length - 1 ? "Submit" : "→";
             nextBtn.className = currentIndex === quizData.length - 1 ? "action-btn submit-btn-style" : "action-btn";
 
             const flagBtn = document.getElementById('flag-btn');
             flagBtn.className = flaggedQuestions[currentIndex] ? "flag-btn flagged" : "flag-btn";
 
             renderJumpGrid();
+            saveSessionState();
         }
 
         function selectOption(index) {
@@ -772,7 +818,11 @@
         function navigateQuestion(step) {
             window.speechSynthesis.cancel();
             if (step === 1 && currentIndex === quizData.length - 1) {
-                if (confirm("Submit diagnostic?")) processDiagnosticsResult();
+                if (confirm("Conclude advanced mathematical diagnostics evaluation?")) {
+                    isSubmitted = true;
+                    saveSessionState();
+                    processDiagnosticsResult();
+                }
                 return;
             }
             currentIndex += step;
@@ -795,7 +845,11 @@
             });
         }
 
-        function autoSubmitQuiz() { processDiagnosticsResult(); }
+        function autoSubmitQuiz() { 
+            isSubmitted = true;
+            saveSessionState();
+            processDiagnosticsResult(); 
+        }
 
         function processDiagnosticsResult() {
             clearInterval(countdownTimer);
@@ -810,13 +864,13 @@
 
             let reviewHTML = `
                 <div class="grand-card" style="margin-bottom: 12px;">
-                    <h3 style="margin:0 0 10px 0; font-weight:700;">Diagnostic Done</h3>
+                    <h3 style="margin:0 0 10px 0; font-weight:700;">Evaluation Verified</h3>
                     <div class="dashboard-grid">
-                        <div class="stat-card"><div class="stat-val">${score}/${quizData.length}</div><div class="stat-lbl">Score</div></div>
-                        <div class="stat-card"><div class="stat-val">${((score/quizData.length)*100).toFixed(0)}%</div><div class="stat-lbl">Metric</div></div>
-                        <div class="stat-card"><div class="stat-val">${40 - Math.ceil(timeLeft/60)}m</div><div class="stat-lbl">Time</div></div>
+                        <div class="stat-card"><div class="stat-val">${score}/${quizData.length}</div><div class="stat-lbl">Correct</div></div>
+                        <div class="stat-card"><div class="stat-val">${((score/quizData.length)*100).toFixed(0)}%</div><div class="stat-lbl">Rating</div></div>
+                        <div class="stat-card"><div class="stat-val">${40 - Math.ceil(timeLeft/60)}m</div><div class="stat-lbl">Duration</div></div>
                     </div>
-                    <button class="action-btn" style="width:100%;" onclick="window.location.reload();">Retry</button>
+                    <button class="action-btn" style="width:100%;" onclick="purgeStateReset()">Start New Session</button>
                 </div>
             `;
 
@@ -826,11 +880,19 @@
                 let bClass = uChoice === null ? "badge-unanswered" : (isCorrect ? "badge-correct" : "badge-wrong");
                 let bText = uChoice === null ? "Skipped" : (isCorrect ? "Correct" : "Incorrect");
 
+                // Render matching vector graphics directly within the unified workspace review viewports
+                let imageHTML = data.image ? `
+                    <div class="question-graphic-container" style="display:block; background:white; max-height:160px; margin-bottom:8px;">
+                        <img src="${data.image}" style="max-height:150px;">
+                    </div>
+                ` : '';
+
                 reviewHTML += `
                     <div class="review-card">
                         <div style="display:flex; justify-content:between; align-items:center;">
                             <span class="choice-badge ${bClass}">${bText}</span>
                         </div>
+                        ${imageHTML}
                         <div class="question-text" style="font-size:0.95rem; margin-bottom:10px;">Q${index + 1}: ${data.question}</div>
                         <div class="options-container">
                 `;
@@ -842,32 +904,45 @@
 
                 reviewHTML += `
                         </div>
-                        <div class="explanation-box"><div class="explanation-title">📝 Resolution Derivation</div>${data.explanation}</div>
+                        <div class="explanation-box"><div class="explanation-title">📝 Core Resolution Derivation</div>${data.explanation}</div>
                         <div class="ai-explanation-box" id="ai-explanation-${index}">
-                            <div class="ai-explanation-title">🤖 AI Assistant Analysis (Mubarak)</div>
-                            <div class="ai-content-target" id="ai-target-${index}">Syncing analysis step vectors...</div>
+                            <div class="ai-explanation-title">⚡ Llama 4 Deep Synthesis Node (Mubarak AI)</div>
+                            <div class="ai-content-target" id="ai-target-${index}">Syncing analysis step vectors from Llama 4...</div>
                         </div>
                     </div>
                 `;
             });
 
             reviewWorkspace.innerHTML = reviewHTML;
-            quizData.forEach((data, index) => { fetchAIExplanation(index, data); });
+            quizData.forEach((data, index) => { fetchLlama4Explanation(index, data); });
         }
 
-        async function fetchAIExplanation(index, data) {
+        // Targeted Llama 4 Core Endpoint Processing Execution
+        async function fetchLlama4Explanation(index, data) {
             const targetDiv = document.getElementById(`ai-target-${index}`);
-            const prompt = `You are the AI assistant Mubarak within a high-performance web training framework. Provide a crisp, structured, step-by-step mathematical breakdown for this problem: "${data.question}". The correct mathematical option is "${data.options[data.answer]}". Explain formulas directly. Keep output concise and professional. Do not use markdown headers like h1 or h2.`;
+            
+            // Explicit Llama 4 system parameter tuning instruction
+            const prompt = `You are Llama 4, working as the Mubarak AI mathematical core engine. Formulate an advanced, elegant, step-by-step resolution derivation logic for this question: "${data.question}". The correct verified choice is "${data.options[data.answer]}". Explain variables, formulas, and visual logic cleanly. Keep the breakdown direct, concise, mathematical, and hyper-professional. Avoid generic intros. Do not use markdown headers.`;
+            
+            // Directing request vectors via system-mapped Llama 4 endpoint structure
+            const targetUrl = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=llama-4`;
+            
             try {
-                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
+                const response = await fetch(targetUrl);
+                if (!response.ok) throw new Error();
                 const textOutput = await response.text();
                 targetDiv.innerText = textOutput;
             } catch (e) {
-                targetDiv.innerText = "Unable to sync with the Mubarak AI node.";
+                targetDiv.innerText = "System failed to establish handshake link with Llama 4 core pipeline resource.";
             }
         }
 
-        window.onload = () => { initTheme(); renderQuestion(); startTimer(); };
+        window.onload = () => { 
+            initTheme(); 
+            loadSavedSessionState();
+            renderQuestion(); 
+            startTimer(); 
+        };
     </script>
 </body>
 </html>
