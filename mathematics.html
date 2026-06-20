@@ -499,7 +499,10 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-        .mubarak-ai-trigger-btn:active { opacity: 0.9; }
+        .mubarak-ai-trigger-btn:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -916,7 +919,7 @@
                         <button class="mubarak-ai-trigger-btn" id="ai-btn-${index}" onclick="triggerMubarakAI(${index})">Get Mubarak AI explanation</button>
 
                         <div class="ai-explanation-box" id="ai-explanation-${index}" style="display: none;">
-                            <div class="ai-explanation-title">⚡ Mubarak AI Deep Synthesis Node</div>
+                            <div class="ai-explanation-title" id="ai-node-status-${index}">⚡ Mubarak AI Deep Synthesis Node</div>
                             <div class="ai-content-target" id="ai-target-${index}">Syncing analysis step vectors...</div>
                         </div>
                     </div>
@@ -926,58 +929,97 @@
             reviewWorkspace.innerHTML = reviewHTML;
         }
 
+        // --- CORE RESILIENT MULTI-AI CLUSTER ROUTER ---
         async function triggerMubarakAI(index) {
             const btn = document.getElementById(`ai-btn-${index}`);
             const box = document.getElementById(`ai-explanation-${index}`);
             const targetDiv = document.getElementById(`ai-target-${index}`);
+            const statusHeader = document.getElementById(`ai-node-status-${index}`);
             const data = quizData[index];
 
-            btn.innerText = "Analyzing metrics...";
+            btn.innerText = "ROUTING CLUSTER ENGINE...";
             btn.disabled = true;
             box.style.display = "block";
-            targetDiv.innerText = "Computing step vectors...";
+            targetDiv.innerText = "Connecting to array streams...";
 
             const promptText = `You are the specialized Mubarak AI educational assistant. Provide a highly precise, crisp, step-by-step mathematical breakdown for this question: "${data.question}". The verified correct answer option is "${data.options[data.answer]}". Directly show mathematical steps and formulas. Keep output direct, clean, and professional. Do not use markdown titles, dividers, bold summary headings, or friendly greetings.`;
+            const systemInstruction = "You are an expert mathematical tutor who outputs clean, step-by-step math breakdowns without fluff, greetings, or markdown titles.";
 
-            try {
-                // Primary endpoint method
-                const response = await fetch("https://text.pollinations.ai/v1/chat/completions", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        model: "openai/gpt-4o-mini", 
-                        messages: [
-                            { role: "system", content: "You are an expert mathematical tutor who outputs clean, step-by-step math breakdowns without fluff, greetings, or markdown titles." },
-                            { role: "user", content: promptText }
-                        ],
-                        temperature: 0.3
-                    })
-                });
+            // --- 5 Separate High-Speed Distributed Core Nodes ---
+            const aiCluster = [
+                // Node 1: Chat Completion POST API (Structured Engine)
+                async () => {
+                    statusHeader.innerText = "⚡ MUBARAK AI (NODE 1 - HIGH PERFORMANCE)";
+                    const res = await fetch("https://text.pollinations.ai/v1/chat/completions", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            model: "openai", 
+                            messages: [
+                                { role: "system", content: systemInstruction },
+                                { role: "user", content: promptText }
+                            ],
+                            temperature: 0.2
+                        })
+                    });
+                    if (!res.ok) throw new Error("Node 1 Down");
+                    const json = await res.json();
+                    return json.choices[0].message.content;
+                },
 
-                if (!response.ok) throw new Error("Primary API offline");
-                const jsonResult = await response.json();
-                let aiOutput = jsonResult.choices[0].message.content;
+                // Node 2: Mistral Text Processing Engine
+                async () => {
+                    statusHeader.innerText = "⚡ MUBARAK AI (NODE 2 - MISTRAL ARRAY)";
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=mistral&system=${encodeURIComponent(systemInstruction)}`);
+                    if (!res.ok) throw new Error("Node 2 Down");
+                    return await res.text();
+                },
 
-                if (!aiOutput || (aiOutput.trim().startsWith('{') && aiOutput.includes('"error"'))) {
-                    throw new Error("Invalid format returned");
+                // Node 3: Specialized Computational Qwen Engine
+                async () => {
+                    statusHeader.innerText = "⚡ MUBARAK AI (NODE 3 - QWEN MATH COMPILER)";
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=qwen-coder`);
+                    if (!res.ok) throw new Error("Node 3 Down");
+                    return await res.text();
+                },
+
+                // Node 4: Web Search Augmentation Node
+                async () => {
+                    statusHeader.innerText = "⚡ MUBARAK AI (NODE 4 - HYBRID ENGINE)";
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=search`);
+                    if (!res.ok) throw new Error("Node 4 Down");
+                    return await res.text();
+                },
+
+                // Node 5: Base Engine Gateway Fallback
+                async () => {
+                    statusHeader.innerText = "⚡ MUBARAK AI (NODE 5 - GATEWAY SAFEGUARD)";
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=openai`);
+                    if (!res.ok) throw new Error("Node 5 Down");
+                    return await res.text();
                 }
+            ];
 
-                targetDiv.innerText = aiOutput.trim();
-                btn.innerText = "Explanation Synced Successfully";
-            } catch (e) {
-                // Reliable raw fallback path execution method
+            // --- Execution Loop Engine ---
+            for (let i = 0; i < aiCluster.length; i++) {
                 try {
-                    const fallbackUrl = `https://text.pollinations.ai/${encodeURIComponent(promptText)}?model=openai`;
-                    const fallbackRes = await fetch(fallbackUrl);
-                    if (!fallbackRes.ok) throw new Error("Fallback failed");
-                    const fallbackText = await fallbackRes.text();
-                    targetDiv.innerText = fallbackText.trim();
-                    btn.innerText = "Explanation Synced via Fallback Node";
-                } catch (fallbackErr) {
-                    targetDiv.innerText = "The processing channel is currently prioritizing heavy computing calculations. Here is the core structural verification:\n\n" + data.explanation;
-                    btn.innerText = "Local Breakdown Restored";
+                    const resultText = await aiCluster[i]();
+                    
+                    // Validate output string format data
+                    if (resultText && resultText.trim().length > 15 && !resultText.includes('"error"')) {
+                        targetDiv.innerText = resultText.trim();
+                        btn.innerText = `EXPLANATION SYNCED (NODE ${i + 1})`;
+                        return; // Successfully completed route execution
+                    }
+                } catch (err) {
+                    console.warn(`Node ${i + 1} bypassed:`, err.message);
                 }
             }
+
+            // --- SECURE LOCAL RECOVERY MATRIX FALLBACK ---
+            statusHeader.innerText = "⚙️ LOCAL BREAKDOWN RESTORED";
+            targetDiv.innerText = "The processing channel is currently prioritizing heavy computing calculations. Here is the core structural verification:\n\n" + data.explanation;
+            btn.innerText = "LOCAL BREAKDOWN RESTORED";
         }
 
         window.onload = () => { 
