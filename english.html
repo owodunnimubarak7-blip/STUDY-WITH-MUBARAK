@@ -200,10 +200,19 @@
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s;
         }
 
-        .timer-badge {
+        /* Top Right Badge Controls Wrapper */
+        .badge-controls {
             position: absolute;
             top: -15px;
             right: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            transform: translateZ(20px);
+            z-index: 10;
+        }
+
+        .timer-badge {
             background: linear-gradient(135deg, #1e40af, var(--primary));
             color: white;
             padding: 8px 20px;
@@ -212,10 +221,36 @@
             font-weight: 800;
             letter-spacing: 0.5px;
             box-shadow: 0 8px 20px -5px var(--primary-glow);
-            transform: translateZ(20px);
         }
         .timer-badge.warning { background: linear-gradient(135deg, #d97706, #f59e0b); box-shadow: 0 8px 20px -5px rgba(245,158,11,0.4); }
         .timer-badge.danger { background: linear-gradient(135deg, #b91c1c, #ef4444); box-shadow: 0 8px 20px -5px rgba(239,68,68,0.4); }
+
+        /* Dashed/Broken Line Toggle Button Styling */
+        .toggle-jump-btn {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            color: var(--text-main);
+            border: 2px dashed var(--primary);
+            padding: 6px 14px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .toggle-jump-btn:hover {
+            transform: translateY(-2px);
+            background: var(--option-hover);
+            box-shadow: 0 6px 15px var(--primary-glow);
+        }
+        .toggle-jump-btn:active {
+            transform: translateY(1px);
+        }
 
         .instruction-tag {
             background: var(--instruction-bg);
@@ -748,6 +783,7 @@
             .grand-card { padding: 30px 20px; border-radius: 24px; }
             .question-text { font-size: 1.2rem; }
             .jump-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; }
+            .badge-controls { right: 15px; }
         }
     </style>
 </head>
@@ -776,7 +812,10 @@
     </div>
 
     <div id="quiz-box" class="grand-card">
-        <div class="timer-badge" id="timer-badge">⏱️ 30:00</div>
+        <div class="badge-controls">
+            <button class="toggle-jump-btn" onclick="toggleJumpGrid()" title="Toggle Question Navigator">🧩 Questions</button>
+            <div class="timer-badge" id="timer-badge">⏱️ 30:00</div>
+        </div>
 
         <div id="instruction-box" class="instruction-tag"></div>
         
@@ -794,7 +833,7 @@
             <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">Next →</button>
         </div>
 
-        <div class="jump-grid-container">
+        <div id="jump-grid-wrapper" class="jump-grid-container">
             <div class="jump-grid-header">
                 <span class="jump-grid-label">Question Navigator</span>
                 <div class="jump-legend">
@@ -918,6 +957,12 @@
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
     });
+
+    // Toggle Jump Box Grid Function
+    function toggleJumpGrid() {
+        const gridWrapper = document.getElementById("jump-grid-wrapper");
+        gridWrapper.classList.toggle("hidden");
+    }
 
     function setupSession() {
         const locallyStoredState = localStorage.getItem("mubarak_portal_state");
