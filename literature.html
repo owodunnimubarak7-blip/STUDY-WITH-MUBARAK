@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literature Suite | Study With Mubarak</title>
+    <style>
+        :root {
+            --bg: #140909;
+            --surface: rgba(34, 17, 17, 0.7);
+            --border: rgba(239, 68, 68, 0.2);
+            --text-main: #fee2e2;
+            --text-muted: #fecaca;
+            --primary: #ef4444;
+            --blur: blur(16px);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        body { margin: 0; padding: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; }
+        .navbar { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); backdrop-filter: var(--blur); position: sticky; top: 0; z-index: 100; }
+        .back-btn { color: var(--primary); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .container { max-width: 850px; margin: 30px auto; padding: 0 24px; }
+        .quiz-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); backdrop-filter: var(--blur); margin-bottom: 24px; }
+        textarea { width: 100%; height: 90px; background: #0e0606; border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 8px; font-size: 1rem; box-sizing: border-box; resize: none; margin-bottom: 12px; }
+        button { background: var(--primary); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="back-btn">➔ Back to Hub</a>
+    <div style="font-weight: 800; text-transform: uppercase;">📖 Advanced Literature Station</div>
+</div>
+
+<div class="container">
+    <div class="quiz-card">
+        <h2 style="margin-top:0; color: var(--primary);">Rhetorical Device Phrase Scanner</h2>
+        <p style="color: var(--text-muted);">Paste a syntax selection or line of verse to cross-examine core stylistic literary features:</p>
+        <textarea id="excerptInput" placeholder="e.g., The soldier fought as bravely as a lion, while weeping..."></textarea>
+        <button onclick="scanLiteratureText()">Audit Rhetorical Footprint</button>
+        <h3 id="litResult" style="color: #fca5a5; margin-top:20px; text-align:center;"></h3>
+    </div>
+
+    <div class="quiz-card">
+        <h2 style="margin-top:0;">Syllabus Question Array Preview</h2>
+        <div id="questionsContainer"></div>
+    </div>
+</div>
+
+<script>
+    const litRepo = [
+        { topic: "Metrical Cadence Structures", q: "Identify the metric structure sequence tracking mechanism when lines of dramatic presentation move progressively from unstressed syllables directly to stressed syllables.", o: ["Iambic Pentameter", "Trochaic Meter", "Anapestic Flow", "Dactylic Coding"] }
+    ];
+
+    document.getElementById('questionsContainer').innerHTML = litRepo.map((q, idx) => `
+        <div style="margin-bottom: 24px; border-left: 4px solid var(--primary); padding-left: 16px;">
+            <div style="font-size:0.85rem; font-weight:800; color:var(--primary); text-transform:uppercase;">${q.topic}</div>
+            <div style="font-size:1.1rem; margin: 8px 0; font-weight:700;">Q${idx+1}: ${q.q}</div>
+            <div style="display:grid; gap:8px; color: var(--text-muted);">
+                ${q.o.map(opt => `<div style="background:#240e0e; padding:10px; border-radius:6px;">○ ${opt}</div>`).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    function scanLiteratureText() {
+        let text = document.getElementById('excerptInput').value;
+        let detected = [];
+        if(/\blike\b|\bas\b/i.test(text)) detected.push("Simile Match Pattern");
+        if(/\bis a\b|\bwas a\b/i.test(text)) detected.push("Metaphor Identity");
+        if(/(\b\w)\w*\s+\1\w*/i.test(text)) detected.push("Alliterative Sound Coupling");
+
+        document.getElementById('litResult').innerText = detected.length > 0 ? 
+            `Identified Elements: ${detected.join(' | ')}` : "No simplistic matching structural tags logged.";
+    }
+</script>
+</body>
+</html>
