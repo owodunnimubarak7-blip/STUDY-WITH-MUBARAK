@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology Suite | Study With Mubarak</title>
+    <style>
+        :root {
+            --bg: #09130b;
+            --surface: rgba(17, 34, 21, 0.7);
+            --surface-solid: #112215;
+            --border: rgba(16, 185, 129, 0.2);
+            --text-main: #ecfdf5;
+            --text-muted: #a7f3d0;
+            --primary: #10b981;
+            --blur: blur(16px);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        body { margin: 0; padding: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; }
+        .navbar { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); backdrop-filter: var(--blur); position: sticky; top: 0; z-index: 100; }
+        .back-btn { color: var(--primary); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .container { max-width: 850px; margin: 30px auto; padding: 0 24px; }
+        .quiz-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); backdrop-filter: var(--blur); margin-bottom: 24px; }
+        .question-text { font-size: 1.25rem; font-weight: 700; margin: 20px 0; line-height: 1.6; }
+        input { background: #050b06; border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 8px; font-size: 1rem; margin-right: 10px; width: 140px; }
+        button { background: var(--primary); color: #000; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .punnett-grid { display: grid; grid-template-columns: repeat(3, 70px); gap: 8px; margin-top: 20px; }
+        .cell { background: #050b06; padding: 18px; border: 1px solid var(--border); font-weight: bold; text-align: center; border-radius: 6px; }
+        .label-cell { background: transparent; color: var(--primary); border: none; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html" class="back-btn">➔ Back to Hub</a>
+    <div style="font-weight: 800; text-transform: uppercase;">🧬 Advanced Biology Station</div>
+</div>
+
+<div class="container">
+    <div class="quiz-card">
+        <h2 style="margin-top:0; color: var(--primary);">Interactive Genetics Workspace</h2>
+        <p style="color: var(--text-muted);">Simulate allele distributions. Input maternal and paternal genetic traits (e.g., <b>Tt</b> cross <b>Tt</b>):</p>
+        <input type="text" id="p1" placeholder="Parent 1 (e.g. Tt)" maxlength="2" value="Tt">
+        <input type="text" id="p2" placeholder="Parent 2 (e.g. Tt)" maxlength="2" value="Tt">
+        <button onclick="runGeneticsCross()">Generate Grid Matrix</button>
+        <div class="punnett-grid" id="punnettResult" style="display: none;"></div>
+    </div>
+
+    <div class="quiz-card">
+        <h2 style="margin-top:0;">Syllabus Question Array Preview</h2>
+        <div id="questionsContainer"></div>
+    </div>
+</div>
+
+<script>
+    const biologyRepo = [
+        { topic: "Cell Biology", q: "Which cell organelle is primarily responsible for synthesis and transport of lipids and steroid hormones?", o: ["Smooth Endoplasmic Reticulum", "Rough Endoplasmic Reticulum", "Golgi Apparatus", "Lysosomal Matrix"] },
+        { topic: "Ecology", q: "In a plant community, the total dry weight of organic matter present at any given moment is designated as what?", o: ["Standing Crop", "Biomass Index", "Net Production", "Yield Quotient"] }
+    ];
+
+    document.getElementById('questionsContainer').innerHTML = biologyRepo.map((q, idx) => `
+        <div style="margin-bottom: 24px; border-left: 4px solid var(--primary); padding-left: 16px;">
+            <div style="font-size:0.85rem; font-weight:800; color:var(--primary); text-transform:uppercase;">${q.topic}</div>
+            <div class="question-text" style="font-size:1.1rem; margin: 8px 0;">Q${idx+1}: ${q.q}</div>
+            <div style="display:grid; gap:8px; color: var(--text-muted);">
+                ${q.o.map(opt => `<div style="background:#0c1a0f; padding:10px; border-radius:6px;">○ ${opt}</div>`).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    function runGeneticsCross() {
+        let p1 = document.getElementById('p1').value.split("");
+        let p2 = document.getElementById('p2').value.split("");
+        if(p1.length !== 2 || p2.length !== 2) return alert("Please populate with valid 2-allele configurations.");
+        const grid = document.getElementById('punnettResult');
+        grid.style.display = 'grid';
+        grid.innerHTML = `
+            <div class="cell label-cell">✖</div><div class="cell label-cell">${p2[0]}</div><div class="cell label-cell">${p2[1]}</div>
+            <div class="cell label-cell">${p1[0]}</div><div class="cell">${p1[0]+p2[0]}</div><div class="cell">${p1[0]+p2[1]}</div>
+            <div class="cell label-cell">${p1[1]}</div><div class="cell">${p1[1]+p2[0]}</div><div class="cell">${p1[1]+p2[1]}</div>
+        `;
+    }
+</script>
+</body>
+</html>
