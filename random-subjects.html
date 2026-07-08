@@ -4,7 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Premium CBT Simulator | Study With Mubarak</title>
+    
+    <!-- MathJax for Formula Rendering -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <!-- 📥 LINK YOUR INDEPENDENT SUBJECT REPOSITORIES HERE -->
+    <script src="biology.js"></script>
+    <script src="chemistry.js"></script>
+    <!-- Add more files here as you create them:
+    <script src="physics.js"></script>
+    <script src="economics.js"></script>
+    <script src="literature.js"></script> 
+    -->
+
     <style>
+        /* [Your CSS rules stay completely unchanged here] */
         :root {
             --bg: #0f172a;
             --surface: rgba(30, 41, 59, 0.7);
@@ -20,7 +40,6 @@
             --blur: blur(16px);
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-
         [data-theme="light"] {
             --bg: #f8fafc;
             --surface: rgba(255, 255, 255, 0.75);
@@ -35,180 +54,48 @@
             --ai-glow: #7c3aed;
             --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
         }
-
-        body {
-            margin: 0; padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg); color: var(--text-main);
-            min-height: 100vh; transition: background 0.3s, color 0.3s;
-        }
-
-        .navbar {
-            padding: 20px 24px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface); backdrop-filter: var(--blur);
-            position: sticky; top: 0; z-index: 100;
-        }
-
-        .back-btn {
-            color: var(--text-main); text-decoration: none; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
-        }
-
-        .container {
-            max-width: 850px; margin: 30px auto; padding: 0 24px;
-        }
-
-        /* --- CONFIGURATION PANEL ARCHITECTURE --- */
-        .setup-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 24px; padding: 36px; box-shadow: var(--shadow);
-            backdrop-filter: var(--blur); margin-bottom: 24px;
-        }
-        .form-group {
-            margin-bottom: 24px;
-        }
-        .form-label {
-            display: block; font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 0.05em;
-        }
-        .grid-select {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px;
-        }
-        .select-chip {
-            background: var(--surface-solid); border: 1px solid var(--border);
-            color: var(--text-main); padding: 14px; border-radius: 14px; text-align: center;
-            font-weight: 600; cursor: pointer; transition: all 0.2s;
-        }
+        body { margin: 0; padding: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; }
+        .navbar { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); backdrop-filter: var(--blur); position: sticky; top: 0; z-index: 100; }
+        .back-btn { color: var(--text-main); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .container { max-width: 850px; margin: 30px auto; padding: 0 24px; }
+        .setup-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); backdrop-filter: var(--blur); margin-bottom: 24px; }
+        .form-group { margin-bottom: 24px; }
+        .form-label { display: block; font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .grid-select { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+        .select-chip { background: var(--surface-solid); border: 1px solid var(--border); color: var(--text-main); padding: 14px; border-radius: 14px; text-align: center; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .select-chip:hover { border-color: var(--primary); }
         .select-chip.active { background: var(--primary); color: white; border-color: transparent; }
-
-        /* --- EXAM CONTROL PANEL --- */
-        .cbt-meta-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--surface-solid); border: 1px solid var(--border);
-            padding: 16px 24px; border-radius: 16px; margin-bottom: 24px;
-        }
-
-        .timer-box {
-            font-size: 1.2rem; font-weight: 800; color: var(--warning);
-            display: flex; align-items: center; gap: 8px;
-        }
-
-        .progress-container {
-            width: 100%; height: 6px; background: var(--border);
-            border-radius: 3px; margin-bottom: 24px; overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%; width: 0%; background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        /* --- QUIZ CARD ARCHITECTURE --- */
-        .quiz-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 24px; padding: 36px; box-shadow: var(--shadow);
-            backdrop-filter: var(--blur); margin-bottom: 24px;
-            position: relative;
-        }
-
-        .q-meta-flex {
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .q-count {
-            font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 0.05em;
-        }
-        .exam-tag {
-            background: rgba(59, 130, 246, 0.1); color: var(--primary);
-            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 800;
-        }
-
-        .question-text {
-            font-size: 1.3rem; font-weight: 700; margin: 20px 0 28px 0; line-height: 1.6;
-        }
-
-        .options-grid {
-            display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 24px;
-        }
-
-        .option-btn {
-            background: var(--surface-solid); border: 1px solid var(--border);
-            color: var(--text-main); padding: 18px 24px; border-radius: 14px;
-            text-align: left; font-size: 1rem; font-weight: 600; cursor: pointer;
-            transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between;
-        }
-
-        .option-btn:hover:not(:disabled) {
-            border-color: var(--primary); background: rgba(59, 130, 246, 0.05);
-            transform: translateX(4px);
-        }
-
-        .option-btn.correct {
-            background: rgba(16, 185, 129, 0.15) !important;
-            border-color: var(--success) !important; color: var(--success);
-        }
-
-        .option-btn.wrong {
-            background: rgba(239, 68, 68, 0.15) !important;
-            border-color: var(--error) !important; color: var(--error);
-        }
-
-        /* --- CLUSTER AI EXPANSION PANEL --- */
-        .explanation-box {
-            margin-top: 28px; padding: 24px; background: rgba(168, 85, 247, 0.04);
-            border-left: 4px solid var(--ai-glow); border-radius: 12px; display: none;
-            box-shadow: inset 0 0 12px rgba(168, 85, 247, 0.05);
-        }
+        .cbt-meta-bar { display: flex; justify-content: space-between; align-items: center; background: var(--surface-solid); border: 1px solid var(--border); padding: 16px 24px; border-radius: 16px; margin-bottom: 24px; }
+        .timer-box { font-size: 1.2rem; font-weight: 800; color: var(--warning); display: flex; align-items: center; gap: 8px; }
+        .progress-container { width: 100%; height: 6px; background: var(--border); border-radius: 3px; margin-bottom: 24px; overflow: hidden; }
+        .progress-bar { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s ease; }
+        .quiz-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); backdrop-filter: var(--blur); margin-bottom: 24px; position: relative; }
+        .q-meta-flex { display: flex; justify-content: space-between; align-items: center; }
+        .q-count { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .exam-tag { background: rgba(59, 130, 246, 0.1); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; }
+        .question-text { font-size: 1.3rem; font-weight: 700; margin: 20px 0 28px 0; line-height: 1.6; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 24px; }
+        .option-btn { background: var(--surface-solid); border: 1px solid var(--border); color: var(--text-main); padding: 18px 24px; border-radius: 14px; text-align: left; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: space-between; }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background: rgba(59, 130, 246, 0.05); transform: translateX(4px); }
+        .option-btn.correct { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--success) !important; color: var(--success); }
+        .option-btn.wrong { background: rgba(239, 68, 68, 0.15) !important; border-color: var(--error) !important; color: var(--error); }
+        .explanation-box { margin-top: 28px; padding: 24px; background: rgba(168, 85, 247, 0.04); border-left: 4px solid var(--ai-glow); border-radius: 12px; display: none; box-shadow: inset 0 0 12px rgba(168, 85, 247, 0.05); }
         .explanation-box h5 { margin: 0 0 12px 0; font-size: 1rem; color: var(--ai-glow); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;}
         .explanation-box p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text-main); }
-        
-        .ai-status-ticker {
-            margin-top: 10px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 6px;
-        }
-
-        .action-dock {
-            display: flex; justify-content: space-between; margin-top: 32px; gap: 16px;
-        }
-
-        .nav-action {
-            background: var(--surface-solid); color: var(--text-main);
-            border: 1px solid var(--border); padding: 14px 28px;
-            border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 0.95rem;
-            transition: all 0.2s; flex: 1; text-align: center;
-        }
+        .ai-status-ticker { margin-top: 10px; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+        .action-dock { display: flex; justify-content: space-between; margin-top: 32px; gap: 16px; }
+        .nav-action { background: var(--surface-solid); color: var(--text-main); border: 1px solid var(--border); padding: 14px 28px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; flex: 1; text-align: center; }
         .nav-action:hover:not(:disabled) { background: var(--bg); }
-
         .nav-action.primary-btn { background: var(--primary); color: white; border: none; }
         .nav-action.primary-btn:hover { opacity: 0.9; }
-        
-        .nav-action.ai-btn {
-            background: linear-gradient(135deg, #7c3aed, #2563eb); color: white; border: none;
-            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
-        }
-        .nav-action.ai-btn:disabled {
-            background: var(--surface-solid); color: var(--text-muted); box-shadow: none; border: 1px solid var(--border);
-        }
-
-        /* --- INDEXED NAV TRACKER --- */
-        .question-nav-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; margin-top: 24px;
-        }
-        .nav-grid-dot {
-            height: 40px; border-radius: 8px; background: var(--surface-solid); border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; cursor: pointer;
-        }
+        .nav-action.ai-btn { background: linear-gradient(135deg, #7c3aed, #2563eb); color: white; border: none; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3); }
+        .nav-action.ai-btn:disabled { background: var(--surface-solid); color: var(--text-muted); box-shadow: none; border: 1px solid var(--border); }
+        .question-nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 8px; margin-top: 24px; }
+        .nav-grid-dot { height: 40px; border-radius: 8px; background: var(--surface-solid); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
         .nav-grid-dot.answered { background: rgba(16, 185, 129, 0.15); border-color: var(--success); color: var(--success); }
         .nav-grid-dot.current { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); }
-
-        /* --- RESULT SCREEN ARCHITECTURE --- */
         .result-screen { display: none; text-align: center; padding: 40px 20px; }
-        .score-circle {
-            width: 140px; height: 140px; border-radius: 50%; background: var(--surface-solid);
-            border: 4px solid var(--success); display: flex; align-items: center;
-            justify-content: center; font-size: 2rem; font-weight: 900; margin: 0 auto 24px auto;
-        }
+        .score-circle { width: 140px; height: 140px; border-radius: 50%; background: var(--surface-solid); border: 4px solid var(--success); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; margin: 0 auto 24px auto; }
     </style>
 </head>
 <body>
@@ -219,11 +106,11 @@
 </div>
 
 <div class="container">
-
+    <!-- SETUP CARD -->
     <div class="setup-card" id="configSetupScreen">
         <h2 style="margin-top: 0; font-weight: 800;">Configure Examination Matrix</h2>
         <p style="color: var(--text-muted); margin-bottom: 30px;">Select custom system focus vectors to compile standard past examination criteria patterns.</p>
-        
+
         <div class="form-group">
             <span class="form-label">1. Select Subject Focus</span>
             <div class="grid-select" id="subjectGridSelect">
@@ -259,6 +146,7 @@
         <button class="nav-action primary-btn" style="width: 100%; margin-top: 10px; padding: 18px;" onclick="buildAndLaunchExamEngine()">Launch Examination Engine</button>
     </div>
 
+    <!-- MAIN ENGINE -->
     <div id="runtimeEnginePanel" style="display: none;">
         <div class="cbt-meta-bar">
             <div style="font-weight: 700;" id="activeSubjectDisplay">Syllabus Focus: --</div>
@@ -291,11 +179,12 @@
                 <button class="nav-action ai-btn" id="hintExplanationBtn" onclick="triggerMubarakAI()" disabled>Get Mubarak AI Explanation</button>
                 <button class="nav-action primary-btn" id="nextQuestionBtn" onclick="navigateQuestionDirection(1)">Next Question</button>
             </div>
-            
+
             <div class="question-nav-grid" id="questionNavigatorTray"></div>
         </div>
     </div>
 
+    <!-- EVALUATION SCREEN -->
     <div class="quiz-card result-screen" id="scoreEvaluationPanel">
         <div class="score-circle" id="percentagePerformanceMetric">0%</div>
         <h2 style="margin: 0 0 8px 0; font-weight: 800;">Diagnostic Evaluation Complete</h2>
@@ -305,42 +194,16 @@
 </div>
 
 <script>
-    // --- COMPREHENSIVE NIGERIAN SYLLABUS PAST QUESTIONS METADATA DATA REPOSITORY ---
-    const CBT_EXAM_REPOSITORY = {
-        biology: [
-            { id: 1, year: 2026, type: "JAMB", q: "Which of the following cell organelles is primarily responsible for synthesis and transport of lipids and steroid hormones within a mammalian cell architecture?", o: ["Smooth Endoplasmic Reticulum", "Rough Endoplasmic Reticulum", "Golgi Apparatus Complex", "Lysosomal Matrix"], a: 0, e: "The Smooth Endoplasmic Reticulum (SER) synthesizes lipids, phospholipids, and steroid hormones. It lacks ribosomes, distinguishing it functionally and structurally from the Rough Endoplasmic Reticulum." },
-            { id: 2, year: 2024, type: "WAEC", q: "In a plant community, the total dry weight of digital organic matter present at any particular point in time sequence is designated as what?", o: ["Standing Crop", "Biomass Index", "Net Production Quotient", "Climax Community Yield"], a: 0, e: "Standing crop is the total biomass of a specified ecosystem or population present at a given moment. It describes the quantitative physical matter within the trophic layout." },
-            { id: 3, year: 2018, type: "NECO", q: "The localized conditional phenomenon where structural components within close organic proximities express identical morphologic evolution vectors is defined as:", o: ["Adaptive Radiation", "Convergent Evolution", "Parallel Speciation", "Homology Structuring"], a: 1, e: "Convergent evolution happens when distinct organisms independently develop comparable traits because they are adapting to similar ecosystems or selective environmental pressures." },
-            { id: 4, year: 2005, type: "JAMB", q: "Which of the following blood vessels carries deoxygenated blood from the lower parts of the body to the right atrium of the heart?", o: ["Pulmonary Artery", "Inferior Vena Cava", "Superior Vena Cava", "Hepatic Portal Vein"], a: 1, e: "The inferior vena cava returns deoxygenated blood back from system structures situated beneath the thoracic line layout directly into the right atrium room." }
-        ],
-        chemistry: [
-            { id: 5, year: 2025, type: "JAMB", q: "What is the accurate oxidation state allocation of Iron within the standard potassium hexacyanoferrate(II) complex coordination framework compound?", o: ["+2", "+3", "+4", "-2"], a: 0, e: "In $K_4[Fe(CN)_6]$, Potassium is $4 \\times (+1) = +4$ and Cyanide is $6 \\times (-1) = -6$. To maintain absolute neutral valence equilibrium, Iron ($Fe$) must resolve mathematically to a value of $+2$." },
-            { id: 6, year: 2021, type: "WAEC", q: "Which configuration sequence represents the exact behavior vector transformation tracking parameters during localized endothermic state changes?", o: ["Entropy Increases, Enthalpy Gains", "Entropy Decreases, Enthalpy Gains", "Entropy Increases, Enthalpy Drops", "Entropy Drops, Enthalpy Drops"], a: 0, e: "Endothermic processes absorb heat ($\\Delta H > 0$). Converting from solid to liquid or gas raises molecular structural disorder, which boosts global system entropy values ($\\Delta S > 0$)." }
-        ],
-        physics: [
-            { id: 7, year: 2026, type: "JAMB", q: "An alternating current circuit displays maximum resonance performance parameters when the phase angle between voltage and current yields which vector value?", o: ["0 Degrees", "45 Degrees", "90 Degrees", "180 Degrees"], a: 0, e: "Resonance happens when inductive reactance equals capacitive reactance. This turns the circuit purely resistive, aligning voltage and current with a $0^{\\circ}$ phase angle difference." },
-            { id: 8, year: 2015, type: "JAMB", q: "Calculate the total effective capacitance configurations when three matching 9μF capacitor units are bound strictly in sequential series patterns.", o: ["3μF", "9μF", "27μF", "1.5μF"], a: 0, e: "For series matching operations, the equation scales as: $1/C_{total} = 1/9 + 1/9 + 1/9 = 3/9$. Inverting this gives an effective system metric value of $3\\mu F$." }
-        ],
-        economics: [
-            { id: 9, year: 2023, type: "WAEC", q: "When an absolute expansion vector alteration in price adjustments yields zero change to global supply metrics, elastic index values evaluate as:", o: ["Perfectly Inelastic", "Perfectly Elastic", "Unitary Elasticity", "Infinitely Variable"], a: 0, e: "Perfectly inelastic conditions produce an elasticity index of 0. Changes in price levels do not alter quantitative production or supply metrics." }
-        ],
-        literature: [
-            { id: 10, year: 2022, type: "NECO", q: "Identify the metric structure sequence tracking mechanism when lines of dramatic presentation move progressively from unstressed syllables directly to stressed syllables.", o: ["Iambic Pentameter", "Trochaic Meter", "Anapestic Flow", "Dactylic Coding"], a: 0, e: "An iambic foot progresses from an unstressed syllable to a stressed one. It is the dominant structural cadence found throughout classic dramatic literature works." }
-        ]
-    };
-
-    // --- SYSTEM CONTROL LOGIC STATE VARIABLES ---
+    // --- APP CONTROLLER CONFIGURATIONS ---
     let chosenSubject = "biology";
     let chosenType = "JAMB";
     let chosenYearRange = "all";
-    
     let compiledExamPool = [];
     let activeQuestionIndex = 0;
     let selectedAnswersMap = {};
     let examTimerInterval = null;
-    let secondsRemaining = 1200; // 20 Minutes Session
+    let secondsRemaining = 1200;
 
-    // --- INITIALIZATION INTERACTIVE LISTENERS ---
     document.addEventListener("DOMContentLoaded", () => {
         pullParentalSystemThemeState();
         setupInteractiveChipSelectors();
@@ -353,7 +216,7 @@
                 const parsed = JSON.parse(storedData);
                 document.documentElement.setAttribute('data-theme', parsed.theme || 'dark');
             }
-        } catch(e) { console.error("Theme configuration handshake error:", e); }
+        } catch(e) { console.error("Theme handshake error:", e); }
     }
 
     function setupInteractiveChipSelectors() {
@@ -367,21 +230,20 @@
                 callback(clickedChip.getAttribute("data-value"));
             });
         };
-
         handleChipClick("subjectGridSelect", (val) => chosenSubject = val);
         handleChipClick("typeGridSelect", (val) => chosenType = val);
         handleChipClick("yearGridSelect", (val) => chosenYearRange = val);
     }
 
-    // --- COMPILATION ENGINE LOGIC MATRIX ---
+    // --- READ FROM GLOBAL SUBJECT REPOSITORY LAYER MATRIX ---
     function buildAndLaunchExamEngine() {
-        const rawPool = CBT_EXAM_REPOSITORY[chosenSubject] || [];
-        
-        // Filter elements match criteria conditions
+        // Fallback checks safely to avoid empty global bindings
+        const repository = window.CBT_SUBJECT_REPOS || {};
+        const rawPool = repository[chosenSubject] || [];
+
         compiledExamPool = rawPool.filter(item => {
             const typeMatch = (item.type === chosenType);
             let yearMatch = false;
-
             if (chosenYearRange === "all") {
                 yearMatch = true;
             } else if (chosenYearRange.includes("-")) {
@@ -393,44 +255,42 @@
             return typeMatch && yearMatch;
         });
 
-        // Safe Fallback Trigger Matrix: If filtered dataset array evaluates empty, load basic subject parameters
         if (compiledExamPool.length === 0) {
-            alert(`Notice: No exact matches found for ${chosenType} (${chosenYearRange}) within our database. Loading available baseline options for evaluation sequence structural safety.`);
+            alert(`Notice: No exact question data bounds configured for ${chosenType} (${chosenYearRange}) within this profile yet. Syncing available subject matrices instead.`);
             compiledExamPool = [...rawPool];
         }
 
-        // Shuffling Algorithm if 'all' parameter is requested
+        if (compiledExamPool.length === 0) {
+            alert("Error: The question library file for this subject appears to be missing or empty. Please check your script connections.");
+            return;
+        }
+
         if (chosenYearRange === "all") {
             compiledExamPool.sort(() => Math.random() - 0.5);
         }
 
-        // Transition Interface Visibility Views
         document.getElementById("configSetupScreen").style.display = "none";
         document.getElementById("runtimeEnginePanel").style.display = "block";
         document.getElementById("scoreEvaluationPanel").style.display = "none";
-        
-        document.getElementById("activeSubjectDisplay").innerText = `Syllabus Focus: ${chosenSubject.toUpperCase()} | Matrix Config: [${chosenType} / ${chosenYearRange}]`;
+        document.getElementById("activeSubjectDisplay").innerText = `Syllabus Focus: ${chosenSubject.toUpperCase()} | [${chosenType} / ${chosenYearRange}]`;
 
         activeQuestionIndex = 0;
         selectedAnswersMap = {};
-        secondsRemaining = compiledExamPool.length * 60; // 1 minute per compiled question vector
-        
-        renderCurrentQuestionBlock();
+        secondsRemaining = compiledExamPool.length * 60;
+
         buildNavigationIndicatorDots();
+        renderCurrentQuestionBlock();
         resetAndStartTimerEngine();
     }
 
-    // --- CORE PRESENTATION UI DRAW RENDERING ENGINE ---
     function renderCurrentQuestionBlock() {
         if (compiledExamPool.length === 0) return;
         const data = compiledExamPool[activeQuestionIndex];
 
-        // Frame text metric indexes
         document.getElementById('questionMetricTracker').innerText = `Question ${activeQuestionIndex + 1} of ${compiledExamPool.length}`;
         document.getElementById('examContextTag').innerText = `${data.type} (${data.year})`;
-        document.getElementById('targetQuestionRenderer').innerText = data.q;
-        
-        // Wipe interface components clean
+        document.getElementById('targetQuestionRenderer').innerHTML = data.q;
+
         document.getElementById('diagnosticExplanationWrapper').style.display = "none";
         document.getElementById('aiTickerArea').style.display = "none";
         document.getElementById('hintExplanationBtn').disabled = true;
@@ -442,10 +302,9 @@
         data.o.forEach((optionText, idx) => {
             const button = document.createElement("button");
             button.classList.add("option-btn");
-            button.innerText = optionText;
+            button.innerHTML = optionText;
             button.setAttribute("onclick", `evaluateSelectedOption(${idx})`);
-            
-            // Re-apply selections if navigating over previously processed fields
+
             if (selectedAnswersMap[activeQuestionIndex] !== undefined) {
                 button.disabled = true;
                 if (idx === data.a) button.classList.add("correct");
@@ -456,40 +315,38 @@
             optionsGrid.appendChild(button);
         });
 
-        // Manage button activity toggles
         document.getElementById('prevQuestionBtn').disabled = activeQuestionIndex === 0;
         if (selectedAnswersMap[activeQuestionIndex] !== undefined) {
             document.getElementById('hintExplanationBtn').disabled = false;
         }
 
-        // Track and sync dot nodes highlight parameters
         updateNavigationIndicatorDots();
 
-        // Progress metrics scaling computation calculations
         const percentageProgress = ((activeQuestionIndex + 1) / compiledExamPool.length) * 100;
         document.getElementById('cbtProgressBar').style.width = `${percentageProgress}%`;
 
-        // Adapt final action buttons safely
         const nextBtn = document.getElementById('nextQuestionBtn');
         if (activeQuestionIndex === compiledExamPool.length - 1) {
-            nextBtn.innerText = "Submit Evaluation Session";
+            nextBtn.innerText = "Submit Session";
             nextBtn.style.background = "var(--success)";
         } else {
             nextBtn.innerText = "Next Question";
             nextBtn.style.background = "";
         }
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise();
+        }
     }
 
     function evaluateSelectedOption(chosenIndex) {
         if (selectedAnswersMap[activeQuestionIndex] !== undefined) return;
-        
+
         const data = compiledExamPool[activeQuestionIndex];
         selectedAnswersMap[activeQuestionIndex] = chosenIndex;
 
         const optionsButtons = document.getElementById('optionsActionGrid').children;
-        for (let btn of optionsButtons) {
-            btn.disabled = true;
-        }
+        for (let btn of optionsButtons) { btn.disabled = true; }
 
         if (chosenIndex === data.a) {
             optionsButtons[chosenIndex].classList.add("correct");
@@ -502,49 +359,47 @@
         updateNavigationIndicatorDots();
     }
 
-    // --- HIGH-SPEED 5-NODE MUBARAK AI CLUSTER ROUTING ENGINE ---
+    function formatSimpleMarkdown(text) {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            .replace(/\n/g, '<br>');
+    }
+
     async function triggerMubarakAI() {
         const aiButton = document.getElementById("hintExplanationBtn");
         const explanationWrapper = document.getElementById("diagnosticExplanationWrapper");
         const explanationHeader = document.getElementById("explanationHeader");
         const explanationText = document.getElementById("explanationTextContainer");
         const aiTicker = document.getElementById("aiTickerArea");
-
         const data = compiledExamPool[activeQuestionIndex];
-        
-        // Set UI into Active Processing Lock State
+
         aiButton.disabled = true;
-        aiButton.innerText = "ROUTING CLUSTER ENGINE...";
-        explanationText.innerText = "";
+        aiButton.innerText = "ROUTING CLUSTER...";
+        explanationText.innerHTML = "";
         explanationHeader.innerText = "🤖 CONNECTING TO MUBARAK AI NETWORK...";
         explanationWrapper.style.display = "block";
         aiTicker.style.display = "block";
-        aiTicker.innerText = "Computing step vectors via system core routing layout...";
 
-        // Construct Strict Context Instructions Prompt Model Framework
-        const rawSystemContextPrompt = `You are Mubarak AI, an elite educational diagnostic engine specializing in Nigerian secondary and tertiary higher education curriculum standards. Provide an immediate, highly professional, step-by-step academic breakdown for this specific question. Focus strictly on calculations or structural logical breakdowns. Do not include chat fluff, conversational greetings, formatting explanations, or Markdown headers. Use LaTeX formulas where applicable.
-        
+        const rawSystemContextPrompt = `You are Mubarak AI, an elite academic assistant specializing in the Nigerian curriculum (JAMB, WAEC, NECO). Provide a structured, professional, step-by-step breakdown for this question. Do not include chat greetings or signatures. Use LaTeX formulas enclosed in $...$ where applicable for math and chemical formulas.
+
 Question: "${data.q}"
-Options Matrix: ${JSON.stringify(data.o)}
-Verified Answer Index: Option ${data.a} (${data.o[data.a]})`;
+Options: ${JSON.stringify(data.o)}
+Correct Answer: ${data.o[data.a]}`;
 
-        // Define Cluster Node Network Arrays Architecture Layout Configs
         const fallbackClusterEndpoints = [
-            { name: "NODE 1 - OPENAI PRIMARY POST COMPILER", url: "https://text.pollinations.ai/", method: "POST", body: { messages: [{ role: "user", content: rawSystemContextPrompt }], model: "openai" } },
-            { name: "NODE 2 - MISTRAL FAST ENGINE VIA FLUID PORT", url: `https://text.pollinations.ai/${encodeURIComponent(rawSystemContextPrompt)}?model=mistral`, method: "GET" },
-            { name: "NODE 3 - QWEN MATH STRUCTURAL EXPERT", url: `https://text.pollinations.ai/${encodeURIComponent(rawSystemContextPrompt)}?model=qwen-coder`, method: "GET" },
-            { name: "NODE 4 - HYBRID AUGMENT SEARCH MATRIX", url: `https://text.pollinations.ai/${encodeURIComponent(rawSystemContextPrompt)}?model=search`, method: "GET" },
-            { name: "NODE 5 - OPENAI BACKUP GATEWAY LOGISTICS", url: `https://text.pollinations.ai/${encodeURIComponent(rawSystemContextPrompt)}?model=openai`, method: "GET" }
+            { name: "NODE 1 - OPENAI COMPILER", url: "https://text.pollinations.ai/", method: "POST", body: { messages: [{ role: "user", content: rawSystemContextPrompt }], model: "openai" } },
+            { name: "NODE 2 - MISTRAL COMPILER", url: `https://text.pollinations.ai/${encodeURIComponent(rawSystemContextPrompt)}?model=mistral`, method: "GET" },
+            { name: "NODE 3 - QWEN EXPERT", url: `https://text.pollinations.ai/${encodeURIComponent(rawSystemContextPrompt)}?model=qwen-coder`, method: "GET" }
         ];
 
-        // Loop execution sequence tracks node integrity lines
         for (let i = 0; i < fallbackClusterEndpoints.length; i++) {
             const node = fallbackClusterEndpoints[i];
-            aiTicker.innerText = `[TRAFFIC ROUTE SHIFT]: Attempting Connection Matrix on ${node.name}...`;
-
+            aiTicker.innerText = `[TRAFFIC ROUTE]: Syncing with ${node.name}...`;
             try {
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 7000); // 7-second high-speed timeout limit per node
+                const timeoutId = setTimeout(() => controller.abort(), 7000);
 
                 let fetchOptions = { signal: controller.signal };
                 if (node.method === "POST") {
@@ -556,32 +411,29 @@ Verified Answer Index: Option ${data.a} (${data.o[data.a]})`;
                 const response = await fetch(node.url, fetchOptions);
                 clearTimeout(timeoutId);
 
-                if (!response.ok) throw new Error(`HTTP network fault error status lines: ${response.status}`);
+                if (!response.ok) throw new Error("Fault status");
                 const textOutputResult = await response.text();
 
                 if (textOutputResult && textOutputResult.trim().length > 15) {
-                    // Success Handshake Complete Validation Parameter Loops Lock
-                    explanationHeader.innerText = `⚡ MUBARAK AI GRAPH ENGINE (${node.name})`;
-                    explanationText.innerText = textOutputResult.trim();
+                    explanationHeader.innerText = `⚡ MUBARAK AI CORE GRAPH ENGINE (${node.name})`;
+                    explanationText.innerHTML = formatSimpleMarkdown(textOutputResult.trim());
                     aiButton.innerText = "Explanation Synced";
-                    aiTicker.innerText = "Network status online. Node optimization parameters tracking safe.";
-                    return; // Break structural loop immediately
+                    aiTicker.innerText = "Network baseline structural status optimal.";
+                    if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
+                    return;
                 }
-            } catch (nodeError) {
-                console.warn(`Mubarak AI Network Warning: Connection handshake dropped on ${node.name}. Error: ${nodeError.message}`);
-            }
+            } catch (e) { console.warn(`Drop sequence warning on ${node.name}`); }
         }
 
-        // --- SECURE LOCAL RECOVERY MATRIX FALLBACK LAYER ---
-        aiTicker.innerText = "Network connection anomalies verified. Activating Local Recovery Matrix...";
+        aiTicker.innerText = "Network variance detected. Restoring offline local backup matrix...";
         setTimeout(() => {
-            explanationHeader.innerText = "⚙️ LOCAL BREAKDOWN RESTORED (OFFLINE GATEWAY)";
-            explanationText.innerText = data.e;
-            aiButton.innerText = "Local Reference Restored";
+            explanationHeader.innerText = "⚙️ LOCAL BREAKDOWN RESTORED";
+            explanationText.innerHTML = data.e;
+            aiButton.innerText = "Local Engine Sync";
+            if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
         }, 600);
     }
 
-    // --- NAVIGATION GRID CONTROLS TRACKER TRAY ---
     function buildNavigationIndicatorDots() {
         const tray = document.getElementById("questionNavigatorTray");
         tray.innerHTML = "";
@@ -599,7 +451,7 @@ Verified Answer Index: Option ${data.a} (${data.o[data.a]})`;
         compiledExamPool.forEach((_, idx) => {
             const dot = document.getElementById(`navDot-${idx}`);
             if (!dot) return;
-            dot.className = "nav-grid-dot"; // reset
+            dot.className = "nav-grid-dot";
             if (idx === activeQuestionIndex) dot.classList.add("current");
             if (selectedAnswersMap[idx] !== undefined) dot.classList.add("answered");
         });
@@ -616,18 +468,19 @@ Verified Answer Index: Option ${data.a} (${data.o[data.a]})`;
             activeQuestionIndex = nextIndexTarget;
             renderCurrentQuestionBlock();
         } else if (nextIndexTarget >= compiledExamPool.length) {
-            terminateExamAssessmentSession();
+            if(confirm("Are you sure you want to finish and submit your CBT examination script?")) {
+                terminateExamAssessmentSession();
+            }
         }
     }
 
-    // --- LIVE TIMING COUNTDOWN CLOCK CONTROLLERS ---
     function resetAndStartTimerEngine() {
         clearInterval(examTimerInterval);
         examTimerInterval = setInterval(() => {
             secondsRemaining--;
             let mins = Math.floor(secondsRemaining / 60);
             let secs = secondsRemaining % 60;
-            
+
             document.getElementById('cbtClockDisplay').innerText = 
                 `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 
@@ -639,12 +492,12 @@ Verified Answer Index: Option ${data.a} (${data.o[data.a]})`;
 
             if (secondsRemaining <= 0) {
                 clearInterval(examTimerInterval);
+                alert("Time's up! Your examination data is being evaluated automatically.");
                 terminateExamAssessmentSession();
             }
         }, 1000);
     }
 
-    // --- SESSION FINALIZE ANALYTICS SUMMARY MATRIX ---
     function terminateExamAssessmentSession() {
         clearInterval(examTimerInterval);
         let correctTallyCount = 0;
@@ -654,14 +507,14 @@ Verified Answer Index: Option ${data.a} (${data.o[data.a]})`;
         });
 
         const performancePercentage = compiledExamPool.length > 0 ? Math.round((correctTallyCount / compiledExamPool.length) * 100) : 0;
-        
+
         document.getElementById('runtimeEnginePanel').style.display = "none";
         document.getElementById('scoreEvaluationPanel').style.display = "block";
-        
+
         document.getElementById('percentagePerformanceMetric').innerText = `${performancePercentage}%`;
         document.getElementById('scoreSummaryFeedbackText').innerText = 
-            `You correctly evaluated ${correctTallyCount} out of ${compiledExamPool.length} active syllabus past exam items under this testing framework profile segment constraint.`;
-            
+            `You correctly evaluated ${correctTallyCount} out of ${compiledExamPool.length} active syllabus past exam items.`;
+
         const scoreCircleBorder = document.getElementById('percentagePerformanceMetric');
         if(performancePercentage >= 70) {
             scoreCircleBorder.style.borderColor = "var(--success)";
