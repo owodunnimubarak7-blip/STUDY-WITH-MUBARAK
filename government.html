@@ -3,938 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master Portal | STUDY-WITH-MUBARAK</title>
+<title>GOVPRO ULTIMATE CBT v2 | STUDY-WITH-MUBARAK</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
-    --primary: #2563eb;
-    --secondary: #0f172a;
-    --accent: #10b981;
-    --danger: #ef4444;
-    --gold: #f59e0b;
-    --purple: #8b5cf6;
-    --cyan: #06b6d4;
+    --primary: #1d4ed8; --accent: #059669; --danger: #dc2626; --warning: #d97706;
+    --bg: #f1f5f9; --card: rgba(255,255,255,0.9);
 }
-
-* { box-sizing: border-box; }
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: #f1f5f9;
-    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-    margin: 0;
-    color: var(--secondary);
-}
-
-header {
-    background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
-    color: white;
-    padding: 30px 20px;
-    text-align: center;
-    border-bottom: 5px solid var(--primary);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-
-header h1 { margin: 0; font-size: 2.5rem; }
-header p { margin: 5px 0 0 0; opacity: 0.9; }
-
-.container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-
-.glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    animation: slideIn 0.4s ease;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-
-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--secondary);
-}
-
-select, input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 2px solid #ddd;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-select:focus, input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.difficulty-selector {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.difficulty-btn {
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    background: white;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.difficulty-btn.easy { color: var(--accent); }
-.difficulty-btn.medium { color: var(--gold); }
-.difficulty-btn.hard { color: var(--danger); }
-
-.difficulty-btn.selected {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.q-meta {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-.badge {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.badge-topic { background: var(--primary); color: white; }
-.badge-year { background: var(--gold); color: var(--secondary); }
-.badge-difficulty {
-    padding: 4px 12px;
-    font-size: 0.7rem;
-    border-radius: 15px;
-}
-.badge-difficulty.easy { background: #d1fae5; color: #065f46; }
-.badge-difficulty.medium { background: #fef3c7; color: #92400e; }
-.badge-difficulty.hard { background: #fee2e2; color: #7f1d1d; }
-
-#quiz-ui { display: none; }
-
-.quiz-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-    padding: 0 0 20px 0;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-.quiz-header-item {
-    text-align: center;
-}
-
-.quiz-header-label {
-    font-size: 0.875rem;
-    color: #64748b;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.quiz-header-value {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-top: 5px;
-}
-
-#timer { color: var(--danger); font-weight: 900; }
-#timer.warning { animation: pulse 1s infinite; }
-
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-.q-card {
-    background: white;
-    padding: 40px;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border-left: 15px solid var(--primary);
-    animation: slideIn 0.4s ease;
-}
-
-.option {
-    padding: 15px;
-    border: 2px solid #f1f5f9;
-    border-radius: 12px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: white;
-}
-
-.option:hover:not(.disabled) {
-    border-color: var(--primary);
-    background: #eff6ff;
-    transform: translateX(5px);
-}
-
-.option.selected {
-    border-color: var(--primary);
-    background: #eff6ff;
-    font-weight: 800;
-}
-
-.option.correct {
-    background: #dcfce7;
-    border-color: var(--accent);
-    color: #166534;
-}
-
-.option.wrong {
-    background: #fee2e2;
-    border-color: var(--danger);
-    color: #991b1b;
-}
-
-.option.disabled { cursor: not-allowed; opacity: 0.8; }
-
-.flag-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    float: right;
-    margin-bottom: 15px;
-    transition: transform 0.3s;
-}
-
-.flag-btn:hover { transform: scale(1.3); }
-.flag-btn.flagged { color: var(--danger); }
-
-.nav-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-top: 25px;
-}
-
-.btn {
-    padding: 15px;
-    border-radius: 10px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 0.95rem;
-}
-
-.btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn-prev { background: #e2e8f0; color: var(--secondary); }
-.btn-next { background: var(--primary); color: white; }
-.btn-submit {
-    background: var(--accent);
-    color: white;
-    grid-column: span 3;
-    font-size: 1.1rem;
-}
-
-.jump-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 30px;
-}
-
-.jump-box {
-    width: 40px;
-    height: 40px;
-    background: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s;
-}
-
-.jump-box:hover { border-color: var(--primary); transform: scale(1.1); }
-.jump-box.active { background: var(--primary); color: white; border-color: var(--primary); }
-.jump-box.done { background: #dcfce7; border-color: var(--accent); }
-.jump-box.flagged { background: #fee2e2; border-color: var(--danger); }
-
-.explanation {
-    background: #f0fdf4;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-    border-left: 4px solid var(--accent);
-    display: none;
-    animation: slideIn 0.4s ease;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.stat-card {
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(16, 185, 129, 0.1));
-    padding: 20px;
-    border-radius: 12px;
-    border-left: 4px solid var(--primary);
-}
-
-.stat-label { font-size: 0.875rem; color: #64748b; font-weight: 600; }
-.stat-value {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--primary);
-    margin-top: 5px;
-}
-
-.results-screen {
-    display: none;
-}
-
-.result-banner {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--cyan) 100%);
-    color: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.result-banner h2 { margin: 0; font-size: 2.5rem; }
-.result-banner p { margin: 10px 0 0 0; opacity: 0.9; }
-
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 90%;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    float: right;
-    color: #64748b;
-}
-
-.action-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-secondary { background: #e2e8f0; color: var(--secondary); }
-
-@media(max-width: 768px) {
-    header h1 { font-size: 1.8rem; }
-    .form-grid { grid-template-columns: 1fr; }
-    .q-card { padding: 20px; }
-    .nav-footer { grid-template-columns: 1fr 1fr; }
-    .btn-submit { grid-column: span 2; }
-    .quiz-header { grid-template-columns: 1fr; }
-    .jump-box { width: 35px; height: 35px; font-size: 0.85rem; }
-}
-
-@media(max-width: 600px) {
-    .option { padding: 12px; font-size: 0.95rem; }
-    .nav-footer { grid-template-columns: 1fr; }
-    .btn-submit { grid-column: span 1; }
-}
-
-.keyboard-hint {
-    font-size: 0.75rem;
-    color: #94a3b8;
-    margin-top: 5px;
-}
+[data-theme="dark"] { --bg: #0f172a; --card: rgba(30,41,59,0.9); color: #e2e8f0; }
+* { box-sizing: border-box; font-family: 'Manrope', sans-serif; }
+body { margin:0; background: var(--bg); }
+header { background: linear-gradient(135deg, var(--primary), #4338ca); color:white; padding:12px 30px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }
+.container { max-width: 1300px; margin:20px auto; padding:20px; display:grid; grid-template-columns: 1fr 340px; gap:20px; }
+@media(max-width:1000px){.container{grid-template-columns:1fr;} }
+.glass { background: var(--card); backdrop-filter: blur(20px); border-radius:20px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.1); }
+input, textarea, select { width:100%; padding:12px; border-radius:10px; border:2px solid #cbd5e1; margin-top:8px; font-weight:600; }
+.btn { padding:14px; border:none; border-radius:12px; font-weight:700; cursor:pointer; }
+.btn-primary { background: var(--primary); color:white; }
+.btn-danger { background: var(--danger); color:white; }
+.btn-success { background: var(--accent); color:white; }
+.timer { font-size:1.8rem; font-weight:900; color:var(--danger); }
+.options{display:grid; gap:12px; margin:20px 0;}
+.option{padding:16px; border:2px solid #e2e8f0; border-radius:14px; cursor:pointer;}
+.option.selected{border-color:var(--primary); background:#dbeafe; font-weight:700;}
+.palette{display:grid; grid-template-columns:repeat(5,1fr); gap:8px;}
+.p-box{aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:2px solid #cbd5e1; border-radius:10px; font-weight:700; cursor:pointer;}
+.p-box.current{background:var(--primary); color:white;}
+.p-box.answered{background:var(--accent); color:white;}
+.modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000;}
+.modal-content{background:var(--card); padding:30px; border-radius:20px; width:95%; max-width:900px; max-height:90vh; overflow-y:auto;}
+.admin-table { width:100%; border-collapse:collapse; }
+.admin-table td,.admin-table th { border:1px solid #ddd; padding:8px; font-size:0.85rem; }
 </style>
 </head>
 <body>
 
-<header>
-    <h1>🎓 STUDY-WITH-MUBARAK</h1>
-    <p>Professional JAMB & SSCE Exam Engine</p>
-</header>
-
-<div class="container">
-    <!-- Setup Screen -->
-    <div id="setup-screen" class="glass-card">
-        <h2>📋 Exam Configuration</h2>
-        <div class="form-grid">
-            <div>
-                <label>Category</label>
-                <select id="exam-cat">
-                    <option value="JAMB">JAMB (UTME)</option>
-                    <option value="SSCE">SSCE (WAEC/NECO)</option>
-                </select>
-            </div>
-            <div>
-                <label>Year</label>
-                <select id="exam-year">
-                    <option value="all">All Years</option>
-                </select>
-            </div>
-            <div style="grid-column: span 2;">
-                <label>Topic Focus</label>
-                <select id="exam-topic">
-                    <option value="all">All Topics Combined</option>
-                </select>
-            </div>
-            <div style="grid-column: span 2;">
-                <label>Difficulty Level</label>
-                <div class="difficulty-selector">
-                    <button class="difficulty-btn easy selected" onclick="setDifficulty('all')">All Levels</button>
-                    <button class="difficulty-btn easy" onclick="setDifficulty('easy')">Easy</button>
-                    <button class="difficulty-btn medium" onclick="setDifficulty('medium')">Medium</button>
-                    <button class="difficulty-btn hard" onclick="setDifficulty('hard')">Hard</button>
-                </div>
-            </div>
-        </div>
-        <button class="btn" style="width: 100%; background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; font-size: 1.1rem; margin-top: 20px;" onclick="startExam()">🚀 Start Examination</button>
-        <button class="btn btn-secondary" style="width: 100%; margin-top: 10px;" onclick="showHistory()">📊 View History</button>
-    </div>
-
-    <!-- Quiz Screen -->
-    <div id="quiz-ui">
-        <div class="quiz-header">
-            <div class="quiz-header-item">
-                <div class="quiz-header-label">Progress</div>
-                <div class="quiz-header-value" id="progress">1/10</div>
-            </div>
-            <div class="quiz-header-item">
-                <div class="quiz-header-label">Score</div>
-                <div class="quiz-header-value" id="current-score">0/0</div>
-            </div>
-            <div class="quiz-header-item">
-                <div class="quiz-header-label">Time</div>
-                <div class="quiz-header-value" id="timer">20:00</div>
-            </div>
-        </div>
-
-        <div class="q-card">
-            <button class="flag-btn" id="flag-btn" onclick="toggleFlag()">🚩</button>
-            <div style="clear: both;"></div>
-
-            <div class="q-meta">
-                <span id="badge-topic" class="badge badge-topic">Topic</span>
-                <span id="badge-year" class="badge badge-year">2022</span>
-                <span id="badge-difficulty" class="badge badge-difficulty">Difficulty</span>
-            </div>
-
-            <h3 id="q-text" style="margin-top: 0;">Loading Question...</h3>
-            <div id="options-box"></div>
-            <div id="exp-box" class="explanation"></div>
-
-            <div class="nav-footer">
-                <button id="prev-btn" class="btn btn-prev" onclick="nav(-1)">← Previous</button>
-                <button id="mark-btn" class="btn btn-secondary" onclick="toggleFlag()" style="background: #fff3cd; color: #664d03;">⭐ Mark</button>
-                <button id="next-btn" class="btn btn-next" onclick="nav(1)">Next →</button>
-                <button class="btn btn-submit" onclick="finish()">✅ Submit Exam</button>
-            </div>
-
-            <div style="text-align: center; margin-top: 15px; color: #64748b; font-size: 0.85rem;">
-                Use <kbd>←</kbd> <kbd>→</kbd> to navigate or press <kbd>1</kbd>-<kbd>4</kbd> to select answers
-            </div>
-        </div>
-
-        <div class="jump-grid" id="jump-grid"></div>
-    </div>
-
-    <!-- Results Screen -->
-    <div id="results-screen" class="results-screen">
-        <div class="result-banner">
-            <h2 id="result-title">Excellent! 🎉</h2>
-            <p id="result-subtitle">Your performance analysis</p>
-        </div>
-
-        <div class="glass-card">
-            <div class="stats-grid" id="stats-container"></div>
-
-            <h3 style="margin-top: 30px; border-top: 2px solid #e2e8f0; padding-top: 20px;">Performance Breakdown</h3>
-            <div id="performance-details"></div>
-
-            <div class="action-buttons" style="margin-top: 30px;">
-                <button class="btn btn-secondary" onclick="retakeExam()">🔄 Retake Exam</button>
-                <button class="btn" style="background: var(--primary); color: white;" onclick="goHome()">🏠 Home</button>
-            </div>
-        </div>
-    </div>
+<!-- LOGIN + ADMIN BUTTON -->
+<div id="login-screen" class="glass" style="max-width:450px; margin:80px auto;">
+    <h2>🏛️ GOVPRO CBT Login</h2>
+    <label>Full Name</label><input id="student-name">
+    <label>Exam Mode</label>
+    <select id="exam-mode">
+        <option value="jamb">JAMB - 40Q / 40min</option>
+        <option value="waec">WAEC - 50Q / 60min</option>
+        <option value="practice">Practice - 100Q</option>
+    </select>
+    <button class="btn btn-primary" style="width:100%; margin-top:15px;" onclick="startSession()">Start Examination</button>
+    <button class="btn" style="width:100%; margin-top:10px; background:#e2e8f0;" onclick="openAdmin()">⚙️ Admin Panel</button>
 </div>
 
-<!-- History Modal -->
-<div id="history-modal" class="modal-overlay" onclick="closeHistory(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-        <button class="close-btn" onclick="closeHistory()">×</button>
-        <h2>📊 Session History</h2>
-        <div id="history-list"></div>
-        <button class="btn btn-secondary" style="width: 100%; margin-top: 20px;" onclick="closeHistory()">Close</button>
+<!-- ADMIN PANEL -->
+<div class="modal" id="admin-modal">
+<div class="modal-content">
+    <h2>⚙️ Admin Panel - Question Manager</h2>
+    <button class="btn btn-success" onclick="showAddForm()">+ Add New Question</button>
+    <button class="btn" onclick="exportQuestions()">📤 Export JSON</button>
+    <button class="btn" onclick="closeModal('admin-modal')">Close</button>
+
+    <h3 style="margin-top:20px;">Bulk Import</h3>
+    <textarea id="bulk-import" rows="5" placeholder='[{"q":"...","a":["A","B"],"c":0,"t":"Topic","e":"..."}]'></textarea>
+    <button class="btn btn-primary" onclick="importQuestions()">Import</button>
+
+    <h3 style="margin-top:20px;">All Questions (<span id="q-count">0</span>)</h3>
+    <input id="search-q" placeholder="Search questions..." onkeyup="renderAdminTable()">
+    <table class="admin-table"><thead><tr><th>#</th><th>Question</th><th>Topic</th><th>Action</th></tr></thead><tbody id="admin-table-body"></tbody></table>
+</div>
+</div>
+
+<!-- ADD/EDIT QUESTION FORM -->
+<div class="modal" id="question-form-modal">
+<div class="modal-content">
+    <h3 id="form-title">Add Question</h3>
+    <input id="f-q" placeholder="Question">
+    <input id="f-a0" placeholder="Option A"><input id="f-a1" placeholder="Option B">
+    <input id="f-a2" placeholder="Option C"><input id="f-a3" placeholder="Option D">
+    <label>Correct Answer Index 0-3</label><input id="f-c" type="number" min="0" max="3">
+    <input id="f-t" placeholder="Topic e.g. Democracy">
+    <input id="f-y" placeholder="Year e.g. 2020">
+    <textarea id="f-e" placeholder="Explanation"></textarea>
+    <button class="btn btn-success" onclick="saveQuestion()">Save</button>
+    <button class="btn" onclick="closeModal('question-form-modal')">Cancel</button>
+</div>
+</div>
+
+<!-- CBT SCREEN -->
+<div id="cbt-screen" style="display:none;">
+<header><h3 id="student-display">Student</h3><div class="timer" id="timer">40:00</div></header>
+<div class="container">
+    <div class="glass">
+        <div>Q <b id="q-num">1</b>/<b id="q-total">40</b> <button style="float:right" onclick="toggleFlag()">🚩</button></div>
+        <span style="background:var(--primary); color:white; padding:5px 10px; border-radius:20px; font-size:0.8rem;" id="topic-badge">Topic</span>
+        <h2 id="q-text">Loading...</h2>
+        <div class="options" id="options"></div>
+        <div id="explanation" style="display:none; background:#f0fdf4; padding:15px; border-radius:12px;"></div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:20px;">
+            <button class="btn" onclick="nav(-1)">← Prev</button>
+            <button class="btn" onclick="nav(1)">Next →</button>
+            <button class="btn btn-success" onclick="submitExam()">Submit</button>
+        </div>
+    </div>
+    <div class="glass"><h3>Palette</h3><div class="palette" id="palette"></div></div>
+</div>
+</div>
+
+<!-- RESULTS -->
+<div id="results-screen" style="display:none;" class="container">
+    <div class="glass" style="grid-column:span 2;">
+        <h2>📈 Result for <span id="result-name"></span></h2>
+        <h1 id="score">0%</h1>
+        <canvas id="topicChart"></canvas>
+        <button class="btn btn-primary" onclick="location.reload()">Retake</button>
     </div>
 </div>
 
 <script>
-// ============= ENHANCED QUESTIONS DATABASE =============
-const questions = [
-    {
-        q: "The first capital of Nigeria was?",
-        a: ["Lagos", "Abuja", "Calabar", "Lokoja"],
-        c: 2,
-        t: "Pre-Colonial Admin",
-        y: 2005,
-        type: "JAMB",
-        e: "Calabar served as the first capital of the Southern Protectorate.",
-        d: "medium"
-    },
-    {
-        q: "Which body conducts the SSCE in West Africa?",
-        a: ["NECO", "JAMB", "WAEC", "NABTEB"],
-        c: 2,
-        t: "Educational Bodies",
-        y: 2018,
-        type: "SSCE",
-        e: "WAEC (West African Examinations Council) conducts WASSCE.",
-        d: "easy"
-    },
-    {
-        q: "The Nok culture is associated with which historical period?",
-        a: ["Stone Age", "Iron Age", "Bronze Age", "Medieval Age"],
-        c: 1,
-        t: "Pre-Colonial Admin",
-        y: 2010,
-        type: "JAMB",
-        e: "The Nok culture flourished during the Iron Age in Nigeria.",
-        d: "hard"
-    },
-    {
-        q: "Which of these is NOT a function of government?",
-        a: ["Law-making", "Adjudication", "Entertainment", "Execution"],
-        c: 2,
-        t: "Political Systems",
-        y: 2012,
-        type: "JAMB",
-        e: "Entertainment is not a primary function of government.",
-        d: "easy"
-    },
-    {
-        q: "Federal system of government is best described as?",
-        a: ["Centralized power", "Divided power", "Unlimited power", "Religious power"],
-        c: 1,
-        t: "Political Systems",
-        y: 2015,
-        type: "SSCE",
-        e: "Federal government divides power between central and state governments.",
-        d: "medium"
-    },
-    {
-        q: "The executive arm of government is headed by?",
-        a: ["Chief Justice", "President/Governor", "Speaker", "Senate President"],
-        c: 1,
-        t: "Political Systems",
-        y: 2018,
-        type: "JAMB",
-        e: "The President/Governor heads the executive arm at federal/state level.",
-        d: "easy"
-    }
+// ====== 1. FULL QUESTION BANK - ADD 500+ HERE ======
+let fullQuestionBank = [
+    {q:"The first capital of Nigeria was?", a:["Lagos","Abuja","Calabar","Enugu"], c:2, t:"Pre-Colonial", y:2005, e:"Calabar was first capital of Southern Protectorate"},
+    {q:"Which body conducts JAMB?", a:["WAEC","NECO","JAMB","NABTEB"], c:2, t:"Educational Bodies", y:2018, e:"JAMB conducts UTME"},
+    {q:"The 1999 constitution is?", a:["Unitary","Federal","Confederal","Parliamentary"], c:1, t:"Constitution", y:2019, e:"Nigeria practices federalism"},
+    {q:"ECOWAS HQ is in?", a:["Abuja","Accra","Dakar","Lagos"], c:0, t:"International Org", y:2020, e:"Located in Abuja"},
+    {q:"One feature of democracy is?", a:["Decree","Free press","One party","Censorship"], c:1, t:"Democracy", y:2021, e:"Free press ensures accountability"},
+    // PASTE 495 MORE QUESTIONS HERE FOLLOWING SAME FORMAT
 ];
+let questionBank = JSON.parse(localStorage.getItem('govpro_questions')) || fullQuestionBank;
 
-// ============= STATE MANAGEMENT =============
-let session = [], cur = 0, answers = {}, isReview = false, timerLeft = 1200, timerInterval = null;
-let flaggedQuestions = new Set(), selectedDifficulty = 'all';
-let examStats = { startTime: null, endTime: null };
-
-// ============= INITIALIZATION =============
-window.addEventListener('keydown', handleKeyPress);
-
-window.onload = () => {
-    populateYears();
-    populateTopics();
-    loadExamHistory();
-};
-
-function populateYears() {
-    const yr = document.getElementById('exam-year');
-    for(let i = 2026; i >= 2000; i--) {
-        yr.innerHTML += `<option value="${i}">${i}</option>`;
-    }
-}
-
-function populateTopics() {
-    const topSelect = document.getElementById('exam-topic');
-    const uniqueTopics = [...new Set(questions.map(q => q.t.trim()))];
-    uniqueTopics.forEach(t => {
-        topSelect.innerHTML += `<option value="${t}">${t}</option>`;
+// ====== 2. ADMIN PANEL LOGIC ======
+let editingIndex = null;
+function openAdmin(){ document.getElementById('admin-modal').style.display='flex'; renderAdminTable(); }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function renderAdminTable(){
+    const tbody = document.getElementById('admin-table-body'); tbody.innerHTML='';
+    const search = document.getElementById('search-q').value.toLowerCase();
+    questionBank.filter(q=>q.q.toLowerCase().includes(search)).forEach((q,i)=>{
+        tbody.innerHTML += `<tr><td>${i+1}</td><td>${q.q}</td><td>${q.t}</td>
+        <td><button onclick="editQuestion(${i})">Edit</button> <button onclick="deleteQuestion(${i})">Delete</button></td></tr>`;
     });
+    document.getElementById('q-count').innerText = questionBank.length;
+}
+function showAddForm(){ editingIndex=null; document.getElementById('form-title').innerText='Add Question'; clearForm(); document.getElementById('question-form-modal').style.display='flex'; }
+function editQuestion(i){ editingIndex=i; const q=questionBank[i]; document.getElementById('form-title').innerText='Edit Question';
+    document.getElementById('f-q').value=q.q; q.a.forEach((opt,j)=>document.getElementById(`f-a${j}`).value=opt);
+    document.getElementById('f-c').value=q.c; document.getElementById('f-t').value=q.t; document.getElementById('f-y').value=q.y; document.getElementById('f-e').value=q.e;
+    document.getElementById('question-form-modal').style.display='flex';
+}
+function saveQuestion(){
+    const newQ = {
+        q:document.getElementById('f-q').value,
+        a:[f-a0.value,f-a1.value,f-a2.value,f-a3.value],
+        c:parseInt(f-c.value), t:f-t.value, y:parseInt(f-y.value), e:f-e.value
+    };
+    if(editingIndex===null) questionBank.push(newQ); else questionBank[editingIndex]=newQ;
+    localStorage.setItem('govpro_questions', JSON.stringify(questionBank)); closeModal('question-form-modal'); renderAdminTable();
+}
+function deleteQuestion(i){ if(confirm("Delete?")){ questionBank.splice(i,1); localStorage.setItem('govpro_questions', JSON.stringify(questionBank)); renderAdminTable(); } }
+function clearForm(){ ['f-q','f-a0','f-a1','f-a2','f-a3','f-c','f-t','f-y','f-e'].forEach(id=>document.getElementById(id).value=''); }
+function exportQuestions(){ const data=JSON.stringify(questionBank, null, 2); navigator.clipboard.writeText(data); alert("Copied to clipboard!"); }
+function importQuestions(){ try{ const data=JSON.parse(document.getElementById('bulk-import').value); questionBank=[...questionBank,...data]; localStorage.setItem('govpro_questions', JSON.stringify(questionBank)); alert("Imported!"); renderAdminTable(); }catch(e){alert("Invalid JSON")} }
+
+// ====== 3. CBT ENGINE LOGIC ======
+let student={}, examQ=[], cur=0, answers={}, flagged=new Set(), time=2400, timer;
+function startSession(){
+    student.name=document.getElementById('student-name').value||"Guest";
+    const mode=document.getElementById('exam-mode').value;
+    time=mode==='jamb'?2400:3600; let count=mode==='jamb'?40:50;
+    examQ=[...questionBank].sort(()=>0.5-Math.random()).slice(0,count);
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('cbt-screen').style.display='block';
+    document.getElementById('student-display').innerText=student.name;
+    document.getElementById('q-total').innerText=examQ.length;
+    buildPalette(); render(); startTimer();
+}
+function render(){ const q=examQ[cur]; document.getElementById('q-num').innerText=cur+1; document.getElementById('q-text').innerText=q.q; document.getElementById('topic-badge').innerText=q.t;
+    const box=document.getElementById('options'); box.innerHTML='';
+    q.a.forEach((opt,i)=>{ const div=document.createElement('div'); div.className='option'; if(answers[cur]===i)div.classList.add('selected');
+        div.innerHTML=`<b>${String.fromCharCode(65+i)}.</b> ${opt}`; div.onclick=()=>{answers[cur]=i; render(); updatePalette();}; box.appendChild(div); });
+    updatePalette();
+}
+function buildPalette(){ const p=document.getElementById('palette'); p.innerHTML=''; examQ.forEach((_,i)=>{ const d=document.createElement('div'); d.className='p-box'; d.innerText=i+1; d.onclick=()=>{cur=i; render();}; p.appendChild(d);}); }
+function updatePalette(){ document.querySelectorAll('.p-box').forEach((b,i)=>{ b.className='p-box'; if(i===cur)b.classList.add('current'); if(answers[i]!==undefined)b.classList.add('answered'); if(flagged.has(i))b.style.background='var(--warning)'; }); }
+function nav(d){ if(cur+d>=0 && cur+d<examQ.length){cur+=d; render();} }
+function toggleFlag(){ flagged.has(cur)?flagged.delete(cur):flagged.add(cur); updatePalette(); }
+function startTimer(){ clearInterval(timer); timer=setInterval(()=>{ if(time>0){time--; let m=Math.floor(time/60),s=time%60; document.getElementById('timer').innerText=`${m}:${s<10?'0':''}${s}`; } else submitExam(); },1000); }
+function submitExam(){ clearInterval(timer); document.getElementById('cbt-screen').style.display='none'; document.getElementById('results-screen').style.display='block';
+    let correct=Object.keys(answers).filter(i=>answers[i]===examQ[i].c).length; let percent=Math.round(correct/examQ.length*100);
+    document.getElementById('result-name').innerText=student.name; document.getElementById('score').innerText=percent+'%';
+    const topicStats={}; examQ.forEach((q,i)=>{ if(!topicStats[q.t])topicStats[q.t]={t:0,c:0}; topicStats[q.t].t++; if(answers[i]===q.c)topicStats[q.t].c++; });
+    new Chart(document.getElementById('topicChart'), { type:'bar', data:{ labels:Object.keys(topicStats), datasets:[{label:'Accuracy %', data:Object.values(topicStats).map(x=>Math.round(x.c/x.t*100))}] }});
 }
 
-function setDifficulty(level) {
-    selectedDifficulty = level;
-    document.querySelectorAll('.difficulty-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    event.target.classList.add('selected');
-}
-
-// ============= EXAM MANAGEMENT =============
-function startExam() {
-    clearInterval(timerInterval);
-
-    const cat = document.getElementById('exam-cat').value;
-    const topic = document.getElementById('exam-topic').value;
-    const year = document.getElementById('exam-year').value;
-
-    let filtered = questions.filter(q => q.type === cat);
-    if(topic !== 'all') filtered = filtered.filter(q => q.t.trim() === topic);
-    if(year !== 'all') filtered = filtered.filter(q => q.y == year);
-    if(selectedDifficulty !== 'all') filtered = filtered.filter(q => q.d === selectedDifficulty);
-
-    if(filtered.length === 0) {
-        alert("❌ No questions found for this selection!");
-        return;
-    }
-
-    session = filtered;
-    answers = {};
-    flaggedQuestions.clear();
-    cur = 0;
-    isReview = false;
-    timerLeft = session.length * 120; // 2 minutes per question
-    examStats = { startTime: new Date(), endTime: null };
-
-    document.getElementById('setup-screen').style.display = 'none';
-    document.getElementById('results-screen').style.display = 'none';
-    document.getElementById('quiz-ui').style.display = 'block';
-
-    buildGrid();
-    render();
-    startTimer();
-}
-
-// ============= RENDER FUNCTIONS =============
-function buildGrid() {
-    const grid = document.getElementById('jump-grid');
-    grid.innerHTML = '';
-    session.forEach((_, i) => {
-        const div = document.createElement('div');
-        div.id = `jump-${i}`;
-        div.className = 'jump-box';
-        div.textContent = i + 1;
-        div.onclick = () => jump(i);
-        grid.appendChild(div);
-    });
-}
-
-function updateJumpGrid() {
-    session.forEach((_, i) => {
-        const box = document.getElementById(`jump-${i}`);
-        if(!box) return;
-        box.className = 'jump-box';
-        if(i === cur) box.classList.add('active');
-        if(answers[i] !== undefined) box.classList.add('done');
-        if(flaggedQuestions.has(i)) box.classList.add('flagged');
-    });
-}
-
-function render() {
-    const q = session[cur];
-    document.getElementById('q-text').innerText = q.q;
-    document.getElementById('badge-topic').innerText = q.t;
-    document.getElementById('badge-year').innerText = q.y;
-    document.getElementById('badge-difficulty').innerText = q.d.toUpperCase();
-    document.getElementById('badge-difficulty').className = `badge badge-difficulty ${q.d}`;
-    document.getElementById('progress').innerText = `${cur + 1}/${session.length}`;
-
-    // Update score display
-    const correct = Object.keys(answers).filter(i => answers[i] === session[i].c).length;
-    document.getElementById('current-score').innerText = `${correct}/${Object.keys(answers).length}`;
-
-    document.getElementById('prev-btn').disabled = cur === 0;
-    document.getElementById('next-btn').disabled = cur === session.length - 1;
-
-    // Update flag button
-    const flagBtn = document.getElementById('flag-btn');
-    flagBtn.classList.remove('flagged');
-    if(flaggedQuestions.has(cur)) flagBtn.classList.add('flagged');
-
-    const box = document.getElementById('options-box');
-    box.innerHTML = '';
-    q.a.forEach((opt, i) => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.setAttribute('role', 'button');
-        div.setAttribute('tabindex', '0');
-        div.setAttribute('data-index', i);
-
-        if(answers[cur] === i) div.classList.add('selected');
-
-        if(isReview) {
-            div.classList.add('disabled');
-            if(i === q.c) div.classList.add('correct');
-            else if(answers[cur] === i) div.classList.add('wrong');
-            div.innerHTML = `<strong>${i === q.c ? "✓" : (answers[cur] === i ? "✗" : "")}</strong> ${opt}`;
-        } else {
-            div.innerHTML = opt;
-            div.onclick = () => selectOption(i);
-            div.onkeypress = (e) => {
-                if(e.key === 'Enter' || e.key === ' ') selectOption(i);
-            };
-        }
-        box.appendChild(div);
-    });
-
-    const eb = document.getElementById('exp-box');
-    if(isReview) {
-        eb.style.display = 'block';
-        eb.innerHTML = `<strong>💡 Explanation:</strong> ${q.e}`;
-    } else {
-        eb.style.display = 'none';
-    }
-
-    updateJumpGrid();
-}
-
-// ============= USER INTERACTIONS =============
-function selectOption(i) {
-    if(isReview) return;
-    answers[cur] = i;
-    render();
-}
-
-function toggleFlag() {
-    if(flaggedQuestions.has(cur)) {
-        flaggedQuestions.delete(cur);
-    } else {
-        flaggedQuestions.add(cur);
-    }
-    render();
-}
-
-function nav(s) {
-    if(cur + s >= 0 && cur + s < session.length) {
-        cur += s;
-        render();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-}
-
-function jump(i) {
-    cur = i;
-    render();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ============= KEYBOARD NAVIGATION =============
-function handleKeyPress(e) {
-    if(!session.length || document.getElementById('quiz-ui').style.display === 'none') return;
-
-    // Arrow keys for navigation
-    if(e.key === 'ArrowLeft') { e.preventDefault(); nav(-1); }
-    if(e.key === 'ArrowRight') { e.preventDefault(); nav(1); }
-
-    // Number keys for answers
-    if(['1', '2', '3', '4'].includes(e.key) && !isReview) {
-        e.preventDefault();
-        selectOption(parseInt(e.key) - 1);
-    }
-
-    // Flag with 'f'
-    if(e.key.toLowerCase() === 'f') {
-        e.preventDefault();
-        toggleFlag();
-    }
-}
-
-// ============= TIMER =============
-function startTimer() {
-    clearInterval(timerInterval);
-    updateTimerDisplay();
-    timerInterval = setInterval(() => {
-        if(timerLeft > 0 && !isReview) {
-            timerLeft--;
-            updateTimerDisplay();
-            if(timerLeft === 300) document.getElementById('timer').classList.add('warning'); // 5 min warning
-        }
-        if(timerLeft === 0 && !isReview) {
-            finish();
-        }
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    let m = Math.floor(timerLeft / 60);
-    let s = timerLeft % 60;
-    document.getElementById('timer').innerText = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-}
-
-// ============= EXAM COMPLETION =============
-function finish() {
-    clearInterval(timerInterval);
-    examStats.endTime = new Date();
-
-    const answered = Object.keys(answers).length;
-    const correct = Object.keys(answers).filter(i => answers[i] === session[i].c).length;
-
-    if(!isReview && answered < session.length) {
-        if(!confirm(`You have answered ${answered} of ${session.length} questions. Submit anyway?`)) {
-            startTimer();
-            return;
-        }
-    }
-
-    isReview = true;
-    cur = 0;
-    render();
-    showResults(correct, answered);
-
-    // Save to history
-    saveToHistory(correct, answered);
-}
-
-function showResults(correct, total) {
-    document.getElementById('quiz-ui').style.display = 'none';
-    document.getElementById('results-screen').style.display = 'block';
-
-    const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
-
-    document.getElementById('result-title').innerHTML = percentage >= 70 ? '🎉 Excellent!' : percentage >= 50 ? '👍 Good!' : '💪 Keep Practicing!';
-    document.getElementById('result-subtitle').innerText = `You scored ${correct}/${total} (${percentage}%)`;
-
-    const stats = `
-        <div class="stat-card">
-            <div class="stat-label">Total Questions</div>
-            <div class="stat-value">${total}</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Correct Answers</div>
-            <div class="stat-value" style="color: var(--accent);">${correct}</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Score Percentage</div>
-            <div class="stat-value" style="color: var(--primary);">${percentage}%</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Time Taken</div>
-            <div class="stat-value">${Math.floor((examStats.endTime - examStats.startTime) / 1000 / 60)} min</div>
-        </div>
-    `;
-
-    document.getElementById('stats-container').innerHTML = stats;
-
-    // Performance by topic
-    const topicStats = {};
-    session.forEach((q, i) => {
-        if(!topicStats[q.t]) topicStats[q.t] = { total: 0, correct: 0 };
-        topicStats[q.t].total++;
-        if(answers[i] === q.c) topicStats[q.t].correct++;
-    });
-
-    let details = '<table style="width: 100%; border-collapse: collapse;"><tr><th style="text-align: left; padding: 10px; border-bottom: 2px solid #ddd;">Topic</th><th style="text-align: right; padding: 10px; border-bottom: 2px solid #ddd;">Score</th></tr>';
-    Object.keys(topicStats).forEach(topic => {
-        const stats = topicStats[topic];
-        const pct = Math.round((stats.correct / stats.total) * 100);
-        details += `<tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${topic}</td><td style="text-align: right; padding: 10px; border-bottom: 1px solid #e2e8f0; color: ${pct >= 70 ? 'var(--accent)' : 'var(--danger)'}; font-weight: 600;">${stats.correct}/${stats.total} (${pct}%)</td></tr>`;
-    });
-    details += '</table>';
-
-    document.getElementById('performance-details').innerHTML = details;
-}
-
-function retakeExam() {
-    document.getElementById('results-screen').style.display = 'none';
-    document.getElementById('setup-screen').style.display = 'block';
-}
-
-function goHome() {
-    document.getElementById('results-screen').style.display = 'none';
-    document.getElementById('setup-screen').style.display = 'block';
-    selectedDifficulty = 'all';
-}
-
-// ============= HISTORY & STORAGE =============
-function saveToHistory(correct, total) {
-    let history = JSON.parse(localStorage.getItem('examHistory') || '[]');
-    history.unshift({
-        date: new Date().toLocaleString(),
-        correct,
-        total,
-        percentage: Math.round((correct / total) * 100),
-        duration: Math.floor((examStats.endTime - examStats.startTime) / 1000 / 60)
-    });
-    if(history.length > 20) history.pop(); // Keep only last 20
-    localStorage.setItem('examHistory', JSON.stringify(history));
-}
-
-function loadExamHistory() {
-    // Called on page load
-}
-
-function showHistory() {
-    const history = JSON.parse(localStorage.getItem('examHistory') || '[]');
-    let html = '';
-
-    if(history.length === 0) {
-        html = '<p style="text-align: center; color: #94a3b8;">No exam attempts yet. Start an exam to build history!</p>';
-    } else {
-        html = '<table style="width: 100%; border-collapse: collapse;"><tr><th style="text-align: left; padding: 10px; border-bottom: 2px solid #ddd;">Date</th><th style="text-align: center; padding: 10px; border-bottom: 2px solid #ddd;">Score</th><th style="text-align: center; padding: 10px; border-bottom: 2px solid #ddd;">Time</th></tr>';
-        history.forEach(entry => {
-            html += `<tr><td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">${entry.date}</td><td style="text-align: center; padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 600;">${entry.correct}/${entry.total} (${entry.percentage}%)</td><td style="text-align: center; padding: 10px; border-bottom: 1px solid #e2e8f0;">${entry.duration} min</td></tr>`;
-        });
-        html += '</table>';
-    }
-
-    document.getElementById('history-list').innerHTML = html;
-    document.getElementById('history-modal').style.display = 'flex';
-}
-
-function closeHistory(e) {
-    if(e && e.target !== document.getElementById('history-modal')) return;
-    document.getElementById('history-modal').style.display = 'none';
-}
+// Keyboard
+document.addEventListener('keydown', e=>{ if(['1','2','3','4'].includes(e.key)) {answers[cur]=parseInt(e.key)-1; render();} if(e.key==='ArrowRight')nav(1); if(e.key==='ArrowLeft')nav(-1); });
 </script>
 </body>
 </html>
