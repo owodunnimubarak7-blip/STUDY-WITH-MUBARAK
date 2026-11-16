@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STUDY WITH MUBARAK | Ace Your UTME & SSCE Exams</title>
-  <meta name="description" content="Master JAMB UTME, WAEC, and NECO with realistic CBT simulations, instant explanations, and smart performance tracking." />
+  <title>STUDY WITH MUBARAK | World-Class UTME & SSCE CBT Portal</title>
+  <meta name="description" content="Conquer JAMB UTME, WAEC, and NECO with immersive CBT exam simulations, AI explanations, and smart analytics." />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-dark: #070b14;
-      --bg-card: rgba(17, 25, 40, 0.72);
+      --bg-dark: #040812;
+      --bg-card: rgba(13, 20, 35, 0.78);
       --border-glass: rgba(255, 255, 255, 0.1);
-      --primary: #10b981;       /* Emerald Green */
+      --primary: #10b981;       /* Emerald */
       --primary-hover: #059669;
       --accent: #38bdf8;        /* Sky Blue */
-      --gold: #f59e0b;          /* Amber Gold */
+      --gold: #f59e0b;          /* Gold */
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --radius-lg: 20px;
-      --radius-md: 12px;
+      --radius-lg: 24px;
+      --radius-md: 14px;
     }
 
     * {
@@ -40,9 +40,9 @@
       overflow-x: hidden;
       line-height: 1.6;
       background-image:
-        radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.14), transparent 35%),
-        radial-gradient(circle at 85% 25%, rgba(56, 189, 248, 0.12), transparent 40%),
-        radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.08), transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.16), transparent 35%),
+        radial-gradient(circle at 90% 15%, rgba(56, 189, 248, 0.14), transparent 40%),
+        radial-gradient(circle at 50% 85%, rgba(245, 158, 11, 0.08), transparent 45%);
     }
 
     h1, h2, h3, .brand-font {
@@ -52,32 +52,32 @@
     .bg-grid {
       position: fixed;
       inset: 0;
-      background-size: 40px 40px;
+      background-size: 48px 48px;
       background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      mask-image: radial-gradient(ellipse at center, black 45%, transparent 85%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 45%, transparent 85%);
       z-index: -1;
       pointer-events: none;
     }
 
     .container {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 24px;
     }
 
     /* Navbar */
     header {
-      padding: 20px 0;
+      padding: 18px 0;
       border-bottom: 1px solid var(--border-glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(7, 11, 20, 0.75);
+      background: rgba(4, 8, 18, 0.85);
     }
 
     .nav-wrap {
@@ -96,22 +96,22 @@
     }
 
     .logo-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       display: grid;
       place-items: center;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: #04100b;
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
     }
 
     .logo-text {
       font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: 0.4px;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
     }
 
     .logo-text span {
@@ -130,26 +130,32 @@
       gap: 10px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border-glass);
-      padding: 6px 14px 6px 6px;
+      padding: 6px 16px 6px 8px;
       border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
-    .user-pill img {
+    .avatar-circle-sm {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      object-fit: cover;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #04100b;
+      font-weight: 800;
+      font-size: 0.8rem;
+      display: grid;
+      place-items: center;
     }
 
     .btn-signout {
       background: transparent;
       border: 1px solid rgba(239, 68, 68, 0.4);
       color: #fca5a5;
-      padding: 6px 12px;
+      padding: 7px 14px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -160,10 +166,10 @@
 
     /* Hero Section */
     .hero {
-      padding: 64px 0 48px;
+      padding: 60px 0 50px;
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 48px;
+      gap: 50px;
       align-items: center;
     }
 
@@ -171,14 +177,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 999px;
       background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       color: #6ee7b7;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .badge-dot {
@@ -186,14 +192,14 @@
       height: 8px;
       border-radius: 50%;
       background: var(--primary);
-      box-shadow: 0 0 8px var(--primary);
+      box-shadow: 0 0 10px var(--primary);
     }
 
     .hero h1 {
-      font-size: clamp(2.1rem, 4.2vw, 3.35rem);
-      line-height: 1.15;
+      font-size: clamp(2.3rem, 4.5vw, 3.6rem);
+      line-height: 1.12;
       font-weight: 800;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       letter-spacing: -0.02em;
     }
 
@@ -205,40 +211,47 @@
 
     .hero p {
       color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 560px;
+      font-size: 1.1rem;
+      max-width: 580px;
       margin-bottom: 32px;
     }
 
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
       padding-top: 24px;
       border-top: 1px solid var(--border-glass);
     }
 
-    .stat-item h3 {
-      font-size: 1.45rem;
+    .stat-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glass);
+      padding: 16px;
+      border-radius: var(--radius-md);
+    }
+
+    .stat-card h3 {
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--text-main);
     }
 
-    .stat-item p {
-      font-size: 0.82rem;
+    .stat-card p {
+      font-size: 0.8rem;
       color: var(--text-muted);
       margin: 0;
     }
 
-    /* Auth / Welcome Glass Card */
+    /* Grand Auth Card */
     .auth-card {
       background: var(--bg-card);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 36px 30px;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      padding: 36px 32px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
       position: relative;
       overflow: hidden;
     }
@@ -253,82 +266,84 @@
       background: linear-gradient(90deg, var(--primary), var(--accent), var(--gold));
     }
 
-    /* State 1: Signed Out */
-    .signin-view {
-      text-align: center;
-    }
-
+    /* Signed Out Form View */
     .signin-view h2 {
       font-size: 1.55rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .signin-view p {
       color: var(--text-muted);
       font-size: 0.92rem;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
-    /* Custom Google Sign-In Button */
-    .btn-google-auth {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      width: 100%;
-      background: #ffffff;
-      color: #1f2937;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 999px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.98rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-      transition: transform 0.2s ease, background 0.2s ease;
-      margin-bottom: 20px;
+    .form-group {
+      margin-bottom: 16px;
     }
 
-    .btn-google-auth:hover {
-      background: #f8fafc;
-      transform: translateY(-2px);
-    }
-
-    .btn-google-auth svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-muted);
+    .form-group label {
+      display: block;
       font-size: 0.78rem;
-      margin: 20px 0;
-    }
-
-    .divider::before, .divider::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--border-glass);
-    }
-
-    .guest-note {
-      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
-    /* State 2: Signed In Dashboard Card */
+    .form-input, .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .form-select option {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-create-profile {
+      width: 100%;
+      padding: 15px 24px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: linear-gradient(135deg, var(--primary), #059669);
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-create-profile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Signed In Welcome Dashboard View */
     .welcome-view {
       display: none;
-      animation: fadeUp 0.45s ease forwards;
+      animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -339,23 +354,28 @@
       margin-bottom: 22px;
     }
 
-    .profile-avatar {
+    .profile-avatar-lg {
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      border: 2px solid var(--primary);
-      padding: 2px;
-      object-fit: cover;
-      background: #1e293b;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #04100b;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
     }
 
     .time-greeting {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--primary);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 2px;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
     }
 
     .user-fullname {
@@ -364,19 +384,21 @@
       line-height: 1.2;
     }
 
-    .user-email {
-      font-size: 0.82rem;
-      color: var(--text-muted);
+    .user-target {
+      font-size: 0.84rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 2px;
     }
 
     .motivation-box {
       background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.22);
+      border: 1px solid rgba(16, 185, 129, 0.25);
       border-radius: var(--radius-md);
       padding: 14px 16px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #d1fae5;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .btn-get-started {
@@ -395,151 +417,57 @@
       font-weight: 700;
       text-decoration: none;
       cursor: pointer;
-      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn-get-started:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 14px 32px rgba(16, 185, 129, 0.6);
     }
 
-    .btn-get-started svg {
-      transition: transform 0.2s ease;
+    /* Subject Quick-Launch Strip */
+    .subjects-section {
+      padding: 20px 0 40px;
     }
 
-    .btn-get-started:hover svg {
-      transform: translateX(4px);
-    }
-
-    /* Gorgeous Google Sign-In Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(3, 7, 18, 0.8);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 20px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-box {
-      background: #0f172a;
-      border: 1px solid var(--border-glass);
-      width: 100%;
-      max-width: 420px;
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-      text-align: center;
-      position: relative;
-    }
-
-    .google-logo-icon {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 16px;
-      background: #ffffff;
-      border-radius: 50%;
+    .subjects-grid {
       display: grid;
-      place-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
     }
 
-    .modal-box h3 {
-      font-size: 1.35rem;
-      margin-bottom: 6px;
-    }
-
-    .modal-box p {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-    }
-
-    .form-group {
-      text-align: left;
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
+    .subject-chip {
+      background: rgba(17, 25, 40, 0.65);
       border: 1px solid var(--border-glass);
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
+      border-radius: var(--radius-md);
+      padding: 16px 12px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s ease;
     }
 
-    .form-input:focus {
+    .subject-chip:hover {
       border-color: var(--primary);
+      background: rgba(16, 185, 129, 0.1);
+      transform: translateY(-3px);
     }
 
-    .modal-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
+    .subject-chip span {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 6px;
     }
 
-    .btn-modal-cancel {
-      flex: 1;
-      padding: 12px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-glass);
-      background: transparent;
-      color: var(--text-muted);
+    .subject-chip strong {
+      font-size: 0.85rem;
       font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-modal-cancel:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-    }
-
-    .btn-modal-submit {
-      flex: 1.5;
-      padding: 12px;
-      border-radius: var(--radius-md);
-      border: none;
-      background: var(--primary);
-      color: #04100b;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-modal-submit:hover {
-      background: #059669;
-      color: #fff;
     }
 
     /* Features Grid */
     .features-section {
-      padding: 40px 0 80px;
+      padding: 30px 0 90px;
     }
 
     .section-title {
@@ -548,44 +476,44 @@
     }
 
     .section-title h2 {
-      font-size: 1.85rem;
+      font-size: 1.95rem;
       margin-bottom: 8px;
     }
 
     .section-title p {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.98rem;
     }
 
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      gap: 24px;
     }
 
     .feature-card {
-      background: rgba(17, 25, 40, 0.55);
+      background: rgba(17, 25, 40, 0.6);
       border: 1px solid var(--border-glass);
       border-radius: var(--radius-lg);
-      padding: 26px;
+      padding: 30px;
       transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
     .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(16, 185, 129, 0.4);
+      transform: translateY(-6px);
+      border-color: rgba(16, 185, 129, 0.5);
     }
 
     .feature-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       background: rgba(56, 189, 248, 0.12);
       color: var(--accent);
       display: grid;
       place-items: center;
-      font-size: 1.3rem;
-      margin-bottom: 16px;
+      font-size: 1.4rem;
+      margin-bottom: 18px;
     }
 
     .feature-card:nth-child(1) .feature-icon {
@@ -599,46 +527,42 @@
     }
 
     .feature-card h3 {
-      font-size: 1.12rem;
-      margin-bottom: 8px;
+      font-size: 1.18rem;
+      margin-bottom: 10px;
     }
 
     .feature-card p {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: var(--text-muted);
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border-glass);
-      padding: 28px 0;
+      padding: 32px 0;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
     }
 
-    /* Responsive */
-    @media (max-width: 920px) {
+    /* Responsive Design */
+    @media (max-width: 950px) {
       .hero {
         grid-template-columns: 1fr;
-        padding: 42px 0 36px;
+        padding: 40px 0;
         gap: 36px;
+      }
+      .subjects-grid {
+        grid-template-columns: repeat(3, 1fr);
       }
       .features-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 480px) {
-      .auth-card {
-        padding: 28px 20px;
-      }
-      .profile-header {
-        flex-direction: column;
-        text-align: center;
-      }
-      .user-pill span {
-        display: none;
+    @media (max-width: 520px) {
+      .subjects-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -646,7 +570,7 @@
 <body>
   <div class="bg-grid"></div>
 
-  <!-- Navigation Header -->
+  <!-- Header Navigation -->
   <header>
     <div class="container nav-wrap">
       <a href="#" class="logo">
@@ -656,89 +580,93 @@
 
       <div class="nav-actions">
         <div class="user-pill" id="navUserPill">
-          <img id="navAvatar" src="" alt="User" />
-          <span id="navUserName">Student</span>
+          <div class="avatar-circle-sm" id="navInitials">S</div>
+          <span id="navUserName">Scholar</span>
         </div>
         <button class="btn-signout" id="signOutBtn" style="display: none;" onclick="handleSignOut()">
-          Sign Out
+          Switch Student
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Hero Section -->
+  <!-- Main Content -->
   <main class="container">
     <section class="hero">
-      <!-- Left Column: Value Proposition -->
+      <!-- Left Column: Value Pitch -->
       <div>
         <div class="badge">
           <span class="badge-dot"></span>
-          UTME & SSCE Smart CBT Portal
+          100% Free UTME & SSCE CBT Simulator
         </div>
         <h1>
           Prepare Smarter. <br />
           Score <span class="gradient-text">300+ & Distinctions</span> with Confidence.
         </h1>
         <p>
-          Experience real-time Computer-Based Testing (CBT) built for Nigerian students. Practice English, Government, Economics, Literature, and Sciences with built-in timers, calculators, and AI-powered explanations.
+          Practice authentic Computer-Based Tests built for Nigerian students. Master English, Government, Economics, Literature, and Sciences with countdown timers, built-in calculators, and instant AI explanations.
         </p>
 
-        <div class="stats-row">
-          <div class="stat-item">
+        <div class="stats-grid">
+          <div class="stat-card">
             <h3>10,000+</h3>
-            <p>Past & Model Questions</p>
+            <p>Past Questions</p>
           </div>
-          <div class="stat-item">
-            <h3>100% Free</h3>
-            <p>Zero Subscription Fees</p>
+          <div class="stat-card">
+            <h3>Zero</h3>
+            <p>Data / Server Lag</p>
           </div>
-          <div class="stat-item">
+          <div class="stat-card">
             <h3>AI Tutor</h3>
-            <p>Instant Step-by-Step Solutions</p>
+            <p>Instant Explanations</p>
           </div>
         </div>
       </div>
 
-      <!-- Right Column: Auth / Welcome Card -->
+      <!-- Right Column: Instant Local Student Card -->
       <div class="auth-card">
-        <!-- View 1: Signed Out -->
+        <!-- View 1: Quick Student Sign-In -->
         <div class="signin-view" id="signInView">
           <h2>Student Portal Access</h2>
-          <p>Sign in with your Google account to unlock your personalized study dashboard and enter the CBT hall.</p>
+          <p>Enter your name and target exam to personalize your CBT workspace instantly.</p>
 
-          <!-- Custom Google Sign-In Button -->
-          <button class="btn-google-auth" onclick="openLoginModal()">
-            <svg viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.19v3.15C3.17 21.32 7.23 24 12 24z"/>
-              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.19C.43 8.1 0 9.99 0 12s.43 3.9 1.19 5.42l4.09-3.15z"/>
-              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.17 2.68 1.19 6.58l4.09 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-            </svg>
-            Continue with Google
-          </button>
+          <form onsubmit="handleLocalSignIn(event)">
+            <div class="form-group">
+              <label for="studentName">Your Full Name</label>
+              <input type="text" id="studentName" class="form-input" placeholder="e.g. Owodunni Mubarak" required />
+            </div>
 
-          <div class="divider">SECURE ONE-TAP LOGIN</div>
-          <p class="guest-note">
-            Your progress and name are personalized instantly. No password required.
-          </p>
+            <div class="form-group">
+              <label for="examTarget">Target Examination</label>
+              <select id="examTarget" class="form-select">
+                <option value="JAMB UTME Candidate">JAMB UTME</option>
+                <option value="WAEC / NECO SSCE Candidate">WAEC / NECO SSCE</option>
+                <option value="UTME + SSCE Combined">Both UTME & SSCE</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-create-profile">
+              Unlock My Study Dashboard
+            </button>
+          </form>
         </div>
 
-        <!-- View 2: Signed In Dashboard Card -->
+        <!-- View 2: Signed In Welcome Dashboard View -->
         <div class="welcome-view" id="welcomeView">
           <div class="profile-header">
-            <img id="userAvatar" class="profile-avatar" src="" alt="Student Profile Picture" />
+            <div class="profile-avatar-lg" id="userInitials">OM</div>
             <div>
               <div class="time-greeting" id="timeGreeting">Good Day</div>
               <div class="user-fullname" id="userFullName">Student Name</div>
-              <div class="user-email" id="userEmail">student@gmail.com</div>
+              <div class="user-target" id="userExamBadge">JAMB UTME Candidate</div>
             </div>
           </div>
 
           <div class="motivation-box" id="motivationText">
-            Your CBT practice session is ready. Stay focused, manage your time well, and aim for excellence today!
+            Your CBT hall is ready. Stay calm, watch your timer, and aim for excellence!
           </div>
 
-          <!-- Get Started Button Redirecting to Main Study Portal -->
+          <!-- Get Started Button to Main Portal -->
           <a href="portal.html" id="getStartedBtn" class="btn-get-started">
             <span>Get Started to Study Portal</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -750,133 +678,125 @@
       </div>
     </section>
 
-    <!-- Core Features -->
+    <!-- Subject Quick-Launch Bar -->
+    <section class="subjects-section">
+      <div class="subjects-grid">
+        <a href="portal.html" class="subject-chip">
+          <span>📚</span>
+          <strong>Use of English</strong>
+        </a>
+        <a href="portal.html" class="subject-chip">
+          <span>⚖️</span>
+          <strong>Government</strong>
+        </a>
+        <a href="portal.html" class="subject-chip">
+          <span>📈</span>
+          <strong>Economics</strong>
+        </a>
+        <a href="portal.html" class="subject-chip">
+          <span>🎭</span>
+          <strong>Literature</strong>
+        </a>
+        <a href="portal.html" class="subject-chip">
+          <span>🧪</span>
+          <strong>Chemistry</strong>
+        </a>
+        <a href="portal.html" class="subject-chip">
+          <span>⚡</span>
+          <strong>Physics</strong>
+        </a>
+      </div>
+    </section>
+
+    <!-- Core Features Section -->
     <section class="features-section">
       <div class="section-title">
-        <h2>Engineered for Exam Excellence</h2>
-        <p>Everything you need to conquer WAEC, NECO, and JAMB UTME in one fast web app.</p>
+        <h2>Engineered for Top Scores</h2>
+        <p>Built from the ground up to run fast on any phone or computer.</p>
       </div>
 
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">⏱️</div>
-          <h3>Authentic CBT Simulation</h3>
-          <p>Practice under real exam conditions with countdown timers, question palettes, and instant automated grading.</p>
+          <h3>Realistic CBT Simulation</h3>
+          <p>Experience authentic exam conditions complete with countdown timers, subject navigation palettes, and instant automated scoring.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🤖</div>
-          <h3>AI Answer Breakdown</h3>
-          <p>Don't just memorize answers—understand why an option is right with clear, instant explanations.</p>
+          <h3>AI Answer Explanations</h3>
+          <p>Get instant, clear, step-by-step breakdowns for challenging questions so you understand the logic behind every answer.</p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">📱</div>
-          <h3>Mobile-First & Lightweight</h3>
-          <p>Optimized to load fast and run smoothly on any Android smartphone, tablet, or desktop computer.</p>
+          <h3>Zero-Lag Mobile Design</h3>
+          <p>Lightweight architecture that loads immediately even on slow mobile networks without external server delays.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Google Sign-In Popup Modal -->
-  <div class="modal-overlay" id="loginModal">
-    <div class="modal-box">
-      <div class="google-logo-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.19v3.15C3.17 21.32 7.23 24 12 24z"/>
-          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.19C.43 8.1 0 9.99 0 12s.43 3.9 1.19 5.42l4.09-3.15z"/>
-          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.23 0 3.17 2.68 1.19 6.58l4.09 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-        </svg>
-      </div>
-      <h3>Sign in with Google</h3>
-      <p>Enter your details to access <b>STUDY WITH MUBARAK</b></p>
-
-      <form onsubmit="handleModalSubmit(event)">
-        <div class="form-group">
-          <label for="fullNameInput">Full Name</label>
-          <input type="text" id="fullNameInput" class="form-input" placeholder="e.g. Owodunni Mubarak" required />
-        </div>
-        <div class="form-group">
-          <label for="emailInput">Google Email Address</label>
-          <input type="email" id="emailInput" class="form-input" placeholder="e.g. student@gmail.com" required />
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn-modal-cancel" onclick="closeLoginModal()">Cancel</button>
-          <button type="submit" class="btn-modal-submit">Continue</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <footer>
     <div class="container">
-      <p>&copy; <span id="year"></span> <strong>STUDY WITH MUBARAK</strong>. Built to empower students toward academic excellence.</p>
+      <p>&copy; <span id="year"></span> <strong>STUDY WITH MUBARAK</strong>. Empowering Nigerian scholars toward academic excellence.</p>
     </div>
   </footer>
 
   <script>
-    // Set your main portal filename here
+    // Set your main CBT study portal filename here
     const MAIN_PORTAL_URL = "portal.html";
 
     document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("getStartedBtn").href = MAIN_PORTAL_URL;
 
-    // Time-of-day Greeting Logic
-    function getTimeBasedGreeting() {
+    // Update all subject quick-launch links
+    document.querySelectorAll(".subject-chip").forEach(chip => {
+      chip.href = MAIN_PORTAL_URL;
+    });
+
+    // Time-of-day Greeting
+    function getTimeGreeting() {
       const hour = new Date().getHours();
-      if (hour >= 5 && hour < 12) {
-        return "Good Morning ☀️";
-      } else if (hour >= 12 && hour < 17) {
-        return "Good Afternoon 🌤️";
-      } else if (hour >= 17 && hour < 22) {
-        return "Good Evening 🌆";
-      } else {
-        return "Happy Late-Night Study 🌙";
-      }
+      if (hour >= 5 && hour < 12) return "Good Morning ☀️";
+      if (hour >= 12 && hour < 17) return "Good Afternoon 🌤️";
+      if (hour >= 17 && hour < 22) return "Good Evening 🌆";
+      return "Late-Night Study Session 🌙";
     }
 
-    // Modal Controls
-    function openLoginModal() {
-      document.getElementById("loginModal").style.display = "flex";
-      document.getElementById("fullNameInput").focus();
+    // Generate 1-2 Letter Initials
+    function getInitials(name) {
+      const parts = name.trim().split(/\s+/);
+      if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
-    function closeLoginModal() {
-      document.getElementById("loginModal").style.display = "none";
-    }
-
-    // Handle Manual Sign-In Submission
-    function handleModalSubmit(event) {
+    // Handle Local Sign-In
+    function handleLocalSignIn(event) {
       event.preventDefault();
-      const name = document.getElementById("fullNameInput").value.trim();
-      const email = document.getElementById("emailInput").value.trim();
-      const firstName = name.split(" ")[0] || "Scholar";
+      const name = document.getElementById("studentName").value.trim();
+      const target = document.getElementById("examTarget").value;
+      if (!name) return;
 
-      // Generate a sleek avatar using UI Avatars with Google's color theme
-      const picture = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=10b981&color=fff&bold=true`;
+      const userData = {
+        name: name,
+        firstName: name.split(" ")[0],
+        initials: getInitials(name),
+        target: target
+      };
 
-      const userData = { name, firstName, email, picture };
-
-      // Save locally
-      localStorage.setItem("swm_user", JSON.stringify(userData));
-
-      closeLoginModal();
+      localStorage.setItem("swm_student_profile", JSON.stringify(userData));
       renderSignedInUI(userData);
     }
 
-    // Render Signed-In State
+    // Render Signed-In Dashboard
     function renderSignedInUI(user) {
-      const greeting = getTimeBasedGreeting();
-
-      document.getElementById("timeGreeting").textContent = `${greeting},`;
+      document.getElementById("timeGreeting").textContent = `${getTimeGreeting()},`;
       document.getElementById("userFullName").textContent = user.name;
-      document.getElementById("userEmail").textContent = user.email;
-      document.getElementById("userAvatar").src = user.picture;
+      document.getElementById("userExamBadge").textContent = user.target;
+      document.getElementById("userInitials").textContent = user.initials;
 
-      document.getElementById("navAvatar").src = user.picture;
+      document.getElementById("navInitials").textContent = user.initials;
       document.getElementById("navUserName").textContent = user.firstName;
       document.getElementById("navUserPill").style.display = "flex";
       document.getElementById("signOutBtn").style.display = "inline-block";
@@ -885,24 +805,23 @@
       document.getElementById("welcomeView").style.display = "block";
     }
 
-    // Sign Out
+    // Switch Student / Sign Out
     function handleSignOut() {
-      localStorage.removeItem("swm_user");
+      localStorage.removeItem("swm_student_profile");
       document.getElementById("welcomeView").style.display = "none";
       document.getElementById("signInView").style.display = "block";
       document.getElementById("navUserPill").style.display = "none";
       document.getElementById("signOutBtn").style.display = "none";
     }
 
-    // Restore Session on Load
+    // Restore Profile Automatically on Return Visits
     window.addEventListener("DOMContentLoaded", () => {
-      const savedUser = localStorage.getItem("swm_user");
-      if (savedUser) {
+      const saved = localStorage.getItem("swm_student_profile");
+      if (saved) {
         try {
-          const userData = JSON.parse(savedUser);
-          renderSignedInUI(userData);
+          renderSignedInUI(JSON.parse(saved));
         } catch (e) {
-          localStorage.removeItem("swm_user");
+          localStorage.removeItem("swm_student_profile");
         }
       }
     });
