@@ -1,429 +1,1465 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOVPRO ULTIMATE CBT v2 | STUDY-WITH-MUBARAK</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<style>
-:root {
-    --primary: #1d4ed8; --accent: #059669; --danger: #dc2626; --warning: #d97706;
-    --bg: #f1f5f9; --card: rgba(255,255,255,0.9);
-}
-[data-theme="dark"] { --bg: #0f172a; --card: rgba(30,41,59,0.9); color: #e2e8f0; }
-* { box-sizing: border-box; font-family: 'Manrope', sans-serif; }
-body { margin:0; background: var(--bg); }
-header { background: linear-gradient(135deg, var(--primary), #4338ca); color:white; padding:12px 30px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:999; }
-.container { max-width: 1300px; margin:20px auto; padding:20px; display:grid; grid-template-columns: 1fr 340px; gap:20px; }
-@media(max-width:1000px){.container{grid-template-columns:1fr;} }
-.glass { background: var(--card); backdrop-filter: blur(20px); border-radius:20px; padding:25px; box-shadow:0 10px 40px rgba(0,0,0,0.1); }
-input, textarea, select { width:100%; padding:12px; border-radius:10px; border:2px solid #cbd5e1; margin-top:8px; font-weight:600; }
-.btn { padding:14px; border:none; border-radius:12px; font-weight:700; cursor:pointer; }
-.btn-primary { background: var(--primary); color:white; }
-.btn-danger { background: var(--danger); color:white; }
-.btn-success { background: var(--accent); color:white; }
-.timer { font-size:1.8rem; font-weight:900; color:var(--danger); }
-.options{display:grid; gap:12px; margin:20px 0;}
-.option{padding:16px; border:2px solid #e2e8f0; border-radius:14px; cursor:pointer;}
-.option.selected{border-color:var(--primary); background:#dbeafe; font-weight:700;}
-.palette{display:grid; grid-template-columns:repeat(5,1fr); gap:8px;}
-.p-box{aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:2px solid #cbd5e1; border-radius:10px; font-weight:700; cursor:pointer;}
-.p-box.current{background:var(--primary); color:white;}
-.p-box.answered{background:var(--accent); color:white;}
-.modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:1000;}
-.modal-content{background:var(--card); padding:30px; border-radius:20px; width:95%; max-width:900px; max-height:90vh; overflow-y:auto;}
-.admin-table { width:100%; border-collapse:collapse; }
-.admin-table td,.admin-table th { border:1px solid #ddd; padding:8px; font-size:0.85rem; }
-</style>
+<head><meta name="google-adsense-account" content="ca-pub-2619407883412146">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Government Diagnostic | STUDY-WITH-MUBARAK</title>
+    <link rel="manifest" href="random-subject.html">
+    <meta name="theme-color" content="#10b981">
+    <style>
+        :root {
+            --success-bg: #f0fdf4;
+            --success-border: #22c55e;
+            --success-text: #166534;
+            --danger-bg: #fef2f2;
+            --danger-border: #ef4444;
+            --danger-text: #991b1b;
+            --warning-bg: #fffbeb;
+            --warning-border: #f59e0b;
+            --warning-text: #92400e;
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-glow: rgba(16, 185, 129, 0.25);
+            --dark: #0f172a;
+            --gray: #64748b;
+            --card-border: rgba(16, 185, 129, 0.15);
+            --bg-main: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-main: #0f172a;
+            --option-border: #cbd5e1;
+            --option-hover: #ecfdf5;
+            --instruction-bg: #f8fafc;
+            --instruction-text: #475569;
+            --jump-btn-bg: #e2e8f0;
+            --jump-btn-text: #0f172a;
+            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #020617;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-main: #f8fafc;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --option-border: #334155;
+            --option-hover: #064e3b;
+            --instruction-bg: #0f172a;
+            --instruction-text: #cbd5e1;
+            --success-bg: rgba(6, 78, 59, 0.4);
+            --success-text: #a7f3d0;
+            --success-border: #059669;
+            --danger-bg: rgba(127, 29, 29, 0.4);
+            --danger-text: #fecaca;
+            --danger-border: #dc2626;
+            --warning-bg: rgba(120, 53, 15, 0.4);
+            --warning-text: #fcd34a;
+            --warning-border: #d97706;
+            --jump-btn-bg: #1e293b;
+            --jump-btn-text: #f8fafc;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary-glow: rgba(16, 185, 129, 0.4);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            outline: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: radial-gradient(var(--primary-glow) 1px, transparent 1px);
+            background-size: 24px 24px;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        header h1 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 5px 9px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .icon-btn:hover { background: rgba(16, 185, 129, 0.25); }
+
+        .main-viewport {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            max-width: 620px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-wrapper {
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray);
+        }
+        .progress-bar {
+            width: 100%;
+            background: var(--option-border);
+            height: 6px;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #34d399);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .grand-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Pre-Quiz Setup Styles */
+        .setup-container {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 4px;
+            text-align: left;
+        }
+        .setup-container h2 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+        .setup-container p {
+            font-size: 0.82rem;
+            color: var(--gray);
+            margin-bottom: 14px;
+        }
+        .setup-section-title {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .setup-option-card {
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .setup-option-card:hover {
+            border-color: var(--primary);
+            background: var(--option-hover);
+        }
+        .setup-option-card.selected {
+            border-color: var(--primary);
+            background: var(--option-hover);
+            border-width: 2px;
+        }
+        .setup-option-card .title {
+            font-size: 0.83rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .setup-option-card .desc {
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+
+        .badge-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            gap: 6px;
+        }
+
+        .timer-badge {
+            background: linear-gradient(135deg, #065f46, var(--primary));
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .timer-badge.warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .timer-badge.danger { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+
+        .toggle-jump-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px dashed var(--primary);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .instruction-tag {
+            background: var(--instruction-bg);
+            color: var(--instruction-text);
+            font-size: 0.78rem;
+            padding: 7px 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.4;
+            font-weight: 600;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .year-pill {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary-dark);
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .year-pill {
+            color: #6ee7b7;
+        }
+
+        .question-area {
+            position: relative;
+            padding-right: 40px;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.02rem;
+            color: var(--text-main);
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .audio-speech-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--option-border);
+            border-radius: 10px;
+            background: var(--card-bg);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 600;
+            text-align: left;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--option-hover);
+        }
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--option-hover);
+            color: var(--primary-dark);
+            border-width: 2px;
+        }
+        [data-theme="dark"] .option-btn.selected {
+            color: #a7f3d0;
+        }
+
+        .opt-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--jump-btn-bg);
+            color: var(--jump-btn-text);
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .option-btn.selected .opt-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .submit-btn-style {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+        }
+
+        .flag-btn, .bookmark-btn {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
+            padding: 10px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex: 1;
+        }
+        .flag-btn.flagged, .bookmark-btn.bookmarked {
+            background: var(--warning-border);
+            color: white;
+        }
+
+        .nav-btn {
+            background: var(--instruction-bg);
+            color: var(--primary);
+            border: 1px solid var(--option-border);
+            flex: 0.7;
+        }
+
+        .action-btn:disabled, .nav-btn:disabled {
+            background: var(--jump-btn-bg) !important;
+            color: var(--gray) !important;
+            border-color: transparent !important;
+            cursor: not-allowed;
+        }
+
+        /* Fixed Overlay Navigation Grid for Mobile Sizing */
+        .jump-grid-container {
+            position: absolute;
+            bottom: 60px;
+            left: 12px;
+            right: 12px;
+            background: var(--instruction-bg);
+            border-radius: 12px;
+            border: 1px solid var(--option-border);
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 50;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+        .jump-grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .jump-grid-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+        .jump-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+        }
+        .jump-item {
+            position: relative;
+            padding: 8px 0;
+            text-align: center;
+            border-radius: 6px;
+            background-color: var(--jump-btn-bg);
+            color: var(--jump-btn-text);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .jump-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        .jump-item.answered {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
+        }
+        .jump-item.flagged::after {
+            content: '🚩';
+            font-size: 7px;
+            position: absolute;
+            top: 1px;
+            right: 2px;
+        }
+        .jump-item.bookmarked::before {
+            content: '🔖';
+            font-size: 7px;
+            position: absolute;
+            top: 1px;
+            left: 2px;
+        }
+
+        /* Results Panel Scroll Containment */
+        .scrollable-result-view {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 4px;
+        }
+
+        .score-display {
+            font-size: 2.3rem;
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            margin: 6px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin: 10px 0;
+        }
+        .stat-card {
+            background: var(--instruction-bg);
+            padding: 8px 4px;
+            border-radius: 10px;
+            border: 1px solid var(--option-border);
+        }
+        .stat-value {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Topic Breakdown Box */
+        .topic-breakdown {
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .topic-breakdown h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .topic-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.76rem;
+            padding: 3px 0;
+            border-bottom: 1px dashed var(--option-border);
+        }
+        .topic-row:last-child { border-bottom: none; }
+
+        /* Review Filter Pills */
+        .filter-tabs {
+            display: flex;
+            gap: 4px;
+            margin: 12px 0 4px;
+        }
+        .filter-tab {
+            flex: 1;
+            padding: 6px 4px;
+            border-radius: 8px;
+            border: 1px solid var(--option-border);
+            background: var(--instruction-bg);
+            color: var(--text-main);
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .review-card {
+            margin-top: 10px;
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .choice-badge {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .badge-correct { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .badge-wrong { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
+        .badge-unanswered { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
+
+        .explanation-box, .ai-explanation-box, .wiki-box {
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+        .explanation-box { background: var(--success-bg); border-left: 4px solid var(--success-border); color: var(--success-text); }
+        .ai-explanation-box { background: rgba(168, 85, 247, 0.1); border-left: 4px solid #a855f7; color: #6b21a8; }
+        [data-theme="dark"] .ai-explanation-box { background: rgba(168, 85, 247, 0.2); color: #f3e8ff; }
+
+        .hidden { display: none !important; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+        .modal h3 { margin-bottom: 8px; font-size: 1.1rem; }
+        .modal p { font-size: 0.85rem; color: var(--gray); margin-bottom: 16px; }
+        .modal-actions { display: flex; gap: 8px; }
+
+        .shortcuts-hint { font-size: 0.65rem; color: var(--gray); text-align: center; margin-top: 8px; }
+    </style>
 </head>
 <body>
 
-<!-- LOGIN + ADMIN BUTTON -->
-<div id="login-screen" class="glass" style="max-width:450px; margin:80px auto;">
-    <h2>🏛️ GOVPRO CBT Login</h2>
-    <label>Full Name</label><input id="student-name">
-    <label>Exam Mode</label>
-    <select id="exam-mode">
-        <option value="jamb">JAMB - 40Q / 40min</option>
-        <option value="waec">WAEC - 50Q / 60min</option>
-        <option value="practice">Practice - 100Q</option>
-    </select>
-    <button class="btn btn-primary" style="width:100%; margin-top:15px;" onclick="startSession()">Start Examination</button>
-    <button class="btn" style="width:100%; margin-top:10px; background:#e2e8f0;" onclick="openAdmin()">⚙️ Admin Panel</button>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="modal" id="admin-modal">
-<div class="modal-content">
-    <h2>⚙️ Admin Panel - Question Manager</h2>
-    <button class="btn btn-success" onclick="showAddForm()">+ Add New Question</button>
-    <button class="btn" onclick="exportQuestions()">📤 Export JSON</button>
-    <button class="btn" onclick="closeModal('admin-modal')">Close</button>
-
-    <h3 style="margin-top:20px;">Bulk Import</h3>
-    <textarea id="bulk-import" rows="5" placeholder='[{"q":"...","a":["A","B"],"c":0,"t":"Topic","e":"..."}]'></textarea>
-    <button class="btn btn-primary" onclick="importQuestions()">Import</button>
-
-    <h3 style="margin-top:20px;">All Questions (<span id="q-count">0</span>)</h3>
-    <input id="search-q" placeholder="Search questions..." onkeyup="renderAdminTable()">
-    <table class="admin-table"><thead><tr><th>#</th><th>Question</th><th>Topic</th><th>Action</th></tr></thead><tbody id="admin-table-body"></tbody></table>
-</div>
-</div>
-
-<!-- ADD/EDIT QUESTION FORM -->
-<div class="modal" id="question-form-modal">
-<div class="modal-content">
-    <h3 id="form-title">Add Question</h3>
-    <input id="f-q" placeholder="Question">
-    <input id="f-a0" placeholder="Option A"><input id="f-a1" placeholder="Option B">
-    <input id="f-a2" placeholder="Option C"><input id="f-a3" placeholder="Option D">
-    <label>Correct Answer Index 0-3</label><input id="f-c" type="number" min="0" max="3">
-    <input id="f-t" placeholder="Topic e.g. Democracy">
-    <input id="f-y" placeholder="Year e.g. 2020">
-    <textarea id="f-e" placeholder="Explanation"></textarea>
-    <button class="btn btn-success" onclick="saveQuestion()">Save</button>
-    <button class="btn" onclick="closeModal('question-form-modal')">Cancel</button>
-</div>
-</div>
-
-<!-- CBT SCREEN -->
-<div id="cbt-screen" style="display:none;">
-<header><h3 id="student-display">Student</h3><div class="timer" id="timer">40:00</div></header>
-<div class="container">
-    <div class="glass">
-        <div>Q <b id="q-num">1</b>/<b id="q-total">40</b> <button style="float:right" onclick="toggleFlag()">🚩</button></div>
-        <span style="background:var(--primary); color:white; padding:5px 10px; border-radius:20px; font-size:0.8rem;" id="topic-badge">Topic</span>
-        <h2 id="q-text">Loading...</h2>
-        <div class="options" id="options"></div>
-        <div id="explanation" style="display:none; background:#f0fdf4; padding:15px; border-radius:12px;"></div>
-        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:20px;">
-            <button class="btn" onclick="nav(-1)">← Prev</button>
-            <button class="btn" onclick="nav(1)">Next →</button>
-            <button class="btn btn-success" onclick="submitExam()">Submit</button>
+<header>
+    <h1>STUDY-WITH-MUBARAK</h1>
+    <div style="display: flex; align-items: center; gap: 6px;">
+        <a href="index.html">🏠</a>
+        <div class="header-controls">
+            <button class="icon-btn" title="Back to Setup" onclick="returnToSetup()">⚙️ Setup</button>
+            <button class="icon-btn" title="Toggle Dark Mode" onclick="toggleDarkMode()">🌓</button>
+            <button class="icon-btn" title="Pause/Resume Timer" onclick="toggleTimer()">⏱️</button>
         </div>
     </div>
-    <div class="glass"><h3>Palette</h3><div class="palette" id="palette"></div></div>
-</div>
+</header>
+
+<div class="main-viewport">
+    <div class="progress-wrapper" id="progress-wrapper-box">
+        <div class="progress-info">
+            <span id="progress-text">Loading...</span>
+            <span id="answered-count">Answered: 0/0</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+    </div>
+
+    <!-- Pre-Quiz Setup Card -->
+    <div id="setup-box" class="grand-card">
+        <div class="setup-container">
+            <h2>Government CBT Setup</h2>
+            <p>Customize your practice session for WAEC and UTME preparation.</p>
+            
+            <div class="setup-section-title">Select Topic Filter</div>
+            <div class="setup-grid">
+                <div class="setup-option-card selected" onclick="selectSetupTopic('all', this)">
+                    <div class="title">All Topics (30)</div>
+                    <div class="desc">Complete master question bank</div>
+                </div>
+                <div class="setup-option-card" onclick="selectSetupTopic('Constitutional History', this)">
+                    <div class="title">Constitutional History</div>
+                    <div class="desc">Clifford, Coussey, Regions</div>
+                </div>
+                <div class="setup-option-card" onclick="selectSetupTopic('Organs of Government', this)">
+                    <div class="title">Organs of Government</div>
+                    <div class="desc">Legislature, Executive, Judiciary</div>
+                </div>
+                <div class="setup-option-card" onclick="selectSetupTopic('International Organisations', this)">
+                    <div class="title">International Org.</div>
+                    <div class="desc">UN, OAU, Commonwealth</div>
+                </div>
+            </div>
+
+            <div class="setup-section-title">Mode & Shuffle</div>
+            <div class="setup-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 16px;">
+                <div class="setup-option-card selected" id="shuffle-card" onclick="toggleShuffleMode()">
+                    <div class="title">🔀 Shuffle Questions</div>
+                    <div class="desc">Randomize item order</div>
+                </div>
+                <div class="setup-option-card" id="timed-card" onclick="toggleTimedMode()">
+                    <div class="title">⏱️ Timed Mode</div>
+                    <div class="desc">Active countdown timer</div>
+                </div>
+            </div>
+
+            <button class="action-btn" style="width:100%; padding: 12px; font-size: 0.95rem; justify-content: center;" onclick="startCustomQuiz()">🚀 Start Practice Session</button>
+        </div>
+    </div>
+
+    <!-- Active Quiz Card -->
+    <div id="quiz-box" class="grand-card hidden">
+        <div class="badge-controls">
+            <button class="toggle-jump-btn" id="navigator-toggle-btn" onclick="toggleJumpGrid()">🧩 Navigator</button>
+            <div class="timer-badge" id="timer-badge">⏱️ 25:00</div>
+        </div>
+
+        <div class="instruction-tag">
+            <span id="instruction-box">Topic</span>
+            <span id="year-badge" class="year-pill hidden"></span>
+        </div>
+        
+        <div class="question-area">
+            <div class="question-text" id="q-text">Loading Government Modules...</div>
+            <button class="audio-speech-btn" title="Read Question Aloud" onclick="speakQuestion()">🔊</button>
+        </div>
+
+        <div id="options-grid" class="options-container"></div>
+
+        <div class="control-panel">
+            <button id="prev-btn" class="action-btn nav-btn" onclick="navigateQuestion(-1)">←</button>
+            <button id="flag-btn" class="flag-btn" onclick="toggleFlag()">🚩 Flag</button>
+            <button id="bookmark-btn" class="bookmark-btn" onclick="toggleBookmark()">🔖 Save</button>
+            <button id="submit-shortcut-btn" class="action-btn submit-btn-style" onclick="showSubmitModal()">Submit</button>
+            <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">→</button>
+        </div>
+
+        <div id="jump-grid-wrapper" class="jump-grid-container hidden">
+            <div class="jump-grid-header">
+                <span class="jump-grid-label" id="quick-jump-label">Quick Jump</span>
+                <button class="toggle-jump-btn" onclick="toggleJumpGrid()">Close</button>
+            </div>
+            <div id="jump-box-grid" class="jump-grid"></div>
+            <div class="shortcuts-hint">Keys 1–5 or A–E Select Options | Left/Right Navigate</div>
+        </div>
+    </div>
+
+    <!-- Results Panel -->
+    <div id="result-box" class="grand-card hidden" style="text-align: center;">
+        <div class="scrollable-result-view">
+            <h2>Government Session Completed 🎉</h2>
+            <div class="score-display" id="final-score">0 / 0</div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value" id="stat-correct">0</div><div class="stat-label">Correct</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-wrong">0</div><div class="stat-label">Wrong</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-unanswered">0</div><div class="stat-label">Empty</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-time">0:00</div><div class="stat-label">Duration</div></div>
+            </div>
+
+            <p id="performance-msg" style="color: var(--gray); font-size: 0.85rem; font-weight: 600; margin-bottom: 10px;"></p>
+            
+            <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 10px;">
+                <button class="action-btn" style="justify-content:center;" onclick="returnToSetup()">⚙️ New Setup</button>
+                <button class="action-btn nav-btn" style="flex:1;" onclick="exportResults()">📥 Export</button>
+            </div>
+
+            <div id="topic-breakdown-box" class="topic-breakdown"></div>
+
+            <div class="filter-tabs">
+                <button class="filter-tab active" id="filter-all-btn" onclick="filterReviews('all', this)">All</button>
+                <button class="filter-tab" onclick="filterReviews('wrong', this)">Missed</button>
+                <button class="filter-tab" onclick="filterReviews('flagged', this)">Flagged</button>
+                <button class="filter-tab" onclick="filterReviews('saved', this)">🔖 Saved</button>
+            </div>
+
+            <div id="review-cards-container"></div>
+        </div>
+    </div>
 </div>
 
-<!-- RESULTS -->
-<div id="results-screen" style="display:none;" class="container">
-    <div class="glass" style="grid-column:span 2;">
-        <h2>📈 Result for <span id="result-name"></span></h2>
-        <h1 id="score">0%</h1>
-        <canvas id="topicChart"></canvas>
-        <button class="btn btn-primary" onclick="location.reload()">Retake</button>
+<div class="modal-overlay hidden" id="submit-modal">
+    <div class="modal">
+        <h3>Submit Assessment?</h3>
+        <p id="submit-modal-msg">Are you sure you want to grade your current performance track?</p>
+        <div class="modal-actions">
+            <button class="action-btn nav-btn" onclick="closeSubmitModal()">Cancel</button>
+            <button class="action-btn submit-btn-style" onclick="confirmSubmit()">Submit</button>
+        </div>
     </div>
 </div>
 
 <script>
-// ====== 1. FULL QUESTION BANK - ADD 500+ HERE ======
-let fullQuestionBank = [
-    {q:"The first capital of Nigeria was?", a:["Lagos","Abuja","Calabar","Enugu"], c:2, t:"Pre-Colonial", y:2005, e:"Calabar was first capital of Southern Protectorate"},
-    {q:"Which body conducts JAMB?", a:["WAEC","NECO","JAMB","NABTEB"], c:2, t:"Educational Bodies", y:2018, e:"JAMB conducts UTME"},
-    {q:"The 1999 constitution is?", a:["Unitary","Federal","Confederal","Parliamentary"], c:1, t:"Constitution", y:2019, e:"Nigeria practices federalism"},
-    {q:"ECOWAS HQ is in?", a:["Abuja","Accra","Dakar","Lagos"], c:0, t:"International Org", y:2020, e:"Located in Abuja"},
-    {q:"One feature of democracy is?", a:["Decree","Free press","One party","Censorship"], c:1, t:"Democracy", y:2021, e:"Free press ensures accountability"},
-   {
-        q: "When did Nigeria gain her Independence?",
-        a: ["1st October 1963", "31st October 1690", "1st October 2012", "1st October 1960", "12th October 1992"],
-        c: 3,
-        t: "Nigerian Independence",
-        y: 2012,
-        e: "Nigeria gained independence from British colonial rule on 1 October 1960. This marked the beginning of Nigeria's existence as a sovereign and self-governing state. However, Nigeria did not become a republic until 1 October 1963, when it stopped recognising the British monarch as its head of state."
-    },
+    const masterQuestions = [
+        // --- Core Diagnostic Items (1-5) ---
+        { instr: "Principles of Government: Forms of Government", q: "A system of government where political power is concentrated in the hands of a single ruling party or dictator without effective popular control is known as:", options: ["Democracy", "Totalitarianism", "Confederation", "Monarchy"], correct: 1, exp: "Totalitarianism features absolute state control over public and private life, suppressing opposition parties." },
+        { instr: "Nigerian Constitutional History: The Clifford Constitution", q: "The Clifford Constitution of 1923 is historically significant in Nigeria because it introduced:", options: ["Universal adult suffrage", "The elective principle", "Federalism", "Regionalism"], correct: 1, exp: "Governor Hugh Clifford's 1923 Constitution introduced the elective principle to the Legislative Council for the first time in British West Africa." },
+        { instr: "Organs of Government: The Legislature", q: "The primary constitutional function of the legislature in a presidential system of government is to:", options: ["Execute laws", "Interpret laws", "Make laws", "Adjudicate disputes"], correct: 2, exp: "The legislature is primarily empowered to enact, amend, and repeal laws for the peace, order, and good governance of the state." },
+        { instr: "Public Administration: Civil Service", q: "The enduring characteristic of the civil service that shields career civil servants from political victimization when governments change is:", options: ["Partisanship", "Anonymity and Neutrality", "Commercialization", "Decentralization"], correct: 1, exp: "Political neutrality and civil service anonymity ensure that permanent bureaucrats serve successive political administrations impartially." },
+        { instr: "International Relations: Foreign Policy", q: "Which of the following principles forms the cardinal core of Nigeria's foreign policy since independence in 1960?", options: ["Isolationism", "Afrocentrism", "Imperialism", "Aggressive nationalism"], correct: 1, exp: "Afrocentrism—making the African continent the centerpiece of foreign policy—has been Nigeria's principal diplomatic pillar." },
 
-    {
-        q: "Democracy means a system of government in which:",
-        a: ["The majority rules", "The minority rules", "There is no party system", "The people rule", "None of the above"],
-        c: 0,
-        t: "Democracy",
-        y: 2018,
-        e: "Democracy is a system of government in which political authority ultimately belongs to the people. Citizens exercise this authority directly or through elected representatives. Majority rule is an important democratic principle, meaning that decisions are generally made according to the choice of the greater number, while the rights of minorities should also be protected."
-    },
+        // --- Past Question Bank Items (6-30) ---
+        {
+            q: "When did Nigeria gain her Independence?",
+            a: ["1st October 1963", "31st October 1690", "1st October 2012", "1st October 1960", "12th October 1992"],
+            c: 3,
+            t: "Nigerian Independence",
+            y: 2012,
+            e: "Nigeria gained independence from British colonial rule on 1 October 1960. This marked the beginning of Nigeria's existence as a sovereign and self-governing state. However, Nigeria did not become a republic until 1 October 1963, when it stopped recognising the British monarch as its head of state."
+        },
+        {
+            q: "Democracy means a system of government in which:",
+            a: ["The majority rules", "The minority rules", "There is no party system", "The people rule", "None of the above"],
+            c: 0,
+            t: "Democracy",
+            y: 2018,
+            e: "Democracy is a system of government in which political authority ultimately belongs to the people. Citizens exercise this authority directly or through elected representatives. Majority rule is an important democratic principle, meaning that decisions are generally made according to the choice of the greater number, while the rights of minorities should also be protected."
+        },
+        {
+            q: "A constitution is federal if:",
+            a: ["It provides for a presidential system", "It is unwritten", "It is not unitary", "The central and component units or authorities are coordinate and equal", "There is a division of powers between a central and a number of other component authorities"],
+            c: 4,
+            t: "Federalism and Constitution",
+            y: 2015,
+            e: "A federal constitution establishes a division of governmental powers between a central government and component units, such as states or regions. Each level has constitutionally recognised responsibilities and areas of authority. Nigeria is an example of a federation because governmental powers are shared between the Federal Government and the states."
+        },
+        {
+            q: "The Executive is:",
+            a: ["A committee of the legislature", "The body that makes laws", "The body that executes the policies of government", "The highest organ of government", "None of the above"],
+            c: 2,
+            t: "Organs of Government",
+            y: 2021,
+            e: "The Executive is the arm of government responsible for implementing laws and carrying out government policies. It includes the President or Governor, ministers or commissioners, and government departments. After the legislature passes a law, the Executive is responsible for putting that law into operation and ensuring that government decisions are implemented."
+        },
+        {
+            q: "The Judiciary is:",
+            a: ["An arm of the Executive", "The body which makes the law", "A body of lawyers", "The body which interprets the law", "The body which enforces the law"],
+            c: 3,
+            t: "Organs of Government",
+            y: 2010,
+            e: "The Judiciary is the arm of government responsible for interpreting laws and administering justice. It consists of courts and judicial officers, including judges and magistrates. It settles disputes, determines whether laws have been violated and protects citizens' legal rights. It also interprets the Constitution when constitutional disputes arise."
+        },
+        {
+            q: "The separation of powers means the same as:",
+            a: ["A presidential system of government", "Checks and balances", "The rule of law", "Supremacy of the Judiciary", "None of the above"],
+            c: 1,
+            t: "Separation of Powers",
+            y: 2019,
+            e: "Separation of powers involves distributing governmental responsibilities among the Legislature, Executive and Judiciary to prevent excessive concentration of power in one institution. Checks and balances allow each arm to exercise certain controls over the others. For example, courts may declare certain government actions unconstitutional, while the legislature exercises oversight over the Executive."
+        },
+        {
+            q: "Rights are:",
+            a: ["Claims which the law allows", "Claims against the state", "Claims against other individuals", "Claims which are natural to men", "What are written in the Constitution"],
+            c: 0,
+            t: "Fundamental Human Rights",
+            y: 2008,
+            e: "Rights are legally or morally recognised claims and freedoms that individuals are entitled to enjoy. Legal rights are protected by the laws of a country and may be enforced through the courts. Examples include the right to life, freedom of expression and freedom of movement, subject to the limitations recognised by law."
+        },
+        {
+            q: "Pressure groups are:",
+            a: ["Organisations which want to overthrow the government", "Organisations which seek to influence the policies of the government", "Associations of people who share the same ideology", "Political parties", "Religious orders"],
+            c: 1,
+            t: "Pressure Groups",
+            y: 2023,
+            e: "Pressure groups are organised associations that attempt to influence government policies and decisions without necessarily seeking to take political power themselves. They may use lobbying, public campaigns, demonstrations, petitions and negotiations to achieve their objectives. Examples include trade unions, professional associations and students' organisations."
+        },
+        {
+            q: "A cabinet system of government is practised in:",
+            a: ["The USSR", "The USA", "The People's Republic of China", "The United Kingdom", "North Korea"],
+            c: 3,
+            t: "Systems of Government",
+            y: 2016,
+            e: "The United Kingdom operates a parliamentary or cabinet system of government. In this system, the Prime Minister and other ministers are drawn from Parliament and are politically responsible to it. The government must maintain the confidence of the elected House of Commons to remain in office."
+        },
+        {
+            q: "The citizen's obligations are:",
+            a: ["What the government orders", "Duties the individual imposes on himself", "What the law requires of the individual", "What the military decrees", "What political parties demand of their members"],
+            c: 2,
+            t: "Citizenship",
+            y: 2011,
+            e: "Citizens' obligations are duties imposed by the laws and legitimate requirements of the state. They include obeying the law, paying legally required taxes, respecting the rights of others and participating responsibly in civic life. These responsibilities help maintain peace, order and the effective functioning of society."
+        },
+        {
+            q: "An electoral system is the system which governs:",
+            a: ["The appointment of the Pope", "How people vote", "The conduct of elections", "The appointment of cabinet ministers", "The appointment of judges"],
+            c: 2,
+            t: "Electoral System",
+            y: 2020,
+            e: "An electoral system consists of the rules and procedures governing how elections are organised and conducted. It determines matters such as voter registration, voting procedures, counting of votes and how electoral results are translated into political representation. Examples include the first-past-the-post system and proportional representation."
+        },
+        {
+            q: "An unwritten constitution is one which:",
+            a: ["Is not subject to judicial review", "Is only partially written", "Is not written at all", "Is made up solely of a set of conventions", "None of the above"],
+            c: 1,
+            t: "Types of Constitution",
+            y: 2007,
+            e: "An unwritten constitution is not contained in one single authoritative constitutional document. Instead, its provisions are drawn from different sources, including statutes, court decisions, conventions and historical documents. The United Kingdom is a well-known example. The term 'unwritten' does not mean that none of its constitutional rules have ever been written down."
+        },
+        {
+            q: "Delegated legislation is legislation:",
+            a: ["Which is not submitted to Parliament", "Made by judicial tribunals", "Made by a minister acting under an Act of Parliament", "Made by local government", "Made by parastatals"],
+            c: 2,
+            t: "Delegated Legislation",
+            y: 2017,
+            e: "Delegated legislation refers to laws or detailed regulations made by an authority other than the main legislature, using powers granted by an Act of Parliament. For example, a minister may make regulations to explain how a particular Act should be implemented. This allows technical details to be handled without requiring the legislature to debate every minor provision."
+        },
+        {
+            q: "Before colonial rule, Yoruba traditional rulers were appointed by:",
+            a: ["The people acting through their representatives", "The Ogboni", "Ifa (oracle) priests", "Oduduwa", "Kingmakers"],
+            c: 4,
+            t: "Traditional Political Systems",
+            y: 2013,
+            e: "In many traditional Yoruba political systems, kingmakers played an important role in selecting or approving a new ruler. Their authority was based on established customs and traditions. The exact selection process varied among Yoruba communities, but the kingmakers generally had a recognised responsibility in the installation of traditional rulers."
+        },
+        {
+            q: "The first political party properly so-called was formed in Nigeria in:",
+            a: ["1916", "1923", "1944", "1948", "1951"],
+            c: 1,
+            t: "Political Parties and Nationalism",
+            y: 2009,
+            e: "The Nigerian National Democratic Party (NNDP), founded by Herbert Macaulay in 1923, is generally recognised as Nigeria's first organised political party. It participated in the limited elections introduced under the Clifford Constitution. Its formation marked an important stage in the development of organised party politics and nationalist activity in Nigeria."
+        },
+        {
+            q: "The Loi Cadre, a major factor in the constitutional development of the French colonial territories, was introduced in:",
+            a: ["1940", "1946", "1950", "1956", "1960"],
+            c: 3,
+            t: "French Colonial Administration",
+            y: 2024,
+            e: "The Loi Cadre, also known as the Overseas Reform Act, was introduced in 1956 in French colonial Africa. It introduced important administrative and political reforms, including greater internal self-government for the colonies. It also increased the participation of Africans in the administration of their territories and contributed to the process that eventually led to independence."
+        },
+        {
+            q: "The Coussey Commission Report laid the groundwork for the eventual independence of:",
+            a: ["Gambia", "Gold Coast (Ghana)", "Sierra Leone", "Liberia", "Nigeria"],
+            c: 1,
+            t: "Constitutional Development in West Africa",
+            y: 2014,
+            e: "The Coussey Commission was established in the Gold Coast, now Ghana, to examine constitutional reforms and recommend greater African participation in government. Its report contributed to constitutional changes that helped prepare the Gold Coast for self-government. Ghana eventually gained independence from Britain on 6 March 1957."
+        },
+        {
+            q: "The former Western Region of Nigeria became internally self-governing in:",
+            a: ["1955", "1957", "1958", "1956", "1959"],
+            c: 1,
+            t: "Constitutional Development in Nigeria",
+            y: 2006,
+            e: "The Western Region attained internal self-government in 1957, following constitutional developments that increased regional autonomy. Internal self-government allowed the region to manage many of its domestic affairs through its own elected political institutions, although matters such as defence and foreign affairs remained under the central colonial administration."
+        },
+        {
+            q: "The first Pan-African Conference was held in:",
+            a: ["Paris", "Brussels", "London", "New York", "Manchester"],
+            c: 2,
+            t: "Pan-Africanism",
+            y: 2022,
+            e: "The first Pan-African Conference was held in London in 1900 and was organised by Henry Sylvester Williams. It brought together people concerned about the treatment and political position of Africans and people of African descent. The conference helped promote Pan-African ideas, including racial equality, African dignity and opposition to colonial exploitation."
+        },
+        {
+            q: "The Public Service Commission (Nigeria) is responsible for the appointment of all:",
+            a: ["Judges of the High Court", "Officials of public corporations", "Civil servants", "Military personnel", "University teachers"],
+            c: 2,
+            t: "Public Service Commission",
+            y: 2015,
+            e: "The Public Service Commission performs important personnel functions in the public service, including appointments, promotions and disciplinary matters for officers within its jurisdiction. Its role helps ensure that civil servants are recruited and managed according to established public service rules. It does not ordinarily control the appointment of military personnel or every employee of a public corporation."
+        },
+        {
+            q: "Constitutional cases in Nigeria can only be raised in the first instance in:",
+            a: ["The Supreme Court", "The High Courts", "The Courts of Appeal", "The Sharia Court of Appeal", "None of the above"],
+            c: 1,
+            t: "Nigerian Judiciary",
+            y: 2018,
+            e: "Under Nigeria's judicial structure, constitutional disputes may be brought before a court with the appropriate jurisdiction, commonly a High Court at first instance. The Supreme Court is generally the final appellate court rather than the court where every constitutional case must begin. The particular court depends on the nature of the dispute and the jurisdiction provided by the Constitution and other laws."
+        },
+        {
+            q: "Which of the following would act for the Head of State when he is out of the country?",
+            a: ["The Chief Justice of the Supreme Court", "The Chief of Staff, Army", "The Chief of Staff, Supreme Military Headquarters", "The Chief of Staff, Air Force", "The General Officer Commanding, First Division"],
+            c: 2,
+            t: "Military Government",
+            y: 2010,
+            e: "The question refers to the military administrative arrangement in which the Chief of Staff at Supreme Military Headquarters could perform important coordinating duties in the absence of the Head of State. Military governments often relied on military councils and senior military officers to maintain the continuity of administration. This is different from the constitutional succession arrangements in a civilian presidential system."
+        },
+        {
+            q: "To raise funds, local governments can levy:",
+            a: ["Import duties", "Income taxes", "Excise duties", "Rates", "Profits tax"],
+            c: 1,
+            t: "Local Government Finance",
+            y: 2025,
+            e: "Local governments need revenue to provide services such as local roads, markets, sanitation and other community facilities. The answer supplied in the original question bank identifies income taxes as a source of revenue. The precise taxes and charges a local government may collect depend on the applicable constitutional and statutory allocation of revenue powers."
+        },
+        {
+            q: "The Economic Commission for Africa is an agency of:",
+            a: ["The OAU", "The Commonwealth", "The United Nations", "The OCAM", "The African Development Bank"],
+            c: 2,
+            t: "International Organisations",
+            y: 2016,
+            e: "The Economic Commission for Africa (ECA) is a regional commission of the United Nations. It was established in 1958 to promote economic and social development across African countries. Its work includes research, policy advice, regional integration and support for sustainable development on the continent."
+        },
+        {
+            q: "Nigeria is not a member of:",
+            a: ["The OAU", "The Security Council of the UN", "The African Development Bank", "The Commonwealth", "The OCAM"],
+            c: 4,
+            t: "International Organisations",
+            y: 2011,
+            e: "OCAM was an organisation associated with cooperation among certain French-speaking African and Malagasy states. Nigeria, which was formerly under British colonial rule and is not a member of that organisation, was not part of OCAM. Nigeria has, however, participated in organisations such as the Commonwealth, the African Development Bank and the Organisation of African Unity, now known as the African Union."
+        }
+    ];
 
-    {
-        q: "A constitution is federal if:",
-        a: ["It provides for a presidential system", "It is unwritten", "It is not unitary", "The central and component units or authorities are coordinate and equal", "There is a division of powers between a central and a number of other component authorities"],
-        c: 4,
-        t: "Federalism and Constitution",
-        y: 2015,
-        e: "A federal constitution establishes a division of governmental powers between a central government and component units, such as states or regions. Each level has constitutionally recognised responsibilities and areas of authority. Nigeria is an example of a federation because governmental powers are shared between the Federal Government and the states."
-    },
+    function normalizeQuestion(item) {
+        return {
+            instr: item.instr || `Topic: ${item.t || "Government"}`,
+            topic: item.t || (item.instr ? item.instr.split(":")[0] : "General Government"),
+            year: item.y || null,
+            q: item.q,
+            options: item.options || item.a,
+            correct: item.correct !== undefined ? item.correct : item.c,
+            exp: item.exp || item.e
+        };
+    }
 
-    {
-        q: "The Executive is:",
-        a: ["A committee of the legislature", "The body that makes laws", "The body that executes the policies of government", "The highest organ of government", "None of the above"],
-        c: 2,
-        t: "Organs of Government",
-        y: 2021,
-        e: "The Executive is the arm of government responsible for implementing laws and carrying out government policies. It includes the President or Governor, ministers or commissioners, and government departments. After the legislature passes a law, the Executive is responsible for putting that law into operation and ensuring that government decisions are implemented."
-    },
+    const STORAGE_KEY = "mubarak_gov_portal_v4";
+    const BOOKMARK_STORAGE_KEY = "mubarak_gov_bookmarks";
+    const OPTION_LETTERS = ["A", "B", "C", "D", "E"];
 
-    {
-        q: "The Judiciary is:",
-        a: ["An arm of the Executive", "The body which makes the law", "A body of lawyers", "The body which interprets the law", "The body which enforces the law"],
-        c: 3,
-        t: "Organs of Government",
-        y: 2010,
-        e: "The Judiciary is the arm of government responsible for interpreting laws and administering justice. It consists of courts and judicial officers, including judges and magistrates. It settles disputes, determines whether laws have been violated and protects citizens' legal rights. It also interprets the Constitution when constitutional disputes arise."
-    },
+    let selectedTopic = "all";
+    let shuffleEnabled = true;
+    let timedModeEnabled = false;
 
-    {
-        q: "The separation of powers means the same as:",
-        a: ["A presidential system of government", "Checks and balances", "The rule of law", "Supremacy of the Judiciary", "None of the above"],
-        c: 1,
-        t: "Separation of Powers",
-        y: 2019,
-        e: "Separation of powers involves distributing governmental responsibilities among the Legislature, Executive and Judiciary to prevent excessive concentration of power in one institution. Checks and balances allow each arm to exercise certain controls over the others. For example, courts may declare certain government actions unconstitutional, while the legislature exercises oversight over the Executive."
-    },
+    let questions = [];
+    let currentQ = 0;
+    let userAnswers = [];
+    let flaggedQuestions = new Set();
+    let bookmarkedQuestions = new Set(JSON.parse(localStorage.getItem(BOOKMARK_STORAGE_KEY) || "[]"));
+    let timerInterval = null;
+    let totalDuration = 1500; 
+    let timeRemaining = totalDuration;
+    let timerPaused = false;
+    let aiExplanationCache = JSON.parse(localStorage.getItem("mubarak_gov_ai_cache") || "{}");
 
-    {
-        q: "Rights are:",
-        a: ["Claims which the law allows", "Claims against the state", "Claims against other individuals", "Claims which are natural to men", "What are written in the Constitution"],
-        c: 0,
-        t: "Fundamental Human Rights",
-        y: 2008,
-        e: "Rights are legally or morally recognised claims and freedoms that individuals are entitled to enjoy. Legal rights are protected by the laws of a country and may be enforced through the courts. Examples include the right to life, freedom of expression and freedom of movement, subject to the limitations recognised by law."
-    },
+    const POLLINATION_API_URL = 'https://text.pollinations.ai/';
 
-    {
-        q: "Pressure groups are:",
-        a: ["Organisations which want to overthrow the government", "Organisations which seek to influence the policies of the government", "Associations of people who share the same ideology", "Political parties", "Religious orders"],
-        c: 1,
-        t: "Pressure Groups",
-        y: 2023,
-        e: "Pressure groups are organised associations that attempt to influence government policies and decisions without necessarily seeking to take political power themselves. They may use lobbying, public campaigns, demonstrations, petitions and negotiations to achieve their objectives. Examples include trade unions, professional associations and students' organisations."
-    },
+    function selectSetupTopic(topic, cardEl) {
+        selectedTopic = topic;
+        cardEl.parentElement.querySelectorAll('.setup-option-card').forEach(c => c.classList.remove('selected'));
+        cardEl.classList.add('selected');
+    }
 
-    {
-        q: "A cabinet system of government is practised in:",
-        a: ["The USSR", "The USA", "The People's Republic of China", "The United Kingdom", "North Korea"],
-        c: 3,
-        t: "Systems of Government",
-        y: 2016,
-        e: "The United Kingdom operates a parliamentary or cabinet system of government. In this system, the Prime Minister and other ministers are drawn from Parliament and are politically responsible to it. The government must maintain the confidence of the elected House of Commons to remain in office."
-    },
+    function toggleShuffleMode() {
+        shuffleEnabled = !shuffleEnabled;
+        const el = document.getElementById('shuffle-card');
+        if (shuffleEnabled) el.classList.add('selected');
+        else el.classList.remove('selected');
+    }
 
-    {
-        q: "The citizen's obligations are:",
-        a: ["What the government orders", "Duties the individual imposes on himself", "What the law requires of the individual", "What the military decrees", "What political parties demand of their members"],
-        c: 2,
-        t: "Citizenship",
-        y: 2011,
-        e: "Citizens' obligations are duties imposed by the laws and legitimate requirements of the state. They include obeying the law, paying legally required taxes, respecting the rights of others and participating responsibly in civic life. These responsibilities help maintain peace, order and the effective functioning of society."
-    },
+    function toggleTimedMode() {
+        timedModeEnabled = !timedModeEnabled;
+        const el = document.getElementById('timed-card');
+        if (timedModeEnabled) el.classList.add('selected');
+        else el.classList.remove('selected');
+    }
 
-    {
-        q: "An electoral system is the system which governs:",
-        a: ["The appointment of the Pope", "How people vote", "The conduct of elections", "The appointment of cabinet ministers", "The appointment of judges"],
-        c: 2,
-        t: "Electoral System",
-        y: 2020,
-        e: "An electoral system consists of the rules and procedures governing how elections are organised and conducted. It determines matters such as voter registration, voting procedures, counting of votes and how electoral results are translated into political representation. Examples include the first-past-the-post system and proportional representation."
-    },
+    function startCustomQuiz() {
+        let normalized = masterQuestions.map(normalizeQuestion);
 
-    {
-        q: "An unwritten constitution is one which:",
-        a: ["Is not subject to judicial review", "Is only partially written", "Is not written at all", "Is made up solely of a set of conventions", "None of the above"],
-        c: 1,
-        t: "Types of Constitution",
-        y: 2007,
-        e: "An unwritten constitution is not contained in one single authoritative constitutional document. Instead, its provisions are drawn from different sources, including statutes, court decisions, conventions and historical documents. The United Kingdom is a well-known example. The term 'unwritten' does not mean that none of its constitutional rules have ever been written down."
-    },
+        if (selectedTopic !== "all") {
+            normalized = normalized.filter(q => {
+                if (selectedTopic === "Constitutional History") {
+                    return q.topic.toLowerCase().includes("constitutional") || q.topic.toLowerCase().includes("cliord") || q.topic.toLowerCase().includes("region");
+                }
+                if (selectedTopic === "Organs of Government") {
+                    return q.topic.toLowerCase().includes("organs") || q.topic.toLowerCase().includes("legislature") || q.topic.toLowerCase().includes("judiciary");
+                }
+                if (selectedTopic === "International Organisations") {
+                    return q.topic.toLowerCase().includes("international") || q.topic.toLowerCase().includes("organisation");
+                }
+                return q.topic.toLowerCase().includes(selectedTopic.toLowerCase());
+            });
+            if (normalized.length === 0) {
+                normalized = masterQuestions.map(normalizeQuestion);
+            }
+        }
 
-    {
-        q: "Delegated legislation is legislation:",
-        a: ["Which is not submitted to Parliament", "Made by judicial tribunals", "Made by a minister acting under an Act of Parliament", "Made by local government", "Made by parastatals"],
-        c: 2,
-        t: "Delegated Legislation",
-        y: 2017,
-        e: "Delegated legislation refers to laws or detailed regulations made by an authority other than the main legislature, using powers granted by an Act of Parliament. For example, a minister may make regulations to explain how a particular Act should be implemented. This allows technical details to be handled without requiring the legislature to debate every minor provision."
-    },
+        if (shuffleEnabled) {
+            for (let i = normalized.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [normalized[i], normalized[j]] = [normalized[j], normalized[i]];
+            }
+        }
 
-    {
-        q: "Before colonial rule, Yoruba traditional rulers were appointed by:",
-        a: ["The people acting through their representatives", "The Ogboni", "Ifa (oracle) priests", "Oduduwa", "Kingmakers"],
-        c: 4,
-        t: "Traditional Political Systems",
-        y: 2013,
-        e: "In many traditional Yoruba political systems, kingmakers played an important role in selecting or approving a new ruler. Their authority was based on established customs and traditions. The exact selection process varied among Yoruba communities, but the kingmakers generally had a recognised responsibility in the installation of traditional rulers."
-    },
+        questions = normalized;
+        userAnswers = new Array(questions.length).fill(null);
+        flaggedQuestions.clear();
+        currentQ = 0;
+        totalDuration = timedModeEnabled ? questions.length * 50 : 999999;
+        timeRemaining = totalDuration;
 
-    {
-        q: "The first political party properly so-called was formed in Nigeria in:",
-        a: ["1916", "1923", "1944", "1948", "1951"],
-        c: 1,
-        t: "Political Parties and Nationalism",
-        y: 2009,
-        e: "The Nigerian National Democratic Party (NNDP), founded by Herbert Macaulay in 1923, is generally recognised as Nigeria's first organised political party. It participated in the limited elections introduced under the Clifford Constitution. Its formation marked an important stage in the development of organised party politics and nationalist activity in Nigeria."
-    },
+        document.getElementById("setup-box").classList.add("hidden");
+        document.getElementById("result-box").classList.add("hidden");
+        document.getElementById("quiz-box").classList.remove("hidden");
 
-    {
-        q: "The Loi Cadre, a major factor in the constitutional development of the French colonial territories, was introduced in:",
-        a: ["1940", "1946", "1950", "1956", "1960"],
-        c: 3,
-        t: "French Colonial Administration",
-        y: 2024,
-        e: "The Loi Cadre, also known as the Overseas Reform Act, was introduced in 1956 in French colonial Africa. It introduced important administrative and political reforms, including greater internal self-government for the colonies. It also increased the participation of Africans in the administration of their territories and contributed to the process that eventually led to independence."
-    },
+        const timerBadge = document.getElementById("timer-badge");
+        if (!timedModeEnabled) {
+            timerBadge.textContent = "⏱️ Untimed Mode";
+        } else {
+            startTimer();
+        }
 
-    {
-        q: "The Coussey Commission Report laid the groundwork for the eventual independence of:",
-        a: ["Gambia", "Gold Coast (Ghana)", "Sierra Leone", "Liberia", "Nigeria"],
-        c: 1,
-        t: "Constitutional Development in West Africa",
-        y: 2014,
-        e: "The Coussey Commission was established in the Gold Coast, now Ghana, to examine constitutional reforms and recommend greater African participation in government. Its report contributed to constitutional changes that helped prepare the Gold Coast for self-government. Ghana eventually gained independence from Britain on 6 March 1957."
-    },
+        saveCurrentProgressToStorage(false);
+        initQuiz();
+    }
 
-    {
-        q: "The former Western Region of Nigeria became internally self-governing in:",
-        a: ["1955", "1957", "1958", "1956", "1959"],
-        c: 1,
-        t: "Constitutional Development in Nigeria",
-        y: 2006,
-        e: "The Western Region attained internal self-government in 1957, following constitutional developments that increased regional autonomy. Internal self-government allowed the region to manage many of its domestic affairs through its own elected political institutions, although matters such as defence and foreign affairs remained under the central colonial administration."
-    },
+    function returnToSetup() {
+        clearInterval(timerInterval);
+        localStorage.removeItem(STORAGE_KEY);
+        document.getElementById("quiz-box").classList.add("hidden");
+        document.getElementById("result-box").classList.add("hidden");
+        document.getElementById("setup-box").classList.remove("hidden");
+    }
 
-    {
-        q: "The first Pan-African Conference was held in:",
-        a: ["Paris", "Brussels", "London", "New York", "Manchester"],
-        c: 2,
-        t: "Pan-Africanism",
-        y: 2022,
-        e: "The first Pan-African Conference was held in London in 1900 and was organised by Henry Sylvester Williams. It brought together people concerned about the treatment and political position of Africans and people of African descent. The conference helped promote Pan-African ideas, including racial equality, African dignity and opposition to colonial exploitation."
-    },
+    function toggleJumpGrid() {
+        document.getElementById("jump-grid-wrapper").classList.toggle("hidden");
+    }
 
-    {
-        q: "The Public Service Commission (Nigeria) is responsible for the appointment of all:",
-        a: ["Judges of the High Court", "Officials of public corporations", "Civil servants", "Military personnel", "University teachers"],
-        c: 2,
-        t: "Public Service Commission",
-        y: 2015,
-        e: "The Public Service Commission performs important personnel functions in the public service, including appointments, promotions and disciplinary matters for officers within its jurisdiction. Its role helps ensure that civil servants are recruited and managed according to established public service rules. It does not ordinarily control the appointment of military personnel or every employee of a public corporation."
-    },
+    function toggleBookmark() {
+        const qItem = questions[currentQ];
+        const qId = qItem.q;
+        if (bookmarkedQuestions.has(qId)) {
+            bookmarkedQuestions.delete(qId);
+        } else {
+            bookmarkedQuestions.add(qId);
+        }
+        localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify(Array.from(bookmarkedQuestions)));
+        renderActiveQuestion();
+        renderNavigatorGrid();
+    }
 
-    {
-        q: "Constitutional cases in Nigeria can only be raised in the first instance in:",
-        a: ["The Supreme Court", "The High Courts", "The Courts of Appeal", "The Sharia Court of Appeal", "None of the above"],
-        c: 1,
-        t: "Nigerian Judiciary",
-        y: 2018,
-        e: "Under Nigeria's judicial structure, constitutional disputes may be brought before a court with the appropriate jurisdiction, commonly a High Court at first instance. The Supreme Court is generally the final appellate court rather than the court where every constitutional case must begin. The particular court depends on the nature of the dispute and the jurisdiction provided by the Constitution and other laws."
-    },
+    function toggleBookmarkReview(questionText, btnEl) {
+        if (bookmarkedQuestions.has(questionText)) {
+            bookmarkedQuestions.delete(questionText);
+            btnEl.classList.remove("bookmarked");
+            btnEl.textContent = "🔖 Save to Bookmarks";
+        } else {
+            bookmarkedQuestions.add(questionText);
+            btnEl.classList.add("bookmarked");
+            btnEl.textContent = "🔖 Bookmarked ✓";
+        }
+        localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify(Array.from(bookmarkedQuestions)));
+    }
 
-    {
-        q: "Which of the following would act for the Head of State when he is out of the country?",
-        a: ["The Chief Justice of the Supreme Court", "The Chief of Staff, Army", "The Chief of Staff, Supreme Military Headquarters", "The Chief of Staff, Air Force", "The General Officer Commanding, First Division"],
-        c: 2,
-        t: "Military Government",
-        y: 2010,
-        e: "The question refers to the military administrative arrangement in which the Chief of Staff at Supreme Military Headquarters could perform important coordinating duties in the absence of the Head of State. Military governments often relied on military councils and senior military officers to maintain the continuity of administration. This is different from the constitutional succession arrangements in a civilian presidential system."
-    },
+    function renderActiveQuestion() {
+        const item = questions[currentQ];
+        document.getElementById("instruction-box").textContent = item.instr;
 
-    {
-        q: "To raise funds, local governments can levy:",
-        a: ["Import duties", "Income taxes", "Excise duties", "Rates", "Profits tax"],
-        c: 1,
-        t: "Local Government Finance",
-        y: 2025,
-        e: "Local governments need revenue to provide services such as local roads, markets, sanitation and other community facilities. The answer supplied in the original question bank identifies income taxes as a source of revenue. The precise taxes and charges a local government may collect depend on the applicable constitutional and statutory allocation of revenue powers."
-    },
+        const yearBadge = document.getElementById("year-badge");
+        if (item.year) {
+            yearBadge.textContent = `📅 ${item.year}`;
+            yearBadge.classList.remove("hidden");
+        } else {
+            yearBadge.classList.add("hidden");
+        }
 
-    {
-        q: "The Economic Commission for Africa is an agency of:",
-        a: ["The OAU", "The Commonwealth", "The United Nations", "The OCAM", "The African Development Bank"],
-        c: 2,
-        t: "International Organisations",
-        y: 2016,
-        e: "The Economic Commission for Africa (ECA) is a regional commission of the United Nations. It was established in 1958 to promote economic and social development across African countries. Its work includes research, policy advice, regional integration and support for sustainable development on the continent."
-    },
+        document.getElementById("q-text").textContent = `${currentQ + 1}. ${item.q}`;
+        
+        const grid = document.getElementById("options-grid");
+        grid.innerHTML = "";
+        
+        item.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = `option-btn ${userAnswers[currentQ] === idx ? 'selected' : ''}`;
+            btn.innerHTML = `<span class="opt-letter">${OPTION_LETTERS[idx] || idx + 1}</span><span>${opt}</span>`;
+            btn.onclick = () => selectOptionIndex(idx);
+            grid.appendChild(btn);
+        });
 
-    {
-        q: "Nigeria is not a member of:",
-        a: ["The OAU", "The Security Council of the UN", "The African Development Bank", "The Commonwealth", "The OCAM"],
-        c: 4,
-        t: "International Organisations",
-        y: 2011,
-        e: "OCAM was an organisation associated with cooperation among certain French-speaking African and Malagasy states. Nigeria, which was formerly under British colonial rule and is not a member of that organisation, was not part of OCAM. Nigeria has, however, participated in organisations such as the Commonwealth, the African Development Bank and the Organisation of African Unity, now known as the African Union."
-    },
+        document.getElementById("prev-btn").disabled = currentQ === 0;
+        document.getElementById("next-btn").disabled = currentQ === questions.length - 1;
+        
+        const flagBtn = document.getElementById("flag-btn");
+        flagBtn.className = flaggedQuestions.has(currentQ) ? "flag-btn flagged" : "flag-btn";
 
-];
+        const bookmarkBtn = document.getElementById("bookmark-btn");
+        if (bookmarkedQuestions.has(item.q)) {
+            bookmarkBtn.className = "bookmark-btn bookmarked";
+            bookmarkBtn.textContent = "🔖 Saved ✓";
+        } else {
+            bookmarkBtn.className = "bookmark-btn";
+            bookmarkBtn.textContent = "🔖 Save";
+        }
+    }
 
+    function selectOptionIndex(idx) {
+        if (idx < 0 || idx >= questions[currentQ].options.length) return;
+        userAnswers[currentQ] = idx;
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+        saveCurrentProgressToStorage(false);
+    }
 
-    // PASTE 495 MORE QUESTIONS HERE FOLLOWING SAME FORMAT
-];
-let questionBank = JSON.parse(localStorage.getItem('govpro_questions')) || fullQuestionBank;
+    function navigateQuestion(step) {
+        const target = currentQ + step;
+        if (target < 0 || target >= questions.length) return;
+        currentQ = target;
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+    }
 
-// ====== 2. ADMIN PANEL LOGIC ======
-let editingIndex = null;
-function openAdmin(){ document.getElementById('admin-modal').style.display='flex'; renderAdminTable(); }
-function closeModal(id){ document.getElementById(id).style.display='none'; }
-function renderAdminTable(){
-    const tbody = document.getElementById('admin-table-body'); tbody.innerHTML='';
-    const search = document.getElementById('search-q').value.toLowerCase();
-    questionBank.filter(q=>q.q.toLowerCase().includes(search)).forEach((q,i)=>{
-        tbody.innerHTML += `<tr><td>${i+1}</td><td>${q.q}</td><td>${q.t}</td>
-        <td><button onclick="editQuestion(${i})">Edit</button> <button onclick="deleteQuestion(${i})">Delete</button></td></tr>`;
+    function updateProgressIndicators() {
+        const total = questions.length;
+        const answeredCount = userAnswers.filter(ans => ans !== null).length;
+        const percent = Math.round(((currentQ + 1) / total) * 100);
+        document.getElementById("progress-text").textContent = `Item ${currentQ + 1} / ${total}`;
+        document.getElementById("answered-count").textContent = `Answered: ${answeredCount}/${total}`;
+        document.getElementById("progress-percent").textContent = `${percent}%`;
+        document.getElementById("progress-fill").style.width = `${percent}%`;
+        document.getElementById("quick-jump-label").textContent = `Quick Jump (${total} Questions)`;
+    }
+
+    function renderNavigatorGrid() {
+        const gridContainer = document.getElementById("jump-box-grid");
+        gridContainer.innerHTML = "";
+        
+        questions.forEach((q, index) => {
+            const item = document.createElement("div");
+            item.className = `jump-item`;
+            if (index === currentQ) item.classList.add("active");
+            if (userAnswers[index] !== null) item.classList.add("answered");
+            if (flaggedQuestions.has(index)) item.classList.add("flagged");
+            if (bookmarkedQuestions.has(q.q)) item.classList.add("bookmarked");
+            
+            item.textContent = index + 1;
+            item.onclick = () => {
+                currentQ = index;
+                renderActiveQuestion();
+                renderNavigatorGrid();
+                updateProgressIndicators();
+                toggleJumpGrid();
+            };
+            gridContainer.appendChild(item);
+        });
+    }
+
+    function toggleFlag() {
+        if (flaggedQuestions.has(currentQ)) flaggedQuestions.delete(currentQ);
+        else flaggedQuestions.add(currentQ);
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        saveCurrentProgressToStorage(false);
+    }
+
+    function showSubmitModal() {
+        const unansweredCount = userAnswers.filter(ans => ans === null).length;
+        const msg = unansweredCount > 0 
+            ? `You still have ${unansweredCount} unanswered question(s). Are you sure you want to submit now?`
+            : `All ${questions.length} questions answered! Ready to submit and view your Government score?`;
+        document.getElementById("submit-modal-msg").textContent = msg;
+        document.getElementById("submit-modal").classList.remove("hidden");
+    }
+    function closeSubmitModal() { document.getElementById("submit-modal").classList.add("hidden"); }
+
+    function confirmSubmit() {
+        closeSubmitModal();
+        calculateResults();
+    }
+
+    function calculateResults() {
+        let correct = 0, wrong = 0, unanswered = 0;
+        questions.forEach((q, idx) => {
+            if (userAnswers[idx] === null) unanswered++;
+            else if (userAnswers[idx] === q.correct) correct++;
+            else wrong++;
+        });
+
+        const timeTaken = timedModeEnabled ? (totalDuration - timeRemaining) : 0;
+        const statistics = {
+            correct: correct, wrong: wrong, unanswered: unanswered,
+            timeTaken: timedModeEnabled ? `${Math.floor(timeTaken / 60)}:${timeTaken % 60 < 10 ? '0' : ''}${timeTaken % 60}` : "Untimed",
+            score: correct
+        };
+
+        saveCurrentProgressToStorage(true, statistics);
+        executeUIRenderOnSubmit(statistics);
+    }
+
+    function executeUIRenderOnSubmit(stats) {
+        clearInterval(timerInterval);
+        document.getElementById("quiz-box").classList.add("hidden");
+        document.getElementById("result-box").classList.remove("hidden");
+
+        const percentage = Math.round((stats.correct / questions.length) * 100);
+        document.getElementById("final-score").textContent = `${stats.correct} / ${questions.length} (${percentage}%)`;
+        document.getElementById("stat-correct").textContent = stats.correct;
+        document.getElementById("stat-wrong").textContent = stats.wrong;
+        document.getElementById("stat-unanswered").textContent = stats.unanswered;
+        document.getElementById("stat-time").textContent = stats.timeTaken;
+
+        const perfMsg = document.getElementById("performance-msg");
+        if (percentage >= 80) perfMsg.textContent = "Outstanding mastery! You are well-prepared for UTME/WAEC Government.";
+        else if (percentage >= 60) perfMsg.textContent = "Solid effort! Review the missed constitutional and historical topics below.";
+        else perfMsg.textContent = "Keep practicing! Study the detailed explanations and review your bookmarked items.";
+
+        renderTopicBreakdown();
+        renderReviewCards("all");
+    }
+
+    function renderTopicBreakdown() {
+        const topicMap = {};
+        questions.forEach((q, idx) => {
+            const topic = q.topic || "General";
+            if (!topicMap[topic]) topicMap[topic] = { total: 0, correct: 0 };
+            topicMap[topic].total++;
+            if (userAnswers[idx] === q.correct) topicMap[topic].correct++;
+        });
+
+        const box = document.getElementById("topic-breakdown-box");
+        let html = `<h4>📊 Performance by Topic</h4>`;
+        Object.entries(topicMap).forEach(([topic, data]) => {
+            const pct = Math.round((data.correct / data.total) * 100);
+            html += `<div class="topic-row"><span>${topic}</span><strong>${data.correct}/${data.total} (${pct}%)</strong></div>`;
+        });
+        box.innerHTML = html;
+    }
+
+    function filterReviews(filterType, btnEl) {
+        document.querySelectorAll(".filter-tab").forEach(b => b.classList.remove("active"));
+        if (btnEl) btnEl.classList.add("active");
+        renderReviewCards(filterType);
+    }
+
+    function renderReviewCards(filterType = "all") {
+        const container = document.getElementById("review-cards-container");
+        container.innerHTML = "";
+
+        questions.forEach((q, idx) => {
+            const userAnswer = userAnswers[idx];
+            const isCorrect = userAnswer === q.correct;
+            const isUnanswered = userAnswer === null;
+            const isFlagged = flaggedQuestions.has(idx);
+            const isBookmarked = bookmarkedQuestions.has(q.q);
+
+            if (filterType === "wrong" && isCorrect) return;
+            if (filterType === "flagged" && !isFlagged) return;
+            if (filterType === "saved" && !isBookmarked) return;
+
+            const card = document.createElement("div");
+            card.className = "review-card";
+
+            const statusClass = isUnanswered ? "badge-unanswered" : isCorrect ? "badge-correct" : "badge-wrong";
+            const statusText = isUnanswered ? "Unanswered" : isCorrect ? "Correct" : "Incorrect";
+            const userChoiceText = isUnanswered 
+                ? "None" 
+                : `${OPTION_LETTERS[userAnswer]}. ${q.options[userAnswer]}`;
+            const correctChoiceText = `${OPTION_LETTERS[q.correct]}. ${q.options[q.correct]}`;
+
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span class="choice-badge ${statusClass}">${statusText}</span>
+                    <span style="font-size:0.7rem; color:var(--gray); font-weight:700;">${q.topic}${q.year ? ' • ' + q.year : ''}</span>
+                </div>
+                <div style="font-size:0.88rem; font-weight:700; margin-bottom:6px;">Q${idx+1}: ${q.q}</div>
+                <div style="font-size:0.8rem; color:var(--gray); margin-bottom:2px;">Your Answer: <strong>${userChoiceText}</strong></div>
+                <div style="font-size:0.8rem; color:var(--primary-dark); margin-bottom:4px;">Correct Option: <strong>${correctChoiceText}</strong></div>
+                <div class="explanation-box">${q.exp}</div>
+                <div style="display:flex; gap:6px; margin-top:8px;">
+                    <button class="action-btn nav-btn bookmark-review-btn ${isBookmarked ? 'bookmarked' : ''}" style="flex:1; padding:6px;" onclick="toggleBookmarkReview('${q.q.replace(/'/g, "\\'")}', this)">${isBookmarked ? '🔖 Bookmarked ✓' : '🔖 Save to Bookmarks'}</button>
+                    <button class="action-btn nav-btn" style="flex:1; padding:6px;" onclick="fetchAIExplanation(${idx})">✨ Mubarak AI</button>
+                </div>
+                <div id="ai-explanation-${idx}" class="hidden"></div>
+            `;
+            container.appendChild(card);
+        });
+
+        if (container.innerHTML === "") {
+            container.innerHTML = `<p style="font-size:0.82rem; color:var(--gray); margin-top:14px; text-align:center;">No questions match this filter.</p>`;
+        }
+    }
+
+    async function fetchAIExplanation(questionIdx) {
+        const q = questions[questionIdx];
+        const container = document.getElementById(`ai-explanation-${questionIdx}`);
+        container.classList.remove('hidden');
+
+        if (aiExplanationCache[q.q]) {
+            container.innerHTML = `<div class="ai-explanation-box"><strong>Mubarak AI:</strong><br>${aiExplanationCache[q.q]}</div>`;
+            return;
+        }
+
+        container.innerHTML = '<div class="ai-explanation-box">Consulting Government AI Tutor...</div>';
+
+        try {
+            const response = await fetch(POLLINATION_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    messages: [
+                        { role: 'system', content: "You are an expert Nigerian Government and Political Science tutor for WAEC and UTME candidates. Keep your explanation concise, clear, and exam-focused." },
+                        { role: 'user', content: `Explain why "${q.options[q.correct]}" is the correct answer for this Government question: "${q.q}". Options: ${q.options.join(', ')}.` }
+                    ],
+                    model: 'openai'
+                })
+            });
+            const text = await response.text();
+            const formatted = text.replace(/\n/g, '<br>');
+            aiExplanationCache[q.q] = formatted;
+            localStorage.setItem("mubarak_gov_ai_cache", JSON.stringify(aiExplanationCache));
+            container.innerHTML = `<div class="ai-explanation-box"><strong>Mubarak AI:</strong><br>${formatted}</div>`;
+        } catch (e) {
+            container.innerHTML = '<div class="ai-explanation-box">Connection timeout. Please check your network connection.</div>';
+        }
+    }
+
+    function exportResults() {
+        let csv = "Question,Topic,Year,Your Choice,Correct Choice,Status,Bookmarked\n";
+        questions.forEach((q, idx) => {
+            const userChoice = userAnswers[idx] !== null ? q.options[userAnswers[idx]] : "None";
+            const status = userAnswers[idx] === null ? "Unanswered" : (userAnswers[idx] === q.correct ? "Correct" : "Wrong");
+            const isSaved = bookmarkedQuestions.has(q.q) ? "Yes" : "No";
+            csv += `"${q.q.replace(/"/g, '""')}","${q.topic}","${q.year || ''}","${userChoice.replace(/"/g, '""')}","${q.options[q.correct].replace(/"/g, '""')}","${status}","${isSaved}"\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'government-diagnostic-results.csv';
+        link.click();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (document.getElementById("quiz-box").classList.contains("hidden")) return;
+        if (e.key === "ArrowLeft") navigateQuestion(-1);
+        if (e.key === "ArrowRight") navigateQuestion(1);
+        if (e.key >= "1" && e.key <= "5") selectOptionIndex(parseInt(e.key) - 1);
+        const upperKey = e.key.toUpperCase();
+        if (OPTION_LETTERS.includes(upperKey)) {
+            selectOptionIndex(OPTION_LETTERS.indexOf(upperKey));
+        }
     });
-    document.getElementById('q-count').innerText = questionBank.length;
-}
-function showAddForm(){ editingIndex=null; document.getElementById('form-title').innerText='Add Question'; clearForm(); document.getElementById('question-form-modal').style.display='flex'; }
-function editQuestion(i){ editingIndex=i; const q=questionBank[i]; document.getElementById('form-title').innerText='Edit Question';
-    document.getElementById('f-q').value=q.q; q.a.forEach((opt,j)=>document.getElementById(`f-a${j}`).value=opt);
-    document.getElementById('f-c').value=q.c; document.getElementById('f-t').value=q.t; document.getElementById('f-y').value=q.y; document.getElementById('f-e').value=q.e;
-    document.getElementById('question-form-modal').style.display='flex';
-}
-function saveQuestion(){
-    const newQ = {
-        q:document.getElementById('f-q').value,
-        a:[f-a0.value,f-a1.value,f-a2.value,f-a3.value],
-        c:parseInt(f-c.value), t:f-t.value, y:parseInt(f-y.value), e:f-e.value
-    };
-    if(editingIndex===null) questionBank.push(newQ); else questionBank[editingIndex]=newQ;
-    localStorage.setItem('govpro_questions', JSON.stringify(questionBank)); closeModal('question-form-modal'); renderAdminTable();
-}
-function deleteQuestion(i){ if(confirm("Delete?")){ questionBank.splice(i,1); localStorage.setItem('govpro_questions', JSON.stringify(questionBank)); renderAdminTable(); } }
-function clearForm(){ ['f-q','f-a0','f-a1','f-a2','f-a3','f-c','f-t','f-y','f-e'].forEach(id=>document.getElementById(id).value=''); }
-function exportQuestions(){ const data=JSON.stringify(questionBank, null, 2); navigator.clipboard.writeText(data); alert("Copied to clipboard!"); }
-function importQuestions(){ try{ const data=JSON.parse(document.getElementById('bulk-import').value); questionBank=[...questionBank,...data]; localStorage.setItem('govpro_questions', JSON.stringify(questionBank)); alert("Imported!"); renderAdminTable(); }catch(e){alert("Invalid JSON")} }
 
-// ====== 3. CBT ENGINE LOGIC ======
-let student={}, examQ=[], cur=0, answers={}, flagged=new Set(), time=2400, timer;
-function startSession(){
-    student.name=document.getElementById('student-name').value||"Guest";
-    const mode=document.getElementById('exam-mode').value;
-    time=mode==='jamb'?2400:3600; let count=mode==='jamb'?40:50;
-    examQ=[...questionBank].sort(()=>0.5-Math.random()).slice(0,count);
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('cbt-screen').style.display='block';
-    document.getElementById('student-display').innerText=student.name;
-    document.getElementById('q-total').innerText=examQ.length;
-    buildPalette(); render(); startTimer();
-}
-function render(){ const q=examQ[cur]; document.getElementById('q-num').innerText=cur+1; document.getElementById('q-text').innerText=q.q; document.getElementById('topic-badge').innerText=q.t;
-    const box=document.getElementById('options'); box.innerHTML='';
-    q.a.forEach((opt,i)=>{ const div=document.createElement('div'); div.className='option'; if(answers[cur]===i)div.classList.add('selected');
-        div.innerHTML=`<b>${String.fromCharCode(65+i)}.</b> ${opt}`; div.onclick=()=>{answers[cur]=i; render(); updatePalette();}; box.appendChild(div); });
-    updatePalette();
-}
-function buildPalette(){ const p=document.getElementById('palette'); p.innerHTML=''; examQ.forEach((_,i)=>{ const d=document.createElement('div'); d.className='p-box'; d.innerText=i+1; d.onclick=()=>{cur=i; render();}; p.appendChild(d);}); }
-function updatePalette(){ document.querySelectorAll('.p-box').forEach((b,i)=>{ b.className='p-box'; if(i===cur)b.classList.add('current'); if(answers[i]!==undefined)b.classList.add('answered'); if(flagged.has(i))b.style.background='var(--warning)'; }); }
-function nav(d){ if(cur+d>=0 && cur+d<examQ.length){cur+=d; render();} }
-function toggleFlag(){ flagged.has(cur)?flagged.delete(cur):flagged.add(cur); updatePalette(); }
-function startTimer(){ clearInterval(timer); timer=setInterval(()=>{ if(time>0){time--; let m=Math.floor(time/60),s=time%60; document.getElementById('timer').innerText=`${m}:${s<10?'0':''}${s}`; } else submitExam(); },1000); }
-function submitExam(){ clearInterval(timer); document.getElementById('cbt-screen').style.display='none'; document.getElementById('results-screen').style.display='block';
-    let correct=Object.keys(answers).filter(i=>answers[i]===examQ[i].c).length; let percent=Math.round(correct/examQ.length*100);
-    document.getElementById('result-name').innerText=student.name; document.getElementById('score').innerText=percent+'%';
-    const topicStats={}; examQ.forEach((q,i)=>{ if(!topicStats[q.t])topicStats[q.t]={t:0,c:0}; topicStats[q.t].t++; if(answers[i]===q.c)topicStats[q.t].c++; });
-    new Chart(document.getElementById('topicChart'), { type:'bar', data:{ labels:Object.keys(topicStats), datasets:[{label:'Accuracy %', data:Object.values(topicStats).map(x=>Math.round(x.c/x.t*100))}] }});
-}
-
-// Keyboard
-document.addEventListener('keydown', e=>{ if(['1','2','3','4'].includes(e.key)) {answers[cur]=parseInt(e.key)-1; render();} if(e.key==='ArrowRight')nav(1); if(e.key==='ArrowLeft')nav(-1); });
+    setupSession();
 </script>
 </body>
 </html>
