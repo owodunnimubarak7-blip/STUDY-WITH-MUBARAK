@@ -596,7 +596,464 @@
         { instr: "Lexicon & Vocabulary: Identify the closest synonym.", q: "Select the word that is most nearly similar in meaning to 'Ephemeral'.", options: ["Enduring", "Transient", "Precious", "Spurious"], correct: 1, exp: "'Ephemeral' means lasting for a very short time. 'Transient' is a direct synonym, meaning fleeting or temporary." },
         { instr: "Lexicon & Vocabulary: Identify the opposite meaning.", q: "What is the most accurate antonym for the word 'Loquacious'?", options: ["Reticent", "Garrulous", "Verbose", "Articulate"], correct: 0, exp: "'Loquacious' means talkative. 'Reticent' means introverted, silent, or reserved, making it the correct opposite." },
         { instr: "Grammar & Parts of Speech: Pronoun Case Selection.", q: "The grand prize was split equally between Sarah and ______.", options: ["I", "me", "myself", "we"], correct: 1, exp: "The pronoun follows the preposition 'between', requiring the objective case pronoun 'me' rather than the subjective case 'I'." },
-        { instr: "Grammar & Structure: Idiomatic Expressions.", q: "To 'take something with a grain of salt' means to:", options: ["Accept it completely", "Skeptically reserve full belief", "Cook with careful measurements", "Exaggerate an event"], correct: 1, exp: "The idiom means to view a statement with skepticism or not to interpret it as literal, objective truth." }
+        { instr: "Grammar & Structure: Idiomatic Expressions.", q: "To 'take something with a grain of salt' means to:", options: ["Accept it completely", "Skeptically reserve full belief", "Cook with careful measurements", "Exaggerate an event"], correct: 1, exp: "The idiom means to view a statement with skepticism or not to interpret it as literal, objective truth." },
+
+
+    {
+        instr: `PASSAGE A
+
+All over the world till lately and in most of the world till today, mankind has been following the course of nature: that is to say, it has been breeding up to the maximum. To let nature take her course in the reproduction of the human race may have made sense in an age in which we were also letting her take her course in decimating mankind by the casualties of war, pestilence, and famine. Being human, we have at least revolted against that senseless waste. We have started to impose on nature’s heartless play a humane new order of our own. But when once man has begun to interfere with nature, he cannot afford to stop halfway. We cannot, with impunity, cut down the death-rate and at the same time allow the birthrate to go on taking nature’s course. We must consciously try to establish an equilibrium, or sooner or later, famine will stalk abroad again.
+
+Read the passage carefully and answer the questions that follow.`,
+        q: "The author observes that",
+        options: [
+            "War, pestilence and famine were caused by the extravagance of nature",
+            "Nature was heartless and senseless",
+            "There was a time when uncontrolled birth made sense",
+            "It was wise at a time when mankind did not interfere with normal reproduction",
+            "Nature was heartless in its reproductive process"
+        ],
+        correct: 2,
+        exp: "The author explains that unrestricted reproduction may have made sense when war, disease and famine also naturally reduced the population. This means there was a time when uncontrolled birth was considered reasonable."
+    },
+
+    {
+        instr: "PASSAGE A — Choose the option that agrees with the author's views.",
+        q: "Which of these statements does not express the opinion of the author?",
+        options: [
+            "Mankind has started to interfere with the work of nature",
+            "Many people had died in the past through want and disease",
+            "Mankind should not have the maximum number of children possible",
+            "Mankind should take care of its children",
+            "Man's present relationship with nature in matters of birth and death is a happy one"
+        ],
+        correct: 4,
+        exp: "The author does not describe man's present relationship with nature as happy. Instead, the author argues that reducing deaths while allowing births to continue unchecked creates an imbalance."
+    },
+
+    {
+        instr: "PASSAGE A — Answer according to the meaning of the word in the passage.",
+        q: "Humane, as used in the passage, means",
+        options: [
+            "Sensible",
+            "Wise",
+            "Human",
+            "Benevolent",
+            "Thorough"
+        ],
+        correct: 3,
+        exp: "Humane means showing kindness, compassion and concern for human welfare. Benevolent is the closest option because it means kind and well-meaning."
+    },
+
+    {
+        instr: "PASSAGE A — Answer according to the meaning of the expression in the passage.",
+        q: "'We must consciously try to establish an equilibrium' implies that mankind must",
+        options: [
+            "Realistically find an equation",
+            "Strive not to be wasteful",
+            "Deliberately try to fight nature",
+            "Try to fight nature",
+            "Purposely find a balance"
+        ],
+        correct: 4,
+        exp: "Equilibrium means a state of balance. The author argues that mankind must deliberately balance the birth rate and death rate to prevent overpopulation and famine."
+    },
+
+    {
+        instr: "PASSAGE A — Choose the option that best expresses the central idea.",
+        q: "The main idea of this passage is that",
+        options: [
+            "Nature is heartless",
+            "Man should control the birth rate",
+            "Mankind will soon perish of starvation",
+            "Pestilence causes more death than war",
+            "Man should change nature's course gradually"
+        ],
+        correct: 1,
+        exp: "The passage emphasizes that since mankind has reduced the death rate, it must also regulate the birth rate to maintain population balance. Therefore, controlling the birth rate is the central idea."
+    },
+
+    // PASSAGE B
+    // Questions 6–10
+
+    {
+        instr: `PASSAGE B
+
+The endeavour to maintain proper standards of fairness in journalism must be pursued. It is fatally easy for the journalist to deviate from the straight path. There is his natural desire to make a story and the insidious temptation to twist facts to square with his paper's policy. Both are as indefensible as the framing of misleading headlines for the sake of effect. The conscientious journalist must check any tendency to bias, and guard against the dangers inherent in personal antipathies or friendships, and in traditional opposition between rival schools of thought. When a political opponent, whose stupidity habitually provokes attack, makes an effective speech, honesty requires that he be given credit for it. Where personal relationships might make it easier and more congenial to keep silent than to criticize, the journalist must never forget his duty to the public and the supreme importance of recording the truth.
+
+Read the passage carefully and answer the questions that follow.`,
+        q: "When may a journalist have to act against his own inclination?",
+        options: [
+            "When his friends act stupidly",
+            "When he becomes weak and decrepit",
+            "When his enemies make a mistake",
+            "When his political opponents frame misleading headlines",
+            "After he has been given a bribe"
+        ],
+        correct: 2,
+        exp: "The passage says that when a political opponent makes an effective speech, the journalist must give that opponent credit, even if personal dislike makes this difficult. However, the printed option C says 'make a mistake', which does not accurately match the passage. The intended idea appears to be giving credit to an opponent despite personal inclination."
+    },
+
+    {
+        instr: "PASSAGE B — Answer according to the author's argument.",
+        q: "A journalist would be able to uphold the tenets of his profession if",
+        options: [
+            "He seeks publicity",
+            "He tries to achieve popularity",
+            "He resists temptation to bias",
+            "He can manipulate his story to please his employers",
+            "He tries to protect his friends"
+        ],
+        correct: 2,
+        exp: "The passage emphasizes fairness, truth and freedom from prejudice. A journalist upholds professional standards by resisting bias and reporting facts honestly."
+    },
+
+    {
+        instr: "PASSAGE B — Choose the option closest in meaning to the word.",
+        q: "'Insidious' (line 2) means",
+        options: [
+            "Subtle",
+            "Wicked",
+            "Natural",
+            "Unusual",
+            "Wild"
+        ],
+        correct: 0,
+        exp: "Insidious describes something that operates gradually or secretly in a harmful way. Subtle is the closest option because the temptation may be difficult to notice or resist."
+    },
+
+    {
+        instr: "PASSAGE B — Answer according to the passage.",
+        q: "A dutiful journalist must",
+        options: [
+            "Read widely",
+            "Have political acumen",
+            "Make no enemies but friends",
+            "Be able to make an effective speech",
+            "Be able to recognize merit wherever found"
+        ],
+        correct: 4,
+        exp: "The journalist must acknowledge an effective speech even when it is made by a political opponent. This shows the importance of recognizing merit wherever it occurs."
+    },
+
+    {
+        instr: "PASSAGE B — Choose the option that best expresses the journalist's duty.",
+        q: "The duty of the journalist to the public entails",
+        options: [
+            "Giving credit to his political enemies",
+            "Keeping quiet when necessary",
+            "Trying to make a story",
+            "Telling the truth",
+            "Defending the weak"
+        ],
+        correct: 3,
+        exp: "The final sentence states that the journalist must remember his duty to the public and the supreme importance of recording the truth. Therefore, telling the truth is the best answer."
+    },
+
+    // PASSAGE C
+    // Questions 11–15
+
+    {
+        instr: `PASSAGE C
+
+So far, I have been speaking of science in its universality viewed from the perspective of the world at large. For in the context of our own country and our sister developing countries many of the factors mentioned earlier are not very important. For example, pollution, deterioration of the environment and population explosion are not yet serious problems for us in this country. Let me now turn to a more specific area, namely, the question of scientific choice for developing countries. There is no doubt that the role which science and technology have played in the upliftment of the material and economic well-being of the developed nations will, and does, influence the criteria that the Third World nations must choose in order to establish their science policies and priorities. But the criteria to be used by these nations do not have to be the same as those which have brought the developed countries to their present stage of evolution. For while human beings have the same problems, their solutions, to be meaningful, will have to be sought within some relevant frame of reference such as the available resources and expertise, social values, place and time in the historical scale.
+
+Read the passage carefully and answer the questions that follow.`,
+        q: "'Frame of reference' in this passage means",
+        options: [
+            "Point of information",
+            "Range of authority",
+            "Economic pattern",
+            "Context of situation",
+            "Wholesome choice"
+        ],
+        correct: 3,
+        exp: "A frame of reference is the particular context or set of circumstances used when considering something. The passage mentions resources, expertise, social values, place and historical period as relevant circumstances."
+    },
+
+    {
+        instr: "PASSAGE C — Answer according to the writer's view.",
+        q: "The writer apparently believes that through science and technology our country can achieve",
+        options: [
+            "Peace and order",
+            "Progress and material success",
+            "Social values and universality",
+            "Wealth and economic progress",
+            "Military development and power"
+        ],
+        correct: 3,
+        exp: "The passage specifically discusses how science and technology have improved the material and economic well-being of developed nations. Option D expresses this idea most directly."
+    },
+
+    {
+        instr: "PASSAGE C — Answer according to the factors listed in the passage.",
+        q: "According to the passage, the basic consideration for developing science and technology should be three of the following: 1. technical know-how 2. availability of raw materials 3. atmospheric pollution 4. the people's tradition and beliefs 5. population 6. capital",
+        options: [
+            "2, 1 and 6 only",
+            "3, 2 and 4 only",
+            "5, 3 and 6 only",
+            "6, 5 and 4 only",
+            "5, 2 and 6 only"
+        ],
+        correct: 0,
+        exp: "The passage identifies available resources and expertise as important considerations. Raw materials represent resources, technical know-how represents expertise, and capital is a resource. Option A is the closest match among the choices."
+    },
+
+    {
+        instr: "PASSAGE C — Choose the option that best expresses the main idea.",
+        q: "The main idea of this passage is that",
+        options: [
+            "There is a yawning gap between the have and the have-nots",
+            "There is need to rid his countrymen from scourges of hunger, disease, ignorance and want",
+            "There could be atmospheric pollution and population explosion",
+            "The concerns of science and technology are the same in all countries",
+            "Each nation must plan its development according to its needs and resources"
+        ],
+        correct: 4,
+        exp: "The writer argues that developing countries should not simply copy the scientific policies of developed countries. They should choose policies that suit their own resources, expertise and social conditions."
+    },
+
+    {
+        instr: "PASSAGE C — Interpret the expression as used in the passage.",
+        q: "The term 'our sister developing countries' implies",
+        options: [
+            "Britain, Gambia and Canada",
+            "Ghana, Germany and Togo",
+            "Russia, Switzerland and America",
+            "Liberia, Sierra-Leone and Gabon",
+            "China, India and Holland"
+        ],
+        correct: 3,
+        exp: "The expression refers to countries that share the status of developing nations. Among the options, Liberia, Sierra Leone and Gabon are the intended examples."
+    },
+
+    // PASSAGE D
+    // Questions 16–20
+
+    {
+        instr: `PASSAGE D
+
+These two factors, the altitude and the weather, tend separately and together to defeat the climber. The height weakness slows him down; it forces him to spend days and nights in the course of his assault on the summit. The weather, besides adding to the demands of his energy and moral fortitude, conspires to deny him the time he needs to complete his mission. Whereas in lower mountains and on easy ground the weather may be no more than a handicap, in the high Himalayas it is decisive, regardless of terrain. The deduction to be drawn from these two factors was clear enough. We must either so fortify ourselves that we could continue, without detriment, to live and have our being above the limit of natural acclimatization, or better still, we must solve the problem of speed. It was desirable, in fact, that we should meet both these requirements and thus give to those chosen to attempt the summit and to their supporting teams some measure of insurance against the vagaries of the weather, for safety in mountain climbing is as much a matter of swiftness as of sureness of foot. Either or both could be achieved only by the administration of oxygen in sufficient quantities to make up for the deficiency in the air, and for the duration of the upward journey above the limit of successful acclimatization.
+
+Read the passage carefully and answer the questions that follow.`,
+        q: "The author believes that to overcome the problem of altitude and weather, the climber needs mainly",
+        options: [
+            "Courage and speed",
+            "Energy and moral fortitude",
+            "Sufficient quantities of oxygen",
+            "Swiftness and sureness of foot",
+            "Quick acclimatization"
+        ],
+        correct: 2,
+        exp: "The final part of the passage explains that the requirements for dealing with altitude and speed could be achieved through the administration of sufficient oxygen. Therefore, option C is the most direct answer."
+    },
+
+    {
+        instr: "PASSAGE D — Choose the option closest in meaning to the word.",
+        q: "'Conspires' (line 3) means",
+        options: [
+            "Ruins",
+            "Makes secret plans",
+            "Takes a wicked action",
+            "Combines",
+            "Aggravates"
+        ],
+        correct: 3,
+        exp: "To conspire means to work together or combine towards a particular result. In the passage, the weather works against the climber by making the journey more difficult."
+    },
+
+    {
+        instr: "PASSAGE D — Choose the option closest in meaning to the expression.",
+        q: "'Regardless of terrain' (line 5) means",
+        options: [
+            "Even on easy ground",
+            "Despite the nature of the ground",
+            "Because of steeper gradients",
+            "Swiftness and sureness of foot",
+            "Without considering the handicap"
+        ],
+        correct: 1,
+        exp: "Regardless of terrain means without being affected by or taking account of the nature of the ground. The weather remains decisive even when the type of terrain changes."
+    },
+
+    {
+        instr: "PASSAGE D — Interpret the expression as used in the passage.",
+        q: "'To live and have our being above the limit of natural acclimatization' (line 7) means",
+        options: [
+            "To be protected from the effects of the weather",
+            "To expect no protection from the bad weather",
+            "To survive under unnatural weather conditions",
+            "To limit our natural desires to get acclimatized to the weather",
+            "None of the above"
+        ],
+        correct: 4,
+        exp: "The expression refers to surviving at an altitude beyond the body's natural ability to adjust. None of the listed options accurately expresses that meaning, so 'None of the above' is the closest defensible choice."
+    },
+
+    {
+        instr: "PASSAGE D — Answer according to the passage.",
+        q: "Which ONE of the following was NOT a reason for using oxygen?",
+        options: [
+            "It gave them psychological encouragement",
+            "It fortified them to live above the limit of natural acclimatization",
+            "It protected them against the unexpected changes of the weather",
+            "It quickened their journey to the summit",
+            "It helped them to survive the worst"
+        ],
+        correct: 0,
+        exp: "The passage explains that oxygen helped climbers cope with the lack of oxygen at high altitudes and supported their ability to complete the climb. It does not state that oxygen was used to provide psychological encouragement."
+    },
+
+    // PASSAGE E
+    // Questions 21–25
+
+    {
+        instr: `PASSAGE E
+
+You dare not lift the veil that protects our tribal marriage customs and ceremonies from the eyes of outsiders. There is already too little in this world that is sacred; and what Fatmata and I were required to go through during the next week must remain so. I was deeply in debt by the time everything was over, but I was absolutely satisfied with my parent's choice. Fatmata was as black as a satin, and as soft. She had the teeth and smile of a goddess. The Dopo tutors had done their job well; she was a complete efficient lover and mother. I brought her home with swelling pride, and began at once to save all I could spare towards the cost of acquiring my second wife.
+
+Read the passage carefully and answer the questions that follow.`,
+        q: "The evidence would seem to indicate that",
+        options: [
+            "The author adores his wife",
+            "He disapproves of her ways",
+            "He thinks she is extravagant",
+            "The author regrets the cause of his debt",
+            "She had not been properly brought up"
+        ],
+        correct: 0,
+        exp: "The writer describes Fatmata in highly admiring terms, praising her beauty, smile and qualities. He also says he was satisfied with his parents' choice. This suggests that he adores his wife."
+    },
+
+    {
+        instr: "PASSAGE E — Answer according to the passage and the expression quoted in the original question.",
+        q: "When the author said 'My anti-Western revolt was gaining momentum' (line 7), he was referring to the fact that",
+        options: [
+            "He did not like polygamy",
+            "He hated Europeans",
+            "He did not want to marry another wife",
+            "He admired everything about his wife",
+            "He revolted against European values"
+        ],
+        correct: 4,
+        exp: "An anti-Western revolt refers to a rejection of Western ideas, customs or values. Option E expresses this meaning. However, the quoted sentence is not visible in the passage text reproduced in the PDF section provided, so the answer is based on the wording of the question."
+    },
+
+    {
+        instr: "PASSAGE E — Answer according to the consequences described in the passage.",
+        q: "It would appear that the marriage had turned him into",
+        options: [
+            "A good worker",
+            "A faithful husband",
+            "An incurable debtor",
+            "A tragic figure",
+            "A proud husband"
+        ],
+        correct: 2,
+        exp: "The writer says that he was deeply in debt after the marriage ceremonies. This supports the idea that the marriage left him in serious debt. Option E is also suggested by his 'swelling pride', but option C focuses on the financial consequence emphasized in the question."
+    },
+
+    {
+        instr: "PASSAGE E — Choose the statement that is NOT true according to the passage.",
+        q: "Which one of the following is NOT true of the passage?",
+        options: [
+            "The lady was beautiful",
+            "The marriage cost a lot of money",
+            "The marriage was according to native law and custom",
+            "Fatmata never had an issue",
+            "The author wanted another wife"
+        ],
+        correct: 3,
+        exp: "The passage describes Fatmata as beautiful, says the marriage left the writer deeply in debt, refers to tribal marriage customs, and mentions his plan to acquire a second wife. It does not state that Fatmata never had a child or issue. Therefore, D is the statement not established by the passage."
+    },
+
+    {
+        instr: "PASSAGE E — Choose the option closest in meaning to the word.",
+        q: "'Swelling' (line 6) means",
+        options: [
+            "Jovial",
+            "Great",
+            "Remarkable",
+            "Happy",
+            "Growing"
+        ],
+        correct: 4,
+        exp: "In 'swelling pride', swelling suggests pride that is increasing or growing. Therefore, 'growing' is the closest option."
+    },
+
+    // VOCABULARY AND IDIOM
+    // Questions 26–30
+
+    {
+        instr: "Choose the option that best conveys the meaning of the underlined portion in the following sentence.",
+        q: "In the match against the uplanders team, the submariners turned out to be the dark horse.",
+        options: [
+            "Played most brilliantly",
+            "Played below their usual form",
+            "Won unexpectedly",
+            "Lost as expected",
+            "Won as expected"
+        ],
+        correct: 2,
+        exp: "A dark horse is a person or team whose abilities are not widely known but who unexpectedly performs well or wins a competition."
+    },
+
+    {
+        instr: "Choose the option that best conveys the meaning of the underlined portion.",
+        q: "Only the small fry get punished for such social misdemeanors.",
+        options: [
+            "Small boys",
+            "Unimportant people",
+            "Frightened people",
+            "Frivolous people",
+            "Inexperienced people"
+        ],
+        correct: 1,
+        exp: "Small fry is an idiom referring to people who are considered unimportant or insignificant, especially when compared with more powerful people."
+    },
+
+    {
+        instr: "Choose the option that best conveys the meaning of the underlined portion.",
+        q: "He spoke with his heart in his mouth.",
+        options: [
+            "Courageously",
+            "With such unusual cowardice",
+            "With a lot of confusion in his speech",
+            "Without being able to make up his mind",
+            "With fright and agitation"
+        ],
+        correct: 4,
+        exp: "To have one's heart in one's mouth means to be extremely frightened, anxious or nervous about something."
+    },
+
+    {
+        instr: "Choose the option that best conveys the meaning of the underlined word.",
+        q: "The leader in today's issue of our popular newspaper focuses on inflation.",
+        options: [
+            "President",
+            "Headline",
+            "Editorial",
+            "Columnist",
+            "Proprietor"
+        ],
+        correct: 2,
+        exp: "A leader in a newspaper is an editorial: an article expressing the newspaper's opinion on an important issue. It is not the headline or the person who writes a column."
+    },
+
+    {
+        instr: "Choose the option that best conveys the meaning of the underlined word.",
+        q: "From the ways my friend talks, you can see he is such a bore.",
+        options: [
+            "Rude",
+            "Brilliant",
+            "Uninteresting",
+            "Overbearing",
+            "Humorous"
+        ],
+        correct: 2,
+        exp: "A bore is someone or something that causes boredom. An uninteresting person or conversation is therefore described as a bore."
+    }
+
     ];
 
     let questions = [];
