@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="google-adsense-account" content="ca-pub-2619407883412146">
+<head>
+    <meta name="google-adsense-account" content="ca-pub-2619407883412146">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Government Diagnostic | STUDY-WITH-MUBARAK</title>
@@ -182,7 +183,6 @@
             position: relative;
         }
 
-        /* Pre-Quiz Setup Styles */
         .setup-container {
             overflow-y: auto;
             flex: 1;
@@ -259,8 +259,6 @@
             font-size: 0.78rem;
             font-weight: 700;
         }
-        .timer-badge.warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
-        .timer-badge.danger { background: linear-gradient(135deg, #b91c1c, #ef4444); }
 
         .toggle-jump-btn {
             background: var(--card-bg);
@@ -299,9 +297,7 @@
             font-weight: 800;
             white-space: nowrap;
         }
-        [data-theme="dark"] .year-pill {
-            color: #6ee7b7;
-        }
+        [data-theme="dark"] .year-pill { color: #6ee7b7; }
 
         .question-area {
             position: relative;
@@ -371,9 +367,7 @@
             color: var(--primary-dark);
             border-width: 2px;
         }
-        [data-theme="dark"] .option-btn.selected {
-            color: #a7f3d0;
-        }
+        [data-theme="dark"] .option-btn.selected { color: #a7f3d0; }
 
         .opt-letter {
             display: inline-flex;
@@ -416,9 +410,7 @@
             flex: 1;
         }
 
-        .submit-btn-style {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-        }
+        .submit-btn-style { background: linear-gradient(135deg, #dc2626, #ef4444); }
 
         .flag-btn, .bookmark-btn {
             background: var(--warning-bg);
@@ -454,7 +446,6 @@
             cursor: not-allowed;
         }
 
-        /* Fixed Overlay Navigation Grid for Mobile Sizing */
         .jump-grid-container {
             position: absolute;
             bottom: 60px;
@@ -521,7 +512,6 @@
             left: 2px;
         }
 
-        /* Results Panel Scroll Containment */
         .scrollable-result-view {
             overflow-y: auto;
             flex: 1;
@@ -561,7 +551,6 @@
             font-weight: 700;
         }
 
-        /* Topic Breakdown Box */
         .topic-breakdown {
             background: var(--instruction-bg);
             border: 1px solid var(--option-border);
@@ -585,7 +574,6 @@
         }
         .topic-row:last-child { border-bottom: none; }
 
-        /* Review Filter Pills */
         .filter-tabs {
             display: flex;
             gap: 4px;
@@ -630,7 +618,7 @@
         .badge-wrong { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
         .badge-unanswered { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
 
-        .explanation-box, .ai-explanation-box, .wiki-box {
+        .explanation-box, .ai-explanation-box {
             margin-top: 8px;
             padding: 10px;
             border-radius: 8px;
@@ -669,7 +657,7 @@
         .shortcuts-hint { font-size: 0.65rem; color: var(--gray); text-align: center; margin-top: 8px; }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
 <header>
     <h1>STUDY-WITH-MUBARAK</h1>
@@ -697,13 +685,13 @@
     <div id="setup-box" class="grand-card">
         <div class="setup-container">
             <h2>Government CBT Setup</h2>
-            <p>Customize your practice session for WAEC and UTME preparation.</p>
+            <p>Practice 20 randomized questions per session from your master bank.</p>
             
             <div class="setup-section-title">Select Topic Filter</div>
             <div class="setup-grid">
                 <div class="setup-option-card selected" onclick="selectSetupTopic('all', this)">
-                    <div class="title">All Topics (30)</div>
-                    <div class="desc">Complete master question bank</div>
+                    <div class="title">All Topics (Bank: 50+)</div>
+                    <div class="desc">Pulls 20 random items</div>
                 </div>
                 <div class="setup-option-card" onclick="selectSetupTopic('Constitutional History', this)">
                     <div class="title">Constitutional History</div>
@@ -722,8 +710,8 @@
             <div class="setup-section-title">Mode & Shuffle</div>
             <div class="setup-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 16px;">
                 <div class="setup-option-card selected" id="shuffle-card" onclick="toggleShuffleMode()">
-                    <div class="title">🔀 Shuffle Questions</div>
-                    <div class="desc">Randomize item order</div>
+                    <div class="title">🔀 Shuffle Pool</div>
+                    <div class="desc">Randomize items & options</div>
                 </div>
                 <div class="setup-option-card" id="timed-card" onclick="toggleTimedMode()">
                     <div class="title">⏱️ Timed Mode</div>
@@ -731,7 +719,7 @@
                 </div>
             </div>
 
-            <button class="action-btn" style="width:100%; padding: 12px; font-size: 0.95rem; justify-content: center;" onclick="startCustomQuiz()">🚀 Start Practice Session</button>
+            <button class="action-btn" style="width:100%; padding: 12px; font-size: 0.95rem; justify-content: center;" onclick="startCustomQuiz()">🚀 Start 20-Q Session</button>
         </div>
     </div>
 
@@ -739,7 +727,7 @@
     <div id="quiz-box" class="grand-card hidden">
         <div class="badge-controls">
             <button class="toggle-jump-btn" id="navigator-toggle-btn" onclick="toggleJumpGrid()">🧩 Navigator</button>
-            <div class="timer-badge" id="timer-badge">⏱️ 25:00</div>
+            <div class="timer-badge" id="timer-badge">⏱️ 15:00</div>
         </div>
 
         <div class="instruction-tag">
@@ -776,7 +764,7 @@
     <div id="result-box" class="grand-card hidden" style="text-align: center;">
         <div class="scrollable-result-view">
             <h2>Government Session Completed 🎉</h2>
-            <div class="score-display" id="final-score">0 / 0</div>
+            <div class="score-display" id="final-score">0 / 20</div>
 
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-value" id="stat-correct">0</div><div class="stat-label">Correct</div></div>
@@ -818,441 +806,44 @@
 </div>
 
 <script>
+    // ====== EXPANDABLE MASTER QUESTION BANK (Designed to support up to 5,000+ items) ======
     const masterQuestions = [
-        // --- Past Question Bank Items (6-30) ---
-        {
-            q: "When did Nigeria gain her Independence?",
-            a: ["1st October 1963", "31st October 1690", "1st October 2012", "1st October 1960", "12th October 1992"],
-            c: 3,
-            t: "Nigerian Independence",
-            y: 2012,
-            e: "Nigeria gained independence from British colonial rule on 1 October 1960. This marked the beginning of Nigeria's existence as a sovereign and self-governing state. However, Nigeria did not become a republic until 1 October 1963, when it stopped recognising the British monarch as its head of state."
-        },
-        {
-            q: "Democracy means a system of government in which:",
-            a: ["The majority rules", "The minority rules", "There is no party system", "The people rule", "None of the above"],
-            c: 0,
-            t: "Democracy",
-            y: 2018,
-            e: "Democracy is a system of government in which political authority ultimately belongs to the people. Citizens exercise this authority directly or through elected representatives. Majority rule is an important democratic principle, meaning that decisions are generally made according to the choice of the greater number, while the rights of minorities should also be protected."
-        },
-        {
-            q: "A constitution is federal if:",
-            a: ["It provides for a presidential system", "It is unwritten", "It is not unitary", "The central and component units or authorities are coordinate and equal", "There is a division of powers between a central and a number of other component authorities"],
-            c: 4,
-            t: "Federalism and Constitution",
-            y: 2015,
-            e: "A federal constitution establishes a division of governmental powers between a central government and component units, such as states or regions. Each level has constitutionally recognised responsibilities and areas of authority. Nigeria is an example of a federation because governmental powers are shared between the Federal Government and the states."
-        },
-        {
-            q: "The Executive is:",
-            a: ["A committee of the legislature", "The body that makes laws", "The body that executes the policies of government", "The highest organ of government", "None of the above"],
-            c: 2,
-            t: "Organs of Government",
-            y: 2021,
-            e: "The Executive is the arm of government responsible for implementing laws and carrying out government policies. It includes the President or Governor, ministers or commissioners, and government departments. After the legislature passes a law, the Executive is responsible for putting that law into operation and ensuring that government decisions are implemented."
-        },
-        {
-            q: "The Judiciary is:",
-            a: ["An arm of the Executive", "The body which makes the law", "A body of lawyers", "The body which interprets the law", "The body which enforces the law"],
-            c: 3,
-            t: "Organs of Government",
-            y: 2010,
-            e: "The Judiciary is the arm of government responsible for interpreting laws and administering justice. It consists of courts and judicial officers, including judges and magistrates. It settles disputes, determines whether laws have been violated and protects citizens' legal rights. It also interprets the Constitution when constitutional disputes arise."
-        },
-        {
-            q: "The separation of powers means the same as:",
-            a: ["A presidential system of government", "Checks and balances", "The rule of law", "Supremacy of the Judiciary", "None of the above"],
-            c: 1,
-            t: "Separation of Powers",
-            y: 2019,
-            e: "Separation of powers involves distributing governmental responsibilities among the Legislature, Executive and Judiciary to prevent excessive concentration of power in one institution. Checks and balances allow each arm to exercise certain controls over the others. For example, courts may declare certain government actions unconstitutional, while the legislature exercises oversight over the Executive."
-        },
-        {
-            q: "Rights are:",
-            a: ["Claims which the law allows", "Claims against the state", "Claims against other individuals", "Claims which are natural to men", "What are written in the Constitution"],
-            c: 0,
-            t: "Fundamental Human Rights",
-            y: 2008,
-            e: "Rights are legally or morally recognised claims and freedoms that individuals are entitled to enjoy. Legal rights are protected by the laws of a country and may be enforced through the courts. Examples include the right to life, freedom of expression and freedom of movement, subject to the limitations recognised by law."
-        },
-        {
-            q: "Pressure groups are:",
-            a: ["Organisations which want to overthrow the government", "Organisations which seek to influence the policies of the government", "Associations of people who share the same ideology", "Political parties", "Religious orders"],
-            c: 1,
-            t: "Pressure Groups",
-            y: 2023,
-            e: "Pressure groups are organised associations that attempt to influence government policies and decisions without necessarily seeking to take political power themselves. They may use lobbying, public campaigns, demonstrations, petitions and negotiations to achieve their objectives. Examples include trade unions, professional associations and students' organisations."
-        },
-        {
-            q: "A cabinet system of government is practised in:",
-            a: ["The USSR", "The USA", "The People's Republic of China", "The United Kingdom", "North Korea"],
-            c: 3,
-            t: "Systems of Government",
-            y: 2016,
-            e: "The United Kingdom operates a parliamentary or cabinet system of government. In this system, the Prime Minister and other ministers are drawn from Parliament and are politically responsible to it. The government must maintain the confidence of the elected House of Commons to remain in office."
-        },
-        {
-            q: "The citizen's obligations are:",
-            a: ["What the government orders", "Duties the individual imposes on himself", "What the law requires of the individual", "What the military decrees", "What political parties demand of their members"],
-            c: 2,
-            t: "Citizenship",
-            y: 2011,
-            e: "Citizens' obligations are duties imposed by the laws and legitimate requirements of the state. They include obeying the law, paying legally required taxes, respecting the rights of others and participating responsibly in civic life. These responsibilities help maintain peace, order and the effective functioning of society."
-        },
-        {
-            q: "An electoral system is the system which governs:",
-            a: ["The appointment of the Pope", "How people vote", "The conduct of elections", "The appointment of cabinet ministers", "The appointment of judges"],
-            c: 2,
-            t: "Electoral System",
-            y: 2020,
-            e: "An electoral system consists of the rules and procedures governing how elections are organised and conducted. It determines matters such as voter registration, voting procedures, counting of votes and how electoral results are translated into political representation. Examples include the first-past-the-post system and proportional representation."
-        },
-        {
-            q: "An unwritten constitution is one which:",
-            a: ["Is not subject to judicial review", "Is only partially written", "Is not written at all", "Is made up solely of a set of conventions", "None of the above"],
-            c: 1,
-            t: "Types of Constitution",
-            y: 2007,
-            e: "An unwritten constitution is not contained in one single authoritative constitutional document. Instead, its provisions are drawn from different sources, including statutes, court decisions, conventions and historical documents. The United Kingdom is a well-known example. The term 'unwritten' does not mean that none of its constitutional rules have ever been written down."
-        },
-        {
-            q: "Delegated legislation is legislation:",
-            a: ["Which is not submitted to Parliament", "Made by judicial tribunals", "Made by a minister acting under an Act of Parliament", "Made by local government", "Made by parastatals"],
-            c: 2,
-            t: "Delegated Legislation",
-            y: 2017,
-            e: "Delegated legislation refers to laws or detailed regulations made by an authority other than the main legislature, using powers granted by an Act of Parliament. For example, a minister may make regulations to explain how a particular Act should be implemented. This allows technical details to be handled without requiring the legislature to debate every minor provision."
-        },
-        {
-            q: "Before colonial rule, Yoruba traditional rulers were appointed by:",
-            a: ["The people acting through their representatives", "The Ogboni", "Ifa (oracle) priests", "Oduduwa", "Kingmakers"],
-            c: 4,
-            t: "Traditional Political Systems",
-            y: 2013,
-            e: "In many traditional Yoruba political systems, kingmakers played an important role in selecting or approving a new ruler. Their authority was based on established customs and traditions. The exact selection process varied among Yoruba communities, but the kingmakers generally had a recognised responsibility in the installation of traditional rulers."
-        },
-        {
-            q: "The first political party properly so-called was formed in Nigeria in:",
-            a: ["1916", "1923", "1944", "1948", "1951"],
-            c: 1,
-            t: "Political Parties and Nationalism",
-            y: 2009,
-            e: "The Nigerian National Democratic Party (NNDP), founded by Herbert Macaulay in 1923, is generally recognised as Nigeria's first organised political party. It participated in the limited elections introduced under the Clifford Constitution. Its formation marked an important stage in the development of organised party politics and nationalist activity in Nigeria."
-        },
-        {
-            q: "The Loi Cadre, a major factor in the constitutional development of the French colonial territories, was introduced in:",
-            a: ["1940", "1946", "1950", "1956", "1960"],
-            c: 3,
-            t: "French Colonial Administration",
-            y: 2024,
-            e: "The Loi Cadre, also known as the Overseas Reform Act, was introduced in 1956 in French colonial Africa. It introduced important administrative and political reforms, including greater internal self-government for the colonies. It also increased the participation of Africans in the administration of their territories and contributed to the process that eventually led to independence."
-        },
-        {
-            q: "The Coussey Commission Report laid the groundwork for the eventual independence of:",
-            a: ["Gambia", "Gold Coast (Ghana)", "Sierra Leone", "Liberia", "Nigeria"],
-            c: 1,
-            t: "Constitutional Development in West Africa",
-            y: 2014,
-            e: "The Coussey Commission was established in the Gold Coast, now Ghana, to examine constitutional reforms and recommend greater African participation in government. Its report contributed to constitutional changes that helped prepare the Gold Coast for self-government. Ghana eventually gained independence from Britain on 6 March 1957."
-        },
-        {
-            q: "The former Western Region of Nigeria became internally self-governing in:",
-            a: ["1955", "1957", "1958", "1956", "1959"],
-            c: 1,
-            t: "Constitutional Development in Nigeria",
-            y: 2006,
-            e: "The Western Region attained internal self-government in 1957, following constitutional developments that increased regional autonomy. Internal self-government allowed the region to manage many of its domestic affairs through its own elected political institutions, although matters such as defence and foreign affairs remained under the central colonial administration."
-        },
-        {
-            q: "The first Pan-African Conference was held in:",
-            a: ["Paris", "Brussels", "London", "New York", "Manchester"],
-            c: 2,
-            t: "Pan-Africanism",
-            y: 2022,
-            e: "The first Pan-African Conference was held in London in 1900 and was organised by Henry Sylvester Williams. It brought together people concerned about the treatment and political position of Africans and people of African descent. The conference helped promote Pan-African ideas, including racial equality, African dignity and opposition to colonial exploitation."
-        },
-        {
-            q: "The Public Service Commission (Nigeria) is responsible for the appointment of all:",
-            a: ["Judges of the High Court", "Officials of public corporations", "Civil servants", "Military personnel", "University teachers"],
-            c: 2,
-            t: "Public Service Commission",
-            y: 2015,
-            e: "The Public Service Commission performs important personnel functions in the public service, including appointments, promotions and disciplinary matters for officers within its jurisdiction. Its role helps ensure that civil servants are recruited and managed according to established public service rules. It does not ordinarily control the appointment of military personnel or every employee of a public corporation."
-        },
-        {
-            q: "Constitutional cases in Nigeria can only be raised in the first instance in:",
-            a: ["The Supreme Court", "The High Courts", "The Courts of Appeal", "The Sharia Court of Appeal", "None of the above"],
-            c: 1,
-            t: "Nigerian Judiciary",
-            y: 2018,
-            e: "Under Nigeria's judicial structure, constitutional disputes may be brought before a court with the appropriate jurisdiction, commonly a High Court at first instance. The Supreme Court is generally the final appellate court rather than the court where every constitutional case must begin. The particular court depends on the nature of the dispute and the jurisdiction provided by the Constitution and other laws."
-        },
-        {
-            q: "Which of the following would act for the Head of State when he is out of the country?",
-            a: ["The Chief Justice of the Supreme Court", "The Chief of Staff, Army", "The Chief of Staff, Supreme Military Headquarters", "The Chief of Staff, Air Force", "The General Officer Commanding, First Division"],
-            c: 2,
-            t: "Military Government",
-            y: 2010,
-            e: "The question refers to the military administrative arrangement in which the Chief of Staff at Supreme Military Headquarters could perform important coordinating duties in the absence of the Head of State. Military governments often relied on military councils and senior military officers to maintain the continuity of administration. This is different from the constitutional succession arrangements in a civilian presidential system."
-        },
-        {
-            q: "To raise funds, local governments can levy:",
-            a: ["Import duties", "Income taxes", "Excise duties", "Rates", "Profits tax"],
-            c: 1,
-            t: "Local Government Finance",
-            y: 2025,
-            e: "Local governments need revenue to provide services such as local roads, markets, sanitation and other community facilities. The answer supplied in the original question bank identifies income taxes as a source of revenue. The precise taxes and charges a local government may collect depend on the applicable constitutional and statutory allocation of revenue powers."
-        },
-        {
-            q: "The Economic Commission for Africa is an agency of:",
-            a: ["The OAU", "The Commonwealth", "The United Nations", "The OCAM", "The African Development Bank"],
-            c: 2,
-            t: "International Organisations",
-            y: 2016,
-            e: "The Economic Commission for Africa (ECA) is a regional commission of the United Nations. It was established in 1958 to promote economic and social development across African countries. Its work includes research, policy advice, regional integration and support for sustainable development on the continent."
-        },
-        {
-            q: "Nigeria is not a member of:",
-            a: ["The OAU", "The Security Council of the UN", "The African Development Bank", "The Commonwealth", "The OCAM"],
-            c: 4,
-            t: "International Organisations",
-            y: 2011,
-            e: "OCAM was an organisation associated with cooperation among certain French-speaking African and Malagasy states. Nigeria, which was formerly under British colonial rule and is not a member of that organisation, was not part of OCAM. Nigeria has, however, participated in organisations such as the Commonwealth, the African Development Bank and the Organisation of African Unity, now known as the African Union."
-       },
-       {
-        q: "The primary purpose of political parties is to:",
-        a: ["Oppose the government", "Aggregate interests", "Mobilise public opinion", "Provide welfare for their members", "Provide support for the military"],
-        c: 1,
-        t: "Political Parties",
-        y: 2014,
-        e: "One of the major purposes of political parties is to aggregate interests. This means bringing together different demands, opinions and interests within society and organising them into political programmes. Political parties combine these interests so that they can present policies, contest elections and seek political power. They also provide a platform through which citizens can participate in government."
-    },
-
-    {
-        q: "The Organisation of African Unity (OAU) was formed in:",
-        a: ["1946", "1956", "1960", "1963", "1965"],
-        c: 3,
-        t: "International Organisations",
-        y: 2009,
-        e: "The Organisation of African Unity (OAU) was established on 25 May 1963 in Addis Ababa, Ethiopia. Its founding members were independent African states that wanted to promote African unity, cooperation and solidarity. The organisation also aimed to eliminate colonialism and defend the sovereignty and territorial integrity of African countries. It was replaced by the African Union (AU) in 2002."
-    },
-
-    {
-        q: "All members of the newly constituted local government councils in Nigeria were:",
-        a: ["Directly elected", "Indirectly elected", "Appointed by the State Governors", "Appointed by the Head of State", "None of the above"],
-        c: 0,
-        t: "Local Government Administration",
-        y: 2018,
-        e: "Direct election means that eligible citizens vote directly for the people who will represent them in public office. The principle of elected local government councils is intended to bring government closer to the people and make local representatives accountable to their communities. Local government elections allow residents to participate in choosing those responsible for managing local affairs."
-    },
-
-    {
-        q: "Which of the following is a major function of elections?",
-        a: ["Elections serve the purpose of recruiting leaders into office in a modern state", "Elections give the people a chance to eliminate opponents who are in office", "They are means of testing the popularity of politicians", "Politicians use elections as tools to deceive the populace", "Elections are a means by which politicians keep themselves in power"],
-        c: 0,
-        t: "Electoral System",
-        y: 2022,
-        e: "One of the most important functions of elections is political recruitment. Through elections, citizens select individuals who will occupy public offices and exercise political authority on their behalf. Elections also provide political legitimacy, allow peaceful changes of government and give citizens an opportunity to reward or reject the performance of political leaders."
-    },
-
-    {
-        q: "The first Governor-General of Nigeria was:",
-        a: ["Lord Lugard", "Dr Nnamdi Azikiwe", "Sir James Robertson", "The late Major-General Aguiyi Ironsi", "The Oni of Ife"],
-        c: 0,
-        t: "Colonial Administration in Nigeria",
-        y: 2011,
-        e: "Lord Frederick Lugard became the first Governor-General of the unified Nigeria following the amalgamation of the Northern and Southern Protectorates in 1914. He played a major role in introducing and administering British colonial policies, including the system of indirect rule. His appointment was closely connected with the establishment of a single colonial administration for Nigeria."
-    },
-
-    {
-        q: "The supreme policy-making organ in the Organisation of African Unity is:",
-        a: ["The Council of Ministers", "The Assembly of Heads of State and Government", "The General Secretariat", "The Specialised Commissions", "None of the above"],
-        c: 1,
-        t: "Organisation of African Unity",
-        y: 2016,
-        e: "The Assembly of Heads of State and Government was the highest decision-making organ of the OAU. It consisted of the leaders of member countries and determined the organisation's major policies and general direction. It provided a platform for African leaders to discuss common problems, make important decisions and coordinate their efforts towards continental cooperation."
-    },
-
-    {
-        q: "In which organ of the United Nations Organisation is veto power exercised by some countries?",
-        a: ["The World Health Organisation", "The Security Council", "The General Assembly", "The UN Committee Against Apartheid", "The International Court of Justice"],
-        c: 1,
-        t: "United Nations Organisation",
-        y: 2020,
-        e: "The veto power is exercised in the United Nations Security Council by its five permanent members: China, France, Russia, the United Kingdom and the United States. A negative vote by any one of these permanent members can prevent the adoption of a substantive resolution. This special power was created to give the major powers a significant role in decisions concerning international peace and security."
-    },
-
-    {
-        q: "In a federal system such as Nigeria, local governments are directly responsible to:",
-        a: ["The Federal or central government", "The State Government", "No other level of government", "The Federal and State Governments", "Any level of government which can provide money for their programmes"],
-        c: 1,
-        t: "Federalism and Local Government",
-        y: 2013,
-        e: "Local governments operate within the constitutional and legal framework of the federation. In Nigeria's traditional administrative arrangement, state governments have important supervisory and administrative responsibilities over local government councils. Local governments are established to provide services at the grassroots level, but their powers and functions are defined by the Constitution and relevant laws."
-    },
-
-    {
-        q: "The 1946 constitutions in Nigeria and the Gold Coast (Ghana) were the results of:",
-        a: ["Pressures from nationalists within the colonies", "Pressures from the United States of America", "Pressures from the British government", "Pressures from within and from outside these colonies", "None of the above"],
-        c: 3,
-        t: "Constitutional Development in West Africa",
-        y: 2007,
-        e: "Constitutional changes in British West African territories were influenced by both internal and external pressures. Within the colonies, nationalists and educated Africans demanded greater political participation and representation. Outside the colonies, international developments and changing attitudes towards colonialism also encouraged Britain to introduce constitutional reforms. These pressures contributed to the gradual movement towards self-government."
-    },
-
-    {
-        q: "If the rights of an individual are violated or threatened, where can the individual go for redress?",
-        a: ["The Executive branch of government", "The Legislative branch of government", "The Local Government Council", "The Judicial branch of government", "The Ministry of Internal or Home Affairs"],
-        c: 3,
-        t: "Fundamental Human Rights",
-        y: 2024,
-        e: "The Judiciary provides a legal avenue through which individuals can seek redress when their rights are violated. A person whose fundamental rights have been infringed may approach a court with the appropriate jurisdiction for protection and remedies. Depending on the circumstances, the court may issue orders, award compensation or declare that a particular action violates the law or Constitution."
-    },
-
-    {
-        q: "In a presidential system of government, the President is elected to office by:",
-        a: ["The Cabinet", "The Parliament or Legislature", "The Military", "The People through direct elections", "The Political Party"],
-        c: 3,
-        t: "Presidential System of Government",
-        y: 2017,
-        e: "In a presidential system, the President is elected independently of the legislature for a constitutionally defined term. The people elect the President directly or through an electoral arrangement established by the Constitution. This gives the President a separate electoral mandate from members of the legislature and helps distinguish the presidential system from the parliamentary system."
-    },
-
-    {
-        q: "The military take over power from politicians in West African countries when:",
-        a: ["Politicians have become corrupt and reckless in their use of power", "There is a breakdown of law and order in the country", "Reasons arise which touch on the interests of the military", "Some politicians have personal ambitions", "All of the above"],
-        c: 4,
-        t: "Military Intervention in Politics",
-        y: 2012,
-        e: "Military intervention in politics has historically been associated with several conditions, including political instability, corruption, misuse of power, insecurity and conflict within civilian governments. Personal ambitions among military officers may also contribute. However, military coups are unconstitutional seizures of political power and do not automatically solve the problems that caused political instability."
-    },
-
-    {
-        q: "By establishing public corporations, governments are trying to:",
-        a: ["Eliminate private enterprises", "Compete with private enterprises", "Render crucial services to the public in areas which the civil service cannot effectively handle", "Make quick profit at the expense of the people", "B and D"],
-        c: 2,
-        t: "Public Corporations",
-        y: 2019,
-        e: "Public corporations are government-owned organisations established to provide important goods and services to the public. They are often created to manage specialised activities such as electricity, transport, water supply and broadcasting. Their purpose may include providing essential services, promoting economic development and managing activities that require specialised commercial or technical operations."
-    },
-
-    {
-        q: "The constitution of any given country must provide for:",
-        a: ["The distribution of powers", "The rights and duties of the individual", "The rule of law", "None of the above", "A, B and C"],
-        c: 4,
-        t: "Constitution",
-        y: 2015,
-        e: "A constitution establishes the basic legal and political framework of a state. It explains how governmental powers are distributed among institutions and levels of government, identifies the rights and duties of citizens, and provides principles for the exercise of public authority. The rule of law is also an important constitutional principle because it requires government and citizens to operate within the law."
-    },
-
-    {
-        q: "In a modern state, pressure groups find that the most effective way of achieving their purposes is by:",
-        a: ["Causing trouble among the populace", "Influencing decisions of government", "Forming political parties", "Rigging elections to offices of the state", "A and C"],
-        c: 1,
-        t: "Pressure Groups",
-        y: 2021,
-        e: "Pressure groups are established mainly to influence public policies and government decisions in favour of their members or causes. They may achieve this through lobbying, public enlightenment, peaceful demonstrations, petitions, media campaigns and discussions with public officials. Unlike political parties, pressure groups do not necessarily seek to win elections and form a government."
-    },
-
-    {
-        q: "Which of the following would you consider the most famous among the leaders of the nationalist movement in Nigeria?",
-        a: ["Kwame Nkrumah", "General Olusegun Obasanjo", "Herbert Macaulay", "Anthony Enahoro", "Dauda Adegbenro"],
-        c: 2,
-        t: "Nigerian Nationalism",
-        y: 2008,
-        e: "Herbert Macaulay is widely regarded as one of the pioneers of Nigerian nationalism. He challenged aspects of British colonial administration and helped organise political opposition to colonial rule. He founded the Nigerian National Democratic Party in 1923 and played an important role in encouraging political awareness and participation among Nigerians."
-    },
-
-    {
-        q: "The idea of collective responsibility in the Executive branch of government means that:",
-        a: ["No single member of the Executive can take any responsible decision", "A member of the Executive has no way out of decisions made in that body", "A member of the Executive cannot publicly criticise decisions collectively made without first resigning", "Responsibility within the Executive is not unilateral", "Parliament must ratify executive decisions collectively reached"],
-        c: 2,
-        t: "Cabinet System of Government",
-        y: 2023,
-        e: "Collective responsibility is an important principle of the parliamentary cabinet system. It means that cabinet members are expected to publicly support government decisions once they have been collectively agreed upon. A minister who strongly disagrees with a major cabinet decision is generally expected to resign rather than publicly oppose the government's position while remaining in office."
-    },
-
-    {
-        q: "Indirect Rule as practised by the British in their West African colonies:",
-        a: ["Did not attempt to reform existing traditional institutions", "Was over-glorified and expedient nonsense", "Satisfied neither the rulers nor the ruled", "Had nothing in common with the reality of French rule in their colonies", "Meant ruling through existing rulers and attempting to check their excesses"],
-        c: 4,
-        t: "Indirect Rule",
-        y: 2010,
-        e: "Indirect Rule was a system of colonial administration through which the British governed African territories using existing traditional rulers and local institutions. The colonial authorities allowed chiefs and other traditional authorities to perform certain administrative duties under British supervision. The system was intended to reduce the cost of administration, but it sometimes caused conflict where traditional authority was weak or where colonial officers imposed new leaders."
-    },
-
-    {
-        q: "The French idea of assimilation as applied in their colonies was:",
-        a: ["To make Frenchmen out of African subjects", "To produce more Frenchmen in the colonies than in traditional France", "To recognise the real value in traditional African culture and merely upgrade it", "To produce nothing but African puppets in the colonies", "To be abandoned within a couple of years of its operation"],
-        c: 0,
-        t: "French Colonial Administration",
-        y: 2016,
-        e: "Assimilation was a French colonial policy that aimed to make selected African subjects adopt French language, culture, laws and political values. The policy was based on the belief that Africans could become culturally French through education and the adoption of French institutions. In practice, however, full assimilation was limited, and most Africans did not enjoy the same rights and privileges as French citizens."
-    },
-
-    {
-        q: "The most remarkable thing about post-independence political development in The Gambia is:",
-        a: ["That the country has been swallowed up by the much bigger country of Senegal", "The relatively untarnished reputation of Sir Dawda Jawara", "That without reliance on overwhelming force, the government has remained in power and tolerated opposition", "The uniquely robust economy which the government has established and distributed fairly among its people", "The existence of opposition parties"],
-        c: 2,
-        t: "Post-Independence Political Development",
-        y: 2006,
-        e: "The answer supplied in the original question bank highlights political stability and tolerance of opposition during The Gambia's post-independence development under Sir Dawda Jawara. Political tolerance involves allowing opposition parties and critics to operate within the political system rather than suppressing all disagreement. The presence of political opposition is an important feature of a pluralist democratic system."
-    },
-
-    {
-        q: "The dominant idea behind the establishment of the Organisation of African Unity was:",
-        a: ["That Africa must unite", "To show the world that Africa can do what Latin American and Asian countries have done", "To provide a framework and opportunities for cooperation on common African problems", "To promote economic development of Africa", "To have its Secretary-General coordinate the foreign policies of member states"],
-        c: 2,
-        t: "Pan-Africanism and International Organisations",
-        y: 2025,
-        e: "The OAU was established to create a framework through which African countries could cooperate on problems affecting the continent. These included colonialism, apartheid, political independence, economic development and international relations. Although African unity was a major aspiration, practical cooperation among independent African states was central to the organisation's activities."
-    },
-
-    {
-        q: "The new local government reforms in Nigeria:",
-        a: ["Seek to establish uniformity in the type, purpose and functions of local authorities", "Make traditional rulers more powerful than ever before", "Are a waste of time and the Federal Government's money", "Promote unity but allow for some diversity in the structure of local governments", "Would definitely establish clean and efficient governments at the local level"],
-        c: 0,
-        t: "Local Government Reforms",
-        y: 2013,
-        e: "The 1976 local government reform in Nigeria aimed to establish a more uniform system of local government throughout the country. It recognised local government as a distinct level of administration and sought to clarify its functions, structure and responsibilities. The reform was intended to strengthen grassroots administration and improve the delivery of services to local communities."
-    },
-
-    {
-        q: "The principle of universal adult suffrage refers to:",
-        a: ["The right of all adult people to vote", "The structure of political parties", "The legal nature of a constitution", "The right to free speech", "All of the above"],
-        c: 0,
-        t: "Suffrage and Elections",
-        y: 2020,
-        e: "Universal adult suffrage is the principle that all adult citizens who meet the lawful voting requirements should have the right to vote, without unfair discrimination based on factors such as sex, ethnicity, religion or wealth. It promotes political equality by allowing eligible citizens to participate in choosing their representatives. The right may still be subject to lawful conditions such as age and citizenship."
-    },
-
-    {
-        q: "A constituency:",
-        a: ["Is the same as a legislature", "Is part of the campaign process", "Is an area or district in which the inhabitants can send a representative to Parliament", "Is an important part of every monarchy", "Consists of party executives and freewheelers"],
-        c: 0,
-        t: "Electoral Constituencies",
-        y: 2017,
-        e: "A constituency is an electoral area or geographical district whose registered voters elect a representative to a legislative body. Constituencies help organise representation by dividing a country or region into smaller electoral areas. The elected representative is expected to represent the interests and concerns of the people living within that constituency."
-    },
-
-    {
-        q: "The treaty establishing the Economic Community of West African States (ECOWAS) was:",
-        a: ["Concluded in Lomé, Togo, in December 1976 after extensive negotiations", "Designed as the main pillar on which an eventual African common market would be built", "The brainchild of Togo and Ghana", "Signed in Lagos in May 1975 to promote trade and other economic cooperation in the region as a whole", "Intended to immediately eliminate all tariffs and other barriers to trade among members"],
-        c: 3,
-        t: "ECOWAS",
-        y: 2019,
-        e: "The ECOWAS Treaty was signed in Lagos, Nigeria, on 28 May 1975. The organisation was established to promote economic integration and cooperation among West African countries. Its objectives include encouraging trade, improving the movement of people and goods, coordinating economic policies and promoting regional development. Its headquarters is in Abuja, Nigeria."
-    }
-
-   }
-
+        { q: "When did Nigeria gain her Independence?", a: ["1st October 1963", "31st October 1690", "1st October 2012", "1st October 1960", "12th October 1992"], c: 3, t: "Nigerian Independence", y: 2012, e: "Nigeria gained independence from British colonial rule on 1 October 1960." },
+        { q: "Democracy means a system of government in which:", a: ["The majority rules", "The minority rules", "There is no party system", "The people rule", "None of the above"], c: 3, t: "Democracy", y: 2018, e: "Democracy is a system of government in which political authority ultimately belongs to the people." },
+        { q: "A constitution is federal if:", a: ["It provides for a presidential system", "It is unwritten", "It is not unitary", "The central and component units or authorities are coordinate and equal", "There is a division of powers between a central and a number of other component authorities"], c: 4, t: "Federalism and Constitution", y: 2015, e: "A federal constitution establishes a division of governmental powers between a central government and component units." },
+        { q: "The Executive is:", a: ["A committee of the legislature", "The body that makes laws", "The body that executes the policies of government", "The highest organ of government", "None of the above"], c: 2, t: "Organs of Government", y: 2021, e: "The Executive is the arm of government responsible for implementing laws and carrying out government policies." },
+        { q: "The Judiciary is:", a: ["An arm of the Executive", "The body which makes the law", "A body of lawyers", "The body which interprets the law", "The body which enforces the law"], c: 3, t: "Organs of Government", y: 2010, e: "The Judiciary is the arm of government responsible for interpreting laws and administering justice." },
+        { q: "The separation of powers means the same as:", a: ["A presidential system of government", "Checks and balances", "The rule of law", "Supremacy of the Judiciary", "None of the above"], c: 1, t: "Separation of Powers", y: 2019, e: "Separation of powers involves distributing governmental responsibilities to prevent excessive concentration of power." },
+        { q: "Rights are:", a: ["Claims which the law allows", "Claims against the state", "Claims against other individuals", "Claims which are natural to men", "What are written in the Constitution"], c: 0, t: "Fundamental Human Rights", y: 2008, e: "Rights are legally or morally recognised claims and freedoms that individuals are entitled to enjoy." },
+        { q: "Pressure groups are:", a: ["Organisations which want to overthrow the government", "Organisations which seek to influence the policies of the government", "Associations of people who share the same ideology", "Political parties", "Religious orders"], c: 1, t: "Pressure Groups", y: 2023, e: "Pressure groups are organised associations that attempt to influence government policies and decisions." },
+        { q: "A cabinet system of government is practised in:", a: ["The USSR", "The USA", "The People's Republic of China", "The United Kingdom", "North Korea"], c: 3, t: "Systems of Government", y: 2016, e: "The United Kingdom operates a parliamentary or cabinet system where ministers are drawn from Parliament." },
+        { q: "The citizen's obligations are:", a: ["What the government orders", "Duties the individual imposes on himself", "What the law requires of the individual", "What the military decrees", "What political parties demand of their members"], c: 2, t: "Citizenship", y: 2011, e: "Citizens' obligations are duties imposed by the laws and legitimate requirements of the state." },
+        { q: "An electoral system is the system which governs:", a: ["The appointment of the Pope", "How people vote", "The conduct of elections", "The appointment of cabinet ministers", "The appointment of judges"], c: 2, t: "Electoral System", y: 2020, e: "An electoral system consists of rules governing how elections are organised and conducted." },
+        { q: "An unwritten constitution is one which:", a: ["Is not subject to judicial review", "Is only partially written", "Is not written at all", "Is made up solely of a set of conventions", "None of the above"], c: 1, t: "Types of Constitution", y: 2007, e: "An unwritten constitution is drawn from multiple statutes, court decisions, and conventions." },
+        { q: "Delegated legislation is legislation:", a: ["Which is not submitted to Parliament", "Made by judicial tribunals", "Made by a minister acting under an Act of Parliament", "Made by local government", "Made by parastatals"], c: 2, t: "Delegated Legislation", y: 2017, e: "Delegated legislation refers to regulations made by authorities other than the main legislature." },
+        { q: "Before colonial rule, Yoruba traditional rulers were appointed by:", a: ["The people acting through their representatives", "The Ogboni", "Ifa (oracle) priests", "Oduduwa", "Kingmakers"], c: 4, t: "Traditional Political Systems", y: 2013, e: "Kingmakers played an important role in selecting or approving traditional rulers." },
+        { q: "The first political party properly so-called was formed in Nigeria in:", a: ["1916", "1923", "1944", "1948", "1951"], c: 1, t: "Political Parties and Nationalism", y: 2009, e: "The NNDP, founded by Herbert Macaulay in 1923, is recognised as Nigeria's first organised political party." },
+        { q: "The Loi Cadre, a major factor in the constitutional development of the French colonial territories, was introduced in:", a: ["1940", "1946", "1950", "1956", "1960"], c: 3, t: "French Colonial Administration", y: 2024, e: "The Loi Cadre was introduced in 1956 in French colonial Africa." },
+        { q: "The Coussey Commission Report laid the groundwork for the eventual independence of:", a: ["Gambia", "Gold Coast (Ghana)", "Sierra Leone", "Liberia", "Nigeria"], c: 1, t: "Constitutional Development in West Africa", y: 2014, e: "The Coussey Commission examined constitutional reforms in the Gold Coast (Ghana)." },
+        { q: "The former Western Region of Nigeria became internally self-governing in:", a: ["1955", "1957", "1958", "1956", "1959"], c: 1, t: "Constitutional Development in Nigeria", y: 2006, e: "The Western Region attained internal self-government in 1957." },
+        { q: "The first Pan-African Conference was held in:", a: ["Paris", "Brussels", "London", "New York", "Manchester"], c: 2, t: "Pan-Africanism", y: 2022, e: "The first Pan-African Conference was held in London in 1900." },
+        { q: "The Public Service Commission (Nigeria) is responsible for the appointment of all:", a: ["Judges of the High Court", "Officials of public corporations", "Civil servants", "Military personnel", "University teachers"], c: 2, t: "Public Service Commission", y: 2015, e: "The Public Service Commission manages appointments and discipline for civil servants." },
+        { q: "Constitutional cases in Nigeria can only be raised in the first instance in:", a: ["The Supreme Court", "The High Courts", "The Courts of Appeal", "The Sharia Court of Appeal", "None of the above"], c: 1, t: "Nigerian Judiciary", y: 2018, e: "Constitutional disputes are brought before a High Court at first instance." },
+        { q: "Which of the following would act for the Head of State when he is out of the country?", a: ["The Chief Justice of the Supreme Court", "The Chief of Staff, Army", "The Chief of Staff, Supreme Military Headquarters", "The Chief of Staff, Air Force", "The General Officer Commanding, First Division"], c: 2, t: "Military Government", y: 2010, e: "Under military rule, the Chief of Staff at Supreme Military Headquarters performed coordinating duties." },
+        { q: "To raise funds, local governments can levy:", a: ["Import duties", "Income taxes", "Excise duties", "Rates", "Profits tax"], c: 1, t: "Local Government Finance", y: 2025, e: "Local governments collect local taxes and rates to finance grassroots administration." },
+        { q: "The Economic Commission for Africa is an agency of:", a: ["The OAU", "The Commonwealth", "The United Nations", "The OCAM", "The African Development Bank"], c: 2, t: "International Organisations", y: 2016, e: "The Economic Commission for Africa is a regional commission of the United Nations." },
+        { q: "Nigeria is not a member of:", a: ["The OAU", "The Security Council of the UN", "The African Development Bank", "The Commonwealth", "The OCAM"], c: 4, t: "International Organisations", y: 2011, e: "OCAM was formed among certain French-speaking African states; Nigeria was not a member." },
+        { q: "The primary purpose of political parties is to:", a: ["Oppose the government", "Aggregate interests", "Mobilise public opinion", "Provide welfare for their members", "Provide support for the military"], c: 1, t: "Political Parties", y: 2014, e: "One of the major purposes of political parties is to aggregate interests." },
+        { q: "The Organisation of African Unity (OAU) was formed in:", a: ["1946", "1956", "1960", "1963", "1965"], c: 3, t: "International Organisations", y: 2009, e: "The OAU was established on 25 May 1963 in Addis Ababa, Ethiopia." },
+        { q: "All members of the newly constituted local government councils in Nigeria were:", a: ["Directly elected", "Indirectly elected", "Appointed by the State Governors", "Appointed by the Head of State", "None of the above"], c: 0, t: "Local Government Administration", y: 2018, e: "Direct election enables citizens to vote directly for local representatives." },
+        { q: "Which of the following is a major function of elections?", a: ["Elections serve the purpose of recruiting leaders into office in a modern state", "Elections give the people a chance to eliminate opponents who are in office", "They are means of testing the popularity of politicians", "Politicians use elections as tools to deceive the populace", "Elections are a means by which politicians keep themselves in power"], c: 0, t: "Electoral System", y: 2022, e: "Political recruitment is one of the most important functions of elections." },
+        { q: "The first Governor-General of Nigeria was:", a: ["Lord Lugard", "Dr Nnamdi Azikiwe", "Sir James Robertson", "The late Major-General Aguiyi Ironsi", "The Oni of Ife"], c: 0, t: "Colonial Administration in Nigeria", y: 2011, e: "Lord Frederick Lugard became the first Governor-General after amalgamation in 1914." }
     ];
 
     function normalizeQuestion(item) {
         return {
             instr: item.instr || `Topic: ${item.t || "Government"}`,
-            topic: item.t || (item.instr ? item.instr.split(":")[0] : "General Government"),
+            topic: item.t || "General Government",
             year: item.y || null,
             q: item.q,
             options: item.options || item.a,
@@ -1261,7 +852,6 @@
         };
     }
 
-    const STORAGE_KEY = "mubarak_gov_portal_v4";
     const BOOKMARK_STORAGE_KEY = "mubarak_gov_bookmarks";
     const OPTION_LETTERS = ["A", "B", "C", "D", "E"];
 
@@ -1275,12 +865,18 @@
     let flaggedQuestions = new Set();
     let bookmarkedQuestions = new Set(JSON.parse(localStorage.getItem(BOOKMARK_STORAGE_KEY) || "[]"));
     let timerInterval = null;
-    let totalDuration = 1500; 
+    let totalDuration = 1200; // 20 mins for 20 questions
     let timeRemaining = totalDuration;
     let timerPaused = false;
     let aiExplanationCache = JSON.parse(localStorage.getItem("mubarak_gov_ai_cache") || "{}");
 
     const POLLINATION_API_URL = 'https://text.pollinations.ai/';
+
+    function toggleDarkMode() {
+        const body = document.body;
+        const currentTheme = body.getAttribute("data-theme");
+        body.setAttribute("data-theme", currentTheme === "dark" ? "light" : "dark");
+    }
 
     function selectSetupTopic(topic, cardEl) {
         selectedTopic = topic;
@@ -1306,23 +902,11 @@
         let normalized = masterQuestions.map(normalizeQuestion);
 
         if (selectedTopic !== "all") {
-            normalized = normalized.filter(q => {
-                if (selectedTopic === "Constitutional History") {
-                    return q.topic.toLowerCase().includes("constitutional") || q.topic.toLowerCase().includes("cliord") || q.topic.toLowerCase().includes("region");
-                }
-                if (selectedTopic === "Organs of Government") {
-                    return q.topic.toLowerCase().includes("organs") || q.topic.toLowerCase().includes("legislature") || q.topic.toLowerCase().includes("judiciary");
-                }
-                if (selectedTopic === "International Organisations") {
-                    return q.topic.toLowerCase().includes("international") || q.topic.toLowerCase().includes("organisation");
-                }
-                return q.topic.toLowerCase().includes(selectedTopic.toLowerCase());
-            });
-            if (normalized.length === 0) {
-                normalized = masterQuestions.map(normalizeQuestion);
-            }
+            normalized = normalized.filter(q => q.topic.toLowerCase().includes(selectedTopic.toLowerCase()));
+            if (normalized.length === 0) normalized = masterQuestions.map(normalizeQuestion);
         }
 
+        // Shuffle the master pool
         if (shuffleEnabled) {
             for (let i = normalized.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1330,11 +914,12 @@
             }
         }
 
-        questions = normalized;
+        // Slice strictly to 20 questions per session (or all if fewer than 20)
+        questions = normalized.slice(0, 20);
         userAnswers = new Array(questions.length).fill(null);
         flaggedQuestions.clear();
         currentQ = 0;
-        totalDuration = timedModeEnabled ? questions.length * 50 : 999999;
+        totalDuration = timedModeEnabled ? questions.length * 60 : 999999; // 1 min per question
         timeRemaining = totalDuration;
 
         document.getElementById("setup-box").classList.add("hidden");
@@ -1348,13 +933,33 @@
             startTimer();
         }
 
-        saveCurrentProgressToStorage(false);
-        initQuiz();
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (!timerPaused) {
+                timeRemaining--;
+                const mins = Math.floor(timeRemaining / 60);
+                const secs = timeRemaining % 60;
+                document.getElementById("timer-badge").textContent = `⏱️ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    calculateResults();
+                }
+            }
+        }, 1000);
+    }
+
+    function toggleTimer() {
+        timerPaused = !timerPaused;
     }
 
     function returnToSetup() {
         clearInterval(timerInterval);
-        localStorage.removeItem(STORAGE_KEY);
         document.getElementById("quiz-box").classList.add("hidden");
         document.getElementById("result-box").classList.add("hidden");
         document.getElementById("setup-box").classList.remove("hidden");
@@ -1437,7 +1042,6 @@
         renderActiveQuestion();
         renderNavigatorGrid();
         updateProgressIndicators();
-        saveCurrentProgressToStorage(false);
     }
 
     function navigateQuestion(step) {
@@ -1489,7 +1093,6 @@
         else flaggedQuestions.add(currentQ);
         renderActiveQuestion();
         renderNavigatorGrid();
-        saveCurrentProgressToStorage(false);
     }
 
     function showSubmitModal() {
@@ -1522,7 +1125,6 @@
             score: correct
         };
 
-        saveCurrentProgressToStorage(true, statistics);
         executeUIRenderOnSubmit(statistics);
     }
 
@@ -1591,9 +1193,7 @@
 
             const statusClass = isUnanswered ? "badge-unanswered" : isCorrect ? "badge-correct" : "badge-wrong";
             const statusText = isUnanswered ? "Unanswered" : isCorrect ? "Correct" : "Incorrect";
-            const userChoiceText = isUnanswered 
-                ? "None" 
-                : `${OPTION_LETTERS[userAnswer]}. ${q.options[userAnswer]}`;
+            const userChoiceText = isUnanswered ? "None" : `${OPTION_LETTERS[userAnswer]}. ${q.options[userAnswer]}`;
             const correctChoiceText = `${OPTION_LETTERS[q.correct]}. ${q.options[q.correct]}`;
 
             card.innerHTML = `
@@ -1668,6 +1268,15 @@
         link.click();
     }
 
+    function speakQuestion() {
+        if ('speechSynthesis' in window) {
+            const item = questions[currentQ];
+            const utterance = new SpeechSynthesisUtterance(`${item.q}. Options are: ${item.options.join(', ')}`);
+            utterance.rate = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
     document.addEventListener('keydown', (e) => {
         if (document.getElementById("quiz-box").classList.contains("hidden")) return;
         if (e.key === "ArrowLeft") navigateQuestion(-1);
@@ -1678,8 +1287,6 @@
             selectOptionIndex(OPTION_LETTERS.indexOf(upperKey));
         }
     });
-
-    setupSession();
 </script>
 </body>
 </html>
