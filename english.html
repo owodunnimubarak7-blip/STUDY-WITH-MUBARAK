@@ -22,18 +22,15 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 .icon-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:grid;place-items:center}
 .icon-btn.active{background:#10b981}
 .main{max-width:720px;width:100%;margin:12px auto;padding:0 14px 20px;flex:1;display:flex;flex-direction:column;gap:12px}
-/* TOP CONTROLS - NO SEARCH */
 .top-controls{display:flex;gap:8px;flex-wrap:wrap}
 .pill{flex:1;min-width:110px;font-size:12px;font-weight:800;padding:10px 8px;border-radius:12px;background:var(--card);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--shadow);color:var(--text)}
 .pill.active{background:#10b981;color:#fff;border-color:#10b981}
 .pill.shuffle-on{background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff;border:none}
 .pill small{font-size:10px;opacity:.8}
-/* STATS STRIP */
 .stats-strip{display:flex;gap:8px}
 .mini-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 8px;text-align:center;box-shadow:var(--shadow)}
 .mini-stat b{font-size:17px;display:block}
 .mini-stat span{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700}
-/* PROGRESS */
 .progress-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
 .ring{width:56px;height:56px;flex-shrink:0;position:relative}
 .ring svg{transform:rotate(-90deg)}
@@ -55,7 +52,9 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 [data-theme="dark"] .badge{background:#064e3b;color:#a7f3d0}
 .shuffle-badge{font-size:11px;font-weight:800;padding:6px 10px;border-radius:999px;background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
 [data-theme="dark"] .shuffle-badge{background:#0c4a6e;color:#e0f2fe}
+.passage-badge{font-size:11px;font-weight:800;padding:6px 10px;border-radius:999px;background:#fef3c7;color:#92400e;border:1px solid #fde68a}
 .ghost-btn{border:1px dashed var(--primary);background:transparent;color:var(--text);padding:6px 10px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer}
+.ghost-btn.open{background:var(--primary);color:#fff;border-style:solid}
 .instruction{background:var(--instruction-bg);border-left:4px solid var(--primary);padding:12px 13px;border-radius:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-height:220px;overflow-y:auto;white-space:pre-wrap;margin-bottom:14px}
 .q-head{display:flex;gap:10px;align-items:flex-start}
 .q-num{width:38px;height:38px;border-radius:11px;background:#0f172a;color:#fff;display:grid;place-items:center;font-weight:900;flex-shrink:0}
@@ -67,8 +66,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 @keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .option:hover{border-color:var(--primary);background:var(--option-hover);transform:translateY(-1px)}
 .option.selected{border-color:var(--primary);background:var(--option-hover);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
-.option.correct-flash{border-color:#16a34a;background:#dcfce7}
-.option.wrong-flash{border-color:#dc2626;background:#fee2e2}
 .letter{width:30px;height:30px;border-radius:9px;background:var(--instruction-bg);display:grid;place-items:center;font-size:12px;font-weight:900;flex-shrink:0}
 .option.selected .letter{background:var(--primary);color:#fff}
 .controls{display:flex;gap:8px;margin-top:16px}
@@ -80,7 +77,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .btn.flagged{background:#f59e0b;color:#fff}
 .hint{text-align:center;font-size:11px;color:var(--muted);margin-top:8px}
-.navigator{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+.navigator{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow);animation:slideIn .3s ease}
 .nav-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .nav-head b{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--primary)}
 .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
@@ -133,15 +130,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 </header>
 
 <div class="main">
-  <!-- NEW TOP CONTROLS : SHUFFLE SYSTEM -->
   <div class="top-controls" id="topControls">
-    <button class="pill shuffle-on" id="shuffleQBtn">🔀 Shuffle Questions <small>ON</small></button>
+    <button class="pill shuffle-on" id="shuffleQBtn">🔀 Shuffle Blocks <small>ON</small></button>
     <button class="pill shuffle-on" id="shuffleOptBtn">🔤 Shuffle Options <small>ON</small></button>
-    <button class="pill" id="instantBtn">⚡ Instant Feedback: OFF</button>
     <button class="pill" id="pauseBtn">⏸️ Pause</button>
   </div>
 
-  <!-- NEW STATS STRIP -->
   <div class="stats-strip">
     <div class="mini-stat"><b id="streakVal">🔥 0</b><span>Streak</span></div>
     <div class="mini-stat"><b id="xpVal">0 XP</b><span>XP • Lv <span id="levelVal">1</span></span></div>
@@ -156,7 +150,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
   </div>
 
   <div class="card" id="quizBox">
-    <div class="badge-row"><span class="badge" id="catBadge">Grammar</span><span class="shuffle-badge" id="shuffleBadge">🔀 Shuffled • Q1</span><button class="ghost-btn" onclick="document.getElementById('navigator').scrollIntoView({behavior:'smooth'})">🧩 Navigator ↓</button></div>
+    <div class="badge-row"><span class="badge" id="catBadge">Grammar</span><span class="passage-badge hidden" id="passageBadge">📖 Passage</span><span class="shuffle-badge" id="shuffleBadge">🔀 Block Shuffled • Q1</span><button class="ghost-btn" id="navigatorToggleBtn">🧩 Navigator ↓</button></div>
     <div class="instruction" id="instructionBox"></div>
     <div class="q-head">
       <div class="q-num" id="qNum">1</div>
@@ -170,10 +164,11 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
       <button class="btn btn-danger" onclick="showSubmitModal()">Submit</button>
       <button class="btn btn-primary" id="nextBtn">Next →</button>
     </div>
-    <p class="hint">Shortcuts: <b>1-5</b> select • <b>← →</b> navigate • <b>F</b> flag • <b>S</b> speak • <b>H</b> shuffle</p>
+    <p class="hint">Shortcuts: <b>1-5</b> select • <b>← →</b> navigate • <b>F</b> flag • <b>S</b> speak • <b>H</b> shuffle • <b>N</b> navigator</p>
   </div>
 
-  <div class="navigator" id="navigator">
+  <!-- NAVIGATOR - HIDDEN BY DEFAULT, TOGGLED BY BUTTON -->
+  <div class="navigator hidden" id="navigator">
     <div class="nav-head"><b>Navigator • 30 Questions</b><span id="navCount" style="font-size:12px;color:var(--muted)"></span></div>
     <div class="filter-row">
       <button class="chip active" data-filter="all">All 30</button><button class="chip" data-filter="answered">✅ Answered</button><button class="chip" data-filter="unanswered">⬜ Unanswered</button><button class="chip" data-filter="flagged">🚩 Flagged</button>
@@ -197,84 +192,142 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 </div>
 
 <div class="modal-overlay hidden" id="submitModal"><div class="modal"><div style="font-size:40px">📝</div><h3>Submit Assessment?</h3><p id="submitMsg">You have answered 0 of 30 questions.</p><div class="modal-actions"><button class="btn btn-ghost" onclick="closeSubmitModal()">Cancel</button><button class="btn btn-danger" onclick="confirmSubmit()">Submit Now</button></div></div></div>
-<div class="modal-overlay hidden" id="shuffleModal"><div class="modal"><div style="font-size:40px">🔀</div><h3>Reshuffle Questions?</h3><p>Your current answers will be cleared and you will get a fresh shuffled order of 30 questions. Continue?</p><div class="modal-actions"><button class="btn btn-ghost" onclick="closeShuffleModal()">Cancel</button><button class="btn btn-primary" onclick="doReshuffle()">Shuffle Now</button></div></div></div>
+<div class="modal-overlay hidden" id="shuffleModal"><div class="modal"><div style="font-size:40px">🔀</div><h3>Reshuffle Questions?</h3><p>Blocks will be reshuffled, but passage questions will stay together in correct order. Your current answers will be cleared. Continue?</p><div class="modal-actions"><button class="btn btn-ghost" onclick="closeShuffleModal()">Cancel</button><button class="btn btn-primary" onclick="doReshuffle()">Shuffle Now</button></div></div></div>
 <div class="toast" id="toast"></div>
 <canvas id="confettiCanvas" style="position:fixed;inset:0;pointer-events:none;z-index:300;display:none"></canvas>
 
 <script>
 const TOTAL = 30;
-const masterQuestions = [
-        { instr: "Grammar & Mechanics: Subject-Verb Agreement.", q: "Neither the teacher nor the students ______ capable of solving the complex riddle immediately.", options: ["is", "are", "was", "has"], correct: 1, exp: "When a subject is joined by 'neither... nor', the verb agrees with the closer subject. 'Students' is plural, so it takes the plural verb 'are'." },
-        { instr: "Lexicon & Vocabulary: Identify the closest synonym.", q: "Select the word that is most nearly similar in meaning to 'Ephemeral'.", options: ["Enduring", "Transient", "Precious", "Spurious"], correct: 1, exp: "'Ephemeral' means lasting for a very short time. 'Transient' is a direct synonym, meaning fleeting or temporary." },
-        { instr: "Lexicon & Vocabulary: Identify the opposite meaning.", q: "What is the most accurate antonym for the word 'Loquacious'?", options: ["Reticent", "Garrulous", "Verbose", "Articulate"], correct: 0, exp: "'Loquacious' means talkative. 'Reticent' means introverted, silent, or reserved, making it the correct opposite." },
-        { instr: "Grammar & Parts of Speech: Pronoun Case Selection.", q: "The grand prize was split equally between Sarah and ______.", options: ["I", "me", "myself", "we"], correct: 1, exp: "The pronoun follows the preposition 'between', requiring the objective case pronoun 'me' rather than the subjective case 'I'." },
-        { instr: "Grammar & Structure: Idiomatic Expressions.", q: "To 'take something with a grain of salt' means to:", options: ["Accept it completely", "Skeptically reserve full belief", "Cook with careful measurements", "Exaggerate an event"], correct: 1, exp: "The idiom means to view a statement with skepticism or not to interpret it as literal, objective truth." },
+// ===== BLOCK DEFINITION - THIS FIXES PASSAGE CONFUSION =====
+// Each block = questions that must stay together in order.
+// Passage blocks: first item has the full passage, next items are follow-ups.
+// Single questions: block of 1.
+const masterBlocks = [
+  { id:'single-1', type:'single', items:[
+    { instr: "Grammar & Mechanics: Subject-Verb Agreement.", q: "Neither the teacher nor the students ______ capable of solving the complex riddle immediately.", options: ["is", "are", "was", "has"], correct: 1, exp: "When a subject is joined by 'neither... nor', the verb agrees with the closer subject. 'Students' is plural, so it takes the plural verb 'are'." }
+  ]},
+  { id:'single-2', type:'single', items:[
+    { instr: "Lexicon & Vocabulary: Identify the closest synonym.", q: "Select the word that is most nearly similar in meaning to 'Ephemeral'.", options: ["Enduring", "Transient", "Precious", "Spurious"], correct: 1, exp: "'Ephemeral' means lasting for a very short time. 'Transient' is a direct synonym, meaning fleeting or temporary." }
+  ]},
+  { id:'single-3', type:'single', items:[
+    { instr: "Lexicon & Vocabulary: Identify the opposite meaning.", q: "What is the most accurate antonym for the word 'Loquacious'?", options: ["Reticent", "Garrulous", "Verbose", "Articulate"], correct: 0, exp: "'Loquacious' means talkative. 'Reticent' means introverted, silent, or reserved, making it the correct opposite." }
+  ]},
+  { id:'single-4', type:'single', items:[
+    { instr: "Grammar & Parts of Speech: Pronoun Case Selection.", q: "The grand prize was split equally between Sarah and ______.", options: ["I", "me", "myself", "we"], correct: 1, exp: "The pronoun follows the preposition 'between', requiring the objective case pronoun 'me' rather than the subjective case 'I'." }
+  ]},
+  { id:'single-5', type:'single', items:[
+    { instr: "Grammar & Structure: Idiomatic Expressions.", q: "To 'take something with a grain of salt' means to:", options: ["Accept it completely", "Skeptically reserve full belief", "Cook with careful measurements", "Exaggerate an event"], correct: 1, exp: "The idiom means to view a statement with skepticism or not to interpret it as literal, objective truth." }
+  ]},
+  { id:'passage-A', type:'passage', label:'PASSAGE A', items:[
     { instr: `PASSAGE A\n\nAll over the world till lately and in most of the world till today, mankind has been following the course of nature: that is to say, it has been breeding up to the maximum. To let nature take her course in the reproduction of the human race may have made sense in an age in which we were also letting her take her course in decimating mankind by the casualties of war, pestilence, and famine. Being human, we have at least revolted against that senseless waste. We have started to impose on nature’s heartless play a humane new order of our own. But when once man has begun to interfere with nature, he cannot afford to stop halfway. We cannot, with impunity, cut down the death-rate and at the same time allow the birthrate to go on taking nature’s course. We must consciously try to establish an equilibrium, or sooner or later, famine will stalk abroad again.\n\nRead the passage carefully and answer the questions that follow.`, q: "The author observes that", options: ["War, pestilence and famine were caused by the extravagance of nature","Nature was heartless and senseless","There was a time when uncontrolled birth made sense","It was wise at a time when mankind did not interfere with normal reproduction","Nature was heartless in its reproductive process"], correct: 2, exp: "The author explains that unrestricted reproduction may have made sense when war, disease and famine also naturally reduced the population." },
-    { instr: "PASSAGE A — Choose the option that agrees with the author's views.", q: "Which of these statements does not express the opinion of the author?", options: ["Mankind has started to interfere with the work of nature","Many people had died in the past through want and disease","Mankind should not have the maximum number of children possible","Mankind should take care of its children","Man's present relationship with nature in matters of birth and death is a happy one"], correct: 4, exp: "The author does not describe man's present relationship with nature as happy. Reducing deaths while allowing births to continue creates an imbalance." },
-    { instr: "PASSAGE A — Answer according to the meaning of the word in the passage.", q: "Humane, as used in the passage, means", options: ["Sensible","Wise","Human","Benevolent","Thorough"], correct: 3, exp: "Humane means showing kindness, compassion and concern for human welfare. Benevolent is the closest." },
-    { instr: "PASSAGE A — Answer according to the meaning of the expression in the passage.", q: "'We must consciously try to establish an equilibrium' implies that mankind must", options: ["Realistically find an equation","Strive not to be wasteful","Deliberately try to fight nature","Try to fight nature","Purposely find a balance"], correct: 4, exp: "Equilibrium means a state of balance. Mankind must deliberately balance birth rate and death rate." },
-    { instr: "PASSAGE A — Choose the option that best expresses the central idea.", q: "The main idea of this passage is that", options: ["Nature is heartless","Man should control the birth rate","Mankind will soon perish of starvation","Pestilence causes more death than war","Man should change nature's course gradually"], correct: 1, exp: "Since mankind has reduced the death rate, it must also regulate the birth rate to maintain balance." },
+    { instr: "PASSAGE A — Choose the option that agrees with the author's views. [Passage A above]", q: "Which of these statements does not express the opinion of the author?", options: ["Mankind has started to interfere with the work of nature","Many people had died in the past through want and disease","Mankind should not have the maximum number of children possible","Mankind should take care of its children","Man's present relationship with nature in matters of birth and death is a happy one"], correct: 4, exp: "The author does not describe man's present relationship with nature as happy. Reducing deaths while allowing births to continue creates an imbalance." },
+    { instr: "PASSAGE A — Answer according to the meaning of the word in the passage. [Passage A above]", q: "Humane, as used in the passage, means", options: ["Sensible","Wise","Human","Benevolent","Thorough"], correct: 3, exp: "Humane means showing kindness, compassion and concern for human welfare. Benevolent is the closest." },
+    { instr: "PASSAGE A — Answer according to the meaning of the expression in the passage. [Passage A above]", q: "'We must consciously try to establish an equilibrium' implies that mankind must", options: ["Realistically find an equation","Strive not to be wasteful","Deliberately try to fight nature","Try to fight nature","Purposely find a balance"], correct: 4, exp: "Equilibrium means a state of balance. Mankind must deliberately balance birth rate and death rate." },
+    { instr: "PASSAGE A — Choose the option that best expresses the central idea. [Passage A above]", q: "The main idea of this passage is that", options: ["Nature is heartless","Man should control the birth rate","Mankind will soon perish of starvation","Pestilence causes more death than war","Man should change nature's course gradually"], correct: 1, exp: "Since mankind has reduced the death rate, it must also regulate the birth rate to maintain balance." }
+  ]},
+  { id:'passage-B', type:'passage', label:'PASSAGE B', items:[
     { instr: `PASSAGE B\n\nThe endeavour to maintain proper standards of fairness in journalism must be pursued. It is fatally easy for the journalist to deviate from the straight path. There is his natural desire to make a story and the insidious temptation to twist facts to square with his paper's policy. Both are as indefensible as the framing of misleading headlines for the sake of effect. The conscientious journalist must check any tendency to bias, and guard against the dangers inherent in personal antipathies or friendships, and in traditional opposition between rival schools of thought. When a political opponent, whose stupidity habitually provokes attack, makes an effective speech, honesty requires that he be given credit for it. Where personal relationships might make it easier and more congenial to keep silent than to criticize, the journalist must never forget his duty to the public and the supreme importance of recording the truth.\n\nRead the passage carefully and answer the questions that follow.`, q: "When may a journalist have to act against his own inclination?", options: ["When his friends act stupidly","When he becomes weak and decrepit","When his enemies make a mistake","When his political opponents frame misleading headlines","After he has been given a bribe"], correct: 2, exp: "The passage says when a political opponent makes an effective speech, the journalist must give credit, even if dislike makes this difficult." },
-    { instr: "PASSAGE B — Answer according to the author's argument.", q: "A journalist would be able to uphold the tenets of his profession if", options: ["He seeks publicity","He tries to achieve popularity","He resists temptation to bias","He can manipulate his story to please his employers","He tries to protect his friends"], correct: 2, exp: "A journalist upholds standards by resisting bias and reporting facts honestly." },
-    { instr: "PASSAGE B — Choose the option closest in meaning to the word.", q: "'Insidious' (line 2) means", options: ["Subtle","Wicked","Natural","Unusual","Wild"], correct: 0, exp: "Insidious describes something that operates gradually or secretly in a harmful way. Subtle is closest." },
-    { instr: "PASSAGE B — Answer according to the passage.", q: "A dutiful journalist must", options: ["Read widely","Have political acumen","Make no enemies but friends","Be able to make an effective speech","Be able to recognize merit wherever found"], correct: 4, exp: "The journalist must acknowledge an effective speech even when made by a political opponent." },
-    { instr: "PASSAGE B — Choose the option that best expresses the journalist's duty.", q: "The duty of the journalist to the public entails", options: ["Giving credit to his political enemies","Keeping quiet when necessary","Trying to make a story","Telling the truth","Defending the weak"], correct: 3, exp: "The journalist must remember his duty to the public and the supreme importance of recording the truth." },
+    { instr: "PASSAGE B — Answer according to the author's argument. [Passage B above]", q: "A journalist would be able to uphold the tenets of his profession if", options: ["He seeks publicity","He tries to achieve popularity","He resists temptation to bias","He can manipulate his story to please his employers","He tries to protect his friends"], correct: 2, exp: "A journalist upholds standards by resisting bias and reporting facts honestly." },
+    { instr: "PASSAGE B — Choose the option closest in meaning to the word. [Passage B above]", q: "'Insidious' (line 2) means", options: ["Subtle","Wicked","Natural","Unusual","Wild"], correct: 0, exp: "Insidious describes something that operates gradually or secretly in a harmful way. Subtle is closest." },
+    { instr: "PASSAGE B — Answer according to the passage. [Passage B above]", q: "A dutiful journalist must", options: ["Read widely","Have political acumen","Make no enemies but friends","Be able to make an effective speech","Be able to recognize merit wherever found"], correct: 4, exp: "The journalist must acknowledge an effective speech even when made by a political opponent." },
+    { instr: "PASSAGE B — Choose the option that best expresses the journalist's duty. [Passage B above]", q: "The duty of the journalist to the public entails", options: ["Giving credit to his political enemies","Keeping quiet when necessary","Trying to make a story","Telling the truth","Defending the weak"], correct: 3, exp: "The journalist must remember his duty to the public and the supreme importance of recording the truth." }
+  ]},
+  { id:'passage-C', type:'passage', label:'PASSAGE C', items:[
     { instr: `PASSAGE C\n\nSo far, I have been speaking of science in its universality viewed from the perspective of the world at large. For in the context of our own country and our sister developing countries many of the factors mentioned earlier are not very important. For example, pollution, deterioration of the environment and population explosion are not yet serious problems for us in this country. Let me now turn to a more specific area, namely, the question of scientific choice for developing countries. There is no doubt that the role which science and technology have played in the upliftment of the material and economic well-being of the developed nations will, and does, influence the criteria that the Third World nations must choose in order to establish their science policies and priorities. But the criteria to be used by these nations do not have to be the same as those which have brought the developed countries to their present stage of evolution. For while human beings have the same problems, their solutions, to be meaningful, will have to be sought within some relevant frame of reference such as the available resources and expertise, social values, place and time in the historical scale.\n\nRead the passage carefully and answer the questions that follow.`, q: "'Frame of reference' in this passage means", options: ["Point of information","Range of authority","Economic pattern","Context of situation","Wholesome choice"], correct: 3, exp: "A frame of reference is the particular context or set of circumstances used when considering something." },
-    { instr: "PASSAGE C — Answer according to the writer's view.", q: "The writer apparently believes that through science and technology our country can achieve", options: ["Peace and order","Progress and material success","Social values and universality","Wealth and economic progress","Military development and power"], correct: 3, exp: "The passage discusses how science and technology improved material and economic well-being." },
-    { instr: "PASSAGE C — Answer according to the factors listed in the passage.", q: "According to the passage, the basic consideration for developing science and technology should be three of the following: 1. technical know-how 2. availability of raw materials 3. atmospheric pollution 4. the people's tradition and beliefs 5. population 6. capital", options: ["2, 1 and 6 only","3, 2 and 4 only","5, 3 and 6 only","6, 5 and 4 only","5, 2 and 6 only"], correct: 0, exp: "The passage identifies available resources and expertise as important. Raw materials, know-how and capital match." },
-    { instr: "PASSAGE C — Choose the option that best expresses the main idea.", q: "The main idea of this passage is that", options: ["There is a yawning gap between the have and the have-nots","There is need to rid his countrymen from scourges of hunger, disease, ignorance and want","There could be atmospheric pollution and population explosion","The concerns of science and technology are the same in all countries","Each nation must plan its development according to its needs and resources"], correct: 4, exp: "Developing countries should not copy developed countries. They should choose policies that suit their own resources." },
-    { instr: "PASSAGE C — Interpret the expression as used in the passage.", q: "The term 'our sister developing countries' implies", options: ["Britain, Gambia and Canada","Ghana, Germany and Togo","Russia, Switzerland and America","Liberia, Sierra-Leone and Gabon","China, India and Holland"], correct: 3, exp: "Refers to countries that share the status of developing nations." },
+    { instr: "PASSAGE C — Answer according to the writer's view. [Passage C above]", q: "The writer apparently believes that through science and technology our country can achieve", options: ["Peace and order","Progress and material success","Social values and universality","Wealth and economic progress","Military development and power"], correct: 3, exp: "The passage discusses how science and technology improved material and economic well-being." },
+    { instr: "PASSAGE C — Answer according to the factors listed in the passage. [Passage C above]", q: "According to the passage, the basic consideration for developing science and technology should be three of the following: 1. technical know-how 2. availability of raw materials 3. atmospheric pollution 4. the people's tradition and beliefs 5. population 6. capital", options: ["2, 1 and 6 only","3, 2 and 4 only","5, 3 and 6 only","6, 5 and 4 only","5, 2 and 6 only"], correct: 0, exp: "The passage identifies available resources and expertise as important. Raw materials, know-how and capital match." },
+    { instr: "PASSAGE C — Choose the option that best expresses the main idea. [Passage C above]", q: "The main idea of this passage is that", options: ["There is a yawning gap between the have and the have-nots","There is need to rid his countrymen from scourges of hunger, disease, ignorance and want","There could be atmospheric pollution and population explosion","The concerns of science and technology are the same in all countries","Each nation must plan its development according to its needs and resources"], correct: 4, exp: "Developing countries should not copy developed countries. They should choose policies that suit their own resources." },
+    { instr: "PASSAGE C — Interpret the expression as used in the passage. [Passage C above]", q: "The term 'our sister developing countries' implies", options: ["Britain, Gambia and Canada","Ghana, Germany and Togo","Russia, Switzerland and America","Liberia, Sierra-Leone and Gabon","China, India and Holland"], correct: 3, exp: "Refers to countries that share the status of developing nations." }
+  ]},
+  { id:'passage-D', type:'passage', label:'PASSAGE D', items:[
     { instr: `PASSAGE D\n\nThese two factors, the altitude and the weather, tend separately and together to defeat the climber. The height weakness slows him down; it forces him to spend days and nights in the course of his assault on the summit. The weather, besides adding to the demands of his energy and moral fortitude, conspires to deny him the time he needs to complete his mission. Whereas in lower mountains and on easy ground the weather may be no more than a handicap, in the high Himalayas it is decisive, regardless of terrain. The deduction to be drawn from these two factors was clear enough. We must either so fortify ourselves that we could continue, without detriment, to live and have our being above the limit of natural acclimatization, or better still, we must solve the problem of speed. It was desirable, in fact, that we should meet both these requirements and thus give to those chosen to attempt the summit and to their supporting teams some measure of insurance against the vagaries of the weather, for safety in mountain climbing is as much a matter of swiftness as of sureness of foot. Either or both could be achieved only by the administration of oxygen in sufficient quantities to make up for the deficiency in the air, and for the duration of the upward journey above the limit of successful acclimatization.\n\nRead the passage carefully and answer the questions that follow.`, q: "The author believes that to overcome the problem of altitude and weather, the climber needs mainly", options: ["Courage and speed","Energy and moral fortitude","Sufficient quantities of oxygen","Swiftness and sureness of foot","Quick acclimatization"], correct: 2, exp: "Requirements could be achieved through administration of sufficient oxygen." },
-    { instr: "PASSAGE D — Choose the option closest in meaning to the word.", q: "'Conspires' (line 3) means", options: ["Ruins","Makes secret plans","Takes a wicked action","Combines","Aggravates"], correct: 3, exp: "To conspire means to work together or combine towards a particular result." },
-    { instr: "PASSAGE D — Choose the option closest in meaning to the expression.", q: "'Regardless of terrain' (line 5) means", options: ["Even on easy ground","Despite the nature of the ground","Because of steeper gradients","Swiftness and sureness of foot","Without considering the handicap"], correct: 1, exp: "Regardless of terrain means without being affected by the nature of the ground." },
-    { instr: "PASSAGE D — Interpret the expression as used in the passage.", q: "'To live and have our being above the limit of natural acclimatization' (line 7) means", options: ["To be protected from the effects of the weather","To expect no protection from the bad weather","To survive under unnatural weather conditions","To limit our natural desires to get acclimatized to the weather","None of the above"], correct: 4, exp: "Refers to surviving at an altitude beyond the body's natural ability to adjust. None of the options accurately expresses it." },
-    { instr: "PASSAGE D — Answer according to the passage.", q: "Which ONE of the following was NOT a reason for using oxygen?", options: ["It gave them psychological encouragement","It fortified them to live above the limit of natural acclimatization","It protected them against the unexpected changes of the weather","It quickened their journey to the summit","It helped them to survive the worst"], correct: 0, exp: "Passage does not state oxygen was used to provide psychological encouragement." },
+    { instr: "PASSAGE D — Choose the option closest in meaning to the word. [Passage D above]", q: "'Conspires' (line 3) means", options: ["Ruins","Makes secret plans","Takes a wicked action","Combines","Aggravates"], correct: 3, exp: "To conspire means to work together or combine towards a particular result." },
+    { instr: "PASSAGE D — Choose the option closest in meaning to the expression. [Passage D above]", q: "'Regardless of terrain' (line 5) means", options: ["Even on easy ground","Despite the nature of the ground","Because of steeper gradients","Swiftness and sureness of foot","Without considering the handicap"], correct: 1, exp: "Regardless of terrain means without being affected by the nature of the ground." },
+    { instr: "PASSAGE D — Interpret the expression as used in the passage. [Passage D above]", q: "'To live and have our being above the limit of natural acclimatization' (line 7) means", options: ["To be protected from the effects of the weather","To expect no protection from the bad weather","To survive under unnatural weather conditions","To limit our natural desires to get acclimatized to the weather","None of the above"], correct: 4, exp: "Refers to surviving at an altitude beyond the body's natural ability to adjust. None of the options accurately expresses it." },
+    { instr: "PASSAGE D — Answer according to the passage. [Passage D above]", q: "Which ONE of the following was NOT a reason for using oxygen?", options: ["It gave them psychological encouragement","It fortified them to live above the limit of natural acclimatization","It protected them against the unexpected changes of the weather","It quickened their journey to the summit","It helped them to survive the worst"], correct: 0, exp: "Passage does not state oxygen was used to provide psychological encouragement." }
+  ]},
+  { id:'passage-E', type:'passage', label:'PASSAGE E', items:[
     { instr: `PASSAGE E\n\nYou dare not lift the veil that protects our tribal marriage customs and ceremonies from the eyes of outsiders. There is already too little in this world that is sacred; and what Fatmata and I were required to go through during the next week must remain so. I was deeply in debt by the time everything was over, but I was absolutely satisfied with my parent's choice. Fatmata was as black as a satin, and as soft. She had the teeth and smile of a goddess. The Dopo tutors had done their job well; she was a complete efficient lover and mother. I brought her home with swelling pride, and began at once to save all I could spare towards the cost of acquiring my second wife.\n\nRead the passage carefully and answer the questions that follow.`, q: "The evidence would seem to indicate that", options: ["The author adores his wife","He disapproves of her ways","He thinks she is extravagant","The author regrets the cause of his debt","She had not been properly brought up"], correct: 0, exp: "Writer describes Fatmata in highly admiring terms and says he was satisfied with his parents' choice." },
-    { instr: "PASSAGE E — Answer according to the passage.", q: "When the author said 'My anti-Western revolt was gaining momentum' (line 7), he was referring to the fact that", options: ["He did not like polygamy","He hated Europeans","He did not want to marry another wife","He admired everything about his wife","He revolted against European values"], correct: 4, exp: "An anti-Western revolt refers to a rejection of Western ideas, customs or values." },
-    { instr: "PASSAGE E — Answer according to the consequences described in the passage.", q: "It would appear that the marriage had turned him into", options: ["A good worker","A faithful husband","An incurable debtor","A tragic figure","A proud husband"], correct: 2, exp: "Writer says he was deeply in debt after the marriage ceremonies." },
-    { instr: "PASSAGE E — Choose the statement that is NOT true according to the passage.", q: "Which one of the following is NOT true of the passage?", options: ["The lady was beautiful","The marriage cost a lot of money","The marriage was according to native law and custom","Fatmata never had an issue","The author wanted another wife"], correct: 3, exp: "Passage does not state that Fatmata never had a child. Therefore D is not established." },
-    { instr: "PASSAGE E — Choose the option closest in meaning to the word.", q: "'Swelling' (line 6) means", options: ["Jovial","Great","Remarkable","Happy","Growing"], correct: 4, exp: "In 'swelling pride', swelling suggests pride that is increasing or growing." },
-    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "In the match against the uplanders team, the submariners turned out to be the dark horse.", options: ["Played most brilliantly","Played below their usual form","Won unexpectedly","Lost as expected","Won as expected"], correct: 2, exp: "A dark horse unexpectedly performs well or wins." },
-    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "Only the small fry get punished for such social misdemeanors.", options: ["Small boys","Unimportant people","Frightened people","Frivolous people","Inexperienced people"], correct: 1, exp: "Small fry refers to people considered unimportant or insignificant." },
-    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "He spoke with his heart in his mouth.", options: ["Courageously","With such unusual cowardice","With a lot of confusion in his speech","Without being able to make up his mind","With fright and agitation"], correct: 4, exp: "To have one's heart in one's mouth means to be extremely frightened or anxious." },
-    { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "The leader in today's issue of our popular newspaper focuses on inflation.", options: ["President","Headline","Editorial","Columnist","Proprietor"], correct: 2, exp: "A leader in a newspaper is an editorial expressing the newspaper's opinion." },
+    { instr: "PASSAGE E — Answer according to the passage. [Passage E above]", q: "When the author said 'My anti-Western revolt was gaining momentum' (line 7), he was referring to the fact that", options: ["He did not like polygamy","He hated Europeans","He did not want to marry another wife","He admired everything about his wife","He revolted against European values"], correct: 4, exp: "An anti-Western revolt refers to a rejection of Western ideas, customs or values." },
+    { instr: "PASSAGE E — Answer according to the consequences described in the passage. [Passage E above]", q: "It would appear that the marriage had turned him into", options: ["A good worker","A faithful husband","An incurable debtor","A tragic figure","A proud husband"], correct: 2, exp: "Writer says he was deeply in debt after the marriage ceremonies." },
+    { instr: "PASSAGE E — Choose the statement that is NOT true according to the passage. [Passage E above]", q: "Which one of the following is NOT true of the passage?", options: ["The lady was beautiful","The marriage cost a lot of money","The marriage was according to native law and custom","Fatmata never had an issue","The author wanted another wife"], correct: 3, exp: "Passage does not state that Fatmata never had a child. Therefore D is not established." },
+    { instr: "PASSAGE E — Choose the option closest in meaning to the word. [Passage E above]", q: "'Swelling' (line 6) means", options: ["Jovial","Great","Remarkable","Happy","Growing"], correct: 4, exp: "In 'swelling pride', swelling suggests pride that is increasing or growing." }
+  ]},
+  { id:'single-6', type:'single', items:[
+    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "In the match against the uplanders team, the submariners turned out to be the dark horse.", options: ["Played most brilliantly","Played below their usual form","Won unexpectedly","Lost as expected","Won as expected"], correct: 2, exp: "A dark horse unexpectedly performs well or wins." }
+  ]},
+  { id:'single-7', type:'single', items:[
+    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "Only the small fry get punished for such social misdemeanors.", options: ["Small boys","Unimportant people","Frightened people","Frivolous people","Inexperienced people"], correct: 1, exp: "Small fry refers to people considered unimportant or insignificant." }
+  ]},
+  { id:'single-8', type:'single', items:[
+    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "He spoke with his heart in his mouth.", options: ["Courageously","With such unusual cowardice","With a lot of confusion in his speech","Without being able to make up his mind","With fright and agitation"], correct: 4, exp: "To have one's heart in one's mouth means to be extremely frightened or anxious." }
+  ]},
+  { id:'single-9', type:'single', items:[
+    { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "The leader in today's issue of our popular newspaper focuses on inflation.", options: ["President","Headline","Editorial","Columnist","Proprietor"], correct: 2, exp: "A leader in a newspaper is an editorial expressing the newspaper's opinion." }
+  ]},
+  { id:'single-10', type:'single', items:[
     { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "From the ways my friend talks, you can see he is such a bore.", options: ["Rude","Brilliant","Uninteresting","Overbearing","Humorous"], correct: 2, exp: "A bore is someone who causes boredom. Uninteresting is closest." }
+  ]}
 ];
 
-// ===== SHUFFLE SYSTEM =====
+// ===== SHUFFLE SYSTEM - BLOCK SHUFFLE =====
 function shuffleArray(arr){
   let a=[...arr];
   for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];}
   return a;
 }
-function buildShuffledQuestions(shuffleQ, shuffleOpt){
-  let qs = shuffleQ ? shuffleArray(masterQuestions) : [...masterQuestions];
-  // Always exactly 30
-  qs = qs.slice(0, TOTAL);
-  if(!shuffleOpt) return qs.map(q=>({...q, options:[...q.options]}));
-  // Shuffle options but keep correct index tracking
-  return qs.map(q=>{
-    let paired = q.options.map((text,idx)=>({text, isCorrect: idx===q.correct}));
-    paired = shuffleArray(paired);
-    return {...q, options: paired.map(p=>p.text), correct: paired.findIndex(p=>p.isCorrect)};
+function buildQuestions(shuffleBlocks, shuffleOpt){
+  let blocks = shuffleBlocks ? shuffleArray(masterBlocks) : [...masterBlocks];
+  let flat = [];
+  blocks.forEach(block=>{
+    // NEVER shuffle inside a passage block - keep order so passage comes first
+    block.items.forEach((item, idx)=>{
+      let q = {...item, options:[...item.options], blockId:block.id, blockType:block.type, blockLabel:block.label||'', blockIndex:idx, blockSize:block.items.length};
+      if(shuffleOpt){
+        let paired = q.options.map((text,i)=>({text, isCorrect:i===q.correct}));
+        paired = shuffleArray(paired);
+        q.options = paired.map(p=>p.text);
+        q.correct = paired.findIndex(p=>p.isCorrect);
+      }
+      flat.push(q);
+    });
   });
+  return flat.slice(0, TOTAL);
 }
 
-let shuffleQ = true, shuffleOpt = true, instantFeedback=false;
-let questions = buildShuffledQuestions(true,true);
-let currentQ=0, userAnswers=new Array(TOTAL).fill(null), flagged=new Set(), timeRemaining=900, totalDuration=900, paused=false, timerInterval=null, filter='all', reviewFilter='all', soundOn=true, focusMode=false, streak=0, xp=parseInt(localStorage.getItem('mubarak_xp')||'0'), bestScore=parseInt(localStorage.getItem('mubarak_best')||'0'), qStartTime=Date.now(), qTimes=[];
-const KEY='mubarak_eng_v3';
+let shuffleBlocks = true, shuffleOpt = true;
+let questions = buildQuestions(true,true);
+let currentQ=0, userAnswers=new Array(TOTAL).fill(null), flagged=new Set(), timeRemaining=900, totalDuration=900, paused=false, timerInterval=null, filter='all', reviewFilter='all', soundOn=true, focusMode=false, streak=0, xp=parseInt(localStorage.getItem('mubarak_xp')||'0'), bestScore=parseInt(localStorage.getItem('mubarak_best')||'0'), qStartTime=Date.now(), qTimes=[], navigatorOpen=false, isSubmitted=false;
+const KEY='mubarak_eng_v4';
 
 function showToast(msg){let t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200)}
 function vibrate(p=15){if(navigator.vibrate) navigator.vibrate(p)}
-function save(){localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,shuffleQ,shuffleOpt,instantFeedback})); localStorage.setItem('mubarak_xp',xp); if(bestScore) localStorage.setItem('mubarak_best',bestScore)}
-function load(){try{let s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.questions&&s.questions.length===TOTAL){questions=s.questions;userAnswers=s.userAnswers;flagged=new Set(s.flagged);currentQ=s.currentQ;timeRemaining=s.timeRemaining;shuffleQ=s.shuffleQ;shuffleOpt=s.shuffleOpt;instantFeedback=s.instantFeedback; updateShuffleUI(); if(s.submitted){showResult(s.stats);return true}}}catch(e){} return false}
+function save(){localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,shuffleBlocks,shuffleOpt})); localStorage.setItem('mubarak_xp',xp); if(bestScore) localStorage.setItem('mubarak_best',bestScore)}
+function load(){try{let s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.questions&&s.questions.length===TOTAL){questions=s.questions;userAnswers=s.userAnswers;flagged=new Set(s.flagged);currentQ=s.currentQ;timeRemaining=s.timeRemaining;shuffleBlocks=s.shuffleBlocks;shuffleOpt=s.shuffleOpt; updateShuffleUI(); if(s.submitted){isSubmitted=true; showResult(s.stats,false); return true}}}catch(e){} return false}
 function updateShuffleUI(){
-  document.getElementById('shuffleQBtn').className='pill '+(shuffleQ?'shuffle-on':''); document.getElementById('shuffleQBtn').innerHTML=`🔀 Shuffle Questions <small>${shuffleQ?'ON':'OFF'}</small>`;
+  document.getElementById('shuffleQBtn').className='pill '+(shuffleBlocks?'shuffle-on':''); document.getElementById('shuffleQBtn').innerHTML=`🔀 Shuffle Blocks <small>${shuffleBlocks?'ON':'OFF'}</small>`;
   document.getElementById('shuffleOptBtn').className='pill '+(shuffleOpt?'shuffle-on':''); document.getElementById('shuffleOptBtn').innerHTML=`🔤 Shuffle Options <small>${shuffleOpt?'ON':'OFF'}</small>`;
-  document.getElementById('instantBtn').className='pill '+(instantFeedback?'shuffle-on':''); document.getElementById('instantBtn').textContent=instantFeedback?'⚡ Instant Feedback: ON':'⚡ Instant Feedback: OFF';
-  document.getElementById('shuffleBadge').textContent=(shuffleQ||shuffleOpt?'🔀 Shuffled • ':'📋 Original • ')+'Q'+(currentQ+1);
+  document.getElementById('shuffleBadge').textContent=(shuffleBlocks||shuffleOpt?'🔀 Block Shuffled • ':'📋 Original • ')+'Q'+(currentQ+1);
 }
+// ===== NAVIGATOR TOGGLE - OPEN / CLOSE =====
+function toggleNavigator(){
+  navigatorOpen = !navigatorOpen;
+  let nav = document.getElementById('navigator');
+  let btn = document.getElementById('navigatorToggleBtn');
+  if(navigatorOpen){
+    nav.classList.remove('hidden');
+    btn.textContent='🧩 Navigator ↑';
+    btn.classList.add('open');
+    renderNav();
+    nav.scrollIntoView({behavior:'smooth', block:'nearest'});
+  } else {
+    nav.classList.add('hidden');
+    btn.textContent='🧩 Navigator ↓';
+    btn.classList.remove('open');
+  }
+}
+function closeNavigator(){ if(navigatorOpen) toggleNavigator(); }
+
 function speak(t){if('speechSynthesis' in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}}
 function speakQuestion(){let q=questions[currentQ]; speak(q.q+'. Options: '+q.options.join(', '))}
 function render(){
@@ -283,17 +336,17 @@ function render(){
   document.getElementById('qNum').textContent=currentQ+1;
   document.getElementById('qText').textContent=q.q;
   document.getElementById('catBadge').textContent=q.instr.includes('PASSAGE')?'📖 Comprehension':q.instr.includes('Vocabulary')||q.instr.includes('Lexicon')?'📝 Vocabulary':'✍️ Grammar';
-  document.getElementById('shuffleBadge').textContent=(shuffleQ||shuffleOpt?'🔀 Shuffled • ':'📋 Original • ')+'Q'+(currentQ+1);
+  // Show passage badge if part of passage block
+  let pb=document.getElementById('passageBadge');
+  if(q.blockType==='passage'){ pb.classList.remove('hidden'); pb.textContent=`📖 ${q.blockLabel} • Q ${q.blockIndex+1} of ${q.blockSize} • Passage stays together`; }
+  else pb.classList.add('hidden');
+  document.getElementById('shuffleBadge').textContent=(shuffleBlocks||shuffleOpt?'🔀 Block Shuffled • ':'📋 Original • ')+'Q'+(currentQ+1);
   let grid=document.getElementById('optionsGrid'); grid.innerHTML='';
   q.options.forEach((opt,i)=>{
     let b=document.createElement('button'); b.className='option'+(userAnswers[currentQ]===i?' selected':'');
-    // Instant feedback coloring
-    if(instantFeedback && userAnswers[currentQ]!==null){
-      if(i===q.correct) b.classList.add('correct-flash');
-      else if(i===userAnswers[currentQ]) b.classList.add('wrong-flash');
-    }
-    b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${opt}</span><span style="margin-left:auto">${userAnswers[currentQ]===i?'✅':''}${instantFeedback && i===q.correct && userAnswers[currentQ]!==null?' ✓':''}</span>`;
-    b.onclick=()=>selectOption(i,b); grid.appendChild(b);
+    // NO CORRECT ANSWER DISPLAY BEFORE SUBMISSION - intentional
+    b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${opt}</span><span style="margin-left:auto">${userAnswers[currentQ]===i?'✅':''}</span>`;
+    b.onclick=()=>selectOption(i); grid.appendChild(b);
   });
   document.getElementById('prevBtn').disabled=currentQ===0;
   document.getElementById('nextBtn').disabled=currentQ===TOTAL-1;
@@ -312,47 +365,46 @@ function render(){
   document.getElementById('qTimeVal').textContent=avg+'s';
   qStartTime=Date.now();
 }
-function selectOption(idx,btn){
+function selectOption(idx){
   let q=questions[currentQ]; let wasAnswered=userAnswers[currentQ]!==null;
   let timeSpent=Math.round((Date.now()-qStartTime)/1000); qTimes.push(timeSpent);
   userAnswers[currentQ]=idx; vibrate(10);
-  // Streak & XP - only first time answering this question
+  // XP/Streak WITHOUT revealing correct answer
   if(!wasAnswered){
-    if(idx===q.correct){streak++; xp+=10; showToast(`✅ Correct! +10 XP • Streak ${streak} 🔥`); if(streak%5===0) showToast(`🔥 ${streak} Streak! You're on fire!`)}
-    else {streak=0; xp+=2; if(instantFeedback) showToast(`❌ Not quite. Correct is ${q.options[q.correct]}`)}
+    if(idx===q.correct){streak++; xp+=10; showToast(`✅ Saved! +10 XP • Streak ${streak} 🔥`);}
+    else {streak=0; xp+=2; showToast(`✅ Answer saved. Keep going!`);}
   }
-  render(); renderNav(); save();
+  render(); if(navigatorOpen) renderNav(); save();
 }
 function renderNav(){
   let grid=document.getElementById('jumpGrid'); grid.innerHTML='';
   questions.forEach((q,i)=>{
     if(filter==='answered'&&userAnswers[i]===null)return; if(filter==='unanswered'&&userAnswers[i]!==null)return; if(filter==='flagged'&&!flagged.has(i))return;
-    let d=document.createElement('div'); d.className='cell'+(userAnswers[i]!==null?' answered':'')+(flagged.has(i)?' flagged':'')+(i===currentQ?' current':''); d.textContent=i+1;
+    let d=document.createElement('div'); d.className='cell'+(userAnswers[i]!==null?' answered':'')+(flagged.has(i)?' flagged':'')+(i===currentQ?' current':''); d.textContent=i+1; d.title=q.blockType==='passage'? q.blockLabel+' - Q'+(q.blockIndex+1) : 'Q'+(i+1);
     d.onclick=()=>{currentQ=i; render(); renderNav();}; grid.appendChild(d);
   });
   document.getElementById('navCount').textContent=`${userAnswers.filter(x=>x!==null).length}/${TOTAL} answered`;
 }
-function navigate(s){currentQ=Math.max(0,Math.min(TOTAL-1,currentQ+s)); render(); renderNav();}
-function toggleFlag(){flagged.has(currentQ)?flagged.delete(currentQ):flagged.add(currentQ); vibrate(15); render(); renderNav(); save();}
+function navigate(s){currentQ=Math.max(0,Math.min(TOTAL-1,currentQ+s)); render(); if(navigatorOpen) renderNav();}
+function toggleFlag(){flagged.has(currentQ)?flagged.delete(currentQ):flagged.add(currentQ); vibrate(15); render(); if(navigatorOpen) renderNav(); save();}
 function jumpToFirstUnanswered(){let idx=userAnswers.findIndex(x=>x===null); if(idx!==-1){currentQ=idx; render(); renderNav();} else showToast('All 30 answered! 🎉')}
-function clearAllAnswers(){if(confirm('Clear all 30 answers?')){userAnswers=new Array(TOTAL).fill(null); flagged.clear(); streak=0; render(); renderNav(); save();}}
+function clearAllAnswers(){if(confirm('Clear all 30 answers?')){userAnswers=new Array(TOTAL).fill(null); flagged.clear(); streak=0; render(); if(navigatorOpen) renderNav(); save();}}
 function updateTimer(){let m=Math.floor(timeRemaining/60), s=timeRemaining%60; let badge=document.getElementById('timerBadge'); badge.textContent=`⏱️ ${m}:${s<10?'0':''}${s}`; badge.className='timer'+(timeRemaining<180?' danger':timeRemaining<450?' warn':'')}
 function startTimer(){clearInterval(timerInterval); timerInterval=setInterval(()=>{if(!paused){timeRemaining--; updateTimer(); let qElapsed=Math.floor((Date.now()-qStartTime)/1000); document.getElementById('qTimerFill').style.width=Math.max(0,100-(qElapsed/30*100))+'%'; if(timeRemaining<=0){clearInterval(timerInterval); confirmSubmit();}}},1000)}
-function showSubmitModal(){let a=userAnswers.filter(x=>x!==null).length; document.getElementById('submitMsg').textContent=`You have answered ${a} of ${TOTAL} questions. ${a<TOTAL?`You have ${TOTAL-a} unanswered.`:'All 30 done! 🎉'}`; document.getElementById('submitModal').classList.remove('hidden')}
+function showSubmitModal(){let a=userAnswers.filter(x=>x!==null).length; document.getElementById('submitMsg').textContent=`You have answered ${a} of ${TOTAL} questions. ${a<TOTAL?`You have ${TOTAL-a} unanswered.`:'All 30 done! 🎉'} Your correct answers will be revealed ONLY after you submit.`; document.getElementById('submitModal').classList.remove('hidden')}
 function closeSubmitModal(){document.getElementById('submitModal').classList.add('hidden')}
 function showShuffleModal(){document.getElementById('shuffleModal').classList.remove('hidden')}
 function closeShuffleModal(){document.getElementById('shuffleModal').classList.add('hidden')}
 function reshuffleNow(){showShuffleModal()}
-function doReshuffle(){closeShuffleModal(); questions=buildShuffledQuestions(shuffleQ, shuffleOpt); userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; streak=0; timeRemaining=900; qTimes=[]; render(); renderNav(); save(); showToast('🔀 New shuffled order ready!'); vibrate(20)}
-function startNewSession(shuffle=true){localStorage.removeItem(KEY); questions=buildShuffledQuestions(true,true); userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; timeRemaining=900; streak=0; qTimes=[]; document.getElementById('resultBox').classList.add('hidden'); document.getElementById('quizBox').classList.remove('hidden'); document.getElementById('navigator').classList.remove('hidden'); document.getElementById('progressCard').classList.remove('hidden'); render(); renderNav(); save(); startTimer(); showToast('🔀 Fresh shuffled session started!')}
+function doReshuffle(){closeShuffleModal(); closeNavigator(); questions=buildQuestions(shuffleBlocks, shuffleOpt); userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; streak=0; timeRemaining=900; qTimes=[]; render(); save(); showToast('🔀 Blocks reshuffled! Passages stayed together.'); vibrate(20)}
+function startNewSession(shuffle=true){localStorage.removeItem(KEY); questions=buildQuestions(true,true); userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; timeRemaining=900; streak=0; qTimes=[]; isSubmitted=false; document.getElementById('resultBox').classList.add('hidden'); document.getElementById('quizBox').classList.remove('hidden'); document.getElementById('progressCard').classList.remove('hidden'); closeNavigator(); render(); save(); startTimer(); showToast('🔀 Fresh shuffled session started!')}
 function retryWrongOnly(){
   let wrongIdx=[]; questions.forEach((q,i)=>{if(userAnswers[i]!==null && userAnswers[i]!==q.correct) wrongIdx.push(i)});
   if(!wrongIdx.length){showToast('No wrong answers! Perfect! 🌟'); return;}
   let wrongQs=wrongIdx.map(i=>questions[i]); questions=wrongQs.concat(questions.filter((_,i)=>!wrongIdx.includes(i))).slice(0,TOTAL);
-  // Reset only wrong ones for retry
-  userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; document.getElementById('resultBox').classList.add('hidden'); document.getElementById('quizBox').classList.remove('hidden'); document.getElementById('navigator').classList.remove('hidden'); document.getElementById('progressCard').classList.remove('hidden'); render(); renderNav(); showToast(`🔁 Retrying ${wrongIdx.length} wrong questions first`); startTimer();
+  userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; isSubmitted=false; document.getElementById('resultBox').classList.add('hidden'); document.getElementById('quizBox').classList.remove('hidden'); document.getElementById('progressCard').classList.remove('hidden'); closeNavigator(); render(); showToast(`🔁 Retrying ${wrongIdx.length} wrong questions first`); startTimer();
 }
-function confirmSubmit(){closeSubmitModal(); let correct=0,wrong=0,empty=0; questions.forEach((q,i)=>{if(userAnswers[i]===null)empty++; else if(userAnswers[i]===q.correct)correct++; else wrong++;}); let taken=totalDuration-timeRemaining; let stats={correct,wrong,empty,timeTaken:`${Math.floor(taken/60)}:${taken%60<10?'0':''}${taken%60}`,score:correct}; let isNewBest=correct>bestScore; if(isNewBest){bestScore=correct; localStorage.setItem('mubarak_best',bestScore)} localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,submitted:true,stats,shuffleQ,shuffleOpt,instantFeedback})); showResult(stats,isNewBest);}
+function confirmSubmit(){closeSubmitModal(); let correct=0,wrong=0,empty=0; questions.forEach((q,i)=>{if(userAnswers[i]===null)empty++; else if(userAnswers[i]===q.correct)correct++; else wrong++;}); let taken=totalDuration-timeRemaining; let stats={correct,wrong,empty,timeTaken:`${Math.floor(taken/60)}:${taken%60<10?'0':''}${taken%60}`,score:correct}; let isNewBest=correct>bestScore; if(isNewBest){bestScore=correct; localStorage.setItem('mubarak_best',bestScore)} localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,submitted:true,stats,shuffleBlocks,shuffleOpt})); isSubmitted=true; showResult(stats,isNewBest);}
 function showResult(stats,isNewBest){
   clearInterval(timerInterval); document.getElementById('quizBox').classList.add('hidden'); document.getElementById('navigator').classList.add('hidden'); document.getElementById('progressCard').classList.add('hidden'); document.getElementById('resultBox').classList.remove('hidden');
   let pct=Math.round(stats.correct/TOTAL*100); document.getElementById('finalScore').textContent=`${stats.correct} / ${TOTAL} (${pct}%)`;
@@ -368,6 +420,7 @@ function renderReview(){
     let ua=userAnswers[i]; let isCorrect=ua===q.correct; let isEmpty=ua===null;
     if(reviewFilter==='wrong'&&isCorrect)return; if(reviewFilter==='correct'&&!isCorrect)return;
     let d=document.createElement('div'); d.className='review-card '+(isEmpty?'':isCorrect?'correct':'wrong');
+    // CORRECT ANSWERS ONLY SHOWN HERE - AFTER SUBMISSION
     d.innerHTML=`<span class="status ${isEmpty?'empty':isCorrect?'ok':'bad'}">${isEmpty?'Unanswered':isCorrect?'Correct ✅':'Incorrect ❌'}</span><p>Q${i+1}: ${q.q}</p><small>Your answer: <b>${isEmpty?'— None —':q.options[ua]}</b> | Correct: <b style="color:#16a34a">${q.options[q.correct]}</b></small><div class="exp"><b>💡 Explanation:</b> ${q.exp}</div><button class="btn btn-ghost" style="margin-top:8px;padding:8px" onclick="askAI(${i},this)">✨ Ask Mubarak AI</button><div id="ai-${i}"></div>`;
     c.appendChild(d);
   });
@@ -380,26 +433,25 @@ async function askAI(idx,btn){
 function exportCSV(){let csv="Question,Your Answer,Correct Answer,Result\n"; questions.forEach((q,i)=>{let ua=userAnswers[i]; csv+=`"${q.q.replace(/"/g,'""')}","${ua===null?'None':q.options[ua]}","${q.options[q.correct]}","${ua===q.correct?'Correct':'Wrong'}"\n`}); let b=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='english-results.csv'; a.click();}
 function shareScore(){let pct=Math.round(userAnswers.filter((a,i)=>a===questions[i].correct).length/TOTAL*100); let txt=`I scored ${pct}% (${userAnswers.filter((a,i)=>a===questions[i].correct).length}/30) in English Diagnostic on STUDY-WITH-MUBARAK! 📚 Try it too!`; if(navigator.share)navigator.share({text:txt}); else {navigator.clipboard.writeText(txt); showToast('Score copied!')}}
 function launchConfetti(){let cv=document.getElementById('confettiCanvas'); cv.style.display='block'; cv.width=innerWidth; cv.height=innerHeight; let ctx=cv.getContext('2d'); let parts=Array.from({length:140},()=>({x:Math.random()*cv.width,y:-20,vy:2+Math.random()*4,vx:-2+Math.random()*4,c:['#10b981','#06b6d4','#a855f7','#f59e0b'][Math.floor(Math.random()*4)],s:4+Math.random()*6})); let frames=0; (function anim(){ctx.clearRect(0,0,cv.width,cv.height); parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s)}); if(++frames<120)requestAnimationFrame(anim); else cv.style.display='none'})();}
-// Events
+document.getElementById('navigatorToggleBtn').onclick=toggleNavigator;
 document.getElementById('prevBtn').onclick=()=>navigate(-1);
 document.getElementById('nextBtn').onclick=()=>navigate(1);
 document.getElementById('flagBtn').onclick=toggleFlag;
-document.getElementById('shuffleQBtn').onclick=()=>{shuffleQ=!shuffleQ; updateShuffleUI(); save(); showToast(shuffleQ?'🔀 Question shuffle ON - will apply on next reshuffle':'📋 Question shuffle OFF');};
+document.getElementById('shuffleQBtn').onclick=()=>{shuffleBlocks=!shuffleBlocks; updateShuffleUI(); save(); showToast(shuffleBlocks?'🔀 Block shuffle ON - passages stay together':'📋 Block shuffle OFF');};
 document.getElementById('shuffleOptBtn').onclick=()=>{shuffleOpt=!shuffleOpt; updateShuffleUI(); save(); showToast(shuffleOpt?'🔤 Option shuffle ON':'🔤 Option shuffle OFF');};
-document.getElementById('instantBtn').onclick=()=>{instantFeedback=!instantFeedback; updateShuffleUI(); save(); render(); showToast(instantFeedback?'⚡ Instant feedback ON':'⚡ Instant feedback OFF');};
 document.getElementById('pauseBtn').onclick=(e)=>{paused=!paused; e.target.textContent=paused?'▶️ Resume':'⏸️ Pause'; document.getElementById('timerBadge').style.opacity=paused?'.4':'1'};
 document.getElementById('themeBtn').onclick=(e)=>{let isDark=document.documentElement.getAttribute('data-theme')==='dark'; if(isDark){document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme','light'); e.target.textContent='🌙';} else {document.documentElement.setAttribute('data-theme','dark'); localStorage.setItem('theme','dark'); e.target.textContent='☀️';}};
 document.getElementById('soundBtn').onclick=(e)=>{soundOn=!soundOn; e.target.textContent=soundOn?'🔔':'🔕';};
-document.getElementById('focusBtn').onclick=(e)=>{focusMode=!focusMode; document.getElementById('navigator').style.display=focusMode?'none':'block'; document.getElementById('topControls').style.display=focusMode?'none':'flex'; e.target.classList.toggle('active',focusMode); showToast(focusMode?'🎯 Focus Mode ON - distractions hidden':'🎯 Focus Mode OFF');};
+document.getElementById('focusBtn').onclick=(e)=>{focusMode=!focusMode; closeNavigator(); document.getElementById('topControls').style.display=focusMode?'none':'flex'; e.target.classList.toggle('active',focusMode); showToast(focusMode?'🎯 Focus Mode ON - distractions hidden':'🎯 Focus Mode OFF');};
 document.querySelectorAll('.filter-row .chip').forEach(ch=>ch.onclick=()=>{document.querySelectorAll('.filter-row .chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); filter=ch.dataset.filter; renderNav();});
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('resultBox').classList.contains('hidden'))return;
   if(e.key==='ArrowLeft')navigate(-1); if(e.key==='ArrowRight')navigate(1);
   if(e.key>='1'&&e.key<='5'){let idx=parseInt(e.key)-1; if(idx<questions[currentQ].options.length){selectOption(idx)}}
-  if(e.key.toLowerCase()==='f')toggleFlag(); if(e.key.toLowerCase()==='s')speakQuestion(); if(e.key.toLowerCase()==='h')reshuffleNow();
+  if(e.key.toLowerCase()==='f')toggleFlag(); if(e.key.toLowerCase()==='s')speakQuestion(); if(e.key.toLowerCase()==='h')reshuffleNow(); if(e.key.toLowerCase()==='n')toggleNavigator();
 });
 if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark'); document.getElementById('themeBtn').textContent='☀️';}
-if(!load()){updateShuffleUI(); render(); renderNav(); startTimer();} else {render(); renderNav();}
+if(!load()){updateShuffleUI(); render(); startTimer();} else {render();}
 updateTimer(); if(document.getElementById('resultBox').classList.contains('hidden')) startTimer();
 </script>
 </body>
