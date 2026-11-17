@@ -2,83 +2,1269 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Suite | Study With Mubarak</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Physics Diagnostic | STUDY-WITH-MUBARAK</title>
+    <meta name="theme-color" content="#10b981">
     <style>
         :root {
-            --bg: #091118;
-            --surface: rgba(17, 27, 34, 0.7);
-            --border: rgba(59, 130, 246, 0.2);
-            --text-main: #f0fdfa;
-            --text-muted: #93c5fd;
-            --primary: #3b82f6;
-            --blur: blur(16px);
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --success-bg: #f0fdf4;
+            --success-border: #22c55e;
+            --success-text: #166534;
+            --danger-bg: #fef2f2;
+            --danger-border: #ef4444;
+            --danger-text: #991b1b;
+            --warning-bg: #fffbeb;
+            --warning-border: #f59e0b;
+            --warning-text: #92400e;
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-glow: rgba(16, 185, 129, 0.25);
+            --dark: #0f172a;
+            --gray: #64748b;
+            --card-border: rgba(16, 185, 129, 0.15);
+            --bg-main: #f1f5f9;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-main: #0f172a;
+            --option-border: #cbd5e1;
+            --option-hover: #ecfdf5;
+            --instruction-bg: #f8fafc;
+            --instruction-text: #475569;
+            --jump-btn-bg: #e2e8f0;
+            --jump-btn-text: #0f172a;
+            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
         }
-        body { margin: 0; padding: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; }
-        .navbar { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); backdrop-filter: var(--blur); position: sticky; top: 0; z-index: 100; }
-        .back-btn { color: var(--primary); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .container { max-width: 850px; margin: 30px auto; padding: 0 24px; }
-        .quiz-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 36px; box-shadow: var(--shadow); backdrop-filter: var(--blur); margin-bottom: 24px; }
-        input, select { background: #050a0e; border: 1px solid var(--border); color: #fff; padding: 12px; border-radius: 8px; font-size: 1rem; margin-bottom: 12px; width: 100%; box-sizing: border-box; }
-        button { background: var(--primary); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; width: 100%; }
+
+        [data-theme="dark"] {
+            --bg-main: #020617;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --text-main: #f8fafc;
+            --dark: #f8fafc;
+            --gray: #94a3b8;
+            --option-border: #334155;
+            --option-hover: #064e3b;
+            --instruction-bg: #0f172a;
+            --instruction-text: #cbd5e1;
+            --success-bg: rgba(6, 78, 59, 0.4);
+            --success-text: #a7f3d0;
+            --success-border: #059669;
+            --danger-bg: rgba(127, 29, 29, 0.4);
+            --danger-text: #fecaca;
+            --danger-border: #dc2626;
+            --warning-bg: rgba(120, 53, 15, 0.4);
+            --warning-text: #fcd34a;
+            --warning-border: #d97706;
+            --jump-btn-bg: #1e293b;
+            --jump-btn-text: #f8fafc;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary-glow: rgba(16, 185, 129, 0.4);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            outline: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: radial-gradient(var(--primary-glow) 1px, transparent 1px);
+            background-size: 24px 24px;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        header h1 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 5px 9px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .icon-btn:hover { background: rgba(16, 185, 129, 0.25); }
+
+        .main-viewport {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            max-width: 620px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-wrapper {
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray);
+        }
+        .progress-bar {
+            width: 100%;
+            background: var(--option-border);
+            height: 6px;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #34d399);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .grand-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .setup-container {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 4px;
+            text-align: left;
+        }
+        .setup-container h2 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+        .setup-container p {
+            font-size: 0.82rem;
+            color: var(--gray);
+            margin-bottom: 14px;
+        }
+        .setup-section-title {
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .setup-option-card {
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .setup-option-card:hover {
+            border-color: var(--primary);
+            background: var(--option-hover);
+        }
+        .setup-option-card.selected {
+            border-color: var(--primary);
+            background: var(--option-hover);
+            border-width: 2px;
+        }
+        .setup-option-card .title {
+            font-size: 0.83rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .setup-option-card .desc {
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+
+        .badge-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            gap: 6px;
+        }
+
+        .timer-badge {
+            background: linear-gradient(135deg, #065f46, var(--primary));
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .toggle-jump-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px dashed var(--primary);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .instruction-tag {
+            background: var(--instruction-bg);
+            color: var(--instruction-text);
+            font-size: 0.78rem;
+            padding: 7px 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.4;
+            font-weight: 600;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .year-pill {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary-dark);
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .year-pill { color: #6ee7b7; }
+
+        .question-area {
+            position: relative;
+            padding-right: 40px;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.02rem;
+            color: var(--text-main);
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .audio-speech-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--option-border);
+            border-radius: 10px;
+            background: var(--card-bg);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 600;
+            text-align: left;
+            color: var(--text-main);
+            line-height: 1.35;
+        }
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--option-hover);
+        }
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--option-hover);
+            color: var(--primary-dark);
+            border-width: 2px;
+        }
+        [data-theme="dark"] .option-btn.selected { color: #a7f3d0; }
+
+        .opt-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--jump-btn-bg);
+            color: var(--jump-btn-text);
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .option-btn.selected .opt-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .submit-btn-style { background: linear-gradient(135deg, #dc2626, #ef4444); }
+
+        .flag-btn, .bookmark-btn {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
+            padding: 10px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            flex: 1;
+        }
+        .flag-btn.flagged, .bookmark-btn.bookmarked {
+            background: var(--warning-border);
+            color: white;
+        }
+
+        .nav-btn {
+            background: var(--instruction-bg);
+            color: var(--primary);
+            border: 1px solid var(--option-border);
+            flex: 0.7;
+        }
+
+        .action-btn:disabled, .nav-btn:disabled {
+            background: var(--jump-btn-bg) !important;
+            color: var(--gray) !important;
+            border-color: transparent !important;
+            cursor: not-allowed;
+        }
+
+        .jump-grid-container {
+            position: absolute;
+            bottom: 60px;
+            left: 12px;
+            right: 12px;
+            background: var(--instruction-bg);
+            border-radius: 12px;
+            border: 1px solid var(--option-border);
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 50;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+        .jump-grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .jump-grid-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+        .jump-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 6px;
+        }
+        .jump-item {
+            position: relative;
+            padding: 8px 0;
+            text-align: center;
+            border-radius: 6px;
+            background-color: var(--jump-btn-bg);
+            color: var(--jump-btn-text);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .jump-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        .jump-item.answered {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
+        }
+        .jump-item.flagged::after {
+            content: '🚩';
+            font-size: 7px;
+            position: absolute;
+            top: 1px;
+            right: 2px;
+        }
+        .jump-item.bookmarked::before {
+            content: '🔖';
+            font-size: 7px;
+            position: absolute;
+            top: 1px;
+            left: 2px;
+        }
+
+        .scrollable-result-view {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 4px;
+        }
+
+        .score-display {
+            font-size: 2.3rem;
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            margin: 6px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin: 10px 0;
+        }
+        .stat-card {
+            background: var(--instruction-bg);
+            padding: 8px 4px;
+            border-radius: 10px;
+            border: 1px solid var(--option-border);
+        }
+        .stat-value {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .topic-breakdown {
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .topic-breakdown h4 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .topic-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.76rem;
+            padding: 3px 0;
+            border-bottom: 1px dashed var(--option-border);
+        }
+        .topic-row:last-child { border-bottom: none; }
+
+        .filter-tabs {
+            display: flex;
+            gap: 4px;
+            margin: 12px 0 4px;
+        }
+        .filter-tab {
+            flex: 1;
+            padding: 6px 4px;
+            border-radius: 8px;
+            border: 1px solid var(--option-border);
+            background: var(--instruction-bg);
+            color: var(--text-main);
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .review-card {
+            margin-top: 10px;
+            background: var(--instruction-bg);
+            border: 1px solid var(--option-border);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .choice-badge {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .badge-correct { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .badge-wrong { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
+        .badge-unanswered { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
+
+        .explanation-box, .ai-explanation-box {
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+        .explanation-box { background: var(--success-bg); border-left: 4px solid var(--success-border); color: var(--success-text); }
+        .ai-explanation-box { background: rgba(168, 85, 247, 0.1); border-left: 4px solid #a855f7; color: #6b21a8; }
+        [data-theme="dark"] .ai-explanation-box { background: rgba(168, 85, 247, 0.2); color: #f3e8ff; }
+
+        .hidden { display: none !important; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+        .modal h3 { margin-bottom: 8px; font-size: 1.1rem; }
+        .modal p { font-size: 0.85rem; color: var(--gray); margin-bottom: 16px; }
+        .modal-actions { display: flex; gap: 8px; }
+
+        .shortcuts-hint { font-size: 0.65rem; color: var(--gray); text-align: center; margin-top: 8px; }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
-<div class="navbar">
-    <a href="index.html" class="back-btn">➔ Back to Hub</a>
-    <div style="font-weight: 800; text-transform: uppercase;">🔋 Advanced Physics Station</div>
-</div>
+<header>
+    <h1>STUDY-WITH-MUBARAK</h1>
+    <div style="display: flex; align-items: center; gap: 6px;">
+        <a href="index.html">🏠</a>
+        <div class="header-controls">
+            <button class="icon-btn" title="Back to Setup" onclick="returnToSetup()">⚙️ Setup</button>
+            <button class="icon-btn" title="Toggle Dark Mode" onclick="toggleDarkMode()">🌓</button>
+            <button class="icon-btn" title="Pause/Resume Timer" onclick="toggleTimer()">⏱️</button>
+        </div>
+    </div>
+</header>
 
-<div class="container">
-    <div class="quiz-card">
-        <h2 style="margin-top:0; color: var(--primary);">Resistor Network Array Matrix Solver</h2>
-        <p style="color: var(--text-muted);">Enter ohms magnitudes separated explicitly by commas (e.g., <b>10, 20, 30</b>):</p>
-        <input type="text" id="resistorInputs" placeholder="e.g. 10, 20, 30" value="10, 20">
-        <select id="circuitType">
-            <option value="series">Series Layout Configuration</option>
-            <option value="parallel">Parallel Layout Configuration</option>
-        </select>
-        <button onclick="calculateCircuit()">Compute Network Vector</button>
-        <h3 id="circuitResult" style="color: #60a5fa; margin-top:20px; text-align:center;"></h3>
+<div class="main-viewport">
+    <div class="progress-wrapper" id="progress-wrapper-box">
+        <div class="progress-info">
+            <span id="progress-text">Loading...</span>
+            <span id="answered-count">Answered: 0/0</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
     </div>
 
-    <div class="quiz-card">
-        <h2 style="margin-top:0;">Syllabus Question Array Preview</h2>
-        <div id="questionsContainer"></div>
+    <!-- Pre-Quiz Setup Card -->
+    <div id="setup-box" class="grand-card">
+        <div class="setup-container">
+            <h2>Physics CBT Setup</h2>
+            <p>Practice 20 randomized questions per session from your master bank (scales up to 5,000+ items).</p>
+            
+            <div class="setup-section-title">Select Topic Filter</div>
+            <div class="setup-grid">
+                <div class="setup-option-card selected" onclick="selectSetupTopic('all', this)">
+                    <div class="title">All Topics (Full Bank)</div>
+                    <div class="desc">Pulls 20 random items</div>
+                </div>
+                <div class="setup-option-card" onclick="selectSetupTopic('Mechanics', this)">
+                    <div class="title">Mechanics & Motion</div>
+                    <div class="desc">Gravity, Vectors, Work, Energy</div>
+                </div>
+                <div class="setup-option-card" onclick="selectSetupTopic('Electromagnetism', this)">
+                    <div class="title">Electromagnetism</div>
+                    <div class="desc">Ohm's Law, Circuits, Charges</div>
+                </div>
+                <div class="setup-option-card" onclick="selectSetupTopic('Optics & Waves', this)">
+                    <div class="title">Optics & Waves</div>
+                    <div class="desc">Light, Sound, Refraction</div>
+                </div>
+            </div>
+
+            <div class="setup-section-title">Mode & Shuffle</div>
+            <div class="setup-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 16px;">
+                <div class="setup-option-card selected" id="shuffle-card" onclick="toggleShuffleMode()">
+                    <div class="title">🔀 Shuffle Pool</div>
+                    <div class="desc">Randomize items & options</div>
+                </div>
+                <div class="setup-option-card" id="timed-card" onclick="toggleTimedMode()">
+                    <div class="title">⏱️ Timed Mode</div>
+                    <div class="desc">Active countdown timer</div>
+                </div>
+            </div>
+
+            <button class="action-btn" style="width:100%; padding: 12px; font-size: 0.95rem; justify-content: center;" onclick="startCustomQuiz()">🚀 Start 20-Q Session</button>
+        </div>
+    </div>
+
+    <!-- Active Quiz Card -->
+    <div id="quiz-box" class="grand-card hidden">
+        <div class="badge-controls">
+            <button class="toggle-jump-btn" id="navigator-toggle-btn" onclick="toggleJumpGrid()">🧩 Navigator</button>
+            <div class="timer-badge" id="timer-badge">⏱️ 15:00</div>
+        </div>
+
+        <div class="instruction-tag">
+            <span id="instruction-box">Topic</span>
+            <span id="year-badge" class="year-pill hidden"></span>
+        </div>
+        
+        <div class="question-area">
+            <div class="question-text" id="q-text">Loading Physics Modules...</div>
+            <button class="audio-speech-btn" title="Read Question Aloud" onclick="speakQuestion()">🔊</button>
+        </div>
+
+        <div id="options-grid" class="options-container"></div>
+
+        <div class="control-panel">
+            <button id="prev-btn" class="action-btn nav-btn" onclick="navigateQuestion(-1)">←</button>
+            <button id="flag-btn" class="flag-btn" onclick="toggleFlag()">🚩 Flag</button>
+            <button id="bookmark-btn" class="bookmark-btn" onclick="toggleBookmark()">🔖 Save</button>
+            <button id="submit-shortcut-btn" class="action-btn submit-btn-style" onclick="showSubmitModal()">Submit</button>
+            <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">→</button>
+        </div>
+
+        <div id="jump-grid-wrapper" class="jump-grid-container hidden">
+            <div class="jump-grid-header">
+                <span class="jump-grid-label" id="quick-jump-label">Quick Jump</span>
+                <button class="toggle-jump-btn" onclick="toggleJumpGrid()">Close</button>
+            </div>
+            <div id="jump-box-grid" class="jump-grid"></div>
+            <div class="shortcuts-hint">Keys 1–5 or A–E Select Options | Left/Right Navigate</div>
+        </div>
+    </div>
+
+    <!-- Results Panel -->
+    <div id="result-box" class="grand-card hidden" style="text-align: center;">
+        <div class="scrollable-result-view">
+            <h2>Physics Session Completed 🎉</h2>
+            <div class="score-display" id="final-score">0 / 20</div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value" id="stat-correct">0</div><div class="stat-label">Correct</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-wrong">0</div><div class="stat-label">Wrong</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-unanswered">0</div><div class="stat-label">Empty</div></div>
+                <div class="stat-card"><div class="stat-value" id="stat-time">0:00</div><div class="stat-label">Duration</div></div>
+            </div>
+
+            <p id="performance-msg" style="color: var(--gray); font-size: 0.85rem; font-weight: 600; margin-bottom: 10px;"></p>
+            
+            <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 10px;">
+                <button class="action-btn" style="justify-content:center;" onclick="returnToSetup()">⚙️ New Setup</button>
+                <button class="action-btn nav-btn" style="flex:1;" onclick="exportResults()">📥 Export</button>
+            </div>
+
+            <div id="topic-breakdown-box" class="topic-breakdown"></div>
+
+            <div class="filter-tabs">
+                <button class="filter-tab active" id="filter-all-btn" onclick="filterReviews('all', this)">All</button>
+                <button class="filter-tab" onclick="filterReviews('wrong', this)">Missed</button>
+                <button class="filter-tab" onclick="filterReviews('flagged', this)">Flagged</button>
+                <button class="filter-tab" onclick="filterReviews('saved', this)">🔖 Saved</button>
+            </div>
+
+            <div id="review-cards-container"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay hidden" id="submit-modal">
+    <div class="modal">
+        <h3>Submit Assessment?</h3>
+        <p id="submit-modal-msg">Are you sure you want to grade your current performance track?</p>
+        <div class="modal-actions">
+            <button class="action-btn nav-btn" onclick="closeSubmitModal()">Cancel</button>
+            <button class="action-btn submit-btn-style" onclick="confirmSubmit()">Submit</button>
+        </div>
     </div>
 </div>
 
 <script>
-    const physicsRepo = [
-        { topic: "AC Circuits", q: "An alternating current circuit displays maximum resonance performance parameters when the phase angle between voltage and current yields which vector value?", o: ["0 Degrees", "45 Degrees", "90 Degrees", "180 Degrees"] }
+    // ====== PHYSICS MASTER QUESTION BANK (Optimized for up to 5,000+ items) ======
+    const masterQuestions = [
+        { q: "What is the SI unit of electric current?", a: ["Volt", "Ampere", "Ohm", "Watt", "Coulomb"], c: 1, t: "Electromagnetism", y: 2021, e: "The Ampere (A) is the base SI unit of electric current." },
+        { q: "The acceleration due to gravity on the Earth's surface is approximately:", a: ["5.8 m/s²", "9.8 m/s²", "10.5 m/s²", "8.9 m/s²", "3.14 m/s²"], c: 1, t: "Mechanics", y: 2019, e: "Standard gravitational acceleration on Earth is universally approximated as 9.8 m/s²." },
+        { q: "Which of the following physical quantities is a scalar?", a: ["Velocity", "Acceleration", "Force", "Speed", "Momentum"], c: 3, t: "Mechanics", y: 2022, e: "Speed has magnitude only with no specified direction, making it a scalar quantity." },
+        { q: "The instrument used for measuring relative humidity is the:", a: ["Barometer", "Hydrometer", "Hygrometer", "Thermometer", "Anemometer"], c: 2, t: "Thermodynamics", y: 2020, e: "A hygrometer is an instrument used to measure the amount of water vapor in air or humidity." },
+        { q: "Light travels in a straight line, a property known as:", a: ["Refraction", "Diffraction", "Rectilinear propagation", "Interference", "Polarization"], c: 2, t: "Optics & Waves", y: 2018, e: "Rectilinear propagation of light describes the tendency of light waves to travel in straight lines in a homogeneous medium." },
+        { q: "The SI unit of electrical resistance is:", a: ["Ampere", "Ohm", "Volt", "Henry", "Farad"], c: 1, t: "Electromagnetism", y: 2023, e: "The Ohm (Ω) is the SI unit of electrical resistance, named after Georg Ohm." },
+        { q: "According to Ohm's law, the potential difference V across a resistor is equal to:", a: ["IR", "I/R", "R/I", "I²R", "V/I"], c: 0, t: "Electromagnetism", y: 2021, e: "Ohm's Law states that V = IR, where I is current and R is resistance." },
+        { q: "Which of the following waves requires a material medium for propagation?", a: ["Light waves", "X-rays", "Sound waves", "Radio waves", "Gamma rays"], c: 2, t: "Optics & Waves", y: 2017, e: "Sound waves are mechanical waves requiring a medium (solid, liquid, or gas) to travel through." },
+        { q: "What is the work done in moving a charge of 2 Coulombs across a potential difference of 12 Volts?", a: ["6 J", "14 J", "24 J", "48 J", "0.17 J"], c: 2, t: "Electromagnetism", y: 2019, e: "Work done W = Q × V = 2 C × 12 V = 24 Joules." },
+        { q: "The potential energy stored in a spring compressed by a distance x is given by:", a: ["mgx", "0.5kx²", "kx", "kx²", "0.5mv²"], c: 1, t: "Mechanics", y: 2022, e: "Elastic potential energy stored in a stretched or compressed spring is given by E = 0.5kx²." }
     ];
 
-    document.getElementById('questionsContainer').innerHTML = physicsRepo.map((q, idx) => `
-        <div style="margin-bottom: 24px; border-left: 4px solid var(--primary); padding-left: 16px;">
-            <div style="font-size:0.85rem; font-weight:800; color:var(--primary); text-transform:uppercase;">${q.topic}</div>
-            <div style="font-size:1.1rem; margin: 8px 0; font-weight:700;">Q${idx+1}: ${q.q}</div>
-            <div style="display:grid; gap:8px; color: var(--text-muted);">
-                ${q.o.map(opt => `<div style="background:#0e1a24; padding:10px; border-radius:6px;">○ ${opt}</div>`).join('')}
-            </div>
-        </div>
-    `).join('');
+    function normalizeQuestion(item) {
+        return {
+            instr: item.instr || `Topic: ${item.t || "Physics"}`,
+            topic: item.t || "General Physics",
+            year: item.y || null,
+            q: item.q,
+            options: item.options || item.a,
+            correct: item.correct !== undefined ? item.correct : item.c,
+            exp: item.exp || item.e
+        };
+    }
 
-    function calculateCircuit() {
-        let values = document.getElementById('resistorInputs').value.split(',').map(Number).filter(v => !isNaN(v) && v > 0);
-        let type = document.getElementById('circuitType').value;
-        if(values.length === 0) return alert("Please specify numeric vector inputs.");
+    const BOOKMARK_STORAGE_KEY = "mubarak_phys_bookmarks";
+    const OPTION_LETTERS = ["A", "B", "C", "D", "E"];
 
-        let target = document.getElementById('circuitResult');
-        if(type === "series") {
-            let sum = values.reduce((a, b) => a + b, 0);
-            target.innerText = `Total Network Resistance ($R_{eq}$) = ${sum.toFixed(2)} Ω`;
+    let selectedTopic = "all";
+    let shuffleEnabled = true;
+    let timedModeEnabled = false;
+
+    let questions = [];
+    let currentQ = 0;
+    let userAnswers = [];
+    let flaggedQuestions = new Set();
+    let bookmarkedQuestions = new Set(JSON.parse(localStorage.getItem(BOOKMARK_STORAGE_KEY) || "[]"));
+    let timerInterval = null;
+    let totalDuration = 1200; 
+    let timeRemaining = totalDuration;
+    let timerPaused = false;
+    let aiExplanationCache = JSON.parse(localStorage.getItem("mubarak_phys_ai_cache") || "{}");
+
+    const POLLINATION_API_URL = 'https://text.pollinations.ai/';
+
+    function toggleDarkMode() {
+        const body = document.body;
+        const currentTheme = body.getAttribute("data-theme");
+        body.setAttribute("data-theme", currentTheme === "dark" ? "light" : "dark");
+    }
+
+    function selectSetupTopic(topic, cardEl) {
+        selectedTopic = topic;
+        cardEl.parentElement.querySelectorAll('.setup-option-card').forEach(c => c.classList.remove('selected'));
+        cardEl.classList.add('selected');
+    }
+
+    function toggleShuffleMode() {
+        shuffleEnabled = !shuffleEnabled;
+        const el = document.getElementById('shuffle-card');
+        if (shuffleEnabled) el.classList.add('selected');
+        else el.classList.remove('selected');
+    }
+
+    function toggleTimedMode() {
+        timedModeEnabled = !timedModeEnabled;
+        const el = document.getElementById('timed-card');
+        if (timedModeEnabled) el.classList.add('selected');
+        else el.classList.remove('selected');
+    }
+
+    function startCustomQuiz() {
+        let normalized = masterQuestions.map(normalizeQuestion);
+
+        if (selectedTopic !== "all") {
+            normalized = normalized.filter(q => q.topic.toLowerCase().includes(selectedTopic.toLowerCase()));
+            if (normalized.length === 0) normalized = masterQuestions.map(normalizeQuestion);
+        }
+
+        // Shuffle the master pool
+        if (shuffleEnabled) {
+            for (let i = normalized.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [normalized[i], normalized[j]] = [normalized[j], normalized[i]];
+            }
+        }
+
+        // Slice strictly to 20 questions per session (or all if fewer than 20)
+        questions = normalized.slice(0, 20);
+        userAnswers = new Array(questions.length).fill(null);
+        flaggedQuestions.clear();
+        currentQ = 0;
+        totalDuration = timedModeEnabled ? questions.length * 60 : 999999;
+        timeRemaining = totalDuration;
+
+        document.getElementById("setup-box").classList.add("hidden");
+        document.getElementById("result-box").classList.add("hidden");
+        document.getElementById("quiz-box").classList.remove("hidden");
+
+        const timerBadge = document.getElementById("timer-badge");
+        if (!timedModeEnabled) {
+            timerBadge.textContent = "⏱️ Untimed Mode";
         } else {
-            let invSum = values.reduce((a, b) => a + (1 / b), 0);
-            target.innerText = `Total Network Resistance ($R_{eq}$) = ${(1 / invSum).toFixed(2)} Ω`;
+            startTimer();
+        }
+
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (!timerPaused) {
+                timeRemaining--;
+                const mins = Math.floor(timeRemaining / 60);
+                const secs = timeRemaining % 60;
+                document.getElementById("timer-badge").textContent = `⏱️ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    calculateResults();
+                }
+            }
+        }, 1000);
+    }
+
+    function toggleTimer() {
+        timerPaused = !timerPaused;
+    }
+
+    function returnToSetup() {
+        clearInterval(timerInterval);
+        document.getElementById("quiz-box").classList.add("hidden");
+        document.getElementById("result-box").classList.add("hidden");
+        document.getElementById("setup-box").classList.remove("hidden");
+    }
+
+    function toggleJumpGrid() {
+        document.getElementById("jump-grid-wrapper").classList.toggle("hidden");
+    }
+
+    function toggleBookmark() {
+        const qItem = questions[currentQ];
+        const qId = qItem.q;
+        if (bookmarkedQuestions.has(qId)) {
+            bookmarkedQuestions.delete(qId);
+        } else {
+            bookmarkedQuestions.add(qId);
+        }
+        localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify(Array.from(bookmarkedQuestions)));
+        renderActiveQuestion();
+        renderNavigatorGrid();
+    }
+
+    function toggleBookmarkReview(questionText, btnEl) {
+        if (bookmarkedQuestions.has(questionText)) {
+            bookmarkedQuestions.delete(questionText);
+            btnEl.classList.remove("bookmarked");
+            btnEl.textContent = "🔖 Save to Bookmarks";
+        } else {
+            bookmarkedQuestions.add(questionText);
+            btnEl.classList.add("bookmarked");
+            btnEl.textContent = "🔖 Bookmarked ✓";
+        }
+        localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify(Array.from(bookmarkedQuestions)));
+    }
+
+    function renderActiveQuestion() {
+        const item = questions[currentQ];
+        document.getElementById("instruction-box").textContent = item.instr;
+
+        const yearBadge = document.getElementById("year-badge");
+        if (item.year) {
+            yearBadge.textContent = `📅 ${item.year}`;
+            yearBadge.classList.remove("hidden");
+        } else {
+            yearBadge.classList.add("hidden");
+        }
+
+        document.getElementById("q-text").textContent = `${currentQ + 1}. ${item.q}`;
+        
+        const grid = document.getElementById("options-grid");
+        grid.innerHTML = "";
+        
+        item.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = `option-btn ${userAnswers[currentQ] === idx ? 'selected' : ''}`;
+            btn.innerHTML = `<span class="opt-letter">${OPTION_LETTERS[idx] || idx + 1}</span><span>${opt}</span>`;
+            btn.onclick = () => selectOptionIndex(idx);
+            grid.appendChild(btn);
+        });
+
+        document.getElementById("prev-btn").disabled = currentQ === 0;
+        document.getElementById("next-btn").disabled = currentQ === questions.length - 1;
+        
+        const flagBtn = document.getElementById("flag-btn");
+        flagBtn.className = flaggedQuestions.has(currentQ) ? "flag-btn flagged" : "flag-btn";
+
+        const bookmarkBtn = document.getElementById("bookmark-btn");
+        if (bookmarkedQuestions.has(item.q)) {
+            bookmarkBtn.className = "bookmark-btn bookmarked";
+            bookmarkBtn.textContent = "🔖 Saved ✓";
+        } else {
+            bookmarkBtn.className = "bookmark-btn";
+            bookmarkBtn.textContent = "🔖 Save";
         }
     }
+
+    function selectOptionIndex(idx) {
+        if (idx < 0 || idx >= questions[currentQ].options.length) return;
+        userAnswers[currentQ] = idx;
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+    }
+
+    function navigateQuestion(step) {
+        const target = currentQ + step;
+        if (target < 0 || target >= questions.length) return;
+        currentQ = target;
+        renderActiveQuestion();
+        renderNavigatorGrid();
+        updateProgressIndicators();
+    }
+
+    function updateProgressIndicators() {
+        const total = questions.length;
+        const answeredCount = userAnswers.filter(ans => ans !== null).length;
+        const percent = Math.round(((currentQ + 1) / total) * 100);
+        document.getElementById("progress-text").textContent = `Item ${currentQ + 1} / ${total}`;
+        document.getElementById("answered-count").textContent = `Answered: ${answeredCount}/${total}`;
+        document.getElementById("progress-percent").textContent = `${percent}%`;
+        document.getElementById("progress-fill").style.width = `${percent}%`;
+        document.getElementById("quick-jump-label").textContent = `Quick Jump (${total} Questions)`;
+    }
+
+    function renderNavigatorGrid() {
+        const gridContainer = document.getElementById("jump-box-grid");
+        gridContainer.innerHTML = "";
+        
+        questions.forEach((q, index) => {
+            const item = document.createElement("div");
+            item.className = `jump-item`;
+            if (index === currentQ) item.classList.add("active");
+            if (userAnswers[index] !== null) item.classList.add("answered");
+            if (flaggedQuestions.has(index)) item.classList.add("flagged");
+            if (bookmarkedQuestions.has(q.q)) item.classList.add("bookmarked");
+            
+            item.textContent = index + 1;
+            item.onclick = () => {
+                currentQ = index;
+                renderActiveQuestion();
+                renderNavigatorGrid();
+                updateProgressIndicators();
+                toggleJumpGrid();
+            };
+            gridContainer.appendChild(item);
+        });
+    }
+
+    function toggleFlag() {
+        if (flaggedQuestions.has(currentQ)) flaggedQuestions.delete(currentQ);
+        else flaggedQuestions.add(currentQ);
+        renderActiveQuestion();
+        renderNavigatorGrid();
+    }
+
+    function showSubmitModal() {
+        const unansweredCount = userAnswers.filter(ans => ans === null).length;
+        const msg = unansweredCount > 0 
+            ? `You still have ${unansweredCount} unanswered question(s). Are you sure you want to submit now?`
+            : `All ${questions.length} questions answered! Ready to submit and view your Physics score?`;
+        document.getElementById("submit-modal-msg").textContent = msg;
+        document.getElementById("submit-modal").classList.remove("hidden");
+    }
+    function closeSubmitModal() { document.getElementById("submit-modal").classList.add("hidden"); }
+
+    function confirmSubmit() {
+        closeSubmitModal();
+        calculateResults();
+    }
+
+    function calculateResults() {
+        let correct = 0, wrong = 0, unanswered = 0;
+        questions.forEach((q, idx) => {
+            if (userAnswers[idx] === null) unanswered++;
+            else if (userAnswers[idx] === q.correct) correct++;
+            else wrong++;
+        });
+
+        const timeTaken = timedModeEnabled ? (totalDuration - timeRemaining) : 0;
+        const statistics = {
+            correct: correct, wrong: wrong, unanswered: unanswered,
+            timeTaken: timedModeEnabled ? `${Math.floor(timeTaken / 60)}:${timeTaken % 60 < 10 ? '0' : ''}${timeTaken % 60}` : "Untimed",
+            score: correct
+        };
+
+        executeUIRenderOnSubmit(statistics);
+    }
+
+    function executeUIRenderOnSubmit(stats) {
+        clearInterval(timerInterval);
+        document.getElementById("quiz-box").classList.add("hidden");
+        document.getElementById("result-box").classList.remove("hidden");
+
+        const percentage = Math.round((stats.correct / questions.length) * 100);
+        document.getElementById("final-score").textContent = `${stats.correct} / ${questions.length} (${percentage}%)`;
+        document.getElementById("stat-correct").textContent = stats.correct;
+        document.getElementById("stat-wrong").textContent = stats.wrong;
+        document.getElementById("stat-unanswered").textContent = stats.unanswered;
+        document.getElementById("stat-time").textContent = stats.timeTaken;
+
+        const perfMsg = document.getElementById("performance-msg");
+        if (percentage >= 80) perfMsg.textContent = "Outstanding mastery! You are well-prepared for UTME/WAEC Physics.";
+        else if (percentage >= 60) perfMsg.textContent = "Solid effort! Review the missed mechanics, optics, and electromagnetism concepts below.";
+        else perfMsg.textContent = "Keep practicing! Study the detailed explanations and review your bookmarked items.";
+
+        renderTopicBreakdown();
+        renderReviewCards("all");
+    }
+
+    function renderTopicBreakdown() {
+        const topicMap = {};
+        questions.forEach((q, idx) => {
+            const topic = q.topic || "General";
+            if (!topicMap[topic]) topicMap[topic] = { total: 0, correct: 0 };
+            topicMap[topic].total++;
+            if (userAnswers[idx] === q.correct) topicMap[topic].correct++;
+        });
+
+        const box = document.getElementById("topic-breakdown-box");
+        let html = `<h4>📊 Performance by Topic</h4>`;
+        Object.entries(topicMap).forEach(([topic, data]) => {
+            const pct = Math.round((data.correct / data.total) * 100);
+            html += `<div class="topic-row"><span>${topic}</span><strong>${data.correct}/${data.total} (${pct}%)</strong></div>`;
+        });
+        box.innerHTML = html;
+    }
+
+    function filterReviews(filterType, btnEl) {
+        document.querySelectorAll(".filter-tab").forEach(b => b.classList.remove("active"));
+        if (btnEl) btnEl.classList.add("active");
+        renderReviewCards(filterType);
+    }
+
+    function renderReviewCards(filterType = "all") {
+        const container = document.getElementById("review-cards-container");
+        container.innerHTML = "";
+
+        questions.forEach((q, idx) => {
+            const userAnswer = userAnswers[idx];
+            const isCorrect = userAnswer === q.correct;
+            const isUnanswered = userAnswer === null;
+            const isFlagged = flaggedQuestions.has(idx);
+            const isBookmarked = bookmarkedQuestions.has(q.q);
+
+            if (filterType === "wrong" && isCorrect) return;
+            if (filterType === "flagged" && !isFlagged) return;
+            if (filterType === "saved" && !isBookmarked) return;
+
+            const card = document.createElement("div");
+            card.className = "review-card";
+
+            const statusClass = isUnanswered ? "badge-unanswered" : isCorrect ? "badge-correct" : "badge-wrong";
+            const statusText = isUnanswered ? "Unanswered" : isCorrect ? "Correct" : "Incorrect";
+            const userChoiceText = isUnanswered ? "None" : `${OPTION_LETTERS[userAnswer]}. ${q.options[userAnswer]}`;
+            const correctChoiceText = `${OPTION_LETTERS[q.correct]}. ${q.options[q.correct]}`;
+
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span class="choice-badge ${statusClass}">${statusText}</span>
+                    <span style="font-size:0.7rem; color:var(--gray); font-weight:700;">${q.topic}${q.year ? ' • ' + q.year : ''}</span>
+                </div>
+                <div style="font-size:0.88rem; font-weight:700; margin-bottom:6px;">Q${idx+1}: ${q.q}</div>
+                <div style="font-size:0.8rem; color:var(--gray); margin-bottom:2px;">Your Answer: <strong>${userChoiceText}</strong></div>
+                <div style="font-size:0.8rem; color:var(--primary-dark); margin-bottom:4px;">Correct Option: <strong>${correctChoiceText}</strong></div>
+                <div class="explanation-box">${q.exp}</div>
+                <div style="display:flex; gap:6px; margin-top:8px;">
+                    <button class="action-btn nav-btn bookmark-review-btn ${isBookmarked ? 'bookmarked' : ''}" style="flex:1; padding:6px;" onclick="toggleBookmarkReview('${q.q.replace(/'/g, "\\'")}', this)">${isBookmarked ? '🔖 Bookmarked ✓' : '🔖 Save to Bookmarks'}</button>
+                    <button class="action-btn nav-btn" style="flex:1; padding:6px;" onclick="fetchAIExplanation(${idx})">✨ Mubarak AI</button>
+                </div>
+                <div id="ai-explanation-${idx}" class="hidden"></div>
+            `;
+            container.appendChild(card);
+        });
+
+        if (container.innerHTML === "") {
+            container.innerHTML = `<p style="font-size:0.82rem; color:var(--gray); margin-top:14px; text-align:center;">No questions match this filter.</p>`;
+        }
+    }
+
+    async function fetchAIExplanation(questionIdx) {
+        const q = questions[questionIdx];
+        const container = document.getElementById(`ai-explanation-${questionIdx}`);
+        container.classList.remove('hidden');
+
+        if (aiExplanationCache[q.q]) {
+            container.innerHTML = `<div class="ai-explanation-box"><strong>Mubarak AI:</strong><br>${aiExplanationCache[q.q]}</div>`;
+            return;
+        }
+
+        container.innerHTML = '<div class="ai-explanation-box">Consulting Physics AI Tutor...</div>';
+
+        try {
+            const response = await fetch(POLLINATION_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    messages: [
+                        { role: 'system', content: "You are an expert Nigerian Physics science tutor for WAEC and UTME candidates. Keep your explanation concise, clear, and exam-focused." },
+                        { role: 'user', content: `Explain why "${q.options[q.correct]}" is the correct answer for this Physics question: "${q.q}". Options: ${q.options.join(', ')}.` }
+                    ],
+                    model: 'openai'
+                })
+            });
+            const text = await response.text();
+            const formatted = text.replace(/\n/g, '<br>');
+            aiExplanationCache[q.q] = formatted;
+            localStorage.setItem("mubarak_phys_ai_cache", JSON.stringify(aiExplanationCache));
+            container.innerHTML = `<div class="ai-explanation-box"><strong>Mubarak AI:</strong><br>${formatted}</div>`;
+        } catch (e) {
+            container.innerHTML = '<div class="ai-explanation-box">Connection timeout or network blocked. Please check your internet connection.</div>';
+        }
+    }
+
+    function exportResults() {
+        let csv = "Question,Topic,Year,Your Choice,Correct Choice,Status,Bookmarked\n";
+        questions.forEach((q, idx) => {
+            const userChoice = userAnswers[idx] !== null ? q.options[userAnswers[idx]] : "None";
+            const status = userAnswers[idx] === null ? "Unanswered" : (userAnswers[idx] === q.correct ? "Correct" : "Wrong");
+            const isSaved = bookmarkedQuestions.has(q.q) ? "Yes" : "No";
+            csv += `"${q.q.replace(/"/g, '""')}","${q.topic}","${q.year || ''}","${userChoice.replace(/"/g, '""')}","${q.options[q.correct].replace(/"/g, '""')}","${status}","${isSaved}"\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'physics-diagnostic-results.csv';
+        link.click();
+    }
+
+    function speakQuestion() {
+        if ('speechSynthesis' in window) {
+            const item = questions[currentQ];
+            const utterance = new SpeechSynthesisUtterance(`${item.q}. Options are: ${item.options.join(', ')}`);
+            utterance.rate = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (document.getElementById("quiz-box").classList.contains("hidden")) return;
+        if (e.key === "ArrowLeft") navigateQuestion(-1);
+        if (e.key === "ArrowRight") navigateQuestion(1);
+        if (e.key >= "1" && e.key <= "5") selectOptionIndex(parseInt(e.key) - 1);
+        const upperKey = e.key.toUpperCase();
+        if (OPTION_LETTERS.includes(upperKey)) {
+            selectOptionIndex(OPTION_LETTERS.indexOf(upperKey));
+        }
+    });
 </script>
 </body>
 </html>
