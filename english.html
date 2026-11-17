@@ -1,1373 +1,342 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="google-adsense-account" content="ca-pub-2619407883412146">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>English Language Diagnostic | STUDY-WITH-MUBARAK</title>
-    <link rel="manifest" href="random-subject.html">
-    <meta name="theme-color" content="#10b981">
-    <style>
-        :root {
-            --success-bg: #f0fdf4;
-            --success-border: #22c55e;
-            --success-text: #166534;
-            --danger-bg: #fef2f2;
-            --danger-border: #ef4444;
-            --danger-text: #991b1b;
-            --warning-bg: #fffbeb;
-            --warning-border: #f59e0b;
-            --warning-text: #92400e;
-            --primary: #10b981;
-            --primary-dark: #059669;
-            --primary-glow: rgba(16, 185, 129, 0.25);
-            --dark: #0f172a;
-            --gray: #64748b;
-            --card-border: rgba(16, 185, 129, 0.15);
-            --bg-main: #f1f5f9;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --text-main: #0f172a;
-            --option-border: #cbd5e1;
-            --option-hover: #ecfdf5;
-            --instruction-bg: #f8fafc;
-            --instruction-text: #475569;
-            --jump-btn-bg: #e2e8f0;
-            --jump-btn-text: #0f172a;
-            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
-        }
+<head>
+<meta name="google-adsense-account" content="ca-pub-2619407883412146">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>English Language Diagnostic | STUDY-WITH-MUBARAK</title>
+<meta name="theme-color" content="#10b981">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#10b981; --primary2:#06b6d4; --primary-dark:#059669;
+  --bg:#eef2f7; --card:#ffffff; --text:#0f172a; --muted:#64748b; --border:#e2e8f0;
+  --success:#16a34a; --danger:#dc2626; --warning:#f59e0b; --purple:#a855f7;
+  --shadow:0 20px 40px -12px rgba(15,23,42,.12); --radius:20px;
+  --instruction-bg:#f8fafc; --option-bg:#fff; --option-hover:#ecfdf5;
+}
+[data-theme="dark"]{
+  --bg:#020617; --card:#0f172a; --text:#f8fafc; --muted:#94a3b8; --border:#1e293b;
+  --instruction-bg:#1e293b; --option-bg:#0f172a; --option-hover:#064e3b; --shadow:0 20px 40px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;margin:0;padding:0;outline:none}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column;transition:.3s}
+a{text-decoration:none;color:inherit}
 
-        [data-theme="dark"] {
-            --bg-main: #020617;
-            --card-bg: rgba(15, 23, 42, 0.8);
-            --text-main: #f8fafc;
-            --dark: #f8fafc;
-            --gray: #94a3b8;
-            --option-border: #334155;
-            --option-hover: #064e3b;
-            --instruction-bg: #0f172a;
-            --instruction-text: #cbd5e1;
-            --success-bg: rgba(6, 78, 59, 0.4);
-            --success-text: #a7f3d0;
-            --success-border: #059669;
-            --danger-bg: rgba(127, 29, 29, 0.4);
-            --danger-text: #fecaca;
-            --danger-border: #dc2626;
-            --warning-bg: rgba(120, 53, 15, 0.4);
-            --warning-text: #fcd34a;
-            --warning-border: #d97706;
-            --jump-btn-bg: #1e293b;
-            --jump-btn-text: #f8fafc;
-            --card-border: rgba(255, 255, 255, 0.08);
-            --primary-glow: rgba(16, 185, 129, 0.4);
-        }
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-filter:blur(12px);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:19px;box-shadow:0 8px 20px rgba(16,185,129,.4)}
+.logo b{font-family:'Plus Jakarta Sans';font-size:15px;line-height:1;letter-spacing:-.3px}
+.logo span{font-size:10px;letter-spacing:1.5px;color:#a7f3d0;font-weight:700}
+.header-actions{display:flex;gap:6px}
+.icon-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:grid;place-items:center}
+.icon-btn.active{background:#10b981}
 
-        * { 
-            box-sizing: border-box; 
-            outline: none;
-            margin: 0;
-            padding: 0;
-        }
+/* TOP BAR */
+.topbar{max-width:720px;width:100%;margin:14px auto 0;padding:0 14px;display:flex;gap:8px;align-items:center}
+.search-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:9px 12px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}
+.search-box input{border:none;background:transparent;flex:1;font-size:13.5px;color:var(--text);outline:none}
+.pill{font-size:11px;font-weight:800;padding:7px 10px;border-radius:999px;background:var(--card);border:1px solid var(--border);cursor:pointer;white-space:nowrap}
+.pill.active{background:var(--text);color:var(--card)}
 
-        body {
-            background-color: var(--bg-main);
-            background-image: radial-gradient(var(--primary-glow) 1px, transparent 1px);
-            background-size: 24px 24px;
-            font-family: system-ui, -apple-system, sans-serif;
-            color: var(--text-main);
-            transition: background-color 0.3s, color 0.3s;
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+/* MAIN */
+.main{max-width:720px;width:100%;margin:12px auto;padding:0 14px 20px;flex:1;display:flex;flex-direction:column;gap:12px}
+.progress-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
+.ring{width:56px;height:56px;flex-shrink:0;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:13px}
+.progress-meta{flex:1}
+.progress-meta b{font-size:14px}
+.progress-meta p{font-size:12px;color:var(--muted);margin:3px 0 6px}
+.bar{height:7px;background:var(--border);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#06b6d4,#a855f7);border-radius:999px;transition:.4s}
+.timer{font-weight:800;font-size:13px;padding:8px 10px;border-radius:10px;background:#065f46;color:#fff;white-space:nowrap}
+.timer.warn{background:#f59e0b}.timer.danger{background:#dc2626;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.7}}
 
-        header {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: white;
-            padding: 8px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 50px;
-            flex-shrink: 0;
-        }
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#10b981,#06b6d4,#a855f7)}
+.badge-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+[data-theme="dark"] .badge{background:#064e3b;color:#a7f3d0}
+.ghost-btn{border:1px dashed var(--primary);background:transparent;color:var(--text);padding:6px 10px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer}
+.instruction{background:var(--instruction-bg);border-left:4px solid var(--primary);padding:12px 13px;border-radius:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-height:220px;overflow-y:auto;white-space:pre-wrap;margin-bottom:14px}
+.instruction b{color:var(--text)}
+.q-head{display:flex;gap:10px;align-items:flex-start}
+.q-num{width:38px;height:38px;border-radius:11px;background:#0f172a;color:#fff;display:grid;place-items:center;font-weight:900;flex-shrink:0;font-size:15px}
+.q-text{font-family:'Plus Jakarta Sans';font-size:18px;line-height:1.45;font-weight:700}
+.q-actions{margin-left:auto;display:flex;gap:6px}
+.mini-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:15px}
+.options{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+.option{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:14px 14px;border:1.5px solid var(--border);border-radius:14px;background:var(--option-bg);cursor:pointer;transition:.15s;font-size:14.5px;font-weight:600;color:var(--text)}
+.option:hover{border-color:var(--primary);background:var(--option-hover);transform:translateY(-1px)}
+.option.selected{border-color:var(--primary);background:var(--option-hover);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+.letter{width:30px;height:30px;border-radius:9px;background:var(--instruction-bg);display:grid;place-items:center;font-size:12px;font-weight:900;flex-shrink:0}
+.option.selected .letter{background:var(--primary);color:#fff}
+.controls{display:flex;gap:8px;margin-top:16px}
+.btn{flex:1;border:none;padding:13px;border-radius:13px;font-weight:800;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff;box-shadow:0 10px 20px rgba(16,185,129,.3)}
+.btn-dark{background:var(--text);color:var(--card)}
+.btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
+.btn-ghost{background:var(--instruction-bg);color:var(--text);border:1px solid var(--border)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn.flagged{background:#f59e0b;color:#fff}
+.hint{text-align:center;font-size:11px;color:var(--muted);margin-top:8px}
 
-        header h1 {
-            font-size: 1rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* NAVIGATOR */
+.navigator{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+.nav-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.nav-head b{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--primary)}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{font-size:11px;font-weight:700;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);cursor:pointer}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.cell{padding:10px 0;text-align:center;border-radius:10px;background:var(--instruction-bg);font-weight:800;font-size:13px;cursor:pointer;border:1px solid var(--border);position:relative}
+.cell.active{background:var(--text);color:var(--card)}
+.cell.answered{background:#dcfce7;color:#166534;border-color:#86efac}
+[data-theme="dark"] .cell.answered{background:#064e3b;color:#a7f3d0}
+.cell.flagged:after{content:"🚩";position:absolute;top:-6px;right:-2px;font-size:10px}
+.cell.current{outline:2px solid var(--primary);outline-offset:2px}
 
-        header a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 6px;
-            background: rgba(255,255,255,0.05);
-        }
-
-        .header-controls {
-            display: flex;
-            gap: 6px;
-        }
-
-        .icon-btn {
-            background: rgba(255,255,255,0.05);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        .main-viewport {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 12px;
-            max-width: 600px;
-            width: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-wrapper {
-            margin-bottom: 8px;
-            flex-shrink: 0;
-        }
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--gray);
-        }
-        .progress-bar {
-            width: 100%;
-            background: var(--option-border);
-            height: 6px;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-        #progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #34d399);
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-
-        .grand-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 16px;
-            border-radius: 16px;
-            border: 1px solid var(--card-border);
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .badge-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            flex-shrink: 0;
-        }
-
-        .timer-badge {
-            background: linear-gradient(135deg, #065f46, var(--primary));
-            color: white;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-        .timer-badge.warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
-        .timer-badge.danger { background: linear-gradient(135deg, #b91c1c, #ef4444); }
-
-        .toggle-jump-btn {
-            background: var(--card-bg);
-            color: var(--text-main);
-            border: 1px dashed var(--primary);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .instruction-tag {
-            background: var(--instruction-bg);
-            color: var(--instruction-text);
-            font-size: 0.8rem;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--primary);
-            line-height: 1.4;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .question-area {
-            position: relative;
-            padding-right: 40px;
-            margin-bottom: 12px;
-            flex-shrink: 0;
-        }
-
-        .question-text {
-            font-size: 1.05rem;
-            color: var(--text-main);
-            font-weight: 700;
-            line-height: 1.4;
-        }
-
-        .audio-speech-btn {
-            position: absolute;
-            right: 0;
-            top: 0;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 4px;
-            margin-bottom: 12px;
-        }
-
-        .option-btn {
-            display: block;
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--option-border);
-            border-radius: 10px;
-            background: var(--card-bg);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            font-weight: 600;
-            text-align: left;
-            color: var(--text-main);
-        }
-        .option-btn:hover {
-            border-color: var(--primary);
-            background: var(--option-hover);
-        }
-        .option-btn.selected {
-            border-color: var(--primary);
-            background: var(--option-hover);
-            color: var(--primary-dark);
-            border-width: 2px;
-        }
-
-        .control-panel {
-            display: flex;
-            justify-content: space-between;
-            gap: 6px;
-            flex-shrink: 0;
-        }
-
-        .action-btn {
-            background: linear-gradient(135deg, var(--primary), #34d399);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            flex: 1;
-        }
-
-        .submit-btn-style {
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-        }
-
-        .flag-btn {
-            background: var(--warning-bg);
-            color: var(--warning-text);
-            border: 1px solid var(--warning-border);
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            flex: 1;
-        }
-        .flag-btn.flagged {
-            background: var(--warning-border);
-            color: white;
-        }
-
-        .nav-btn {
-            background: var(--instruction-bg);
-            color: var(--primary);
-            border: 1px solid var(--option-border);
-        }
-
-        .action-btn:disabled, .nav-btn:disabled {
-            background: var(--jump-btn-bg) !important;
-            color: var(--gray) !important;
-            border-color: transparent !important;
-            cursor: not-allowed;
-        }
-
-        /* Fixed Overlay Navigation Grid for Mobile Sizing */
-        .jump-grid-container {
-            position: absolute;
-            bottom: 60px;
-            left: 12px;
-            right: 12px;
-            background: var(--instruction-bg);
-            border-radius: 12px;
-            border: 1px solid var(--option-border);
-            padding: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            z-index: 50;
-        }
-        .jump-grid-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .jump-grid-label {
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-transform: uppercase;
-        }
-        .jump-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
-        }
-        .jump-item {
-            padding: 8px 0;
-            text-align: center;
-            border-radius: 6px;
-            background-color: var(--jump-btn-bg);
-            color: var(--jump-btn-text);
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .jump-item.active {
-            background: var(--primary);
-            color: white;
-        }
-        .jump-item.answered {
-            background: var(--success-bg);
-            color: var(--success-text);
-            border: 1px solid var(--success-border);
-        }
-        .jump-item.flagged::after {
-            content: '🚩';
-            font-size: 8px;
-            position: absolute;
-        }
-
-        /* Results Panel Scroll Containment */
-        .scrollable-result-view {
-            overflow-y: auto;
-            flex: 1;
-            padding-right: 4px;
-        }
-
-        .score-display {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--primary), #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            margin: 10px 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin: 12px 0;
-        }
-        .stat-card {
-            background: var(--instruction-bg);
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--option-border);
-        }
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--gray);
-            text-transform: uppercase;
-        }
-
-        .review-card {
-            margin-top: 12px;
-            background: var(--instruction-bg);
-            border: 1px solid var(--option-border);
-            padding: 12px;
-            border-radius: 10px;
-            text-align: left;
-        }
-        .choice-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .explanation-box, .ai-explanation-box, .wiki-box {
-            margin-top: 8px;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            line-height: 1.4;
-        }
-        .explanation-box { background: var(--success-bg); border-left: 4px solid var(--success-border); color: var(--success-text); }
-        .ai-explanation-box { background: rgba(168, 85, 247, 0.1); border-left: 4px solid #a855f7; color: #6b21a8; }
-        [data-theme="dark"] .ai-explanation-box { background: rgba(168, 85, 247, 0.2); color: #f3e8ff; }
-        .wiki-box { background: var(--bg-main); border-left: 4px solid #0284c7; }
-
-        .hidden { display: none !important; }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .modal {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 16px;
-            max-width: 320px;
-            width: 90%;
-            text-align: center;
-        }
-        .modal h3 { margin-bottom: 8px; font-size: 1.1rem; }
-        .modal p { font-size: 0.85rem; color: var(--gray); margin-bottom: 16px; }
-        .modal-actions { display: flex; gap: 8px; }
-
-        .shortcuts-hint { font-size: 0.65rem; color: var(--gray); text-align: center; margin-top: 4px; }
-    </style>
+/* RESULTS */
+.score-hero{text-align:center;padding:8px 0 14px}
+.score-hero h2{font-family:'Plus Jakarta Sans';font-size:22px}
+.big-score{font-size:56px;font-weight:900;line-height:1;background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px}
+.grade-pill{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:900;font-size:13px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stat{background:var(--instruction-bg);border:1px solid var(--border);border-radius:13px;padding:11px 8px;text-align:center}
+.stat b{font-size:19px;display:block}
+.stat span{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.review{margin-top:14px;text-align:left;display:flex;flex-direction:column;gap:10px}
+.review-card{background:var(--instruction-bg);border:1px solid var(--border);border-radius:14px;padding:13px}
+.review-card.correct{border-left:4px solid #16a34a}.review-card.wrong{border-left:4px solid #dc2626}
+.status{font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;padding:4px 8px;border-radius:999px;display:inline-block;margin-bottom:7px}
+.status.ok{background:#dcfce7;color:#166534}.status.bad{background:#fee2e2;color:#991b1b}.status.empty{background:#fef3c7;color:#92400e}
+.review-card p{font-size:13.5px;line-height:1.5;font-weight:600}
+.review-card small{font-size:12px;color:var(--muted)}
+.exp{margin-top:8px;background:#f0fdf4;border-left:3px solid #22c55e;padding:9px 10px;border-radius:8px;font-size:12.5px;line-height:1.5;color:#166534}
+[data-theme="dark"] .exp{background:#064e3b;color:#a7f3d0}
+.ai-box{margin-top:8px;background:#faf5ff;border-left:3px solid #a855f7;padding:9px 10px;border-radius:8px;font-size:12.5px;line-height:1.5;color:#6b21a8}
+[data-theme="dark"] .ai-box{background:#3b0764;color:#f3e8ff}
+.hidden{display:none!important}
+.modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,.6);backdrop-filter:blur(6px);display:grid;place-items:center;z-index:200;padding:16px}
+.modal{background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:360px;text-align:center;box-shadow:var(--shadow)}
+.modal h3{font-size:18px;margin-bottom:6px}.modal p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.modal-actions{display:flex;gap:8px}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:300}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(5,1fr)}.q-text{font-size:16px}.big-score{font-size:44px}}
+</style>
 </head>
 <body>
-
 <header>
-    <h1>STUDY-WITH-MUBARAK</h1>
-    <div style="display: flex; align-items: center; gap: 8px;">
-        <a href="index.html">🏠</a>
-        <div class="header-controls">
-            <button class="icon-btn" onclick="toggleDarkMode()">🌓</button>
-            <button class="icon-btn" onclick="toggleTimer()">⏱️</button>
-        </div>
-    </div>
+  <div class="logo"><div class="logo-icon">📚</div><div><b>STUDY-WITH-MUBARAK</b><br><span>ENGLISH DIAGNOSTIC • 30 QUESTIONS</span></div></div>
+  <div class="header-actions">
+    <button class="icon-btn" id="fontBtn" title="Font size">A+</button>
+    <button class="icon-btn" id="soundBtn" title="Sound">🔔</button>
+    <button class="icon-btn" id="themeBtn" title="Dark mode">🌙</button>
+    <button class="icon-btn" onclick="location.href='index.html'">🏠</button>
+  </div>
 </header>
 
-<div class="main-viewport">
-    <div class="progress-wrapper">
-        <div class="progress-info">
-            <span id="progress-text">Loading...</span>
-            <span id="progress-percent">0%</span>
-        </div>
-        <div class="progress-bar"><div id="progress-fill"></div></div>
-    </div>
-
-    <div id="quiz-box" class="grand-card">
-        <div class="badge-controls">
-            <button class="toggle-jump-btn" onclick="toggleJumpGrid()">🧩 Navigator</button>
-            <div class="timer-badge" id="timer-badge">⏱️ 15:00</div>
-        </div>
-
-        <div id="instruction-box" class="instruction-tag"></div>
-        
-        <div class="question-area">
-            <div class="question-text" id="q-text">Loading Language Modules...</div>
-            <button class="audio-speech-btn" onclick="speakQuestion()">🔊</button>
-        </div>
-
-        <div id="options-grid" class="options-container"></div>
-
-        <div class="control-panel">
-            <button id="prev-btn" class="action-btn nav-btn" onclick="navigateQuestion(-1)">←</button>
-            <button id="flag-btn" class="flag-btn" onclick="toggleFlag()">🚩</button>
-            <button id="submit-shortcut-btn" class="action-btn submit-btn-style" onclick="showSubmitModal()">Submit</button>
-            <button id="next-btn" class="action-btn nav-btn" onclick="navigateQuestion(1)">→</button>
-        </div>
-
-        <div id="jump-grid-wrapper" class="jump-grid-container hidden">
-            <div class="jump-grid-header">
-                <span class="jump-grid-label">Quick Jump</span>
-                <button class="toggle-jump-btn" onclick="toggleJumpGrid()">Close</button>
-            </div>
-            <div id="jump-box-grid" class="jump-grid"></div>
-            <div class="shortcuts-hint">1-4 Select Options | Key Left/Right Navigate</div>
-        </div>
-    </div>
-
-    <!-- Scrollable results to maintain screen constraints -->
-    <div id="result-box" class="grand-card hidden" style="text-align: center;">
-        <div class="scrollable-result-view">
-            <h2>Session Completed 🎉</h2>
-            <div class="score-display" id="final-score">0 / 0</div>
-
-            <div class="stats-grid">
-                <div class="stat-card"><div class="stat-value" id="stat-correct">0</div><div class="stat-label">Correct</div></div>
-                <div class="stat-card"><div class="stat-value" id="stat-wrong">0</div><div class="stat-label">Wrong</div></div>
-                <div class="stat-card"><div class="stat-value" id="stat-unanswered">0</div><div class="stat-label">Empty</div></div>
-                <div class="stat-card"><div class="stat-value" id="stat-time">0:00</div><div class="stat-label">Duration</div></div>
-            </div>
-
-            <p id="performance-msg" style="color: var(--gray); font-size: 0.85rem; font-weight: 600; margin-bottom: 12px;"></p>
-            
-            <div style="display: flex; gap: 8px; justify-content: center;">
-                <button class="action-btn" onclick="resetSessionData()">🔄 Restart</button>
-                <button class="action-btn nav-btn" onclick="exportResults()">📥 Export</button>
-            </div>
-
-            <div id="review-cards-container"></div>
-        </div>
-    </div>
+<div class="topbar">
+  <div class="search-box">🔍 <input id="searchInput" placeholder="Search question... e.g. journalist, humane"></div>
+  <button class="pill" id="shuffleBtn">🔀 Shuffle</button>
+  <button class="pill" id="pauseBtn">⏸️ Pause</button>
 </div>
 
-<div class="modal-overlay hidden" id="submit-modal">
-    <div class="modal">
-        <h3>Submit Assessment?</h3>
-        <p>Are you sure you want to grade your current performance track?</p>
-        <div class="modal-actions">
-            <button class="action-btn nav-btn" onclick="closeSubmitModal()">Cancel</button>
-            <button class="action-btn submit-btn-style" onclick="confirmSubmit()">Submit</button>
-        </div>
+<div class="main">
+  <!-- PROGRESS -->
+  <div class="progress-card" id="progressCard">
+    <div class="ring"><svg width="56" height="56"><circle cx="28" cy="28" r="24" fill="none" stroke="var(--border)" stroke-width="6"/><circle id="ringFill" cx="28" cy="28" r="24" fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg><span id="ringText">0%</span></div>
+    <div class="progress-meta"><b id="progressText">Question 1 / 30</b><p id="progressSub">0 answered • 0 flagged • Keep going 💪</p><div class="bar"><i id="barFill" style="width:3%"></i></div></div>
+    <div class="timer" id="timerBadge">⏱️ 15:00</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card" id="quizBox">
+    <div class="badge-row"><span class="badge" id="catBadge">Grammar</span><button class="ghost-btn" onclick="document.getElementById('navigator').scrollIntoView({behavior:'smooth'})">🧩 Navigator ↓</button></div>
+    <div class="instruction" id="instructionBox"></div>
+    <div class="q-head">
+      <div class="q-num" id="qNum">1</div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-actions"><button class="mini-btn" onclick="speakQuestion()" title="Listen">🔊</button><button class="mini-btn" onclick="copyQuestion()" title="Copy">📋</button></div>
     </div>
+    <div class="options" id="optionsGrid"></div>
+    <div class="controls">
+      <button class="btn btn-ghost" id="prevBtn">← Prev</button>
+      <button class="btn btn-ghost" id="flagBtn">🚩 Flag</button>
+      <button class="btn btn-danger" onclick="showSubmitModal()">Submit</button>
+      <button class="btn btn-primary" id="nextBtn">Next →</button>
+    </div>
+    <p class="hint">Shortcuts: <b>1-5</b> select • <b>← →</b> navigate • <b>F</b> flag • <b>S</b> speak</p>
+  </div>
+
+  <!-- NAVIGATOR -->
+  <div class="navigator" id="navigator">
+    <div class="nav-head"><b>Question Navigator</b><span id="navCount" style="font-size:12px;color:var(--muted)"></span></div>
+    <div class="filter-row">
+      <button class="chip active" data-filter="all">All</button><button class="chip" data-filter="answered">✅ Answered</button><button class="chip" data-filter="unanswered">⬜ Unanswered</button><button class="chip" data-filter="flagged">🚩 Flagged</button>
+    </div>
+    <div class="grid" id="jumpGrid"></div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-ghost" onclick="clearAllAnswers()">🗑️ Clear All</button><button class="btn btn-dark" onclick="jumpToFirstUnanswered()">➡️ First Unanswered</button></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card hidden" id="resultBox">
+    <div class="score-hero"><h2>Session Completed 🎉</h2><div class="big-score" id="finalScore">0 / 30</div><div><span class="grade-pill" id="gradePill">Grade F</span></div><p id="perfMsg" style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:600"></p></div>
+    <div class="stats">
+      <div class="stat"><b id="statCorrect" style="color:#16a34a">0</b><span>Correct</span></div>
+      <div class="stat"><b id="statWrong" style="color:#dc2626">0</b><span>Wrong</span></div>
+      <div class="stat"><b id="statEmpty">0</b><span>Empty</span></div>
+      <div class="stat"><b id="statTime">0:00</b><span>Duration</span></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="resetSession()">🔄 Restart</button><button class="btn btn-ghost" onclick="exportCSV()">📥 CSV</button><button class="btn btn-ghost" onclick="window.print()">🖨️ Print</button><button class="btn btn-dark" onclick="shareScore()">📤 Share</button></div>
+    <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="chip active" onclick="filterReview('all',this)">All</button><button class="chip" onclick="filterReview('wrong',this)">Wrong Only</button><button class="chip" onclick="filterReview('correct',this)">Correct Only</button></div>
+    <div class="review" id="reviewContainer"></div>
+  </div>
 </div>
+
+<div class="modal-overlay hidden" id="submitModal"><div class="modal"><div style="font-size:40px">📝</div><h3>Submit Assessment?</h3><p id="submitMsg">You have answered 0 of 30 questions.</p><div class="modal-actions"><button class="btn btn-ghost" onclick="closeSubmitModal()">Cancel</button><button class="btn btn-danger" onclick="confirmSubmit()">Submit Now</button></div></div></div>
+<canvas class="confetti hidden" id="confettiCanvas"></canvas>
 
 <script>
-    const masterQuestions = [
+const masterQuestions = [
         { instr: "Grammar & Mechanics: Subject-Verb Agreement.", q: "Neither the teacher nor the students ______ capable of solving the complex riddle immediately.", options: ["is", "are", "was", "has"], correct: 1, exp: "When a subject is joined by 'neither... nor', the verb agrees with the closer subject. 'Students' is plural, so it takes the plural verb 'are'." },
         { instr: "Lexicon & Vocabulary: Identify the closest synonym.", q: "Select the word that is most nearly similar in meaning to 'Ephemeral'.", options: ["Enduring", "Transient", "Precious", "Spurious"], correct: 1, exp: "'Ephemeral' means lasting for a very short time. 'Transient' is a direct synonym, meaning fleeting or temporary." },
         { instr: "Lexicon & Vocabulary: Identify the opposite meaning.", q: "What is the most accurate antonym for the word 'Loquacious'?", options: ["Reticent", "Garrulous", "Verbose", "Articulate"], correct: 0, exp: "'Loquacious' means talkative. 'Reticent' means introverted, silent, or reserved, making it the correct opposite." },
         { instr: "Grammar & Parts of Speech: Pronoun Case Selection.", q: "The grand prize was split equally between Sarah and ______.", options: ["I", "me", "myself", "we"], correct: 1, exp: "The pronoun follows the preposition 'between', requiring the objective case pronoun 'me' rather than the subjective case 'I'." },
         { instr: "Grammar & Structure: Idiomatic Expressions.", q: "To 'take something with a grain of salt' means to:", options: ["Accept it completely", "Skeptically reserve full belief", "Cook with careful measurements", "Exaggerate an event"], correct: 1, exp: "The idiom means to view a statement with skepticism or not to interpret it as literal, objective truth." },
-
-
     {
-        instr: `PASSAGE A
-
-All over the world till lately and in most of the world till today, mankind has been following the course of nature: that is to say, it has been breeding up to the maximum. To let nature take her course in the reproduction of the human race may have made sense in an age in which we were also letting her take her course in decimating mankind by the casualties of war, pestilence, and famine. Being human, we have at least revolted against that senseless waste. We have started to impose on nature’s heartless play a humane new order of our own. But when once man has begun to interfere with nature, he cannot afford to stop halfway. We cannot, with impunity, cut down the death-rate and at the same time allow the birthrate to go on taking nature’s course. We must consciously try to establish an equilibrium, or sooner or later, famine will stalk abroad again.
-
-Read the passage carefully and answer the questions that follow.`,
-        q: "The author observes that",
-        options: [
-            "War, pestilence and famine were caused by the extravagance of nature",
-            "Nature was heartless and senseless",
-            "There was a time when uncontrolled birth made sense",
-            "It was wise at a time when mankind did not interfere with normal reproduction",
-            "Nature was heartless in its reproductive process"
-        ],
-        correct: 2,
-        exp: "The author explains that unrestricted reproduction may have made sense when war, disease and famine also naturally reduced the population. This means there was a time when uncontrolled birth was considered reasonable."
+        instr: `PASSAGE A\n\nAll over the world till lately and in most of the world till today, mankind has been following the course of nature: that is to say, it has been breeding up to the maximum. To let nature take her course in the reproduction of the human race may have made sense in an age in which we were also letting her take her course in decimating mankind by the casualties of war, pestilence, and famine. Being human, we have at least revolted against that senseless waste. We have started to impose on nature’s heartless play a humane new order of our own. But when once man has begun to interfere with nature, he cannot afford to stop halfway. We cannot, with impunity, cut down the death-rate and at the same time allow the birthrate to go on taking nature’s course. We must consciously try to establish an equilibrium, or sooner or later, famine will stalk abroad again.\n\nRead the passage carefully and answer the questions that follow.`,
+        q: "The author observes that", options: ["War, pestilence and famine were caused by the extravagance of nature","Nature was heartless and senseless","There was a time when uncontrolled birth made sense","It was wise at a time when mankind did not interfere with normal reproduction","Nature was heartless in its reproductive process"], correct: 2, exp: "The author explains that unrestricted reproduction may have made sense when war, disease and famine also naturally reduced the population."
     },
-
-    {
-        instr: "PASSAGE A — Choose the option that agrees with the author's views.",
-        q: "Which of these statements does not express the opinion of the author?",
-        options: [
-            "Mankind has started to interfere with the work of nature",
-            "Many people had died in the past through want and disease",
-            "Mankind should not have the maximum number of children possible",
-            "Mankind should take care of its children",
-            "Man's present relationship with nature in matters of birth and death is a happy one"
-        ],
-        correct: 4,
-        exp: "The author does not describe man's present relationship with nature as happy. Instead, the author argues that reducing deaths while allowing births to continue unchecked creates an imbalance."
-    },
-
-    {
-        instr: "PASSAGE A — Answer according to the meaning of the word in the passage.",
-        q: "Humane, as used in the passage, means",
-        options: [
-            "Sensible",
-            "Wise",
-            "Human",
-            "Benevolent",
-            "Thorough"
-        ],
-        correct: 3,
-        exp: "Humane means showing kindness, compassion and concern for human welfare. Benevolent is the closest option because it means kind and well-meaning."
-    },
-
-    {
-        instr: "PASSAGE A — Answer according to the meaning of the expression in the passage.",
-        q: "'We must consciously try to establish an equilibrium' implies that mankind must",
-        options: [
-            "Realistically find an equation",
-            "Strive not to be wasteful",
-            "Deliberately try to fight nature",
-            "Try to fight nature",
-            "Purposely find a balance"
-        ],
-        correct: 4,
-        exp: "Equilibrium means a state of balance. The author argues that mankind must deliberately balance the birth rate and death rate to prevent overpopulation and famine."
-    },
-
-    {
-        instr: "PASSAGE A — Choose the option that best expresses the central idea.",
-        q: "The main idea of this passage is that",
-        options: [
-            "Nature is heartless",
-            "Man should control the birth rate",
-            "Mankind will soon perish of starvation",
-            "Pestilence causes more death than war",
-            "Man should change nature's course gradually"
-        ],
-        correct: 1,
-        exp: "The passage emphasizes that since mankind has reduced the death rate, it must also regulate the birth rate to maintain population balance. Therefore, controlling the birth rate is the central idea."
-    },
-
-    // PASSAGE B
-    // Questions 6–10
-
-    {
-        instr: `PASSAGE B
-
-The endeavour to maintain proper standards of fairness in journalism must be pursued. It is fatally easy for the journalist to deviate from the straight path. There is his natural desire to make a story and the insidious temptation to twist facts to square with his paper's policy. Both are as indefensible as the framing of misleading headlines for the sake of effect. The conscientious journalist must check any tendency to bias, and guard against the dangers inherent in personal antipathies or friendships, and in traditional opposition between rival schools of thought. When a political opponent, whose stupidity habitually provokes attack, makes an effective speech, honesty requires that he be given credit for it. Where personal relationships might make it easier and more congenial to keep silent than to criticize, the journalist must never forget his duty to the public and the supreme importance of recording the truth.
-
-Read the passage carefully and answer the questions that follow.`,
-        q: "When may a journalist have to act against his own inclination?",
-        options: [
-            "When his friends act stupidly",
-            "When he becomes weak and decrepit",
-            "When his enemies make a mistake",
-            "When his political opponents frame misleading headlines",
-            "After he has been given a bribe"
-        ],
-        correct: 2,
-        exp: "The passage says that when a political opponent makes an effective speech, the journalist must give that opponent credit, even if personal dislike makes this difficult. However, the printed option C says 'make a mistake', which does not accurately match the passage. The intended idea appears to be giving credit to an opponent despite personal inclination."
-    },
-
-    {
-        instr: "PASSAGE B — Answer according to the author's argument.",
-        q: "A journalist would be able to uphold the tenets of his profession if",
-        options: [
-            "He seeks publicity",
-            "He tries to achieve popularity",
-            "He resists temptation to bias",
-            "He can manipulate his story to please his employers",
-            "He tries to protect his friends"
-        ],
-        correct: 2,
-        exp: "The passage emphasizes fairness, truth and freedom from prejudice. A journalist upholds professional standards by resisting bias and reporting facts honestly."
-    },
-
-    {
-        instr: "PASSAGE B — Choose the option closest in meaning to the word.",
-        q: "'Insidious' (line 2) means",
-        options: [
-            "Subtle",
-            "Wicked",
-            "Natural",
-            "Unusual",
-            "Wild"
-        ],
-        correct: 0,
-        exp: "Insidious describes something that operates gradually or secretly in a harmful way. Subtle is the closest option because the temptation may be difficult to notice or resist."
-    },
-
-    {
-        instr: "PASSAGE B — Answer according to the passage.",
-        q: "A dutiful journalist must",
-        options: [
-            "Read widely",
-            "Have political acumen",
-            "Make no enemies but friends",
-            "Be able to make an effective speech",
-            "Be able to recognize merit wherever found"
-        ],
-        correct: 4,
-        exp: "The journalist must acknowledge an effective speech even when it is made by a political opponent. This shows the importance of recognizing merit wherever it occurs."
-    },
-
-    {
-        instr: "PASSAGE B — Choose the option that best expresses the journalist's duty.",
-        q: "The duty of the journalist to the public entails",
-        options: [
-            "Giving credit to his political enemies",
-            "Keeping quiet when necessary",
-            "Trying to make a story",
-            "Telling the truth",
-            "Defending the weak"
-        ],
-        correct: 3,
-        exp: "The final sentence states that the journalist must remember his duty to the public and the supreme importance of recording the truth. Therefore, telling the truth is the best answer."
-    },
-
-    // PASSAGE C
-    // Questions 11–15
-
-    {
-        instr: `PASSAGE C
-
-So far, I have been speaking of science in its universality viewed from the perspective of the world at large. For in the context of our own country and our sister developing countries many of the factors mentioned earlier are not very important. For example, pollution, deterioration of the environment and population explosion are not yet serious problems for us in this country. Let me now turn to a more specific area, namely, the question of scientific choice for developing countries. There is no doubt that the role which science and technology have played in the upliftment of the material and economic well-being of the developed nations will, and does, influence the criteria that the Third World nations must choose in order to establish their science policies and priorities. But the criteria to be used by these nations do not have to be the same as those which have brought the developed countries to their present stage of evolution. For while human beings have the same problems, their solutions, to be meaningful, will have to be sought within some relevant frame of reference such as the available resources and expertise, social values, place and time in the historical scale.
-
-Read the passage carefully and answer the questions that follow.`,
-        q: "'Frame of reference' in this passage means",
-        options: [
-            "Point of information",
-            "Range of authority",
-            "Economic pattern",
-            "Context of situation",
-            "Wholesome choice"
-        ],
-        correct: 3,
-        exp: "A frame of reference is the particular context or set of circumstances used when considering something. The passage mentions resources, expertise, social values, place and historical period as relevant circumstances."
-    },
-
-    {
-        instr: "PASSAGE C — Answer according to the writer's view.",
-        q: "The writer apparently believes that through science and technology our country can achieve",
-        options: [
-            "Peace and order",
-            "Progress and material success",
-            "Social values and universality",
-            "Wealth and economic progress",
-            "Military development and power"
-        ],
-        correct: 3,
-        exp: "The passage specifically discusses how science and technology have improved the material and economic well-being of developed nations. Option D expresses this idea most directly."
-    },
-
-    {
-        instr: "PASSAGE C — Answer according to the factors listed in the passage.",
-        q: "According to the passage, the basic consideration for developing science and technology should be three of the following: 1. technical know-how 2. availability of raw materials 3. atmospheric pollution 4. the people's tradition and beliefs 5. population 6. capital",
-        options: [
-            "2, 1 and 6 only",
-            "3, 2 and 4 only",
-            "5, 3 and 6 only",
-            "6, 5 and 4 only",
-            "5, 2 and 6 only"
-        ],
-        correct: 0,
-        exp: "The passage identifies available resources and expertise as important considerations. Raw materials represent resources, technical know-how represents expertise, and capital is a resource. Option A is the closest match among the choices."
-    },
-
-    {
-        instr: "PASSAGE C — Choose the option that best expresses the main idea.",
-        q: "The main idea of this passage is that",
-        options: [
-            "There is a yawning gap between the have and the have-nots",
-            "There is need to rid his countrymen from scourges of hunger, disease, ignorance and want",
-            "There could be atmospheric pollution and population explosion",
-            "The concerns of science and technology are the same in all countries",
-            "Each nation must plan its development according to its needs and resources"
-        ],
-        correct: 4,
-        exp: "The writer argues that developing countries should not simply copy the scientific policies of developed countries. They should choose policies that suit their own resources, expertise and social conditions."
-    },
-
-    {
-        instr: "PASSAGE C — Interpret the expression as used in the passage.",
-        q: "The term 'our sister developing countries' implies",
-        options: [
-            "Britain, Gambia and Canada",
-            "Ghana, Germany and Togo",
-            "Russia, Switzerland and America",
-            "Liberia, Sierra-Leone and Gabon",
-            "China, India and Holland"
-        ],
-        correct: 3,
-        exp: "The expression refers to countries that share the status of developing nations. Among the options, Liberia, Sierra Leone and Gabon are the intended examples."
-    },
-
-    // PASSAGE D
-    // Questions 16–20
-
-    {
-        instr: `PASSAGE D
-
-These two factors, the altitude and the weather, tend separately and together to defeat the climber. The height weakness slows him down; it forces him to spend days and nights in the course of his assault on the summit. The weather, besides adding to the demands of his energy and moral fortitude, conspires to deny him the time he needs to complete his mission. Whereas in lower mountains and on easy ground the weather may be no more than a handicap, in the high Himalayas it is decisive, regardless of terrain. The deduction to be drawn from these two factors was clear enough. We must either so fortify ourselves that we could continue, without detriment, to live and have our being above the limit of natural acclimatization, or better still, we must solve the problem of speed. It was desirable, in fact, that we should meet both these requirements and thus give to those chosen to attempt the summit and to their supporting teams some measure of insurance against the vagaries of the weather, for safety in mountain climbing is as much a matter of swiftness as of sureness of foot. Either or both could be achieved only by the administration of oxygen in sufficient quantities to make up for the deficiency in the air, and for the duration of the upward journey above the limit of successful acclimatization.
-
-Read the passage carefully and answer the questions that follow.`,
-        q: "The author believes that to overcome the problem of altitude and weather, the climber needs mainly",
-        options: [
-            "Courage and speed",
-            "Energy and moral fortitude",
-            "Sufficient quantities of oxygen",
-            "Swiftness and sureness of foot",
-            "Quick acclimatization"
-        ],
-        correct: 2,
-        exp: "The final part of the passage explains that the requirements for dealing with altitude and speed could be achieved through the administration of sufficient oxygen. Therefore, option C is the most direct answer."
-    },
-
-    {
-        instr: "PASSAGE D — Choose the option closest in meaning to the word.",
-        q: "'Conspires' (line 3) means",
-        options: [
-            "Ruins",
-            "Makes secret plans",
-            "Takes a wicked action",
-            "Combines",
-            "Aggravates"
-        ],
-        correct: 3,
-        exp: "To conspire means to work together or combine towards a particular result. In the passage, the weather works against the climber by making the journey more difficult."
-    },
-
-    {
-        instr: "PASSAGE D — Choose the option closest in meaning to the expression.",
-        q: "'Regardless of terrain' (line 5) means",
-        options: [
-            "Even on easy ground",
-            "Despite the nature of the ground",
-            "Because of steeper gradients",
-            "Swiftness and sureness of foot",
-            "Without considering the handicap"
-        ],
-        correct: 1,
-        exp: "Regardless of terrain means without being affected by or taking account of the nature of the ground. The weather remains decisive even when the type of terrain changes."
-    },
-
-    {
-        instr: "PASSAGE D — Interpret the expression as used in the passage.",
-        q: "'To live and have our being above the limit of natural acclimatization' (line 7) means",
-        options: [
-            "To be protected from the effects of the weather",
-            "To expect no protection from the bad weather",
-            "To survive under unnatural weather conditions",
-            "To limit our natural desires to get acclimatized to the weather",
-            "None of the above"
-        ],
-        correct: 4,
-        exp: "The expression refers to surviving at an altitude beyond the body's natural ability to adjust. None of the listed options accurately expresses that meaning, so 'None of the above' is the closest defensible choice."
-    },
-
-    {
-        instr: "PASSAGE D — Answer according to the passage.",
-        q: "Which ONE of the following was NOT a reason for using oxygen?",
-        options: [
-            "It gave them psychological encouragement",
-            "It fortified them to live above the limit of natural acclimatization",
-            "It protected them against the unexpected changes of the weather",
-            "It quickened their journey to the summit",
-            "It helped them to survive the worst"
-        ],
-        correct: 0,
-        exp: "The passage explains that oxygen helped climbers cope with the lack of oxygen at high altitudes and supported their ability to complete the climb. It does not state that oxygen was used to provide psychological encouragement."
-    },
-
-    // PASSAGE E
-    // Questions 21–25
-
-    {
-        instr: `PASSAGE E
-
-You dare not lift the veil that protects our tribal marriage customs and ceremonies from the eyes of outsiders. There is already too little in this world that is sacred; and what Fatmata and I were required to go through during the next week must remain so. I was deeply in debt by the time everything was over, but I was absolutely satisfied with my parent's choice. Fatmata was as black as a satin, and as soft. She had the teeth and smile of a goddess. The Dopo tutors had done their job well; she was a complete efficient lover and mother. I brought her home with swelling pride, and began at once to save all I could spare towards the cost of acquiring my second wife.
-
-Read the passage carefully and answer the questions that follow.`,
-        q: "The evidence would seem to indicate that",
-        options: [
-            "The author adores his wife",
-            "He disapproves of her ways",
-            "He thinks she is extravagant",
-            "The author regrets the cause of his debt",
-            "She had not been properly brought up"
-        ],
-        correct: 0,
-        exp: "The writer describes Fatmata in highly admiring terms, praising her beauty, smile and qualities. He also says he was satisfied with his parents' choice. This suggests that he adores his wife."
-    },
-
-    {
-        instr: "PASSAGE E — Answer according to the passage and the expression quoted in the original question.",
-        q: "When the author said 'My anti-Western revolt was gaining momentum' (line 7), he was referring to the fact that",
-        options: [
-            "He did not like polygamy",
-            "He hated Europeans",
-            "He did not want to marry another wife",
-            "He admired everything about his wife",
-            "He revolted against European values"
-        ],
-        correct: 4,
-        exp: "An anti-Western revolt refers to a rejection of Western ideas, customs or values. Option E expresses this meaning. However, the quoted sentence is not visible in the passage text reproduced in the PDF section provided, so the answer is based on the wording of the question."
-    },
-
-    {
-        instr: "PASSAGE E — Answer according to the consequences described in the passage.",
-        q: "It would appear that the marriage had turned him into",
-        options: [
-            "A good worker",
-            "A faithful husband",
-            "An incurable debtor",
-            "A tragic figure",
-            "A proud husband"
-        ],
-        correct: 2,
-        exp: "The writer says that he was deeply in debt after the marriage ceremonies. This supports the idea that the marriage left him in serious debt. Option E is also suggested by his 'swelling pride', but option C focuses on the financial consequence emphasized in the question."
-    },
-
-    {
-        instr: "PASSAGE E — Choose the statement that is NOT true according to the passage.",
-        q: "Which one of the following is NOT true of the passage?",
-        options: [
-            "The lady was beautiful",
-            "The marriage cost a lot of money",
-            "The marriage was according to native law and custom",
-            "Fatmata never had an issue",
-            "The author wanted another wife"
-        ],
-        correct: 3,
-        exp: "The passage describes Fatmata as beautiful, says the marriage left the writer deeply in debt, refers to tribal marriage customs, and mentions his plan to acquire a second wife. It does not state that Fatmata never had a child or issue. Therefore, D is the statement not established by the passage."
-    },
-
-    {
-        instr: "PASSAGE E — Choose the option closest in meaning to the word.",
-        q: "'Swelling' (line 6) means",
-        options: [
-            "Jovial",
-            "Great",
-            "Remarkable",
-            "Happy",
-            "Growing"
-        ],
-        correct: 4,
-        exp: "In 'swelling pride', swelling suggests pride that is increasing or growing. Therefore, 'growing' is the closest option."
-    },
-
-    // VOCABULARY AND IDIOM
-    // Questions 26–30
-
-    {
-        instr: "Choose the option that best conveys the meaning of the underlined portion in the following sentence.",
-        q: "In the match against the uplanders team, the submariners turned out to be the dark horse.",
-        options: [
-            "Played most brilliantly",
-            "Played below their usual form",
-            "Won unexpectedly",
-            "Lost as expected",
-            "Won as expected"
-        ],
-        correct: 2,
-        exp: "A dark horse is a person or team whose abilities are not widely known but who unexpectedly performs well or wins a competition."
-    },
-
-    {
-        instr: "Choose the option that best conveys the meaning of the underlined portion.",
-        q: "Only the small fry get punished for such social misdemeanors.",
-        options: [
-            "Small boys",
-            "Unimportant people",
-            "Frightened people",
-            "Frivolous people",
-            "Inexperienced people"
-        ],
-        correct: 1,
-        exp: "Small fry is an idiom referring to people who are considered unimportant or insignificant, especially when compared with more powerful people."
-    },
-
-    {
-        instr: "Choose the option that best conveys the meaning of the underlined portion.",
-        q: "He spoke with his heart in his mouth.",
-        options: [
-            "Courageously",
-            "With such unusual cowardice",
-            "With a lot of confusion in his speech",
-            "Without being able to make up his mind",
-            "With fright and agitation"
-        ],
-        correct: 4,
-        exp: "To have one's heart in one's mouth means to be extremely frightened, anxious or nervous about something."
-    },
-
-    {
-        instr: "Choose the option that best conveys the meaning of the underlined word.",
-        q: "The leader in today's issue of our popular newspaper focuses on inflation.",
-        options: [
-            "President",
-            "Headline",
-            "Editorial",
-            "Columnist",
-            "Proprietor"
-        ],
-        correct: 2,
-        exp: "A leader in a newspaper is an editorial: an article expressing the newspaper's opinion on an important issue. It is not the headline or the person who writes a column."
-    },
-
-    {
-        instr: "Choose the option that best conveys the meaning of the underlined word.",
-        q: "From the ways my friend talks, you can see he is such a bore.",
-        options: [
-            "Rude",
-            "Brilliant",
-            "Uninteresting",
-            "Overbearing",
-            "Humorous"
-        ],
-        correct: 2,
-        exp: "A bore is someone or something that causes boredom. An uninteresting person or conversation is therefore described as a bore."
-    }
-
-    ];
-
-    let questions = [];
-    let currentQ = 0;
-    let userAnswers = [];
-    let flaggedQuestions = new Set();
-    let timerInterval = null;
-    let timeRemaining = 900; 
-    let timerPaused = false;
-    let totalDuration = 900;
-    let aiExplanationCache = {};
-
-    const POLLINATION_API_URL = 'https://text.pollinations.ai/';
-
-    function toggleJumpGrid() {
-        document.getElementById("jump-grid-wrapper").classList.toggle("hidden");
-    }
-
-    function setupSession() {
-        const locallyStoredState = localStorage.getItem("mubarak_bio_portal_state");
-        if (locallyStoredState) {
-            try {
-                const parsedState = JSON.parse(locallyStoredState);
-                questions = parsedState.questions;
-                currentQ = parsedState.currentQ;
-                userAnswers = parsedState.userAnswers;
-                flaggedQuestions = new Set(parsedState.flaggedQuestions);
-                timeRemaining = parsedState.timeRemaining;
-                
-                if (parsedState.isSubmitted) {
-                    executeUIRenderOnSubmit(parsedState.statistics);
-                    return;
-                }
-                startTimer();
-                initQuiz();
-                return;
-            } catch (err) { console.error(err); }
-        }
-        createNewFreshSession();
-    }
-
-    function createNewFreshSession() {
-        questions = [...masterQuestions];
-        userAnswers = new Array(questions.length).fill(null);
-        flaggedQuestions.clear();
-        currentQ = 0;
-        timeRemaining = 900;
-        saveCurrentProgressToStorage(false);
-        startTimer();
-        initQuiz();
-    }
-
-    function saveCurrentProgressToStorage(isSubmitted = false, compiledStats = null) {
-        const statePayload = {
-            questions: questions, currentQ: currentQ, userAnswers: userAnswers,
-            flaggedQuestions: Array.from(flaggedQuestions), timeRemaining: timeRemaining,
-            isSubmitted: isSubmitted, statistics: compiledStats
-        };
-        localStorage.setItem("mubarak_bio_portal_state", JSON.stringify(statePayload));
-    }
-
-    function resetSessionData() {
-        localStorage.removeItem("mubarak_bio_portal_state");
-        location.reload();
-    }
-
-    function toggleDarkMode() {
-        const currentTheme = document.documentElement.getAttribute("data-theme");
-        if (currentTheme === "dark") {
-            document.documentElement.removeAttribute("data-theme");
-            localStorage.setItem("bio_theme", "light");
-        } else {
-            document.documentElement.setAttribute("data-theme", "dark");
-            localStorage.setItem("bio_theme", "dark");
-        }
-    }
-
-    if (localStorage.getItem("bio_theme") === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-    }
-
-    function startTimer() {
-        clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-            if (!timerPaused) {
-                timeRemaining--;
-                updateTimerDisplay();
-                if (timeRemaining <= 0) {
-                    clearInterval(timerInterval);
-                    confirmSubmit();
-                }
-            }
-        }, 1000);
-    }
-
-    function toggleTimer() {
-        timerPaused = !timerPaused;
-        document.getElementById("timer-badge").style.opacity = timerPaused ? "0.3" : "1";
-    }
-
-    function updateTimerDisplay() {
-        const badge = document.getElementById("timer-badge");
-        if (!badge) return;
-        const mins = Math.floor(timeRemaining / 60);
-        const secs = timeRemaining % 60;
-        badge.textContent = `⏱️ ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        badge.className = timeRemaining < 180 ? "timer-badge danger" : timeRemaining < 450 ? "timer-badge warning" : "timer-badge";
-    }
-
-    function speakQuestion() {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            const qObj = questions[currentQ];
-            const utterance = new SpeechSynthesisUtterance(`${qObj.instr}. ${qObj.q}`);
-            window.speechSynthesis.speak(utterance);
-        }
-    }
-
-    function initQuiz() {
-        if (questions.length === 0) return;
-        renderActiveQuestion();
-        renderNavigatorGrid();
-        updateProgressIndicators();
-    }
-
-    function renderActiveQuestion() {
-        const item = questions[currentQ];
-        document.getElementById("instruction-box").textContent = item.instr;
-        document.getElementById("q-text").textContent = `${currentQ + 1}. ${item.q}`;
-        
-        const grid = document.getElementById("options-grid");
-        grid.innerHTML = "";
-        
-        item.options.forEach((opt, idx) => {
-            const btn = document.createElement("button");
-            btn.className = `option-btn ${userAnswers[currentQ] === idx ? 'selected' : ''}`;
-            btn.textContent = opt;
-            btn.onclick = () => selectOptionIndex(idx);
-            grid.appendChild(btn);
-        });
-
-        document.getElementById("prev-btn").disabled = currentQ === 0;
-        document.getElementById("next-btn").disabled = currentQ === questions.length - 1;
-        
-        const flagBtn = document.getElementById("flag-btn");
-        flagBtn.className = flaggedQuestions.has(currentQ) ? "flag-btn flagged" : "flag-btn";
-    }
-
-    function selectOptionIndex(idx) {
-        userAnswers[currentQ] = idx;
-        renderActiveQuestion();
-        renderNavigatorGrid();
-        saveCurrentProgressToStorage(false);
-    }
-
-    function navigateQuestion(step) {
-        currentQ += step;
-        renderActiveQuestion();
-        renderNavigatorGrid();
-        updateProgressIndicators();
-    }
-
-    function updateProgressIndicators() {
-        const total = questions.length;
-        const percent = Math.round((currentQ + 1) / total * 100);
-        document.getElementById("progress-text").textContent = `Item ${currentQ + 1} / ${total}`;
-        document.getElementById("progress-percent").textContent = `${percent}%`;
-        document.getElementById("progress-fill").style.width = `${percent}%`;
-    }
-
-    function renderNavigatorGrid() {
-        const gridContainer = document.getElementById("jump-box-grid");
-        gridContainer.innerHTML = "";
-        
-        questions.forEach((_, index) => {
-            const item = document.createElement("div");
-            item.className = `jump-item`;
-            if (index === currentQ) item.classList.add("active");
-            if (userAnswers[index] !== null) item.classList.add("answered");
-            if (flaggedQuestions.has(index)) item.classList.add("flagged");
-            
-            item.textContent = index + 1;
-            item.onclick = () => {
-                currentQ = index;
-                renderActiveQuestion();
-                renderNavigatorGrid();
-                updateProgressIndicators();
-                toggleJumpGrid();
-            };
-            gridContainer.appendChild(item);
-        });
-    }
-
-    function toggleFlag() {
-        if (flaggedQuestions.has(currentQ)) flaggedQuestions.delete(currentQ);
-        else flaggedQuestions.add(currentQ);
-        renderActiveQuestion();
-        renderNavigatorGrid();
-    }
-
-    function showSubmitModal() { document.getElementById("submit-modal").classList.remove("hidden"); }
-    function closeSubmitModal() { document.getElementById("submit-modal").classList.add("hidden"); }
-
-    function confirmSubmit() {
-        closeSubmitModal();
-        calculateResults();
-    }
-
-    function calculateResults() {
-        let correct = 0, wrong = 0, unanswered = 0;
-        questions.forEach((q, idx) => {
-            if (userAnswers[idx] === null) unanswered++;
-            else if (userAnswers[idx] === q.correct) correct++;
-            else wrong++;
-        });
-
-        const timeTaken = totalDuration - timeRemaining;
-        const statistics = {
-            correct: correct, wrong: wrong, unanswered: unanswered,
-            timeTaken: `${Math.floor(timeTaken / 60)}:${timeTaken % 60 < 10 ? '0' : ''}${timeTaken % 60}`,
-            score: correct
-        };
-
-        saveCurrentProgressToStorage(true, statistics);
-        executeUIRenderOnSubmit(statistics);
-    }
-
-    function executeUIRenderOnSubmit(stats) {
-        clearInterval(timerInterval);
-        document.getElementById("quiz-box").classList.add("hidden");
-        document.getElementById("result-box").classList.remove("hidden");
-
-        document.getElementById("final-score").textContent = `${stats.correct} / ${questions.length}`;
-        document.getElementById("stat-correct").textContent = stats.correct;
-        document.getElementById("stat-wrong").textContent = stats.wrong;
-        document.getElementById("stat-unanswered").textContent = stats.unanswered;
-        document.getElementById("stat-time").textContent = stats.timeTaken;
-
-        renderReviewCards();
-    }
-
-    function renderReviewCards() {
-        const container = document.getElementById("review-cards-container");
-        container.innerHTML = "";
-
-        questions.forEach((q, idx) => {
-            const userAnswer = userAnswers[idx];
-            const isCorrect = userAnswer === q.correct;
-            const isUnanswered = userAnswer === null;
-
-            const card = document.createElement("div");
-            card.className = "review-card";
-
-            const statusClass = isUnanswered ? "badge-unanswered" : isCorrect ? "badge-correct" : "badge-wrong";
-            const statusText = isUnanswered ? "Unanswered" : isCorrect ? "Correct" : "Incorrect";
-
-            card.innerHTML = `
-                <div><span class="choice-badge ${statusClass}">${statusText}</span></div>
-                <div style="font-size:0.85rem; font-weight:700; margin-bottom:6px;">Q${idx+1}: ${q.q}</div>
-                <div style="font-size:0.8rem; color:var(--gray); margin-bottom:4px;">Correct Option: <strong>${q.options[q.correct]}</strong></div>
-                <div class="explanation-box">${q.exp}</div>
-                <button class="action-btn nav-btn" style="margin-top:6px; padding:4px;" onclick="fetchAIExplanation(${idx}, event)">✨ Ask Mubarak AI</button>
-                <div id="ai-explanation-${idx}" class="hidden"></div>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    async function fetchAIExplanation(questionIdx, event) {
-        const q = questions[questionIdx];
-        const container = document.getElementById(`ai-explanation-${questionIdx}`);
-        container.classList.remove('hidden');
-        container.innerHTML = '<div class="ai-explanation-box">Consulting AI Linguist Hub...</div>';
-
-        try {
-            const response = await fetch(POLLINATION_API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: [
-                        { role: 'system', content: "You are an expert English Language professor. Keep your answers brief, structured, and clear for students." },
-                        { role: 'user', content: `Explain the correct grammatical rule or vocabulary meaning for this question: ${q.q}. Options: ${q.options.join(', ')}. Correct index is ${q.correct}.` }
-                    ],
-                    model: 'openai'
-                })
-            });
-            const text = await response.text();
-            container.innerHTML = `<div class="ai-explanation-box"><strong>Mubarak AI:</strong><br>${text.replace(/\n/g, '<br>')}</div>`;
-        } catch (e) {
-            container.innerHTML = '<div class="ai-explanation-box">Connection timeout. Please double check your local connection parameters.</div>';
-        }
-    }
-
-    function exportResults() {
-        let csv = "Question,Your Choice,Correct Choice\n";
-        questions.forEach((q, idx) => {
-            const userChoice = userAnswers[idx] !== null ? q.options[userAnswers[idx]] : "None";
-            csv += `"${q.q}","${userChoice}","${q.options[q.correct]}"\n`;
-        });
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'english-results.csv';
-        link.click();
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (document.getElementById("quiz-box").classList.contains("hidden")) return;
-        if (e.key === "ArrowLeft") navigateQuestion(-1);
-        if (e.key === "ArrowRight") navigateQuestion(1);
-        if (e.key >= "1" && e.key <= "4") selectOptionIndex(parseInt(e.key) - 1);
-    });
-
-    setupSession();
+    { instr: "PASSAGE A — Choose the option that agrees with the author's views.", q: "Which of these statements does not express the opinion of the author?", options: ["Mankind has started to interfere with the work of nature","Many people had died in the past through want and disease","Mankind should not have the maximum number of children possible","Mankind should take care of its children","Man's present relationship with nature in matters of birth and death is a happy one"], correct: 4, exp: "The author does not describe man's present relationship with nature as happy. Reducing deaths while allowing births to continue creates an imbalance." },
+    { instr: "PASSAGE A — Answer according to the meaning of the word in the passage.", q: "Humane, as used in the passage, means", options: ["Sensible","Wise","Human","Benevolent","Thorough"], correct: 3, exp: "Humane means showing kindness, compassion and concern for human welfare. Benevolent is the closest." },
+    { instr: "PASSAGE A — Answer according to the meaning of the expression in the passage.", q: "'We must consciously try to establish an equilibrium' implies that mankind must", options: ["Realistically find an equation","Strive not to be wasteful","Deliberately try to fight nature","Try to fight nature","Purposely find a balance"], correct: 4, exp: "Equilibrium means a state of balance. Mankind must deliberately balance birth rate and death rate." },
+    { instr: "PASSAGE A — Choose the option that best expresses the central idea.", q: "The main idea of this passage is that", options: ["Nature is heartless","Man should control the birth rate","Mankind will soon perish of starvation","Pestilence causes more death than war","Man should change nature's course gradually"], correct: 1, exp: "Since mankind has reduced the death rate, it must also regulate the birth rate to maintain balance." },
+    { instr: `PASSAGE B\n\nThe endeavour to maintain proper standards of fairness in journalism must be pursued. It is fatally easy for the journalist to deviate from the straight path. There is his natural desire to make a story and the insidious temptation to twist facts to square with his paper's policy. Both are as indefensible as the framing of misleading headlines for the sake of effect. The conscientious journalist must check any tendency to bias, and guard against the dangers inherent in personal antipathies or friendships, and in traditional opposition between rival schools of thought. When a political opponent, whose stupidity habitually provokes attack, makes an effective speech, honesty requires that he be given credit for it. Where personal relationships might make it easier and more congenial to keep silent than to criticize, the journalist must never forget his duty to the public and the supreme importance of recording the truth.\n\nRead the passage carefully and answer the questions that follow.`, q: "When may a journalist have to act against his own inclination?", options: ["When his friends act stupidly","When he becomes weak and decrepit","When his enemies make a mistake","When his political opponents frame misleading headlines","After he has been given a bribe"], correct: 2, exp: "The passage says when a political opponent makes an effective speech, the journalist must give credit, even if dislike makes this difficult." },
+    { instr: "PASSAGE B — Answer according to the author's argument.", q: "A journalist would be able to uphold the tenets of his profession if", options: ["He seeks publicity","He tries to achieve popularity","He resists temptation to bias","He can manipulate his story to please his employers","He tries to protect his friends"], correct: 2, exp: "A journalist upholds standards by resisting bias and reporting facts honestly." },
+    { instr: "PASSAGE B — Choose the option closest in meaning to the word.", q: "'Insidious' (line 2) means", options: ["Subtle","Wicked","Natural","Unusual","Wild"], correct: 0, exp: "Insidious describes something that operates gradually or secretly in a harmful way. Subtle is closest." },
+    { instr: "PASSAGE B — Answer according to the passage.", q: "A dutiful journalist must", options: ["Read widely","Have political acumen","Make no enemies but friends","Be able to make an effective speech","Be able to recognize merit wherever found"], correct: 4, exp: "The journalist must acknowledge an effective speech even when made by a political opponent." },
+    { instr: "PASSAGE B — Choose the option that best expresses the journalist's duty.", q: "The duty of the journalist to the public entails", options: ["Giving credit to his political enemies","Keeping quiet when necessary","Trying to make a story","Telling the truth","Defending the weak"], correct: 3, exp: "The journalist must remember his duty to the public and the supreme importance of recording the truth." },
+    { instr: `PASSAGE C\n\nSo far, I have been speaking of science in its universality viewed from the perspective of the world at large. For in the context of our own country and our sister developing countries many of the factors mentioned earlier are not very important. For example, pollution, deterioration of the environment and population explosion are not yet serious problems for us in this country. Let me now turn to a more specific area, namely, the question of scientific choice for developing countries. There is no doubt that the role which science and technology have played in the upliftment of the material and economic well-being of the developed nations will, and does, influence the criteria that the Third World nations must choose in order to establish their science policies and priorities. But the criteria to be used by these nations do not have to be the same as those which have brought the developed countries to their present stage of evolution. For while human beings have the same problems, their solutions, to be meaningful, will have to be sought within some relevant frame of reference such as the available resources and expertise, social values, place and time in the historical scale.\n\nRead the passage carefully and answer the questions that follow.`, q: "'Frame of reference' in this passage means", options: ["Point of information","Range of authority","Economic pattern","Context of situation","Wholesome choice"], correct: 3, exp: "A frame of reference is the particular context or set of circumstances used when considering something." },
+    { instr: "PASSAGE C — Answer according to the writer's view.", q: "The writer apparently believes that through science and technology our country can achieve", options: ["Peace and order","Progress and material success","Social values and universality","Wealth and economic progress","Military development and power"], correct: 3, exp: "The passage discusses how science and technology improved material and economic well-being." },
+    { instr: "PASSAGE C — Answer according to the factors listed in the passage.", q: "According to the passage, the basic consideration for developing science and technology should be three of the following: 1. technical know-how 2. availability of raw materials 3. atmospheric pollution 4. the people's tradition and beliefs 5. population 6. capital", options: ["2, 1 and 6 only","3, 2 and 4 only","5, 3 and 6 only","6, 5 and 4 only","5, 2 and 6 only"], correct: 0, exp: "The passage identifies available resources and expertise as important. Raw materials, know-how and capital match." },
+    { instr: "PASSAGE C — Choose the option that best expresses the main idea.", q: "The main idea of this passage is that", options: ["There is a yawning gap between the have and the have-nots","There is need to rid his countrymen from scourges of hunger, disease, ignorance and want","There could be atmospheric pollution and population explosion","The concerns of science and technology are the same in all countries","Each nation must plan its development according to its needs and resources"], correct: 4, exp: "Developing countries should not copy developed countries. They should choose policies that suit their own resources." },
+    { instr: "PASSAGE C — Interpret the expression as used in the passage.", q: "The term 'our sister developing countries' implies", options: ["Britain, Gambia and Canada","Ghana, Germany and Togo","Russia, Switzerland and America","Liberia, Sierra-Leone and Gabon","China, India and Holland"], correct: 3, exp: "Refers to countries that share the status of developing nations." },
+    { instr: `PASSAGE D\n\nThese two factors, the altitude and the weather, tend separately and together to defeat the climber. The height weakness slows him down; it forces him to spend days and nights in the course of his assault on the summit. The weather, besides adding to the demands of his energy and moral fortitude, conspires to deny him the time he needs to complete his mission. Whereas in lower mountains and on easy ground the weather may be no more than a handicap, in the high Himalayas it is decisive, regardless of terrain. The deduction to be drawn from these two factors was clear enough. We must either so fortify ourselves that we could continue, without detriment, to live and have our being above the limit of natural acclimatization, or better still, we must solve the problem of speed. It was desirable, in fact, that we should meet both these requirements and thus give to those chosen to attempt the summit and to their supporting teams some measure of insurance against the vagaries of the weather, for safety in mountain climbing is as much a matter of swiftness as of sureness of foot. Either or both could be achieved only by the administration of oxygen in sufficient quantities to make up for the deficiency in the air, and for the duration of the upward journey above the limit of successful acclimatization.\n\nRead the passage carefully and answer the questions that follow.`, q: "The author believes that to overcome the problem of altitude and weather, the climber needs mainly", options: ["Courage and speed","Energy and moral fortitude","Sufficient quantities of oxygen","Swiftness and sureness of foot","Quick acclimatization"], correct: 2, exp: "Requirements could be achieved through administration of sufficient oxygen." },
+    { instr: "PASSAGE D — Choose the option closest in meaning to the word.", q: "'Conspires' (line 3) means", options: ["Ruins","Makes secret plans","Takes a wicked action","Combines","Aggravates"], correct: 3, exp: "To conspire means to work together or combine towards a particular result." },
+    { instr: "PASSAGE D — Choose the option closest in meaning to the expression.", q: "'Regardless of terrain' (line 5) means", options: ["Even on easy ground","Despite the nature of the ground","Because of steeper gradients","Swiftness and sureness of foot","Without considering the handicap"], correct: 1, exp: "Regardless of terrain means without being affected by the nature of the ground." },
+    { instr: "PASSAGE D — Interpret the expression as used in the passage.", q: "'To live and have our being above the limit of natural acclimatization' (line 7) means", options: ["To be protected from the effects of the weather","To expect no protection from the bad weather","To survive under unnatural weather conditions","To limit our natural desires to get acclimatized to the weather","None of the above"], correct: 4, exp: "Refers to surviving at an altitude beyond the body's natural ability to adjust. None of the options accurately expresses it." },
+    { instr: "PASSAGE D — Answer according to the passage.", q: "Which ONE of the following was NOT a reason for using oxygen?", options: ["It gave them psychological encouragement","It fortified them to live above the limit of natural acclimatization","It protected them against the unexpected changes of the weather","It quickened their journey to the summit","It helped them to survive the worst"], correct: 0, exp: "Passage does not state oxygen was used to provide psychological encouragement." },
+    { instr: `PASSAGE E\n\nYou dare not lift the veil that protects our tribal marriage customs and ceremonies from the eyes of outsiders. There is already too little in this world that is sacred; and what Fatmata and I were required to go through during the next week must remain so. I was deeply in debt by the time everything was over, but I was absolutely satisfied with my parent's choice. Fatmata was as black as a satin, and as soft. She had the teeth and smile of a goddess. The Dopo tutors had done their job well; she was a complete efficient lover and mother. I brought her home with swelling pride, and began at once to save all I could spare towards the cost of acquiring my second wife.\n\nRead the passage carefully and answer the questions that follow.`, q: "The evidence would seem to indicate that", options: ["The author adores his wife","He disapproves of her ways","He thinks she is extravagant","The author regrets the cause of his debt","She had not been properly brought up"], correct: 0, exp: "Writer describes Fatmata in highly admiring terms and says he was satisfied with his parents' choice." },
+    { instr: "PASSAGE E — Answer according to the passage.", q: "When the author said 'My anti-Western revolt was gaining momentum' (line 7), he was referring to the fact that", options: ["He did not like polygamy","He hated Europeans","He did not want to marry another wife","He admired everything about his wife","He revolted against European values"], correct: 4, exp: "An anti-Western revolt refers to a rejection of Western ideas, customs or values." },
+    { instr: "PASSAGE E — Answer according to the consequences described in the passage.", q: "It would appear that the marriage had turned him into", options: ["A good worker","A faithful husband","An incurable debtor","A tragic figure","A proud husband"], correct: 2, exp: "Writer says he was deeply in debt after the marriage ceremonies." },
+    { instr: "PASSAGE E — Choose the statement that is NOT true according to the passage.", q: "Which one of the following is NOT true of the passage?", options: ["The lady was beautiful","The marriage cost a lot of money","The marriage was according to native law and custom","Fatmata never had an issue","The author wanted another wife"], correct: 3, exp: "Passage does not state that Fatmata never had a child. Therefore D is not established." },
+    { instr: "PASSAGE E — Choose the option closest in meaning to the word.", q: "'Swelling' (line 6) means", options: ["Jovial","Great","Remarkable","Happy","Growing"], correct: 4, exp: "In 'swelling pride', swelling suggests pride that is increasing or growing." },
+    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "In the match against the uplanders team, the submariners turned out to be the dark horse.", options: ["Played most brilliantly","Played below their usual form","Won unexpectedly","Lost as expected","Won as expected"], correct: 2, exp: "A dark horse unexpectedly performs well or wins." },
+    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "Only the small fry get punished for such social misdemeanors.", options: ["Small boys","Unimportant people","Frightened people","Frivolous people","Inexperienced people"], correct: 1, exp: "Small fry refers to people considered unimportant or insignificant." },
+    { instr: "Choose the option that best conveys the meaning of the underlined portion.", q: "He spoke with his heart in his mouth.", options: ["Courageously","With such unusual cowardice","With a lot of confusion in his speech","Without being able to make up his mind","With fright and agitation"], correct: 4, exp: "To have one's heart in one's mouth means to be extremely frightened or anxious." },
+    { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "The leader in today's issue of our popular newspaper focuses on inflation.", options: ["President","Headline","Editorial","Columnist","Proprietor"], correct: 2, exp: "A leader in a newspaper is an editorial expressing the newspaper's opinion." },
+    { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "From the ways my friend talks, you can see he is such a bore.", options: ["Rude","Brilliant","Uninteresting","Overbearing","Humorous"], correct: 2, exp: "A bore is someone who causes boredom. Uninteresting is closest." }
+];
+let questions=[...masterQuestions], currentQ=0, userAnswers=new Array(questions.length).fill(null), flagged=new Set(), timeRemaining=900, totalDuration=900, paused=false, timerInterval=null, filter='all', searchTerm='', fontSize=1, soundOn=true, reviewFilter='all';
+const KEY='mubarak_eng_v2';
+function save(){localStorage.setItem(KEY,JSON.stringify({questions,userAnswers: userAnswers,flagged:[...flagged],currentQ,timeRemaining}))}
+function load(){try{let s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.questions&&s.questions.length===questions.length){questions=s.questions;userAnswers=s.userAnswers;flagged=new Set(s.flagged);currentQ=s.currentQ;timeRemaining=s.timeRemaining; if(s.submitted){showResult(s.stats);return true}}}catch(e){} return false}
+function speak(t){if('speechSynthesis' in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}}
+function speakQuestion(){let q=questions[currentQ]; speak(q.q+'. Options: '+q.options.join(', '))}
+function copyQuestion(){navigator.clipboard.writeText(questions[currentQ].q); alert('Question copied!')}
+function playClick(){if(!soundOn)return; try{let a=new (window.AudioContext||window.webkitAudioContext)();let o=a.createOscillator();o.frequency.value=650;o.connect(a.destination);o.start();o.stop(a.currentTime+0.06)}catch(e){}}
+function render(){
+  let q=questions[currentQ];
+  document.getElementById('instructionBox').textContent=q.instr;
+  document.getElementById('qNum').textContent=currentQ+1;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('catBadge').textContent=q.instr.includes('PASSAGE')?'📖 Comprehension':q.instr.includes('Vocabulary')||q.instr.includes('Lexicon')?'📝 Vocabulary':'✍️ Grammar';
+  let grid=document.getElementById('optionsGrid'); grid.innerHTML='';
+  q.options.forEach((opt,i)=>{
+    let b=document.createElement('button'); b.className='option'+(userAnswers[currentQ]===i?' selected':''); b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${opt}</span><span style="margin-left:auto">${userAnswers[currentQ]===i?'✅':''}</span>`;
+    b.onclick=()=>{userAnswers[currentQ]=i; playClick(); render(); renderNav(); save();}; grid.appendChild(b);
+  });
+  document.getElementById('prevBtn').disabled=currentQ===0;
+  document.getElementById('nextBtn').disabled=currentQ===questions.length-1;
+  let fb=document.getElementById('flagBtn'); fb.textContent=flagged.has(currentQ)?'🚩 Flagged':'🚩 Flag'; fb.classList.toggle('flagged',flagged.has(currentQ));
+  let answered=userAnswers.filter(x=>x!==null).length; let pct=Math.round((currentQ+1)/questions.length*100);
+  document.getElementById('progressText').textContent=`Question ${currentQ+1} / ${questions.length}`;
+  document.getElementById('progressSub').textContent=`${answered} answered • ${flagged.size} flagged • Keep going 💪`;
+  document.getElementById('barFill').style.width=pct+'%';
+  document.getElementById('ringText').textContent=Math.round(answered/questions.length*100)+'%';
+  document.getElementById('ringFill').style.strokeDashoffset=150.8*(1-answered/questions.length);
+}
+function renderNav(){
+  let grid=document.getElementById('jumpGrid'); grid.innerHTML='';
+  questions.forEach((q,i)=>{
+    if(filter==='answered'&&userAnswers[i]===null)return; if(filter==='unanswered'&&userAnswers[i]!==null)return; if(filter==='flagged'&&!flagged.has(i))return;
+    if(searchTerm && !q.q.toLowerCase().includes(searchTerm) && !q.instr.toLowerCase().includes(searchTerm))return;
+    let d=document.createElement('div'); d.className='cell'+(userAnswers[i]!==null?' answered':'')+(flagged.has(i)?' flagged':'')+(i===currentQ?' current':''); d.textContent=i+1;
+    d.onclick=()=>{currentQ=i; render(); renderNav();}; grid.appendChild(d);
+  });
+  document.getElementById('navCount').textContent=`${userAnswers.filter(x=>x!==null).length}/${questions.length} answered`;
+}
+function navigate(s){currentQ=Math.max(0,Math.min(questions.length-1,currentQ+s)); render(); renderNav();}
+function toggleFlag(){flagged.has(currentQ)?flagged.delete(currentQ):flagged.add(currentQ); render(); renderNav(); save();}
+function jumpToFirstUnanswered(){let idx=userAnswers.findIndex(x=>x===null); if(idx!==-1){currentQ=idx; render(); renderNav();} else alert('All answered! 🎉')}
+function clearAllAnswers(){if(confirm('Clear all answers?')){userAnswers=new Array(questions.length).fill(null); flagged.clear(); render(); renderNav(); save();}}
+function updateTimer(){let m=Math.floor(timeRemaining/60), s=timeRemaining%60; let badge=document.getElementById('timerBadge'); badge.textContent=`⏱️ ${m}:${s<10?'0':''}${s}`; badge.className='timer'+(timeRemaining<180?' danger':timeRemaining<450?' warn':'')}
+function startTimer(){clearInterval(timerInterval); timerInterval=setInterval(()=>{if(!paused){timeRemaining--; updateTimer(); if(timeRemaining<=0){clearInterval(timerInterval); confirmSubmit();}}},1000)}
+function showSubmitModal(){let a=userAnswers.filter(x=>x!==null).length; document.getElementById('submitMsg').textContent=`You have answered ${a} of ${questions.length} questions. ${a<questions.length?`You have ${questions.length-a} unanswered.`:'All done! 🎉'}`; document.getElementById('submitModal').classList.remove('hidden')}
+function closeSubmitModal(){document.getElementById('submitModal').classList.add('hidden')}
+function confirmSubmit(){closeSubmitModal(); let correct=0,wrong=0,empty=0; questions.forEach((q,i)=>{if(userAnswers[i]===null)empty++; else if(userAnswers[i]===q.correct)correct++; else wrong++;}); let taken=totalDuration-timeRemaining; let stats={correct,wrong,empty,timeTaken:`${Math.floor(taken/60)}:${taken%60<10?'0':''}${taken%60}`,score:correct}; localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,submitted:true,stats})); showResult(stats);}
+function showResult(stats){
+  clearInterval(timerInterval); document.getElementById('quizBox').classList.add('hidden'); document.getElementById('navigator').classList.add('hidden'); document.getElementById('progressCard').classList.add('hidden'); document.getElementById('resultBox').classList.remove('hidden');
+  let pct=Math.round(stats.correct/questions.length*100); document.getElementById('finalScore').textContent=`${stats.correct} / ${questions.length} (${pct}%)`;
+  let grade=pct>=80?'A - Excellent 🌟':pct>=70?'B - Very Good 👏':pct>=60?'C - Good 👍':pct>=50?'D - Fair 🙂':pct>=40?'E - Pass 😐':'F - Keep Practicing 💪';
+  document.getElementById('gradePill').textContent='Grade '+grade; document.getElementById('perfMsg').textContent=pct>=70?'Outstanding! You are ready for JAMB/WAEC English.':pct>=50?'Good effort! Review the wrong ones below to improve.':'Don\'t give up. Review each explanation below.';
+  document.getElementById('statCorrect').textContent=stats.correct; document.getElementById('statWrong').textContent=stats.wrong; document.getElementById('statEmpty').textContent=stats.empty; document.getElementById('statTime').textContent=stats.timeTaken;
+  renderReview(); if(pct>=70) launchConfetti(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderReview(){
+  let c=document.getElementById('reviewContainer'); c.innerHTML='';
+  questions.forEach((q,i)=>{
+    let ua=userAnswers[i]; let isCorrect=ua===q.correct; let isEmpty=ua===null;
+    if(reviewFilter==='wrong'&&isCorrect)return; if(reviewFilter==='correct'&&!isCorrect)return;
+    let d=document.createElement('div'); d.className='review-card '+(isEmpty?'':isCorrect?'correct':'wrong');
+    d.innerHTML=`<span class="status ${isEmpty?'empty':isCorrect?'ok':'bad'}">${isEmpty?'Unanswered':isCorrect?'Correct ✅':'Incorrect ❌'}</span><p>Q${i+1}: ${q.q}</p><small>Your answer: <b>${isEmpty?'— None —':q.options[ua]}</b> | Correct: <b style="color:#16a34a">${q.options[q.correct]}</b></small><div class="exp"><b>💡 Explanation:</b> ${q.exp}</div><button class="btn btn-ghost" style="margin-top:8px;padding:8px" onclick="askAI(${i},this)">✨ Ask Mubarak AI for deeper explanation</button><div id="ai-${i}"></div>`;
+    c.appendChild(d);
+  });
+}
+function filterReview(type,el){reviewFilter=type; document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); el.classList.add('active'); renderReview();}
+async function askAI(idx,btn){
+  let q=questions[idx]; let box=document.getElementById(`ai-${idx}`); box.innerHTML='<div class="ai-box">🤖 Consulting AI Linguist Hub...</div>'; btn.disabled=true;
+  try{let res=await fetch('https://text.pollinations.ai/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'system',content:'You are an expert English professor. Keep answers brief, structured, clear for Nigerian students preparing for JAMB/WAEC.'},{role:'user',content:`Explain: ${q.q} Options: ${q.options.join(', ')} Correct: ${q.options[q.correct]}`}],model:'openai'})}); let txt=await res.text(); box.innerHTML=`<div class="ai-box"><b>🤖 Mubarak AI:</b><br>${txt.replace(/\n/g,'<br>')}</div>`;}catch(e){box.innerHTML='<div class="ai-box">Connection issue. Check your internet and try again.</div>';}
+}
+function exportCSV(){let csv="Question,Your Answer,Correct Answer,Result\n"; questions.forEach((q,i)=>{let ua=userAnswers[i]; csv+=`"${q.q.replace(/"/g,'""')}","${ua===null?'None':q.options[ua]}","${q.options[q.correct]}","${ua===q.correct?'Correct':'Wrong'}"\n`}); let b=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='english-results.csv'; a.click();}
+function shareScore(){let pct=Math.round(userAnswers.filter((a,i)=>a===questions[i].correct).length/questions.length*100); let txt=`I scored ${pct}% in English Diagnostic on STUDY-WITH-MUBARAK! 📚 Try it too!`; if(navigator.share)navigator.share({text:txt}); else {navigator.clipboard.writeText(txt); alert('Score copied!')}}
+function resetSession(){localStorage.removeItem(KEY); location.reload();}
+function launchConfetti(){let cv=document.getElementById('confettiCanvas'); cv.classList.remove('hidden'); cv.width=innerWidth; cv.height=innerHeight; let ctx=cv.getContext('2d'); let parts=Array.from({length:120},()=>({x:Math.random()*cv.width,y:-20,vy:2+Math.random()*4,vx:-2+Math.random()*4,c:['#10b981','#06b6d4','#a855f7','#f59e0b'][Math.floor(Math.random()*4)],s:4+Math.random()*6})); let frames=0; (function anim(){ctx.clearRect(0,0,cv.width,cv.height); parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s)}); if(++frames<120)requestAnimationFrame(anim); else cv.classList.add('hidden')})();}
+// Events
+document.getElementById('prevBtn').onclick=()=>navigate(-1);
+document.getElementById('nextBtn').onclick=()=>navigate(1);
+document.getElementById('flagBtn').onclick=toggleFlag;
+document.getElementById('searchInput').addEventListener('input',e=>{searchTerm=e.target.value.toLowerCase(); renderNav();});
+document.getElementById('shuffleBtn').onclick=()=>{if(confirm('Shuffle questions? Your answers will be cleared.')){questions=[...masterQuestions].sort(()=>Math.random()-.5); userAnswers=new Array(questions.length).fill(null); flagged.clear(); currentQ=0; render(); renderNav(); save();}};
+document.getElementById('pauseBtn').onclick=(e)=>{paused=!paused; e.target.textContent=paused?'▶️ Resume':'⏸️ Pause'; document.getElementById('timerBadge').style.opacity=paused?'.4':'1'};
+document.getElementById('themeBtn').onclick=(e)=>{let isDark=document.documentElement.getAttribute('data-theme')==='dark'; if(isDark){document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme','light'); e.target.textContent='🌙';} else {document.documentElement.setAttribute('data-theme','dark'); localStorage.setItem('theme','dark'); e.target.textContent='☀️';}};
+document.getElementById('fontBtn').onclick=()=>{fontSize=fontSize>=1.3?1:fontSize+0.1; document.body.style.fontSize=(fontSize*16)+'px';};
+document.getElementById('soundBtn').onclick=(e)=>{soundOn=!soundOn; e.target.textContent=soundOn?'🔔':'🔕'; e.target.classList.toggle('active',!soundOn)};
+document.querySelectorAll('.filter-row .chip').forEach(ch=>ch.onclick=()=>{document.querySelectorAll('.filter-row .chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); filter=ch.dataset.filter; renderNav();});
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('resultBox').classList.contains('hidden')===false)return;
+  if(e.key==='ArrowLeft')navigate(-1); if(e.key==='ArrowRight')navigate(1);
+  if(e.key>='1'&&e.key<='5'){let idx=parseInt(e.key)-1; if(idx<questions[currentQ].options.length){userAnswers[currentQ]=idx; render(); renderNav(); save();}}
+  if(e.key.toLowerCase()==='f')toggleFlag(); if(e.key.toLowerCase()==='s')speakQuestion();
+});
+if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark'); document.getElementById('themeBtn').textContent='☀️';}
+if(!load()){render(); renderNav(); startTimer();} else {render(); renderNav();}
+updateTimer(); if(!document.getElementById('resultBox').classList.contains('hidden')===false) startTimer();
 </script>
 </body>
 </html>
