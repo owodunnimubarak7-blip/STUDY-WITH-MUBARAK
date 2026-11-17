@@ -9,40 +9,31 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --primary:#10b981; --primary2:#06b6d4; --primary-dark:#059669;
-  --bg:#eef2f7; --card:#ffffff; --text:#0f172a; --muted:#64748b; --border:#e2e8f0;
-  --success:#16a34a; --danger:#dc2626; --warning:#f59e0b; --purple:#a855f7;
-  --shadow:0 20px 40px -12px rgba(15,23,42,.12); --radius:20px;
-  --instruction-bg:#f8fafc; --option-bg:#fff; --option-hover:#ecfdf5;
-}
-[data-theme="dark"]{
-  --bg:#020617; --card:#0f172a; --text:#f8fafc; --muted:#94a3b8; --border:#1e293b;
-  --instruction-bg:#1e293b; --option-bg:#0f172a; --option-hover:#064e3b; --shadow:0 20px 40px -12px rgba(0,0,0,.6);
-}
+:root{--primary:#10b981;--primary2:#06b6d4;--bg:#eef2f7;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 20px 40px -12px rgba(15,23,42,.12);--instruction-bg:#f8fafc;--option-bg:#fff;--option-hover:#ecfdf5}
+[data-theme="dark"]{--bg:#020617;--card:#0f172a;--text:#f8fafc;--muted:#94a3b8;--border:#1e293b;--instruction-bg:#1e293b;--option-bg:#0f172a;--option-hover:#064e3b;--shadow:0 20px 40px -12px rgba(0,0,0,.6)}
 *{box-sizing:border-box;margin:0;padding:0;outline:none}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column;transition:.3s}
-a{text-decoration:none;color:inherit}
-
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-filter:blur(12px);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-filter:blur(12px);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:19px;box-shadow:0 8px 20px rgba(16,185,129,.4)}
-.logo b{font-family:'Plus Jakarta Sans';font-size:15px;line-height:1;letter-spacing:-.3px}
-.logo span{font-size:10px;letter-spacing:1.5px;color:#a7f3d0;font-weight:700}
+.logo-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:19px}
+.logo b{font-family:'Plus Jakarta Sans';font-size:15px;line-height:1}
+.logo span{font-size:10px;letter-spacing:1.2px;color:#a7f3d0;font-weight:700}
 .header-actions{display:flex;gap:6px}
 .icon-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:grid;place-items:center}
 .icon-btn.active{background:#10b981}
-
-/* TOP BAR */
-.topbar{max-width:720px;width:100%;margin:14px auto 0;padding:0 14px;display:flex;gap:8px;align-items:center}
-.search-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:9px 12px;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow)}
-.search-box input{border:none;background:transparent;flex:1;font-size:13.5px;color:var(--text);outline:none}
-.pill{font-size:11px;font-weight:800;padding:7px 10px;border-radius:999px;background:var(--card);border:1px solid var(--border);cursor:pointer;white-space:nowrap}
-.pill.active{background:var(--text);color:var(--card)}
-
-/* MAIN */
 .main{max-width:720px;width:100%;margin:12px auto;padding:0 14px 20px;flex:1;display:flex;flex-direction:column;gap:12px}
+/* TOP CONTROLS - NO SEARCH */
+.top-controls{display:flex;gap:8px;flex-wrap:wrap}
+.pill{flex:1;min-width:110px;font-size:12px;font-weight:800;padding:10px 8px;border-radius:12px;background:var(--card);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--shadow);color:var(--text)}
+.pill.active{background:#10b981;color:#fff;border-color:#10b981}
+.pill.shuffle-on{background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff;border:none}
+.pill small{font-size:10px;opacity:.8}
+/* STATS STRIP */
+.stats-strip{display:flex;gap:8px}
+.mini-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 8px;text-align:center;box-shadow:var(--shadow)}
+.mini-stat b{font-size:17px;display:block}
+.mini-stat span{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700}
+/* PROGRESS */
 .progress-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px 14px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
 .ring{width:56px;height:56px;flex-shrink:0;position:relative}
 .ring svg{transform:rotate(-90deg)}
@@ -51,28 +42,33 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 .progress-meta b{font-size:14px}
 .progress-meta p{font-size:12px;color:var(--muted);margin:3px 0 6px}
 .bar{height:7px;background:var(--border);border-radius:999px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#06b6d4,#a855f7);border-radius:999px;transition:.4s}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#06b6d4,#a855f7);transition:.4s}
 .timer{font-weight:800;font-size:13px;padding:8px 10px;border-radius:10px;background:#065f46;color:#fff;white-space:nowrap}
 .timer.warn{background:#f59e0b}.timer.danger{background:#dc2626;animation:pulse 1s infinite}
 @keyframes pulse{50%{opacity:.7}}
-
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.q-timer-bar{height:4px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:8px}
+.q-timer-bar i{display:block;height:100%;background:#f59e0b;transition:width 1s linear}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .card:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#10b981,#06b6d4,#a855f7)}
 .badge-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .badge{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
 [data-theme="dark"] .badge{background:#064e3b;color:#a7f3d0}
+.shuffle-badge{font-size:11px;font-weight:800;padding:6px 10px;border-radius:999px;background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
+[data-theme="dark"] .shuffle-badge{background:#0c4a6e;color:#e0f2fe}
 .ghost-btn{border:1px dashed var(--primary);background:transparent;color:var(--text);padding:6px 10px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer}
 .instruction{background:var(--instruction-bg);border-left:4px solid var(--primary);padding:12px 13px;border-radius:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-height:220px;overflow-y:auto;white-space:pre-wrap;margin-bottom:14px}
-.instruction b{color:var(--text)}
 .q-head{display:flex;gap:10px;align-items:flex-start}
-.q-num{width:38px;height:38px;border-radius:11px;background:#0f172a;color:#fff;display:grid;place-items:center;font-weight:900;flex-shrink:0;font-size:15px}
+.q-num{width:38px;height:38px;border-radius:11px;background:#0f172a;color:#fff;display:grid;place-items:center;font-weight:900;flex-shrink:0}
 .q-text{font-family:'Plus Jakarta Sans';font-size:18px;line-height:1.45;font-weight:700}
 .q-actions{margin-left:auto;display:flex;gap:6px}
 .mini-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:15px}
 .options{display:flex;flex-direction:column;gap:9px;margin-top:16px}
-.option{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:14px 14px;border:1.5px solid var(--border);border-radius:14px;background:var(--option-bg);cursor:pointer;transition:.15s;font-size:14.5px;font-weight:600;color:var(--text)}
+.option{width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:14px;border:1.5px solid var(--border);border-radius:14px;background:var(--option-bg);cursor:pointer;transition:.15s;font-size:14.5px;font-weight:600;color:var(--text);animation:slideIn .25s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .option:hover{border-color:var(--primary);background:var(--option-hover);transform:translateY(-1px)}
 .option.selected{border-color:var(--primary);background:var(--option-hover);box-shadow:0 0 0 3px rgba(16,185,129,.15)}
+.option.correct-flash{border-color:#16a34a;background:#dcfce7}
+.option.wrong-flash{border-color:#dc2626;background:#fee2e2}
 .letter{width:30px;height:30px;border-radius:9px;background:var(--instruction-bg);display:grid;place-items:center;font-size:12px;font-weight:900;flex-shrink:0}
 .option.selected .letter{background:var(--primary);color:#fff}
 .controls{display:flex;gap:8px;margin-top:16px}
@@ -81,16 +77,14 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 .btn-dark{background:var(--text);color:var(--card)}
 .btn-danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
 .btn-ghost{background:var(--instruction-bg);color:var(--text);border:1px solid var(--border)}
-.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .btn.flagged{background:#f59e0b;color:#fff}
 .hint{text-align:center;font-size:11px;color:var(--muted);margin-top:8px}
-
-/* NAVIGATOR */
 .navigator{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
 .nav-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .nav-head b{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--primary)}
 .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.chip{font-size:11px;font-weight:700;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);cursor:pointer}
+.chip{font-size:11px;font-weight:700;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text)}
 .chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
 .cell{padding:10px 0;text-align:center;border-radius:10px;background:var(--instruction-bg);font-weight:800;font-size:13px;cursor:pointer;border:1px solid var(--border);position:relative}
@@ -99,69 +93,75 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
 [data-theme="dark"] .cell.answered{background:#064e3b;color:#a7f3d0}
 .cell.flagged:after{content:"🚩";position:absolute;top:-6px;right:-2px;font-size:10px}
 .cell.current{outline:2px solid var(--primary);outline-offset:2px}
-
-/* RESULTS */
 .score-hero{text-align:center;padding:8px 0 14px}
 .score-hero h2{font-family:'Plus Jakarta Sans';font-size:22px}
-.big-score{font-size:56px;font-weight:900;line-height:1;background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px}
+.big-score{font-size:52px;font-weight:900;line-height:1;background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px}
 .grade-pill{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:900;font-size:13px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
 .stat{background:var(--instruction-bg);border:1px solid var(--border);border-radius:13px;padding:11px 8px;text-align:center}
-.stat b{font-size:19px;display:block}
-.stat span{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.stat b{font-size:19px;display:block}.stat span{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:700}
 .review{margin-top:14px;text-align:left;display:flex;flex-direction:column;gap:10px}
 .review-card{background:var(--instruction-bg);border:1px solid var(--border);border-radius:14px;padding:13px}
 .review-card.correct{border-left:4px solid #16a34a}.review-card.wrong{border-left:4px solid #dc2626}
 .status{font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;padding:4px 8px;border-radius:999px;display:inline-block;margin-bottom:7px}
 .status.ok{background:#dcfce7;color:#166534}.status.bad{background:#fee2e2;color:#991b1b}.status.empty{background:#fef3c7;color:#92400e}
-.review-card p{font-size:13.5px;line-height:1.5;font-weight:600}
-.review-card small{font-size:12px;color:var(--muted)}
+.review-card p{font-size:13.5px;line-height:1.5;font-weight:600}.review-card small{font-size:12px;color:var(--muted)}
 .exp{margin-top:8px;background:#f0fdf4;border-left:3px solid #22c55e;padding:9px 10px;border-radius:8px;font-size:12.5px;line-height:1.5;color:#166534}
 [data-theme="dark"] .exp{background:#064e3b;color:#a7f3d0}
 .ai-box{margin-top:8px;background:#faf5ff;border-left:3px solid #a855f7;padding:9px 10px;border-radius:8px;font-size:12.5px;line-height:1.5;color:#6b21a8}
 [data-theme="dark"] .ai-box{background:#3b0764;color:#f3e8ff}
 .hidden{display:none!important}
 .modal-overlay{position:fixed;inset:0;background:rgba(2,6,23,.6);backdrop-filter:blur(6px);display:grid;place-items:center;z-index:200;padding:16px}
-.modal{background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:360px;text-align:center;box-shadow:var(--shadow)}
+.modal{background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:380px;text-align:center;box-shadow:var(--shadow)}
 .modal h3{font-size:18px;margin-bottom:6px}.modal p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5}
 .modal-actions{display:flex;gap:8px}
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:300}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;font-weight:700;z-index:400;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none}
+.toast.show{display:block;animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
 @media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(5,1fr)}.q-text{font-size:16px}.big-score{font-size:44px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo"><div class="logo-icon">📚</div><div><b>STUDY-WITH-MUBARAK</b><br><span>ENGLISH DIAGNOSTIC • 30 QUESTIONS</span></div></div>
+  <div class="logo"><div class="logo-icon">📚</div><div><b>STUDY-WITH-MUBARAK</b><br><span>ENGLISH • 30 QUESTIONS / SESSION</span></div></div>
   <div class="header-actions">
-    <button class="icon-btn" id="fontBtn" title="Font size">A+</button>
+    <button class="icon-btn" id="focusBtn" title="Focus Mode">🎯</button>
     <button class="icon-btn" id="soundBtn" title="Sound">🔔</button>
     <button class="icon-btn" id="themeBtn" title="Dark mode">🌙</button>
     <button class="icon-btn" onclick="location.href='index.html'">🏠</button>
   </div>
 </header>
 
-<div class="topbar">
-  <div class="search-box">🔍 <input id="searchInput" placeholder="Search question... e.g. journalist, humane"></div>
-  <button class="pill" id="shuffleBtn">🔀 Shuffle</button>
-  <button class="pill" id="pauseBtn">⏸️ Pause</button>
-</div>
-
 <div class="main">
-  <!-- PROGRESS -->
+  <!-- NEW TOP CONTROLS : SHUFFLE SYSTEM -->
+  <div class="top-controls" id="topControls">
+    <button class="pill shuffle-on" id="shuffleQBtn">🔀 Shuffle Questions <small>ON</small></button>
+    <button class="pill shuffle-on" id="shuffleOptBtn">🔤 Shuffle Options <small>ON</small></button>
+    <button class="pill" id="instantBtn">⚡ Instant Feedback: OFF</button>
+    <button class="pill" id="pauseBtn">⏸️ Pause</button>
+  </div>
+
+  <!-- NEW STATS STRIP -->
+  <div class="stats-strip">
+    <div class="mini-stat"><b id="streakVal">🔥 0</b><span>Streak</span></div>
+    <div class="mini-stat"><b id="xpVal">0 XP</b><span>XP • Lv <span id="levelVal">1</span></span></div>
+    <div class="mini-stat"><b id="bestVal">—</b><span>Best Score</span></div>
+    <div class="mini-stat"><b id="qTimeVal">0s</b><span>Per Question</span></div>
+  </div>
+
   <div class="progress-card" id="progressCard">
     <div class="ring"><svg width="56" height="56"><circle cx="28" cy="28" r="24" fill="none" stroke="var(--border)" stroke-width="6"/><circle id="ringFill" cx="28" cy="28" r="24" fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg><span id="ringText">0%</span></div>
-    <div class="progress-meta"><b id="progressText">Question 1 / 30</b><p id="progressSub">0 answered • 0 flagged • Keep going 💪</p><div class="bar"><i id="barFill" style="width:3%"></i></div></div>
+    <div class="progress-meta"><b id="progressText">Question 1 / 30</b><p id="progressSub">0 answered • 0 flagged</p><div class="bar"><i id="barFill" style="width:3%"></i></div><div class="q-timer-bar"><i id="qTimerFill" style="width:100%"></i></div></div>
     <div class="timer" id="timerBadge">⏱️ 15:00</div>
   </div>
 
-  <!-- QUIZ -->
   <div class="card" id="quizBox">
-    <div class="badge-row"><span class="badge" id="catBadge">Grammar</span><button class="ghost-btn" onclick="document.getElementById('navigator').scrollIntoView({behavior:'smooth'})">🧩 Navigator ↓</button></div>
+    <div class="badge-row"><span class="badge" id="catBadge">Grammar</span><span class="shuffle-badge" id="shuffleBadge">🔀 Shuffled • Q1</span><button class="ghost-btn" onclick="document.getElementById('navigator').scrollIntoView({behavior:'smooth'})">🧩 Navigator ↓</button></div>
     <div class="instruction" id="instructionBox"></div>
     <div class="q-head">
       <div class="q-num" id="qNum">1</div>
       <div class="q-text" id="qText"></div>
-      <div class="q-actions"><button class="mini-btn" onclick="speakQuestion()" title="Listen">🔊</button><button class="mini-btn" onclick="copyQuestion()" title="Copy">📋</button></div>
+      <div class="q-actions"><button class="mini-btn" onclick="speakQuestion()" title="Listen">🔊</button></div>
     </div>
     <div class="options" id="optionsGrid"></div>
     <div class="controls">
@@ -170,48 +170,46 @@ header{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.92);backdrop-
       <button class="btn btn-danger" onclick="showSubmitModal()">Submit</button>
       <button class="btn btn-primary" id="nextBtn">Next →</button>
     </div>
-    <p class="hint">Shortcuts: <b>1-5</b> select • <b>← →</b> navigate • <b>F</b> flag • <b>S</b> speak</p>
+    <p class="hint">Shortcuts: <b>1-5</b> select • <b>← →</b> navigate • <b>F</b> flag • <b>S</b> speak • <b>H</b> shuffle</p>
   </div>
 
-  <!-- NAVIGATOR -->
   <div class="navigator" id="navigator">
-    <div class="nav-head"><b>Question Navigator</b><span id="navCount" style="font-size:12px;color:var(--muted)"></span></div>
+    <div class="nav-head"><b>Navigator • 30 Questions</b><span id="navCount" style="font-size:12px;color:var(--muted)"></span></div>
     <div class="filter-row">
-      <button class="chip active" data-filter="all">All</button><button class="chip" data-filter="answered">✅ Answered</button><button class="chip" data-filter="unanswered">⬜ Unanswered</button><button class="chip" data-filter="flagged">🚩 Flagged</button>
+      <button class="chip active" data-filter="all">All 30</button><button class="chip" data-filter="answered">✅ Answered</button><button class="chip" data-filter="unanswered">⬜ Unanswered</button><button class="chip" data-filter="flagged">🚩 Flagged</button>
     </div>
     <div class="grid" id="jumpGrid"></div>
-    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-ghost" onclick="clearAllAnswers()">🗑️ Clear All</button><button class="btn btn-dark" onclick="jumpToFirstUnanswered()">➡️ First Unanswered</button></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-ghost" onclick="clearAllAnswers()">🗑️ Clear</button><button class="btn btn-dark" onclick="jumpToFirstUnanswered()">➡️ First Unanswered</button><button class="btn btn-primary" onclick="reshuffleNow()">🔀 Reshuffle All</button></div>
   </div>
 
-  <!-- RESULTS -->
   <div class="card hidden" id="resultBox">
-    <div class="score-hero"><h2>Session Completed 🎉</h2><div class="big-score" id="finalScore">0 / 30</div><div><span class="grade-pill" id="gradePill">Grade F</span></div><p id="perfMsg" style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:600"></p></div>
+    <div class="score-hero"><h2>Session Completed 🎉</h2><div class="big-score" id="finalScore">0 / 30</div><div><span class="grade-pill" id="gradePill">Grade F</span></div><p id="perfMsg" style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:600"></p><p id="newBestMsg" style="font-size:13px;font-weight:800;color:#10b981;margin-top:4px"></p></div>
     <div class="stats">
       <div class="stat"><b id="statCorrect" style="color:#16a34a">0</b><span>Correct</span></div>
       <div class="stat"><b id="statWrong" style="color:#dc2626">0</b><span>Wrong</span></div>
       <div class="stat"><b id="statEmpty">0</b><span>Empty</span></div>
       <div class="stat"><b id="statTime">0:00</b><span>Duration</span></div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="resetSession()">🔄 Restart</button><button class="btn btn-ghost" onclick="exportCSV()">📥 CSV</button><button class="btn btn-ghost" onclick="window.print()">🖨️ Print</button><button class="btn btn-dark" onclick="shareScore()">📤 Share</button></div>
-    <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="chip active" onclick="filterReview('all',this)">All</button><button class="chip" onclick="filterReview('wrong',this)">Wrong Only</button><button class="chip" onclick="filterReview('correct',this)">Correct Only</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" onclick="startNewSession(true)">🔀 New Shuffled Session</button><button class="btn btn-ghost" onclick="retryWrongOnly()">🔁 Retry Wrong Only</button><button class="btn btn-ghost" onclick="exportCSV()">📥 CSV</button><button class="btn btn-dark" onclick="shareScore()">📤 Share</button></div>
+    <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="chip active" onclick="filterReview('all',this)">All 30</button><button class="chip" onclick="filterReview('wrong',this)">Wrong Only</button><button class="chip" onclick="filterReview('correct',this)">Correct Only</button></div>
     <div class="review" id="reviewContainer"></div>
   </div>
 </div>
 
 <div class="modal-overlay hidden" id="submitModal"><div class="modal"><div style="font-size:40px">📝</div><h3>Submit Assessment?</h3><p id="submitMsg">You have answered 0 of 30 questions.</p><div class="modal-actions"><button class="btn btn-ghost" onclick="closeSubmitModal()">Cancel</button><button class="btn btn-danger" onclick="confirmSubmit()">Submit Now</button></div></div></div>
-<canvas class="confetti hidden" id="confettiCanvas"></canvas>
+<div class="modal-overlay hidden" id="shuffleModal"><div class="modal"><div style="font-size:40px">🔀</div><h3>Reshuffle Questions?</h3><p>Your current answers will be cleared and you will get a fresh shuffled order of 30 questions. Continue?</p><div class="modal-actions"><button class="btn btn-ghost" onclick="closeShuffleModal()">Cancel</button><button class="btn btn-primary" onclick="doReshuffle()">Shuffle Now</button></div></div></div>
+<div class="toast" id="toast"></div>
+<canvas id="confettiCanvas" style="position:fixed;inset:0;pointer-events:none;z-index:300;display:none"></canvas>
 
 <script>
+const TOTAL = 30;
 const masterQuestions = [
         { instr: "Grammar & Mechanics: Subject-Verb Agreement.", q: "Neither the teacher nor the students ______ capable of solving the complex riddle immediately.", options: ["is", "are", "was", "has"], correct: 1, exp: "When a subject is joined by 'neither... nor', the verb agrees with the closer subject. 'Students' is plural, so it takes the plural verb 'are'." },
         { instr: "Lexicon & Vocabulary: Identify the closest synonym.", q: "Select the word that is most nearly similar in meaning to 'Ephemeral'.", options: ["Enduring", "Transient", "Precious", "Spurious"], correct: 1, exp: "'Ephemeral' means lasting for a very short time. 'Transient' is a direct synonym, meaning fleeting or temporary." },
         { instr: "Lexicon & Vocabulary: Identify the opposite meaning.", q: "What is the most accurate antonym for the word 'Loquacious'?", options: ["Reticent", "Garrulous", "Verbose", "Articulate"], correct: 0, exp: "'Loquacious' means talkative. 'Reticent' means introverted, silent, or reserved, making it the correct opposite." },
         { instr: "Grammar & Parts of Speech: Pronoun Case Selection.", q: "The grand prize was split equally between Sarah and ______.", options: ["I", "me", "myself", "we"], correct: 1, exp: "The pronoun follows the preposition 'between', requiring the objective case pronoun 'me' rather than the subjective case 'I'." },
         { instr: "Grammar & Structure: Idiomatic Expressions.", q: "To 'take something with a grain of salt' means to:", options: ["Accept it completely", "Skeptically reserve full belief", "Cook with careful measurements", "Exaggerate an event"], correct: 1, exp: "The idiom means to view a statement with skepticism or not to interpret it as literal, objective truth." },
-    {
-        instr: `PASSAGE A\n\nAll over the world till lately and in most of the world till today, mankind has been following the course of nature: that is to say, it has been breeding up to the maximum. To let nature take her course in the reproduction of the human race may have made sense in an age in which we were also letting her take her course in decimating mankind by the casualties of war, pestilence, and famine. Being human, we have at least revolted against that senseless waste. We have started to impose on nature’s heartless play a humane new order of our own. But when once man has begun to interfere with nature, he cannot afford to stop halfway. We cannot, with impunity, cut down the death-rate and at the same time allow the birthrate to go on taking nature’s course. We must consciously try to establish an equilibrium, or sooner or later, famine will stalk abroad again.\n\nRead the passage carefully and answer the questions that follow.`,
-        q: "The author observes that", options: ["War, pestilence and famine were caused by the extravagance of nature","Nature was heartless and senseless","There was a time when uncontrolled birth made sense","It was wise at a time when mankind did not interfere with normal reproduction","Nature was heartless in its reproductive process"], correct: 2, exp: "The author explains that unrestricted reproduction may have made sense when war, disease and famine also naturally reduced the population."
-    },
+    { instr: `PASSAGE A\n\nAll over the world till lately and in most of the world till today, mankind has been following the course of nature: that is to say, it has been breeding up to the maximum. To let nature take her course in the reproduction of the human race may have made sense in an age in which we were also letting her take her course in decimating mankind by the casualties of war, pestilence, and famine. Being human, we have at least revolted against that senseless waste. We have started to impose on nature’s heartless play a humane new order of our own. But when once man has begun to interfere with nature, he cannot afford to stop halfway. We cannot, with impunity, cut down the death-rate and at the same time allow the birthrate to go on taking nature’s course. We must consciously try to establish an equilibrium, or sooner or later, famine will stalk abroad again.\n\nRead the passage carefully and answer the questions that follow.`, q: "The author observes that", options: ["War, pestilence and famine were caused by the extravagance of nature","Nature was heartless and senseless","There was a time when uncontrolled birth made sense","It was wise at a time when mankind did not interfere with normal reproduction","Nature was heartless in its reproductive process"], correct: 2, exp: "The author explains that unrestricted reproduction may have made sense when war, disease and famine also naturally reduced the population." },
     { instr: "PASSAGE A — Choose the option that agrees with the author's views.", q: "Which of these statements does not express the opinion of the author?", options: ["Mankind has started to interfere with the work of nature","Many people had died in the past through want and disease","Mankind should not have the maximum number of children possible","Mankind should take care of its children","Man's present relationship with nature in matters of birth and death is a happy one"], correct: 4, exp: "The author does not describe man's present relationship with nature as happy. Reducing deaths while allowing births to continue creates an imbalance." },
     { instr: "PASSAGE A — Answer according to the meaning of the word in the passage.", q: "Humane, as used in the passage, means", options: ["Sensible","Wise","Human","Benevolent","Thorough"], correct: 3, exp: "Humane means showing kindness, compassion and concern for human welfare. Benevolent is the closest." },
     { instr: "PASSAGE A — Answer according to the meaning of the expression in the passage.", q: "'We must consciously try to establish an equilibrium' implies that mankind must", options: ["Realistically find an equation","Strive not to be wasteful","Deliberately try to fight nature","Try to fight nature","Purposely find a balance"], correct: 4, exp: "Equilibrium means a state of balance. Mankind must deliberately balance birth rate and death rate." },
@@ -242,59 +240,125 @@ const masterQuestions = [
     { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "The leader in today's issue of our popular newspaper focuses on inflation.", options: ["President","Headline","Editorial","Columnist","Proprietor"], correct: 2, exp: "A leader in a newspaper is an editorial expressing the newspaper's opinion." },
     { instr: "Choose the option that best conveys the meaning of the underlined word.", q: "From the ways my friend talks, you can see he is such a bore.", options: ["Rude","Brilliant","Uninteresting","Overbearing","Humorous"], correct: 2, exp: "A bore is someone who causes boredom. Uninteresting is closest." }
 ];
-let questions=[...masterQuestions], currentQ=0, userAnswers=new Array(questions.length).fill(null), flagged=new Set(), timeRemaining=900, totalDuration=900, paused=false, timerInterval=null, filter='all', searchTerm='', fontSize=1, soundOn=true, reviewFilter='all';
-const KEY='mubarak_eng_v2';
-function save(){localStorage.setItem(KEY,JSON.stringify({questions,userAnswers: userAnswers,flagged:[...flagged],currentQ,timeRemaining}))}
-function load(){try{let s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.questions&&s.questions.length===questions.length){questions=s.questions;userAnswers=s.userAnswers;flagged=new Set(s.flagged);currentQ=s.currentQ;timeRemaining=s.timeRemaining; if(s.submitted){showResult(s.stats);return true}}}catch(e){} return false}
+
+// ===== SHUFFLE SYSTEM =====
+function shuffleArray(arr){
+  let a=[...arr];
+  for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function buildShuffledQuestions(shuffleQ, shuffleOpt){
+  let qs = shuffleQ ? shuffleArray(masterQuestions) : [...masterQuestions];
+  // Always exactly 30
+  qs = qs.slice(0, TOTAL);
+  if(!shuffleOpt) return qs.map(q=>({...q, options:[...q.options]}));
+  // Shuffle options but keep correct index tracking
+  return qs.map(q=>{
+    let paired = q.options.map((text,idx)=>({text, isCorrect: idx===q.correct}));
+    paired = shuffleArray(paired);
+    return {...q, options: paired.map(p=>p.text), correct: paired.findIndex(p=>p.isCorrect)};
+  });
+}
+
+let shuffleQ = true, shuffleOpt = true, instantFeedback=false;
+let questions = buildShuffledQuestions(true,true);
+let currentQ=0, userAnswers=new Array(TOTAL).fill(null), flagged=new Set(), timeRemaining=900, totalDuration=900, paused=false, timerInterval=null, filter='all', reviewFilter='all', soundOn=true, focusMode=false, streak=0, xp=parseInt(localStorage.getItem('mubarak_xp')||'0'), bestScore=parseInt(localStorage.getItem('mubarak_best')||'0'), qStartTime=Date.now(), qTimes=[];
+const KEY='mubarak_eng_v3';
+
+function showToast(msg){let t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200)}
+function vibrate(p=15){if(navigator.vibrate) navigator.vibrate(p)}
+function save(){localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,shuffleQ,shuffleOpt,instantFeedback})); localStorage.setItem('mubarak_xp',xp); if(bestScore) localStorage.setItem('mubarak_best',bestScore)}
+function load(){try{let s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.questions&&s.questions.length===TOTAL){questions=s.questions;userAnswers=s.userAnswers;flagged=new Set(s.flagged);currentQ=s.currentQ;timeRemaining=s.timeRemaining;shuffleQ=s.shuffleQ;shuffleOpt=s.shuffleOpt;instantFeedback=s.instantFeedback; updateShuffleUI(); if(s.submitted){showResult(s.stats);return true}}}catch(e){} return false}
+function updateShuffleUI(){
+  document.getElementById('shuffleQBtn').className='pill '+(shuffleQ?'shuffle-on':''); document.getElementById('shuffleQBtn').innerHTML=`🔀 Shuffle Questions <small>${shuffleQ?'ON':'OFF'}</small>`;
+  document.getElementById('shuffleOptBtn').className='pill '+(shuffleOpt?'shuffle-on':''); document.getElementById('shuffleOptBtn').innerHTML=`🔤 Shuffle Options <small>${shuffleOpt?'ON':'OFF'}</small>`;
+  document.getElementById('instantBtn').className='pill '+(instantFeedback?'shuffle-on':''); document.getElementById('instantBtn').textContent=instantFeedback?'⚡ Instant Feedback: ON':'⚡ Instant Feedback: OFF';
+  document.getElementById('shuffleBadge').textContent=(shuffleQ||shuffleOpt?'🔀 Shuffled • ':'📋 Original • ')+'Q'+(currentQ+1);
+}
 function speak(t){if('speechSynthesis' in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(t))}}
 function speakQuestion(){let q=questions[currentQ]; speak(q.q+'. Options: '+q.options.join(', '))}
-function copyQuestion(){navigator.clipboard.writeText(questions[currentQ].q); alert('Question copied!')}
-function playClick(){if(!soundOn)return; try{let a=new (window.AudioContext||window.webkitAudioContext)();let o=a.createOscillator();o.frequency.value=650;o.connect(a.destination);o.start();o.stop(a.currentTime+0.06)}catch(e){}}
 function render(){
   let q=questions[currentQ];
   document.getElementById('instructionBox').textContent=q.instr;
   document.getElementById('qNum').textContent=currentQ+1;
   document.getElementById('qText').textContent=q.q;
   document.getElementById('catBadge').textContent=q.instr.includes('PASSAGE')?'📖 Comprehension':q.instr.includes('Vocabulary')||q.instr.includes('Lexicon')?'📝 Vocabulary':'✍️ Grammar';
+  document.getElementById('shuffleBadge').textContent=(shuffleQ||shuffleOpt?'🔀 Shuffled • ':'📋 Original • ')+'Q'+(currentQ+1);
   let grid=document.getElementById('optionsGrid'); grid.innerHTML='';
   q.options.forEach((opt,i)=>{
-    let b=document.createElement('button'); b.className='option'+(userAnswers[currentQ]===i?' selected':''); b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${opt}</span><span style="margin-left:auto">${userAnswers[currentQ]===i?'✅':''}</span>`;
-    b.onclick=()=>{userAnswers[currentQ]=i; playClick(); render(); renderNav(); save();}; grid.appendChild(b);
+    let b=document.createElement('button'); b.className='option'+(userAnswers[currentQ]===i?' selected':'');
+    // Instant feedback coloring
+    if(instantFeedback && userAnswers[currentQ]!==null){
+      if(i===q.correct) b.classList.add('correct-flash');
+      else if(i===userAnswers[currentQ]) b.classList.add('wrong-flash');
+    }
+    b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${opt}</span><span style="margin-left:auto">${userAnswers[currentQ]===i?'✅':''}${instantFeedback && i===q.correct && userAnswers[currentQ]!==null?' ✓':''}</span>`;
+    b.onclick=()=>selectOption(i,b); grid.appendChild(b);
   });
   document.getElementById('prevBtn').disabled=currentQ===0;
-  document.getElementById('nextBtn').disabled=currentQ===questions.length-1;
+  document.getElementById('nextBtn').disabled=currentQ===TOTAL-1;
   let fb=document.getElementById('flagBtn'); fb.textContent=flagged.has(currentQ)?'🚩 Flagged':'🚩 Flag'; fb.classList.toggle('flagged',flagged.has(currentQ));
-  let answered=userAnswers.filter(x=>x!==null).length; let pct=Math.round((currentQ+1)/questions.length*100);
-  document.getElementById('progressText').textContent=`Question ${currentQ+1} / ${questions.length}`;
-  document.getElementById('progressSub').textContent=`${answered} answered • ${flagged.size} flagged • Keep going 💪`;
+  let answered=userAnswers.filter(x=>x!==null).length; let pct=Math.round((currentQ+1)/TOTAL*100);
+  document.getElementById('progressText').textContent=`Question ${currentQ+1} / ${TOTAL}`;
+  document.getElementById('progressSub').textContent=`${answered} answered • ${flagged.size} flagged • ${TOTAL-answered} left`;
   document.getElementById('barFill').style.width=pct+'%';
-  document.getElementById('ringText').textContent=Math.round(answered/questions.length*100)+'%';
-  document.getElementById('ringFill').style.strokeDashoffset=150.8*(1-answered/questions.length);
+  document.getElementById('ringText').textContent=Math.round(answered/TOTAL*100)+'%';
+  document.getElementById('ringFill').style.strokeDashoffset=150.8*(1-answered/TOTAL);
+  document.getElementById('streakVal').textContent='🔥 '+streak;
+  document.getElementById('xpVal').textContent=xp+' XP';
+  document.getElementById('levelVal').textContent=Math.floor(xp/100)+1;
+  document.getElementById('bestVal').textContent=bestScore?bestScore+'/30':'—';
+  let avg=qTimes.length?Math.round(qTimes.reduce((a,b)=>a+b,0)/qTimes.length):0;
+  document.getElementById('qTimeVal').textContent=avg+'s';
+  qStartTime=Date.now();
+}
+function selectOption(idx,btn){
+  let q=questions[currentQ]; let wasAnswered=userAnswers[currentQ]!==null;
+  let timeSpent=Math.round((Date.now()-qStartTime)/1000); qTimes.push(timeSpent);
+  userAnswers[currentQ]=idx; vibrate(10);
+  // Streak & XP - only first time answering this question
+  if(!wasAnswered){
+    if(idx===q.correct){streak++; xp+=10; showToast(`✅ Correct! +10 XP • Streak ${streak} 🔥`); if(streak%5===0) showToast(`🔥 ${streak} Streak! You're on fire!`)}
+    else {streak=0; xp+=2; if(instantFeedback) showToast(`❌ Not quite. Correct is ${q.options[q.correct]}`)}
+  }
+  render(); renderNav(); save();
 }
 function renderNav(){
   let grid=document.getElementById('jumpGrid'); grid.innerHTML='';
   questions.forEach((q,i)=>{
     if(filter==='answered'&&userAnswers[i]===null)return; if(filter==='unanswered'&&userAnswers[i]!==null)return; if(filter==='flagged'&&!flagged.has(i))return;
-    if(searchTerm && !q.q.toLowerCase().includes(searchTerm) && !q.instr.toLowerCase().includes(searchTerm))return;
     let d=document.createElement('div'); d.className='cell'+(userAnswers[i]!==null?' answered':'')+(flagged.has(i)?' flagged':'')+(i===currentQ?' current':''); d.textContent=i+1;
     d.onclick=()=>{currentQ=i; render(); renderNav();}; grid.appendChild(d);
   });
-  document.getElementById('navCount').textContent=`${userAnswers.filter(x=>x!==null).length}/${questions.length} answered`;
+  document.getElementById('navCount').textContent=`${userAnswers.filter(x=>x!==null).length}/${TOTAL} answered`;
 }
-function navigate(s){currentQ=Math.max(0,Math.min(questions.length-1,currentQ+s)); render(); renderNav();}
-function toggleFlag(){flagged.has(currentQ)?flagged.delete(currentQ):flagged.add(currentQ); render(); renderNav(); save();}
-function jumpToFirstUnanswered(){let idx=userAnswers.findIndex(x=>x===null); if(idx!==-1){currentQ=idx; render(); renderNav();} else alert('All answered! 🎉')}
-function clearAllAnswers(){if(confirm('Clear all answers?')){userAnswers=new Array(questions.length).fill(null); flagged.clear(); render(); renderNav(); save();}}
+function navigate(s){currentQ=Math.max(0,Math.min(TOTAL-1,currentQ+s)); render(); renderNav();}
+function toggleFlag(){flagged.has(currentQ)?flagged.delete(currentQ):flagged.add(currentQ); vibrate(15); render(); renderNav(); save();}
+function jumpToFirstUnanswered(){let idx=userAnswers.findIndex(x=>x===null); if(idx!==-1){currentQ=idx; render(); renderNav();} else showToast('All 30 answered! 🎉')}
+function clearAllAnswers(){if(confirm('Clear all 30 answers?')){userAnswers=new Array(TOTAL).fill(null); flagged.clear(); streak=0; render(); renderNav(); save();}}
 function updateTimer(){let m=Math.floor(timeRemaining/60), s=timeRemaining%60; let badge=document.getElementById('timerBadge'); badge.textContent=`⏱️ ${m}:${s<10?'0':''}${s}`; badge.className='timer'+(timeRemaining<180?' danger':timeRemaining<450?' warn':'')}
-function startTimer(){clearInterval(timerInterval); timerInterval=setInterval(()=>{if(!paused){timeRemaining--; updateTimer(); if(timeRemaining<=0){clearInterval(timerInterval); confirmSubmit();}}},1000)}
-function showSubmitModal(){let a=userAnswers.filter(x=>x!==null).length; document.getElementById('submitMsg').textContent=`You have answered ${a} of ${questions.length} questions. ${a<questions.length?`You have ${questions.length-a} unanswered.`:'All done! 🎉'}`; document.getElementById('submitModal').classList.remove('hidden')}
+function startTimer(){clearInterval(timerInterval); timerInterval=setInterval(()=>{if(!paused){timeRemaining--; updateTimer(); let qElapsed=Math.floor((Date.now()-qStartTime)/1000); document.getElementById('qTimerFill').style.width=Math.max(0,100-(qElapsed/30*100))+'%'; if(timeRemaining<=0){clearInterval(timerInterval); confirmSubmit();}}},1000)}
+function showSubmitModal(){let a=userAnswers.filter(x=>x!==null).length; document.getElementById('submitMsg').textContent=`You have answered ${a} of ${TOTAL} questions. ${a<TOTAL?`You have ${TOTAL-a} unanswered.`:'All 30 done! 🎉'}`; document.getElementById('submitModal').classList.remove('hidden')}
 function closeSubmitModal(){document.getElementById('submitModal').classList.add('hidden')}
-function confirmSubmit(){closeSubmitModal(); let correct=0,wrong=0,empty=0; questions.forEach((q,i)=>{if(userAnswers[i]===null)empty++; else if(userAnswers[i]===q.correct)correct++; else wrong++;}); let taken=totalDuration-timeRemaining; let stats={correct,wrong,empty,timeTaken:`${Math.floor(taken/60)}:${taken%60<10?'0':''}${taken%60}`,score:correct}; localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,submitted:true,stats})); showResult(stats);}
-function showResult(stats){
+function showShuffleModal(){document.getElementById('shuffleModal').classList.remove('hidden')}
+function closeShuffleModal(){document.getElementById('shuffleModal').classList.add('hidden')}
+function reshuffleNow(){showShuffleModal()}
+function doReshuffle(){closeShuffleModal(); questions=buildShuffledQuestions(shuffleQ, shuffleOpt); userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; streak=0; timeRemaining=900; qTimes=[]; render(); renderNav(); save(); showToast('🔀 New shuffled order ready!'); vibrate(20)}
+function startNewSession(shuffle=true){localStorage.removeItem(KEY); questions=buildShuffledQuestions(true,true); userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; timeRemaining=900; streak=0; qTimes=[]; document.getElementById('resultBox').classList.add('hidden'); document.getElementById('quizBox').classList.remove('hidden'); document.getElementById('navigator').classList.remove('hidden'); document.getElementById('progressCard').classList.remove('hidden'); render(); renderNav(); save(); startTimer(); showToast('🔀 Fresh shuffled session started!')}
+function retryWrongOnly(){
+  let wrongIdx=[]; questions.forEach((q,i)=>{if(userAnswers[i]!==null && userAnswers[i]!==q.correct) wrongIdx.push(i)});
+  if(!wrongIdx.length){showToast('No wrong answers! Perfect! 🌟'); return;}
+  let wrongQs=wrongIdx.map(i=>questions[i]); questions=wrongQs.concat(questions.filter((_,i)=>!wrongIdx.includes(i))).slice(0,TOTAL);
+  // Reset only wrong ones for retry
+  userAnswers=new Array(TOTAL).fill(null); flagged.clear(); currentQ=0; document.getElementById('resultBox').classList.add('hidden'); document.getElementById('quizBox').classList.remove('hidden'); document.getElementById('navigator').classList.remove('hidden'); document.getElementById('progressCard').classList.remove('hidden'); render(); renderNav(); showToast(`🔁 Retrying ${wrongIdx.length} wrong questions first`); startTimer();
+}
+function confirmSubmit(){closeSubmitModal(); let correct=0,wrong=0,empty=0; questions.forEach((q,i)=>{if(userAnswers[i]===null)empty++; else if(userAnswers[i]===q.correct)correct++; else wrong++;}); let taken=totalDuration-timeRemaining; let stats={correct,wrong,empty,timeTaken:`${Math.floor(taken/60)}:${taken%60<10?'0':''}${taken%60}`,score:correct}; let isNewBest=correct>bestScore; if(isNewBest){bestScore=correct; localStorage.setItem('mubarak_best',bestScore)} localStorage.setItem(KEY,JSON.stringify({questions,userAnswers,flagged:[...flagged],currentQ,timeRemaining,submitted:true,stats,shuffleQ,shuffleOpt,instantFeedback})); showResult(stats,isNewBest);}
+function showResult(stats,isNewBest){
   clearInterval(timerInterval); document.getElementById('quizBox').classList.add('hidden'); document.getElementById('navigator').classList.add('hidden'); document.getElementById('progressCard').classList.add('hidden'); document.getElementById('resultBox').classList.remove('hidden');
-  let pct=Math.round(stats.correct/questions.length*100); document.getElementById('finalScore').textContent=`${stats.correct} / ${questions.length} (${pct}%)`;
+  let pct=Math.round(stats.correct/TOTAL*100); document.getElementById('finalScore').textContent=`${stats.correct} / ${TOTAL} (${pct}%)`;
   let grade=pct>=80?'A - Excellent 🌟':pct>=70?'B - Very Good 👏':pct>=60?'C - Good 👍':pct>=50?'D - Fair 🙂':pct>=40?'E - Pass 😐':'F - Keep Practicing 💪';
-  document.getElementById('gradePill').textContent='Grade '+grade; document.getElementById('perfMsg').textContent=pct>=70?'Outstanding! You are ready for JAMB/WAEC English.':pct>=50?'Good effort! Review the wrong ones below to improve.':'Don\'t give up. Review each explanation below.';
+  document.getElementById('gradePill').textContent='Grade '+grade; document.getElementById('perfMsg').textContent=pct>=70?'Outstanding! You are ready for JAMB/WAEC English.':pct>=50?'Good effort! Review the wrong ones below.':'Don\'t give up. Review each explanation below.';
+  document.getElementById('newBestMsg').textContent=isNewBest?'🏆 NEW PERSONAL BEST!':`Best: ${bestScore}/30`;
   document.getElementById('statCorrect').textContent=stats.correct; document.getElementById('statWrong').textContent=stats.wrong; document.getElementById('statEmpty').textContent=stats.empty; document.getElementById('statTime').textContent=stats.timeTaken;
   renderReview(); if(pct>=70) launchConfetti(); window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -304,7 +368,7 @@ function renderReview(){
     let ua=userAnswers[i]; let isCorrect=ua===q.correct; let isEmpty=ua===null;
     if(reviewFilter==='wrong'&&isCorrect)return; if(reviewFilter==='correct'&&!isCorrect)return;
     let d=document.createElement('div'); d.className='review-card '+(isEmpty?'':isCorrect?'correct':'wrong');
-    d.innerHTML=`<span class="status ${isEmpty?'empty':isCorrect?'ok':'bad'}">${isEmpty?'Unanswered':isCorrect?'Correct ✅':'Incorrect ❌'}</span><p>Q${i+1}: ${q.q}</p><small>Your answer: <b>${isEmpty?'— None —':q.options[ua]}</b> | Correct: <b style="color:#16a34a">${q.options[q.correct]}</b></small><div class="exp"><b>💡 Explanation:</b> ${q.exp}</div><button class="btn btn-ghost" style="margin-top:8px;padding:8px" onclick="askAI(${i},this)">✨ Ask Mubarak AI for deeper explanation</button><div id="ai-${i}"></div>`;
+    d.innerHTML=`<span class="status ${isEmpty?'empty':isCorrect?'ok':'bad'}">${isEmpty?'Unanswered':isCorrect?'Correct ✅':'Incorrect ❌'}</span><p>Q${i+1}: ${q.q}</p><small>Your answer: <b>${isEmpty?'— None —':q.options[ua]}</b> | Correct: <b style="color:#16a34a">${q.options[q.correct]}</b></small><div class="exp"><b>💡 Explanation:</b> ${q.exp}</div><button class="btn btn-ghost" style="margin-top:8px;padding:8px" onclick="askAI(${i},this)">✨ Ask Mubarak AI</button><div id="ai-${i}"></div>`;
     c.appendChild(d);
   });
 }
@@ -314,29 +378,29 @@ async function askAI(idx,btn){
   try{let res=await fetch('https://text.pollinations.ai/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'system',content:'You are an expert English professor. Keep answers brief, structured, clear for Nigerian students preparing for JAMB/WAEC.'},{role:'user',content:`Explain: ${q.q} Options: ${q.options.join(', ')} Correct: ${q.options[q.correct]}`}],model:'openai'})}); let txt=await res.text(); box.innerHTML=`<div class="ai-box"><b>🤖 Mubarak AI:</b><br>${txt.replace(/\n/g,'<br>')}</div>`;}catch(e){box.innerHTML='<div class="ai-box">Connection issue. Check your internet and try again.</div>';}
 }
 function exportCSV(){let csv="Question,Your Answer,Correct Answer,Result\n"; questions.forEach((q,i)=>{let ua=userAnswers[i]; csv+=`"${q.q.replace(/"/g,'""')}","${ua===null?'None':q.options[ua]}","${q.options[q.correct]}","${ua===q.correct?'Correct':'Wrong'}"\n`}); let b=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='english-results.csv'; a.click();}
-function shareScore(){let pct=Math.round(userAnswers.filter((a,i)=>a===questions[i].correct).length/questions.length*100); let txt=`I scored ${pct}% in English Diagnostic on STUDY-WITH-MUBARAK! 📚 Try it too!`; if(navigator.share)navigator.share({text:txt}); else {navigator.clipboard.writeText(txt); alert('Score copied!')}}
-function resetSession(){localStorage.removeItem(KEY); location.reload();}
-function launchConfetti(){let cv=document.getElementById('confettiCanvas'); cv.classList.remove('hidden'); cv.width=innerWidth; cv.height=innerHeight; let ctx=cv.getContext('2d'); let parts=Array.from({length:120},()=>({x:Math.random()*cv.width,y:-20,vy:2+Math.random()*4,vx:-2+Math.random()*4,c:['#10b981','#06b6d4','#a855f7','#f59e0b'][Math.floor(Math.random()*4)],s:4+Math.random()*6})); let frames=0; (function anim(){ctx.clearRect(0,0,cv.width,cv.height); parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s)}); if(++frames<120)requestAnimationFrame(anim); else cv.classList.add('hidden')})();}
+function shareScore(){let pct=Math.round(userAnswers.filter((a,i)=>a===questions[i].correct).length/TOTAL*100); let txt=`I scored ${pct}% (${userAnswers.filter((a,i)=>a===questions[i].correct).length}/30) in English Diagnostic on STUDY-WITH-MUBARAK! 📚 Try it too!`; if(navigator.share)navigator.share({text:txt}); else {navigator.clipboard.writeText(txt); showToast('Score copied!')}}
+function launchConfetti(){let cv=document.getElementById('confettiCanvas'); cv.style.display='block'; cv.width=innerWidth; cv.height=innerHeight; let ctx=cv.getContext('2d'); let parts=Array.from({length:140},()=>({x:Math.random()*cv.width,y:-20,vy:2+Math.random()*4,vx:-2+Math.random()*4,c:['#10b981','#06b6d4','#a855f7','#f59e0b'][Math.floor(Math.random()*4)],s:4+Math.random()*6})); let frames=0; (function anim(){ctx.clearRect(0,0,cv.width,cv.height); parts.forEach(p=>{p.y+=p.vy;p.x+=p.vx;ctx.fillStyle=p.c;ctx.fillRect(p.x,p.y,p.s,p.s)}); if(++frames<120)requestAnimationFrame(anim); else cv.style.display='none'})();}
 // Events
 document.getElementById('prevBtn').onclick=()=>navigate(-1);
 document.getElementById('nextBtn').onclick=()=>navigate(1);
 document.getElementById('flagBtn').onclick=toggleFlag;
-document.getElementById('searchInput').addEventListener('input',e=>{searchTerm=e.target.value.toLowerCase(); renderNav();});
-document.getElementById('shuffleBtn').onclick=()=>{if(confirm('Shuffle questions? Your answers will be cleared.')){questions=[...masterQuestions].sort(()=>Math.random()-.5); userAnswers=new Array(questions.length).fill(null); flagged.clear(); currentQ=0; render(); renderNav(); save();}};
+document.getElementById('shuffleQBtn').onclick=()=>{shuffleQ=!shuffleQ; updateShuffleUI(); save(); showToast(shuffleQ?'🔀 Question shuffle ON - will apply on next reshuffle':'📋 Question shuffle OFF');};
+document.getElementById('shuffleOptBtn').onclick=()=>{shuffleOpt=!shuffleOpt; updateShuffleUI(); save(); showToast(shuffleOpt?'🔤 Option shuffle ON':'🔤 Option shuffle OFF');};
+document.getElementById('instantBtn').onclick=()=>{instantFeedback=!instantFeedback; updateShuffleUI(); save(); render(); showToast(instantFeedback?'⚡ Instant feedback ON':'⚡ Instant feedback OFF');};
 document.getElementById('pauseBtn').onclick=(e)=>{paused=!paused; e.target.textContent=paused?'▶️ Resume':'⏸️ Pause'; document.getElementById('timerBadge').style.opacity=paused?'.4':'1'};
 document.getElementById('themeBtn').onclick=(e)=>{let isDark=document.documentElement.getAttribute('data-theme')==='dark'; if(isDark){document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme','light'); e.target.textContent='🌙';} else {document.documentElement.setAttribute('data-theme','dark'); localStorage.setItem('theme','dark'); e.target.textContent='☀️';}};
-document.getElementById('fontBtn').onclick=()=>{fontSize=fontSize>=1.3?1:fontSize+0.1; document.body.style.fontSize=(fontSize*16)+'px';};
-document.getElementById('soundBtn').onclick=(e)=>{soundOn=!soundOn; e.target.textContent=soundOn?'🔔':'🔕'; e.target.classList.toggle('active',!soundOn)};
+document.getElementById('soundBtn').onclick=(e)=>{soundOn=!soundOn; e.target.textContent=soundOn?'🔔':'🔕';};
+document.getElementById('focusBtn').onclick=(e)=>{focusMode=!focusMode; document.getElementById('navigator').style.display=focusMode?'none':'block'; document.getElementById('topControls').style.display=focusMode?'none':'flex'; e.target.classList.toggle('active',focusMode); showToast(focusMode?'🎯 Focus Mode ON - distractions hidden':'🎯 Focus Mode OFF');};
 document.querySelectorAll('.filter-row .chip').forEach(ch=>ch.onclick=()=>{document.querySelectorAll('.filter-row .chip').forEach(c=>c.classList.remove('active')); ch.classList.add('active'); filter=ch.dataset.filter; renderNav();});
 document.addEventListener('keydown',e=>{
-  if(document.getElementById('resultBox').classList.contains('hidden')===false)return;
+  if(!document.getElementById('resultBox').classList.contains('hidden'))return;
   if(e.key==='ArrowLeft')navigate(-1); if(e.key==='ArrowRight')navigate(1);
-  if(e.key>='1'&&e.key<='5'){let idx=parseInt(e.key)-1; if(idx<questions[currentQ].options.length){userAnswers[currentQ]=idx; render(); renderNav(); save();}}
-  if(e.key.toLowerCase()==='f')toggleFlag(); if(e.key.toLowerCase()==='s')speakQuestion();
+  if(e.key>='1'&&e.key<='5'){let idx=parseInt(e.key)-1; if(idx<questions[currentQ].options.length){selectOption(idx)}}
+  if(e.key.toLowerCase()==='f')toggleFlag(); if(e.key.toLowerCase()==='s')speakQuestion(); if(e.key.toLowerCase()==='h')reshuffleNow();
 });
 if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark'); document.getElementById('themeBtn').textContent='☀️';}
-if(!load()){render(); renderNav(); startTimer();} else {render(); renderNav();}
-updateTimer(); if(!document.getElementById('resultBox').classList.contains('hidden')===false) startTimer();
+if(!load()){updateShuffleUI(); render(); renderNav(); startTimer();} else {render(); renderNav();}
+updateTimer(); if(document.getElementById('resultBox').classList.contains('hidden')) startTimer();
 </script>
 </body>
 </html>
