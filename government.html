@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-adsense-account" content="ca-pub-2619407883412146">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Government Diagnostic | STUDY-WITH-MUBARAK</title>
-    <link rel="manifest" href="random-subject.html">
     <meta name="theme-color" content="#10b981">
     <style>
         :root {
@@ -685,12 +683,12 @@
     <div id="setup-box" class="grand-card">
         <div class="setup-container">
             <h2>Government CBT Setup</h2>
-            <p>Practice 20 randomized questions per session from your master bank.</p>
+            <p>Practice 20 randomized questions per session from your master bank (scales up to 5,000+ items).</p>
             
             <div class="setup-section-title">Select Topic Filter</div>
             <div class="setup-grid">
                 <div class="setup-option-card selected" onclick="selectSetupTopic('all', this)">
-                    <div class="title">All Topics (Bank: 50+)</div>
+                    <div class="title">All Topics (Full Bank)</div>
                     <div class="desc">Pulls 20 random items</div>
                 </div>
                 <div class="setup-option-card" onclick="selectSetupTopic('Constitutional History', this)">
@@ -806,7 +804,7 @@
 </div>
 
 <script>
-    // ====== EXPANDABLE MASTER QUESTION BANK (Designed to support up to 5,000+ items) ======
+    // ====== EXPANDABLE MASTER QUESTION BANK (Optimized for up to 5,000+ items) ======
     const masterQuestions = [
         { q: "When did Nigeria gain her Independence?", a: ["1st October 1963", "31st October 1690", "1st October 2012", "1st October 1960", "12th October 1992"], c: 3, t: "Nigerian Independence", y: 2012, e: "Nigeria gained independence from British colonial rule on 1 October 1960." },
         { q: "Democracy means a system of government in which:", a: ["The majority rules", "The minority rules", "There is no party system", "The people rule", "None of the above"], c: 3, t: "Democracy", y: 2018, e: "Democracy is a system of government in which political authority ultimately belongs to the people." },
@@ -865,7 +863,7 @@
     let flaggedQuestions = new Set();
     let bookmarkedQuestions = new Set(JSON.parse(localStorage.getItem(BOOKMARK_STORAGE_KEY) || "[]"));
     let timerInterval = null;
-    let totalDuration = 1200; // 20 mins for 20 questions
+    let totalDuration = 1200; 
     let timeRemaining = totalDuration;
     let timerPaused = false;
     let aiExplanationCache = JSON.parse(localStorage.getItem("mubarak_gov_ai_cache") || "{}");
@@ -919,7 +917,7 @@
         userAnswers = new Array(questions.length).fill(null);
         flaggedQuestions.clear();
         currentQ = 0;
-        totalDuration = timedModeEnabled ? questions.length * 60 : 999999; // 1 min per question
+        totalDuration = timedModeEnabled ? questions.length * 60 : 999999;
         timeRemaining = totalDuration;
 
         document.getElementById("setup-box").classList.add("hidden");
@@ -1249,7 +1247,7 @@
             localStorage.setItem("mubarak_gov_ai_cache", JSON.stringify(aiExplanationCache));
             container.innerHTML = `<div class="ai-explanation-box"><strong>Mubarak AI:</strong><br>${formatted}</div>`;
         } catch (e) {
-            container.innerHTML = '<div class="ai-explanation-box">Connection timeout. Please check your network connection.</div>';
+            container.innerHTML = '<div class="ai-explanation-box">Connection timeout or network blocked. Please check your internet connection.</div>';
         }
     }
 
